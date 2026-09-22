@@ -274,20 +274,26 @@
   const bindVisitorUI = shared => {
     const display = document.querySelector('#visitor-display');
     const nameEl = document.querySelector('#visitor-name');
-    const toggle = document.querySelector('#visitor-auth-toggle');
+    const toggle = document.querySelector('#login-auth-toggle');
 
     function updateUI(sharedState) {
       if (!toggle) return;
+      const isAdmin = document.documentElement.dataset.identity === 'admin';
+      
       if (sharedState.status === 'identified' && sharedState.visitor) {
-        toggle.textContent = '로그아웃';
-        toggle.title = '방문자 로그아웃';
+        if (!isAdmin) {
+          toggle.textContent = '로그아웃';
+          toggle.title = '로그아웃';
+        }
         if (display && nameEl) {
           nameEl.textContent = sharedState.visitor.display_name || sharedState.visitor.handle;
           display.hidden = false;
         }
       } else {
-        toggle.textContent = '로그인';
-        toggle.title = '방문자 로그인';
+        if (!isAdmin) {
+          toggle.textContent = '로그인';
+          toggle.title = '로그인';
+        }
         if (display && nameEl) {
           nameEl.textContent = '';
           display.hidden = true;
@@ -295,15 +301,7 @@
       }
     }
 
-    if (toggle) {
-      toggle.addEventListener('click', () => {
-        if (shared.state.status === 'identified') {
-          location.href = shared.getLogoutUrl();
-        } else {
-          location.href = shared.getLoginUrl();
-        }
-      });
-    }
+    // click event is now fully handled by admin-auth.js to coordinate the unified modal
 
     window.addEventListener('minihompy:visitor-identity', ev => {
       updateUI(ev.detail);

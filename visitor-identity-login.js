@@ -51,14 +51,19 @@
 
         // 2. 로그인되어 있지 않은 경우 처리
         if (AUTO_OPEN_LOGIN_DIALOG) {
-          // 옵션 B: 기존 관리자 로그인 다이얼로그 재활용
-          // 로그인 완료(minihompy:identity 이벤트) 또는 다이얼로그 닫힘까지 대기
-          const dialog = document.querySelector('.admin-dialog');
+          // 통합 로그인 다이얼로그 (Step 2) 호출
+          const dialog = document.querySelector('.login-dialog');
           if (dialog && typeof dialog.showModal === 'function') {
-            const msg = document.querySelector('.admin-auth-message');
-            if (msg) msg.textContent = '중앙 연동을 위해 로그인이 필요합니다.';
-            dialog.showModal();
-            document.querySelector('#admin-email')?.focus();
+            const msg = document.querySelector('.login-auth-message');
+            if (msg) msg.textContent = '중앙 연동을 위해 비밀번호를 입력해 주세요.';
+            
+            // admin-auth.js에 추가한 openStep2 함수 활용
+            if (window.MinihompyAdmin && typeof window.MinihompyAdmin.openStep2 === 'function') {
+              window.MinihompyAdmin.openStep2(config.handle || '');
+            } else {
+              dialog.showModal();
+              document.querySelector('#login-email')?.focus();
+            }
 
             const userId = await new Promise((resolve) => {
               function onIdentity(e) {
@@ -80,18 +85,16 @@
               busy = false;
               return true;
             } else {
-              // 취소 시 안내 메시지 (옵션 A 동작과 동일)
-              if (msg) msg.textContent = '로그인이 취소되었습니다. 중앙 연동을 완료하려면 먼저 로그인해 주세요.';
+              if (msg) msg.textContent = '로그인이 취소되었습니다. 중앙 연동을 완료하려면 다시 시도해 주세요.';
             }
           } else {
-            // 다이얼로그 요소를 찾지 못한 경우 — 옵션 A 폴백
-            console.warn('[visitor-identity-login] .admin-dialog 요소를 찾지 못했습니다. 안내 메시지만 표시합니다.');
-            const msg = document.querySelector('.admin-auth-message');
+            console.warn('[visitor-identity-login] .login-dialog 요소를 찾지 못했습니다. 안내 메시지만 표시합니다.');
+            const msg = document.querySelector('.login-auth-message');
             if (msg) msg.textContent = '중앙 연동을 위해 먼저 로그인해 주세요.';
           }
         } else {
           // 옵션 A: 안내 메시지만 표시
-          const msg = document.querySelector('.admin-auth-message');
+          const msg = document.querySelector('.login-auth-message');
           if (msg) msg.textContent = '중앙 연동을 위해 먼저 로그인해 주세요.';
           console.warn('[visitor-identity-login] 로컬 세션 없음 — 로그인 필요 (AUTO_OPEN_LOGIN_DIALOG=false)');
         }

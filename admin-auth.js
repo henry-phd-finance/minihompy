@@ -2,21 +2,25 @@
   'use strict';
   const client = window.MinihompyBackend.getClient('admin');
   const identity = window.createMinihompyIdentity(client);
-  const toggle = document.querySelector('#admin-auth-toggle');
-  const dialog = document.querySelector('.admin-dialog');
-  const form = document.querySelector('#admin-login-form');
-  const email = document.querySelector('#admin-email');
-  const password = document.querySelector('#admin-password');
-  const message = document.querySelector('.admin-auth-message');
-  const submit = document.querySelector('#admin-submit');
-  const close = document.querySelector('#admin-close');
+  const toggle = document.querySelector('#login-auth-toggle');
+  const dialog = document.querySelector('.login-dialog');
+  const form = document.querySelector('#login-form');
+  const handleInput = document.querySelector('#login-handle');
+  const step1 = document.querySelector('#login-step-1');
+  const step2 = document.querySelector('#login-step-2');
+  const email = document.querySelector('#login-email');
+  const password = document.querySelector('#login-password');
+  const message = document.querySelector('.login-auth-message');
+  const submit = document.querySelector('#login-submit');
+  const close = document.querySelector('#login-close');
+  let currentStep = 1;
   let state = Object.freeze({ role: 'reader', userId: null });
   let busy = false;
   let generation = 0;
   function publish(next) {
     state = Object.freeze({ role: next.role === 'admin' ? 'admin' : 'reader', userId: next.role === 'admin' ? next.userId : null });
-    toggle.textContent = state.role === 'admin' ? '로그아웃' : '관리자';
-    toggle.title = state.role === 'admin' ? '관리자 로그아웃' : '관리자 로그인';
+    toggle.textContent = state.role === 'admin' ? '로그아웃' : '로그인';
+    toggle.title = state.role === 'admin' ? '로그아웃' : '로그인';
     document.documentElement.dataset.identity = state.role;
     window.dispatchEvent(new CustomEvent('minihompy:identity', { detail: state }));
   }
@@ -24,6 +28,7 @@
     busy = value;
     toggle.disabled = submit.disabled = close.disabled = value;
     email.disabled = password.disabled = value;
+    if (handleInput) handleInput.disabled = value;
     form.setAttribute('aria-busy', String(value));
   }
   async function refresh() {
@@ -38,6 +43,36 @@
   form.addEventListener('submit', async event => {
     event.preventDefault();
     if (busy) return;
+
+    if (currentStep === 1) {
+      const handle = handleInput.value.trim();
+      if (!handle) return;
+      const config = window.MINIHOMPY_VISITOR_IDENTITY_CONFIG;
+      if (!config || !config.enabled || !config.centralApiUrl) {
+        message.textContent = '중앙 연동 설정이 되어 있지 않습니다.';
+        return;
+      }
+      setBusy(true);
+      message.textContent = '미니홈피를 찾는 중...';
+      try {
+        const currentPath = location.pathname + location.search + (location.hash || '#/home');
+        const intentRes = await fetch(`${config.centralApiUrl}/login-intents`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ handle, return_site_id: config.siteId, return_path: currentPath }),
+          mode: 'cors',
+        });
+        if (!intentRes.ok) throw new Error('아이디를 찾을 수 없거나 서버 오류입니다.');
+        const intentData = await intentRes.json();
+        if (intentData.redirect_url) location.href = intentData.redirect_url;
+        else throw new Error('리다이렉션 URL이 없습니다.');
+      } catch (err) {
+        message.textContent = err.message || '오류가 발생했습니다.';
+        setBusy(false);
+      }
+      return;
+    }
+
     ++generation;
     setBusy(true);
     message.textContent = '확인 중입니다.';
@@ -134,12 +169,28 @@
     const completeUrl = `${centralPageUrl}/complete#ticket=${encodeURIComponent(ticket)}`;
     location.replace(completeUrl);
   }
-  toggle.addEventListener('click', async () => {
+  toggle.addEventListener('click', async (e) => {
     if (busy) return;
     message.textContent = '';
+    
+    const sharedState = window.MinihompySharedIdentity?.state;
+    const isVisitor = state.role !== 'admin' && sharedState?.status === 'identified' && sharedState?.visitor;
+    
+    if (isVisitor) {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      location.href = window.MinihompySharedIdentity.getLogoutUrl();
+      return;
+    }
+
     if (state.role !== 'admin') {
+      currentStep = 1;
+      step1.style.display = 'block';
+      step2.style.display = 'none';
+      submit.textContent = '다음';
+      if(handleInput) handleInput.value = '';
       dialog.showModal();
-      email.focus();
+      if(handleInput) handleInput.focus();
       return;
     }
     ++generation;
@@ -163,16 +214,35 @@
     else if (!busy) setTimeout(() => { if (!busy) void refresh(); }, 0);
   });
   window.addEventListener('online', () => { if (!busy) void refresh(); });
-  window.MinihompyAdmin = Object.freeze({ get state() { return state; }, refresh });
+  window.MinihompyAdmin = Object.freeze({
+    get state() { return state; },
+    refresh,
+    openStep2: (handleVal) => {
+      currentStep = 2;
+      step1.style.display = 'none';
+      step2.style.display = 'block';
+      submit.textContent = '로그인';
+      if(handleVal && handleInput) {
+        handleInput.value = handleVal;
+        handleInput.disabled = true;
+      }
+      dialog.showModal();
+      email.focus();
+    }
+  });
   void refresh();
 
-  // URL 쿼리 파라미터 ?admin=login 감지 시 관리자 로그인 창 자동 오픈
+  // URL 쿼리 파라미터 ?admin=login 감지 시 로그인 창 자동 오픈
   try {
     if (new URLSearchParams(location.search).get('admin') === 'login') {
       setTimeout(() => {
         if (state.role !== 'admin') {
+          currentStep = 1;
+          step1.style.display = 'block';
+          step2.style.display = 'none';
+          submit.textContent = '다음';
           dialog.showModal();
-          email.focus();
+          if(handleInput) handleInput.focus();
         }
       }, 0);
     }
