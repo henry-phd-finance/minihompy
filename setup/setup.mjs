@@ -130,12 +130,10 @@ async function main() {
   const centralEnabled = (await ask('  중앙 연동을 사용하시겠습니까? (y/n): ')).toLowerCase() === 'y';
   let central = { enabled: false, siteId: '', apiUrl: '', pageUrl: '', handle: '' };
   if (centralEnabled) {
-    central.apiUrl  = (await ask('  중앙 API URL: ')).trim().replace(/\/$/, '');
-    central.pageUrl = (await ask('  중앙 Page URL: ')).trim().replace(/\/$/, '');
-    central.siteId  = (await ask("  Site ID ('auto' 입력 시 오픈 등록으로 자동 발급): ")).trim();
-    if (central.siteId.toLowerCase() === 'auto') {
-      central.handle = (await ask(`  중앙 공통 Handle (기본값: ${github.username.toLowerCase()}): `)).trim().toLowerCase() || github.username.toLowerCase();
-    }
+    central.apiUrl  = 'https://pcwovvdgggpbghvqraex.supabase.co/functions/v1/identity-api';
+    central.pageUrl = 'https://henry-phd-finance.github.io/minihompy-central';
+    central.siteId  = 'auto';
+    central.handle  = (await ask(`  미니홈피 아이디(Handle) 설정 (기본값: ${github.username.toLowerCase()}): `)).trim().toLowerCase() || github.username.toLowerCase();
     central.enabled = true;
   }
 
@@ -196,10 +194,28 @@ async function main() {
   hdr('Step 3 / 7  —  관리자 계정 생성');
   let adminUuid = 'dry-run-uuid-0000-0000-0000-000000000000';
 
-  const createRes = await apiFetch(
-    `https://api.supabase.com/v1/projects/${sb.ref}/auth/users`,
-    { method: 'POST', token: sb.token, body: { email: admin.email, password: admin.password, email_confirm: true } }
-  );
+  // 1. Fetch Service Role Key using Management API
+  let serviceRoleKey = '';
+  if (!isDryRun) {
+    const keysRes = await apiFetch(`https://api.supabase.com/v1/projects/${sb.ref}/api-keys`, { token: sb.token });
+    if (keysRes.ok && Array.isArray(keysRes.data)) {
+      const srKeyObj = keysRes.data.find(k => k.name === 'service_role');
+      if (srKeyObj) serviceRoleKey = srKeyObj.api_key;
+    }
+  }
+
+  // 2. Create User using GoTrue Admin API
+  let createRes;
+  if (isDryRun) {
+    createRes = { ok: true, data: { id: adminUuid } };
+  } else if (serviceRoleKey) {
+    createRes = await apiFetch(
+      `https://${sb.ref}.supabase.co/auth/v1/admin/users`,
+      { method: 'POST', token: serviceRoleKey, body: { email: admin.email, password: admin.password, email_confirm: true } }
+    );
+  } else {
+    createRes = { ok: false, status: 500, data: { message: 'Service Role Key를 찾을 수 없습니다.' } };
+  }
   if (createRes.ok && createRes.data?.id) {
     adminUuid = createRes.data.id;
     ok(`관리자 계정 생성 완료 (UUID: ${adminUuid})`);
@@ -354,8 +370,13 @@ async function main() {
   } else {
     console.log(`🔗  중앙 연동     : 비활성 (단독 운영 모드)`);
   }
-  console.log(`\n${C.yellow}  ⚠ GitHub Pages Actions 탭에서 배포 상태를 확인하세요.${C.reset}`);
-  console.log(`     https://github.com/${github.username}/${github.repo}/actions\n`);
+  console.log(`\n${C.bold}${C.yellow}  ⚠ 최초 1회 배포 필수 체크리스트 (Fork 저장소):${C.reset}`);
+  console.log(`     1. GitHub 저장소 Settings → Pages 에서`);
+  console.log(`        Source를 반드시 ${C.bold}'GitHub Actions'${C.reset}로 선택하세요! (폴더 선택 X)`);
+  console.log(`        🔗 https://github.com/${github.username}/${github.repo}/settings/pages`);
+  console.log(`     2. Actions 탭으로 이동하여 초록색 버튼 ${C.bold}'Enable workflows'${C.reset}를 클릭하세요.`);
+  console.log(`     3. 좌측 'Deploy GitHub Pages' → 우측 ${C.bold}'Run workflow'${C.reset}를 눌러 첫 배포를 실행하세요!`);
+  console.log(`        🔗 https://github.com/${github.username}/${github.repo}/actions\n`);
 }
 
 main().catch((e) => {
