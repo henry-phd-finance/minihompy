@@ -38,16 +38,17 @@ button:disabled, input:disabled { opacity: 1; -webkit-text-fill-color: currentCo
 .visitor-display .visitor-name { color: #26778c; font-weight: bold; }
 .site-links { position: absolute; left: 240px; right: 10px; top: 2px; display: flex; align-items: center; justify-content: space-between; height: 11px; white-space: nowrap; }
 .site-links > span + span { border-left: 1px solid #dedede; padding-left: 3px; }
-#admin-auth-toggle, #visitor-auth-toggle { width: 24px; padding: 0; border: 0; color: inherit; background: transparent; font: inherit; cursor: pointer; }
-.admin-dialog { width: 270px; max-width: calc(100vw - 24px); padding: 14px; border: 1px solid #819b9f; border-radius: 3px; color: #555; background: #fff; font: 11px/17px var(--ui-font); }
-.admin-dialog::backdrop { background: rgb(0 0 0 / 20%); }
-.admin-dialog h2 { margin: 0 0 13px; padding-bottom: 6px; border-bottom: 1px solid #ddd; color: #199db9; font-size: 12px; }
-.admin-dialog label { display: block; margin-top: 6px; }
-.admin-dialog input { width: 100%; height: 24px; padding: 2px 4px; border: 1px solid #bbb; color: #333; background: #fff; font: inherit; }
-.admin-auth-message { min-height: 34px; margin: 8px 0; color: #b45728; overflow-wrap: anywhere; }
-.admin-dialog-actions { display: flex; justify-content: flex-end; gap: 5px; }
-.admin-dialog-actions button { padding: 2px 8px; border: 1px solid #bbb; background: #f7f7f7; color: #555; font: inherit; cursor: pointer; }
-.admin-dialog :focus-visible, #admin-auth-toggle:focus-visible, #visitor-auth-toggle:focus-visible { outline: 1px dotted #26778c; outline-offset: 1px; }
+#login-auth-toggle { width: 24px; padding: 0; border: 0; color: inherit; background: transparent; font: inherit; cursor: pointer; }
+/* 관리자 로그인 (이제 통합 로그인) */
+.login-dialog { width: 270px; max-width: calc(100vw - 24px); padding: 14px; border: 1px solid #819b9f; border-radius: 3px; color: #555; background: #fff; font: 11px/17px var(--ui-font); }
+.login-dialog::backdrop { background: rgb(0 0 0 / 20%); }
+.login-dialog h2 { margin: 0 0 13px; padding-bottom: 6px; border-bottom: 1px solid #ddd; color: #199db9; font-size: 12px; }
+.login-dialog label { display: block; margin-top: 6px; }
+.login-dialog input { width: 100%; height: 24px; padding: 2px 4px; border: 1px solid #bbb; color: #333; background: #fff; font: inherit; }
+.login-auth-message { margin: 8px 0; color: #d03030; }
+.login-dialog-actions { display: flex; justify-content: flex-end; gap: 5px; margin-top: 10px; }
+.login-dialog-actions button { padding: 2px 8px; border: 1px solid #bbb; background: #f7f7f7; color: #555; font: inherit; cursor: pointer; }
+.login-dialog :focus-visible, #login-auth-toggle:focus-visible { outline: 1px dotted #26778c; outline-offset: 1px; }
 .history-links { color: #aaa; }
 .tiny-orange { color: var(--action); }
 

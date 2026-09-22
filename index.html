@@ -49,8 +49,8 @@
         <span>메인</span><span>내 미니홈피</span>
         <span class="history-links">◀ 주　 › 정　 › 정</span>
         <span>내모아보기<span class="tiny-orange">▴</span></span>
-        <span>바로가기 ▴</span><span>랜덤</span><span><button id="admin-auth-toggle" type="button" title="관리자 로그인">관리자</button></span>
-        <span><button id="visitor-auth-toggle" type="button" title="방문자 로그인">로그인</button></span>
+        <span>바로가기 ▴</span><span>랜덤</span>
+        <span><button id="login-auth-toggle" type="button" title="로그인">로그인</button></span>
       </div>
     </header>
 
@@ -98,17 +98,27 @@
       <div class="banner-slot banner-right reference-sprite" role="img" aria-label="만화 캐릭터 추천 배너"></div>
     </aside>
   </main>
-  <dialog class="admin-dialog" aria-labelledby="admin-dialog-title">
-    <form id="admin-login-form">
-      <h2 id="admin-dialog-title">관리자 로그인</h2>
-      <label for="admin-email">이메일</label>
-      <input id="admin-email" type="email" autocomplete="username" required maxlength="254">
-      <label for="admin-password">비밀번호</label>
-      <input id="admin-password" type="password" autocomplete="current-password" required>
-      <p class="admin-auth-message" role="status" aria-live="polite"></p>
-      <div class="admin-dialog-actions">
-        <button id="admin-submit" type="submit">로그인</button>
-        <button id="admin-close" type="button">닫기</button>
+  <dialog class="login-dialog" aria-labelledby="login-dialog-title">
+    <form id="login-form">
+      <h2 id="login-dialog-title">로그인</h2>
+      
+      <div id="login-step-1">
+        <label for="login-handle">미니홈피 아이디 (Handle)</label>
+        <input id="login-handle" type="text" autocomplete="username" required maxlength="254" placeholder="예: alice">
+      </div>
+      
+      <div id="login-step-2" style="display: none;">
+        <label for="login-email">이메일</label>
+        <input id="login-email" type="email" autocomplete="email" maxlength="254">
+        <label for="login-password">비밀번호</label>
+        <input id="login-password" type="password" autocomplete="current-password">
+      </div>
+      
+      <p class="login-auth-message" role="status" aria-live="polite"></p>
+      
+      <div class="login-dialog-actions">
+        <button id="login-submit" type="submit">다음</button>
+        <button id="login-close" type="button">닫기</button>
       </div>
     </form>
   </dialog>
