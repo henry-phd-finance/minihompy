@@ -67,6 +67,8 @@
   });
 
   function openLogin() {
+    const preparing = new Event('minihompy:writing-authorize', {cancelable:true});
+    window.dispatchEvent(preparing); if (preparing.defaultPrevented) return;
     const config = window.MINIHOMPY_VISITOR_IDENTITY_CONFIG;
     if (config?.enabled) {
       const clean = new URL(location.href);
@@ -87,6 +89,7 @@
     const sharedState = window.MinihompySharedIdentity?.state;
     const isVisitor = state.role !== 'admin' && sharedState?.status === 'identified' && sharedState?.visitor;
     
+    if (isVisitor || state.role === 'admin') window.dispatchEvent(new Event('minihompy:navigation-invalidate'));
     if (isVisitor) {
       e.preventDefault();
       e.stopImmediatePropagation();

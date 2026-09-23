@@ -15,7 +15,7 @@
       <div class="profile-history">
         <div class="history-heading"><span><i></i>HISTORY</span><span class="history-arrows">▾▴</span></div>
         <div class="profile-name"><span data-config="profile.name">정</span> <span class="profile-detail" data-config="profile.detail">(성)</span></div>
-        <div class="surf-select">파도타기<span aria-hidden="true">▴</span></div>
+        <button type="button" class="surf-select" data-surf-open aria-haspopup="dialog" aria-controls="surf-dialog">파도타기<span aria-hidden="true">▴</span></button>
       </div>
     `),
     createMain: () => fragment(`
@@ -34,7 +34,7 @@
         <div class="minime reference-sprite" role="img" aria-label="주황색 머리의 미니미"></div>
       </div>
       <h2 class="friends-heading">일촌평<span class="help-mark" aria-hidden="true">?</span></h2>
-      <div class="friends-prompt"><span class="friend-icon" aria-hidden="true">♥</span><span data-config="home.friendsMessage">나의 소중한 첫번째 일촌이 되어 주세요.</span><span class="friend-request">일촌신청</span></div>
+      <div class="friends-prompt"><span>일촌 기능 준비 중</span></div>
     `),
   };
 })();

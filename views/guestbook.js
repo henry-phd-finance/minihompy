@@ -102,15 +102,10 @@
     article.dataset.post = post.id;
     article.setAttribute('aria-label', `${privatePost ? '비공개' : '공개'} 방명록 ${post.number}`);
     const header = node('header', 'guestbook-post-header');
-    let homepage;
-    try { const u = new URL(post.author_homepage_url); if (post.author_kind === 'member' && u.protocol === 'https:' && !u.username && !u.password) homepage = u.href; } catch {}
-    const name = node(homepage ? 'a' : 'span', 'guestbook-author', post.author_name);
-    if (homepage) { name.href = homepage; name.rel = 'noopener noreferrer'; name.title = '작성자의 미니홈피 방문'; }
-    name.title = post.author_name;
-    const house = node('i', 'guestbook-house');
-    house.setAttribute('aria-hidden', 'true');
+    const author = window.MinihompyAuthorNavigation?.create(post, 'guestbook-author')
+      || node('span', 'guestbook-author', post.author_name);
     const date = new Intl.DateTimeFormat('sv-SE', { timeZone: 'Asia/Seoul', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(new Date(post.created_at)).replaceAll('-', '.');
-    header.append(node('span', 'guestbook-number', `NO.${post.number}`), name, house, node('time', '', `(${date})`));
+    header.append(node('span', 'guestbook-number', `NO.${post.number}`), author, node('time', '', `(${date})`));
     const actions = node('span', 'guestbook-actions');
     const own = post.author_kind === 'member' ? Boolean(context?.memberId && post.author_member_id === context.memberId) : Boolean(context?.userId && post.author_id === context.userId);
     if (own) actions.append(action('수정', () => {

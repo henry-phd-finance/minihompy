@@ -16,6 +16,9 @@
   <script src="member-writing-config.js" defer></script>
   <script src="member-writing-client.js" defer></script>
   <script src="member-writing-runtime.js" defer></script>
+  <script src="member-navigation.js" defer></script>
+  <script src="author-navigation.js" defer></script>
+  <script src="surf-navigation.js" defer></script>
   <script src="visitor-session.js" defer></script>
   <script src="comments-repository.js" defer></script>
   <script src="comments.js" defer></script>
@@ -46,14 +49,14 @@
         <button type="button" disabled>검색</button>
       </div>
       <div class="visitor-display" id="visitor-display" hidden>
-        <span class="visitor-label">방문자:</span>
-        <span class="visitor-name" id="visitor-name"></span>
+        <span><span class="visitor-label">방문자:</span> <span class="visitor-name" id="visitor-name"></span></span>
+        <span><span class="visitor-label">홈 주인:</span> <span id="home-owner-name">확인 중</span></span>
       </div>
       <div class="site-links" aria-label="사이트 메뉴">
-        <span>메인</span><span>내 미니홈피</span>
+        <span>메인</span><span><a id="my-home-link" aria-disabled="true" tabindex="-1">내 미니홈피</a><button id="my-home-login" type="button" hidden>내 미니홈피 · 로그인</button></span>
         <span class="history-links">◀ 주　 › 정　 › 정</span>
         <span>내모아보기<span class="tiny-orange">▴</span></span>
-        <span>바로가기 ▴</span><span>랜덤</span>
+        <span>바로가기 ▴</span><span><button id="random-visit" type="button" aria-haspopup="dialog" aria-controls="surf-dialog">랜덤</button></span>
         <span><button type="button" id="visitor-identity-retry" hidden title="방문자 확인에 실패했습니다. 다시 시도합니다.">방문자 확인 재시도</button>
           <button id="login-auth-toggle" type="button" title="로그인">로그인</button></span>
       </div>
@@ -69,7 +72,7 @@
 
     <div class="visit-count"><span>TODAY <b data-config="home.today">1</b></span><span>TOTAL <span data-config="home.total">2</span></span></div>
     <h1 class="homepage-title" data-config="page.title">님의 미니홈피</h1>
-    <div class="header-actions">+ 일촌맺기 <span>+ 팬되기</span></div>
+    <!-- Relationship actions are added with the verified relationship feature (backlog 5). -->
     <section class="profile-panel" data-region="A06" data-view-slot="left" aria-label="홈 왼쪽 영역"></section>
     <section class="home-panel" id="home" data-region="A07" data-view-slot="main" aria-label="홈"></section>
 
@@ -88,7 +91,7 @@
 
     <aside class="utility-panel" data-region="A09" aria-label="미니홈피 부가 메뉴">
       <div class="utility-heading"><span>친구추천</span><span class="fan-label">팬</span></div>
-      <div class="relationship-slot"><span data-config="profile.name">정</span>　 님과 나는 <span class="relationship-badge">사촌</span></div>
+      <div class="relationship-slot"><span id="navigation-status" role="status">사용자 확인 중</span> <button id="navigation-retry" type="button" hidden>다시 확인</button></div>
       <div class="utility-statistics"><span>댓글</span><span>스크랩<small>0</small></span><span>앱스<small>0</small></span><span>소망상자</span></div>
       <div class="activity"><span>액티브</span><i></i></div>
       <div class="music-player" aria-label="배경음악">
@@ -103,6 +106,17 @@
       <div class="banner-slot banner-right reference-sprite" role="img" aria-label="만화 캐릭터 추천 배너"></div>
     </aside>
   </main>
+  <dialog id="surf-dialog" class="surf-dialog" aria-labelledby="surf-title" aria-describedby="surf-description">
+    <h2 id="surf-title">파도타기</h2>
+    <p id="surf-description">중앙에 등록된 회원의 미니홈피입니다. 일촌 목록이 아닙니다.</p>
+    <form id="surf-search">
+      <label for="surf-query">회원 ID(handle) 검색</label>
+      <div class="surf-search-row"><input id="surf-query" type="search" maxlength="30" autocomplete="off" placeholder="비워두면 전체 목록"><button type="submit">검색</button></div>
+    </form>
+    <p id="surf-status" role="status" aria-live="polite"></p>
+    <ul id="surf-results" aria-label="방문할 미니홈피"></ul>
+    <div class="surf-actions"><button id="surf-retry" type="button" hidden>다시 시도</button><button id="surf-next" type="button" hidden>다음 페이지</button><button id="surf-close" type="button">닫기</button></div>
+  </dialog>
   <dialog class="login-dialog" aria-labelledby="login-dialog-title">
     <form id="login-form">
       <h2 id="login-dialog-title">로그인</h2>

@@ -33,10 +33,8 @@
       const parts = new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Seoul', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(new Date(comment.created_at));
       const part = type => parts.find(item => item.type === type).value;
       const date = `${part('month')}.${part('day')} ${part('hour')}:${part('minute')}`;
-      let homepage;
-      try { const u = new URL(comment.author_homepage_url); if (comment.author_kind === 'member' && u.protocol === 'https:' && !u.username && !u.password) homepage = u.href; } catch {}
-      const author = node(homepage ? 'a' : 'span', 'photo-comment-name', comment.author_name);
-      if (homepage) { author.href = homepage; author.rel = 'noopener noreferrer'; }
+      const author = window.MinihompyAuthorNavigation?.create(comment, 'photo-comment-name')
+        || node('span', 'photo-comment-name', comment.author_name);
       row.append(author, document.createTextNode(` : ${comment.body} `), node('time', 'photo-comment-date', `(${date})`));
       const own = comment.author_kind === 'member' ? Boolean(state.context.memberId && comment.author_member_id === state.context.memberId) : Boolean((!state.context.api || state.context.role === 'admin') && state.context.userId && comment.author_id === state.context.userId);
       const actions = node('span', 'comment-actions');

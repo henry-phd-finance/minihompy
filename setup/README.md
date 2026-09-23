@@ -97,3 +97,16 @@ node setup/setup.mjs writing --config setup/config.json
 최신 런타임 파일과 생성된 `member-writing-config.js`를 Pages에 배포해야 화면이 활성화된다. `writing`은 Git commit/push를 수행하지 않는다. 기본 저장소의 기능 설정은 새 설치 보호를 위해 false이며, 성공한 사이트의 배포 설정만 true가 된다.
 
 이력 없는 회원 스키마나 기존 적용 파일의 해시 차이는 자동으로 덮어쓰지 않고 중단한다. 오류를 해결한 후 같은 명령으로 재시도한다. 자세한 순서와 복구 범위는 [회원 작성 배포 안내](../docs/member-writing-deployment.md)를 참고한다.
+
+## 회원 이동 기능 설치·업그레이드
+
+중앙 관리자가 먼저 `scripts/deploy-navigation.mjs --apply`로 중앙 이동 SQL과 함수를 배포합니다. 개인 사이트는 최신 소스를 적용하되 기존 `config.js`, `supabase-config.js`, `visitor-identity-config.js`, `member-writing-config.js`와 소유자 설정을 유지합니다. 신규 설치는 기존 등록·검증 절차를 마친 뒤 같은 점검을 실행합니다.
+
+```sh
+node setup/setup.mjs navigation --config setup/config.json --dry-run
+node setup/setup.mjs navigation --config setup/config.json
+node scripts/build-pages.mjs
+node scripts/verify-artifact.mjs
+```
+
+`navigation`은 비밀번호나 관리 토큰 없이 중앙의 지원 버전·등록 주소·목록과 개인 런타임 연결을 확인하는 읽기 전용 명령입니다. 설정의 `siteId`는 등록 완료된 값이어야 합니다. 개인 DB 마이그레이션이나 새로운 비밀 설정은 없습니다. 성공 후 자신의 저장소에서 Pages를 배포합니다. 중앙 장애 시 오래된 주소로 우회하지 않고 화면의 재확인을 이용합니다. 실제 일촌 기능은 별도 백로그입니다.

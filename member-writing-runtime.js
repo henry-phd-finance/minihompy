@@ -35,6 +35,7 @@
     if (blocked) return window.MinihompySharedIdentity?.retry();
   }
   function failClosed(error) {
+    window.dispatchEvent(new Event('minihompy:navigation-invalidate'));
     if (!fault) { fault=true;invalidate('인증이 만료되었거나 서버에 연결하지 못했습니다. 다시 확인해 주세요. 작성 내용은 현재 탭에 보관됩니다.',false); }
     return error;
   }
@@ -61,6 +62,7 @@
     try { member=await (currentRequest ||= api().current().finally(() => { currentRequest=null; }));check(stamp); }
     catch(error) { check(stamp);if(error.status!==401 || !fault)throw failClosed(error);member=null; }
     if (member && member.actor.member_id !== shared.visitor.id) {
+      window.dispatchEvent(new Event('minihompy:navigation-invalidate'));
       needsCleanup=true;invalidate('계정이 변경되었습니다. 회원 확인을 다시 해 주세요.');await drain();throw changed();
     }
     if(member){

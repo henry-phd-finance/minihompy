@@ -15,7 +15,7 @@ export async function verifyCommentsBrowser({playwrightPath,centralRoot,centralH
    const req=route.request(),u=new URL(req.url());
    async function api(response){await route.fulfill({status:response.status,body:await response.text(),headers:Object.fromEntries(response.headers)});}
    if(req.url().startsWith(options.config.SUPABASE_URL+'/functions/v1/member-writing'))return api(await handleMemberWriting(new Request(req.url(),{method:req.method(),headers:req.headers(),...(req.postData()?{body:req.postData()}:{})}),options));
-   if(req.url().startsWith(centralApi))return api(await centralHandler(new Request(req.url(),{method:req.method(),headers:req.headers(),...(req.postData()?{body:req.postData()}:{})}),centralOptions));
+   if(req.url().startsWith(centralApi))return api(await centralHandler(new Request(req.url(),{method:req.method(),headers:req.headers(),...(req.postData()?{body:req.postData()}:{})}),{...centralOptions,allowedOrigins:new Set(['https://bob.github.io'])}));
    if(u.origin==='https://central.test'&&u.pathname.startsWith('/pages/')){
     const name=u.pathname.slice('/pages/'.length);
     if(name==='config.js')return route.fulfill({contentType:'text/javascript',body:`window.MINIHOMPY_CENTRAL_CONFIG=${JSON.stringify({apiBaseUrl:centralApi,pageBaseUrl:centralPage.slice(0,-1)})};`});
@@ -34,12 +34,12 @@ export async function verifyCommentsBrowser({playwrightPath,centralRoot,centralH
       window.MinihompyVisitorSession={nickname:()=>'',context:async()=>localContext};
 `;
     return route.fulfill({contentType:'text/html',body:`<!doctype html><meta charset="utf-8"><link rel="stylesheet" href="styles.css"><script>${setup}</script>
-      ${['supabase-config.js','visitor-identity-config.js','member-writing-config.js','member-writing-client.js','member-writing-runtime.js','comments-repository.js','comments.js'].map(src=>`<script src="${src}"></script>`).join('')}
+      ${['supabase-config.js','visitor-identity-config.js','member-writing-config.js','member-writing-client.js','member-writing-runtime.js','member-navigation.js','author-navigation.js','comments-repository.js','comments.js'].map(src=>`<script src="${src}"></script>`).join('')}
       <main id="host" style="position:relative;width:750px;height:700px;font-size:14px"></main><script>for(const [kind,id] of Object.entries(${JSON.stringify(parents)}))document.querySelector('#host').append(window.MinihompyComments.create(kind,id));</script>`});
    }
    const custom={
     'supabase-config.js':`window.MINIHOMPY_SUPABASE=${JSON.stringify({url:options.config.SUPABASE_URL})};`,
-    'visitor-identity-config.js':`window.MINIHOMPY_VISITOR_IDENTITY_CONFIG=${JSON.stringify({siteId:options.config.MINIHOMPY_SITE_ID,centralApiUrl:centralApi,centralPageUrl:centralPage.slice(0,-1)})};`,
+    'visitor-identity-config.js':`window.MINIHOMPY_VISITOR_IDENTITY_CONFIG=${JSON.stringify({enabled:true,siteId:options.config.MINIHOMPY_SITE_ID,centralApiUrl:centralApi,centralPageUrl:centralPage.slice(0,-1)})};`,
     'member-writing-config.js':'window.MINIHOMPY_MEMBER_WRITING_CONFIG={enabled:true};',
    };
    if(custom[name])return route.fulfill({contentType:'text/javascript',body:custom[name]});
@@ -68,6 +68,7 @@ export async function verifyCommentsBrowser({playwrightPath,centralRoot,centralH
    const kind=row.body.replace('브라우저 댓글 ','');const widget=second.locator(`[data-comment-target="${kind}:${parents[kind]}"]`);
    await widget.locator(`[data-comment="${row.id}"] .comment-edit`).click();await widget.locator('.comment-body').fill('새 브라우저 수정 '+kind);await widget.locator('.comment-save').click();
    await widget.locator(`[data-comment="${row.id}"]`).filter({hasText:'새 브라우저 수정 '+kind}).waitFor();
+   await widget.locator(`[data-comment="${row.id}"] .photo-comment-name[href]`).waitFor();
    assert.equal(await widget.locator(`[data-comment="${row.id}"] .photo-comment-name`).getAttribute('href'),'https://alice.github.io/home/');
   }
   const ownerPage=await tab(memberB,ownerCentralSession,true);

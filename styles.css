@@ -456,3 +456,37 @@ button:disabled, input:disabled { opacity: 1; -webkit-text-fill-color: currentCo
 .settings-load-message { margin: 18px; color: #986244; overflow-wrap: anywhere; }
 .settings-load-retry { margin-left: 18px; }
 .settings-scroll :focus-visible, .settings-sidebar :focus-visible { outline: 1px dotted #26778c; outline-offset: 1px; }
+
+/* Central visitor identity is separate from the local administrator role. */
+.visitor-display { flex-direction: column; align-items: flex-start; gap: 0; top: 0; height: 16px; line-height: 8px; font-size: 6px; }
+.visitor-display > span { display: block; max-width: 125px; overflow: hidden; text-overflow: ellipsis; }
+#my-home-link { color: inherit; text-decoration: none; cursor: pointer; }
+#my-home-link[aria-disabled="true"] { color: #999; cursor: default; }
+#my-home-login, #navigation-retry { border: 0; padding: 0; background: transparent; color: #26778c; font: inherit; cursor: pointer; }
+#my-home-link:focus-visible, #my-home-login:focus-visible, #navigation-retry:focus-visible { outline: 1px dotted #26778c; }
+.relationship-slot { left: 6px; width: 80px; white-space: normal; font-size: 6px; line-height: 8px; }
+.author-navigation { display: inline; overflow-wrap: anywhere; }
+.author-navigation a[href] { cursor: pointer; }
+.author-navigation a[aria-disabled="true"] { cursor: default; text-decoration: none; }
+.author-home { color: #44668b; margin: 0 2px; text-decoration: none; }
+.author-handle, .author-home-status { color: #777; font-size: .9em; }
+.author-home-status { margin-left: 2px; }
+.author-home-retry { border: 0; padding: 0 2px; color: #44668b; background: transparent; font: inherit; cursor: pointer; }
+.author-navigation a:focus-visible, .author-home-retry:focus-visible { outline: 1px dotted #26778c; }
+/* Directory dialog remains inside the viewport, independent of notebook zoom. */
+button.surf-select { display: block; width: 100%; text-align: left; color: inherit; background: white; cursor: pointer; padding-right: 0; }
+#random-visit { border: 0; padding: 0; color: inherit; background: transparent; font: inherit; cursor: pointer; }
+#random-visit:disabled { cursor: wait; opacity: .6; }
+.surf-dialog { width: 380px; max-width: calc(100vw - 24px); max-height: calc(100dvh - 24px); overflow: auto; box-sizing: border-box; padding: 16px; border: 1px solid #819b9f; border-radius: 5px; background: #fff; color: #444; font: 14px/1.5 var(--ui-font); }
+.surf-dialog::backdrop { background: rgb(0 0 0 / 25%); }
+.surf-dialog h2 { margin: 0 0 8px; font-size: 18px; color: #26778c; }
+.surf-dialog p { margin: 8px 0; }
+.surf-search-row { display: flex; gap: 6px; }
+.surf-search-row input { min-width: 0; flex: 1; width: 100%; font: inherit; }
+.surf-dialog button { min-height: 36px; font: inherit; cursor: pointer; }
+#surf-results { padding: 0; list-style: none; }
+#surf-results li { border-bottom: 1px solid #eee; overflow-wrap: anywhere; }
+#surf-results a, #surf-results span { display: block; padding: 10px 4px; }
+#surf-results a { color: #26778c; }
+.surf-actions { display: flex; gap: 8px; justify-content: flex-end; }
+.surf-dialog :focus-visible, button.surf-select:focus-visible, #random-visit:focus-visible { outline: 2px solid #26778c; outline-offset: 2px; }

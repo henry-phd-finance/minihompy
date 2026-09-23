@@ -8,6 +8,11 @@ const out = new URL('../docs/verification/release/', import.meta.url);
 await mkdir(out, { recursive: true });
 const tests = [
   ['identity'],
+  ['member-navigation-state'],
+  ['member-navigation-ui', playwright],
+  ['author-navigation', playwright],
+  ['surf-navigation', playwright],
+  ['navigation-integration', playwright],
   ...['board','settings','photos','diary','guestbook','comments','profile'].map(name => [`${name}-db`, pglite]),
   ['member-writing-foundation', pglite],
   ['member-writing-setup', pglite],

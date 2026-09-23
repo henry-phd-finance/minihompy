@@ -85,7 +85,7 @@
     const returnPath = () => location.pathname + location.search + location.hash;
     function begin(kind) {
       const guard = { attempt_id: window.crypto.randomUUID(), status: kind, started_at: Date.now(), return_path: returnPath() };
-      save(guard); ++generation; return guard;
+      save(guard); ++generation; publish('unverified'); return guard;
     }
     function page(name, guard) {
       const base = (config.centralPageUrl || config.centralUrl).replace(/\/$/, '');
@@ -114,6 +114,7 @@
       if (!config?.enabled || !siteId || !(config.centralApiUrl || config.centralUrl)) return publish('anonymous');
       if (new URLSearchParams(location.search).get('admin') === 'login' || location.search.includes('login_intent=')) return state;
       const current = ++generation;
+      publish('unverified');
       const guard = read();
       const fragment = new URLSearchParams(location.hash.slice(1));
       const ticket = location.hash.startsWith('#vt=') ? fragment.get('vt') : null;
@@ -159,7 +160,8 @@
         await new Promise(done => setTimeout(done, 0));
         if (current !== generation) return state;
         const next = begin('checking');
-        location.assign(page('visit', next));
+        // The central round trip replaces this visit, not an extra history entry.
+        location.replace(page('visit', next));
       } catch {
         if (current !== generation) return state;
         try { save({ status: 'error', started_at: Date.now() }); } catch {}
@@ -173,7 +175,13 @@
     }
     return Object.freeze({
       get state() { return state; }, resolve,
-      retry() { if (pending) return pending; clear(); return resolve(); },
+      retry() {
+        if (pending) return pending;
+        const preparing = new Event('minihompy:writing-authorize', {cancelable:true});
+        window.dispatchEvent(preparing);
+        if (preparing.defaultPrevented) return Promise.resolve(state);
+        clear(); return resolve();
+      },
       getLoginUrl() { return page('login', begin('login')); },
       getLogoutUrl() { return page('logout', begin('logout')); },
     });
@@ -190,7 +198,7 @@
       const identified = visitorState.status === 'identified' && visitorState.visitor;
       const admin = document.documentElement?.dataset.identity === 'admin';
       if (toggle) toggle.textContent = toggle.title = admin || identified ? '로그아웃' : '로그인';
-      if (display && name) {
+      if (display && name && !window.MinihompyNavigation) {
         display.hidden = !identified;
         name.textContent = identified ? visitorState.visitor.display_name || visitorState.visitor.handle : '';
       }
