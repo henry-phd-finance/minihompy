@@ -2,6 +2,8 @@
 
 홈페이지: https://henry-phd-finance.github.io/minihompy/ · [배포 방법](docs/deployment.md)
 
+개발 계획: [기능 백로그](docs/backlog.md) · [A 사용자 관점 기능 검토](docs/functional-review-20260923.md)
+
 ## 현재 상태
 
 분산 로그인 2단계의 로컬 구현을 완료했다. 중앙 페이지에서 ID를 입력하고, 개인 페이지에서 비밀번호만 입력한 뒤 원래 미니홈피로 돌아온다. [로그인 흐름·개인 함수 설정](docs/login-flow.md), [검수 기록](docs/verification/login-step2/README.md). 운영 적용에는 중앙 v2 인증·사이트 재검증과 개인 `owner-login` 함수 설정/배포가 필요하다.
