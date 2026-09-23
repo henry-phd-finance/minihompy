@@ -1,0 +1,1 @@
+PASS: central v1 → v2 tracked migration, idempotent retry, existing member preservation, hash/untracked-schema rejection

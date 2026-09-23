@@ -1,0 +1,11 @@
+PASS 1: real central proof exchanges for personal opaque session; DB stores hash only
+PASS 2: wrong target, altered proof, PKCE and caller-supplied identity are denied
+PASS 3: renewal revokes the old session and consumes a fresh proof
+PASS 4: central outage has no anonymous fallback; local logout race wins
+PASS 5: revocation fails closed locally, retries central cleanup, and is idempotent
+PASS 6: owner mode requires personal Auth and admin RPC, never central member authority
+PASS 7: browser roles cannot invoke session RPC or inspect private state
+PASS 8: mismatched central identity, forbidden origin and oversized bodies fail closed
+PASS 9: failed local persistence revokes the consumed central grant and returns no token
+PASS 10: expired local sessions and centrally revoked login are rejected
+PASS: 10 personal session integration groups; actual central/personal SQL and handlers, no hosted changes.

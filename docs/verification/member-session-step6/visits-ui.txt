@@ -1,0 +1,4 @@
+PASS: direct content entry, reload, tabs, account/menu changes, login return preserve key; separate sites use separate keys
+PASS: server date change, storage blocked read-only and hidden/visible tab
+PASS: failure/retry/timeout do not block content; rate-limit cooldown, disabled readiness and login intent prevent recording
+PASS: simultaneous first tabs create one durable key; separate browser context creates another

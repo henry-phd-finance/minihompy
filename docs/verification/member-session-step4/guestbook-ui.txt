@@ -1,0 +1,1 @@
+PASS: lazy anonymous identity without CAPTCHA, remembered nickname, private visibility, own edit/delete, admin private-only moderation, conflict, denied/lost writes, drafts, logout/read failure clears private DOM; desktop/mobile. Mock auth/API, actual SDK.

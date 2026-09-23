@@ -1,0 +1,1 @@
+PASS: nickname, persistence failure, lazy anonymous identity without CAPTCHA, deduplication, verified admin lookup, fail closed.

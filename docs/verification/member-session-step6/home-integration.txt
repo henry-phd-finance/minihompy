@@ -1,0 +1,6 @@
+PASS 1280: real SQL/browser create four posts/comments → public home → real destination/comments; empty/private-only and anonymous/A/B/owner parity
+PASS 1280: menu draft discard, history/reload, same-browser tabs, blocked storage, server day and dedup cleanup preserve TOTAL
+PASS 1280: outage/retry and late response isolation; four real repository deletes cascade comments and clear home
+PASS 375: real SQL/browser create four posts/comments → public home → real destination/comments; empty/private-only and anonymous/A/B/owner parity
+PASS 375: menu draft discard, history/reload, same-browser tabs, blocked storage, server day and dedup cleanup preserve TOTAL
+PASS 375: outage/retry and late response isolation; four real repository deletes cascade comments and clear home

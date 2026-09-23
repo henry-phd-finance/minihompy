@@ -6,7 +6,7 @@ const owner='10000000-0000-4000-8000-000000000001',site='20000000-0000-4000-8000
 const config={githubUser:'alice',githubRepo:'minihompy',projectRef:'a'.repeat(20),publishableKey:'sb_publishable_testpublickey',handle:'alice',displayName:'Alice',centralApiUrl:'https://central.test/api',centralPageUrl:'https://central.test/hub',siteId:site};
 let deploys=0,offline=false,legacyCentral=false;const query=async sql=>(await db.pg.query(sql)).rows;
 try{
- await cp(new URL('../supabase',import.meta.url),join(root,'supabase'),{recursive:true});await cp(new URL('../login',import.meta.url),join(root,'login'),{recursive:true});await cp(new URL('../member-writing-runtime.js',import.meta.url),join(root,'member-writing-runtime.js'));await writeFile(join(root,'member-writing-config.js'),'disabled');
+ await cp(new URL('../supabase',import.meta.url),join(root,'supabase'),{recursive:true});await cp(new URL('../login',import.meta.url),join(root,'login'),{recursive:true});for(const file of ['member-writing-runtime.js','member-writing-client.js'])await cp(new URL('../'+file,import.meta.url),join(root,file));await writeFile(join(root,'member-writing-config.js'),'disabled');
  await db.pg.query('insert into auth.users values($1)',[owner]);await db.pg.query('insert into private.minihompy_admins values($1)',[owner]);await db.pg.query("select set_config('request.jwt.claim.sub',$1,false)",[owner]);
  const post=(await db.pg.query("insert into public.guestbook_posts(id,author_name,body,visibility) values(gen_random_uuid(),'old','preserve','private') returning *")).rows[0];
  const sql=async text=>{const results=await db.pg.exec(text);return results.at(-1)?.rows||[];};

@@ -1,0 +1,5 @@
+PASS: migration preserves existing v1 session and authorization
+PASS: late renewal commit waits on local logout and is rejected
+PASS: logout after renewal revokes the newly inserted token
+PASS: concurrent tokens stay in one family and revoke together
+PASS: current and revoke use consistent family-before-session lock order

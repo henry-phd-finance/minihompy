@@ -37,18 +37,20 @@ async function addPost(page,secret){
 }
 async function raw(page,path,body,method='POST',mode='member',token){return page.evaluate(async({path,body,method,mode,token})=>{
  const base=window.MINIHOMPY_SUPABASE.url+'/functions/v1/member-writing';
- const saved=token||Object.entries(sessionStorage).find(([k])=>k.startsWith('minihompy.member-writing.v1:'))?.[1];
+ const saved=token||Object.entries(sessionStorage).find(([k])=>k.startsWith('minihompy.member-writing.v1:')&&!k.endsWith(':renewal'))?.[1];
  const r=await fetch(base+path,{method,headers:{'Content-Type':'application/json','X-Minihompy-Auth-Mode':mode,...(mode==='member'&&saved?{Authorization:'Bearer '+saved}:{})},...(body?{body:JSON.stringify(body)}:{})});return {status:r.status,data:await r.json()};
 },{path,body,method,mode,token});}
 try{
  watcher=await fresh(a);await watcher.locator('.guestbook-body-input').fill(prefix+' renewal draft');await watcher.locator('.guestbook-body-input').focus();
  const firstSession=await raw(watcher,'/sessions/current',null,'GET');assert.equal(firstSession.status,200);
  watch={originalExpiresAt:firstSession.data.expires_at,startedAt:new Date().toISOString(),renewals:0,navigations:0,popups:0,recounted:0};
- watcher.on('framenavigated',frame=>{if(frame===watcher.mainFrame())watch.navigations++;});watcher.on('popup',()=>watch.popups++);
- watcher.on('response',async response=>{try{if(response.url().endsWith('/sessions/renew')&&response.ok())watch.renewals++;if(response.url().endsWith('/visit-counts')&&response.ok()&&(await response.json()).counted===true)watch.recounted++;}catch{}});
+ watcher.on('framenavigated',frame=>{if(!watch.finishedAt&&frame===watcher.mainFrame())watch.navigations++;});watcher.on('popup',()=>{if(!watch.finishedAt)watch.popups++;});
+ watcher.on('response',async response=>{try{if(watch.finishedAt)return;if(response.url().endsWith('/sessions/renew')&&response.ok())watch.renewals++;if(response.url().endsWith('/visit-counts')&&response.ok()&&(await response.json()).counted===true)watch.recounted++;}catch{}});
  heartbeat=setInterval(()=>console.log('Live expiry check: '+Math.max(0,Math.ceil((Date.parse(watch.originalExpiresAt)-Date.now())/1000))+' seconds remaining; renewals='+watch.renewals),30000);
  pass('Real-time expiry observation started without changing clocks, tokens or database timestamps');
  const first=await fresh(a);assert.equal(await first.evaluate(()=>window.MinihompyAdmin.state.role),'reader');pass('A authenticated on B without local administrator rights');
+ await first.goto(a.home+'#/home');await state(first,a,a);await first.waitForFunction(()=>MinihompyMemberWriting.state.status==='ready');assert.equal(await first.evaluate(()=>MinihompyAdmin.state.role),'admin');
+ await first.goto(b.home+'#/guestbook');await state(first,b,a);await first.waitForFunction(()=>MinihompyMemberWriting.state.status==='ready');assert.equal(await first.evaluate(()=>MinihompyAdmin.state.role),'reader');pass('A own homepage and B homepage automatically prepare distinct sessions with correct owner separation');
  const publicId=await addPost(first,false);const post=first.locator(`[data-post="${publicId}"]`);
  await post.locator('.comment-body').fill(prefix+' 공개 댓글');await post.locator('.comment-save').click();await post.locator('[data-comment]').filter({hasText:prefix+' 공개 댓글'}).waitFor();
  let comments=(await api(first,`/comments?kind=guestbook&parent_id=${publicId}`)).items;const publicComment=comments.find(r=>r.body===prefix+' 공개 댓글');assert.equal(publicComment.author_kind,'member');
@@ -60,7 +62,7 @@ try{
   const parent={kind,id:crypto.randomUUID()};parentsCreated.push(parent);await saveJournal();
   const made=await ownerPage.evaluate(async({kind,id,prefix})=>{
    const client=MinihompyBackend.getClient('admin'),tables={board:['board_folders','board_posts'],photos:['photo_folders','photo_posts'],diary:['diary_folders','diary_entries']},[folders,table]=tables[kind];
-   const f=await client.from(folders).select('id').eq('kind','folder').limit(1).single();if(f.error)throw Error('Fixture folder unavailable');
+   let folderQuery=client.from(folders).select('id');if(kind!=='diary')folderQuery=folderQuery.eq('kind','folder');const f=await folderQuery.limit(1).single();if(f.error)throw Error('Fixture folder unavailable');
    const row={id,folder_id:f.data.id,author_name:'session verification',...(kind==='diary'?{entry_date:new Date().toISOString().slice(0,10),entry_time:'12:00',body:prefix}:{title:prefix,body:kind==='photos'?[{type:'text',text:prefix},{type:'image',path:id+'/'+crypto.randomUUID()+'.png'}]:prefix})};
    const r=await client.from(table).insert(row);return !r.error;
   },{...parent,prefix});assert.ok(made,'fixture parent created');
@@ -84,7 +86,7 @@ try{
  await ownerPage.reload();await state(ownerPage,b,b);await ownerPage.locator(`[data-post="${privateId}"]`).waitFor();
  const privateComments=(await api(ownerPage,`/comments?kind=guestbook&parent_id=${privateId}`,'GET',undefined,'owner')).items;
  await api(ownerPage,'/comments/'+privateComments[0].id,'DELETE',{request_id:crypto.randomUUID(),revision:privateComments[0].revision,kind:'guestbook',parent_id:privateId},'owner');pass('B owner deletes A private comment');
- const previousToken=await second.evaluate(()=>Object.entries(sessionStorage).find(([k])=>k.startsWith('minihompy.member-writing.v1:'))[1]);
+ const previousToken=await second.evaluate(()=>Object.entries(sessionStorage).find(([k])=>k.startsWith('minihompy.member-writing.v1:')&&!k.endsWith(':renewal'))[1]);
  await second.locator('#login-auth-toggle').click();await state(second,b,null);
  assert.equal((await raw(second,'/sessions/current',null,'GET','member',previousToken)).status,401);assert.equal(await second.locator('.guestbook-post.is-private').count(),0);pass('Actual logout revokes old token and clears private DOM');
  // Re-login as B in the same browser, using the real account-switch screens.

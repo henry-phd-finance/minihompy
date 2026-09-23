@@ -1,0 +1,40 @@
+{
+  "checkedAt": "2026-09-23T13:42:05.139Z",
+  "run": "62df5ed1-9245-49f7-a774-33df1b96cbb6",
+  "checks": [
+    "Real-time expiry observation started without changing clocks, tokens or database timestamps",
+    "A authenticated on B without local administrator rights",
+    "A own homepage and B homepage automatically prepare distinct sessions with correct owner separation",
+    "A public guestbook and UI comment use verified member identity",
+    "Fresh A browser edits original guestbook and comment",
+    "A UI board comment creation plus member edit/delete on dedicated B fixture parent",
+    "A UI photos comment creation plus member edit/delete on dedicated B fixture parent"
+  ],
+  "passed": false,
+  "testContentCleaned": true,
+  "createdGuestbookIds": [
+    "98ca4542-d68f-4c8d-b27b-9e49a4aaa9c5"
+  ],
+  "createdParentIds": [
+    {
+      "kind": "board",
+      "id": "502f352d-e6b8-4b8f-9043-9eb1cddd103a"
+    },
+    {
+      "kind": "photos",
+      "id": "45a19325-8ff5-4928-b554-eee3bff9514c"
+    },
+    {
+      "kind": "diary",
+      "id": "424d115d-2d8e-4f0c-a025-000c5931ed81"
+    }
+  ],
+  "realTimeRenewal": {
+    "originalExpiresAt": "2026-09-23T13:55:37.335315+00:00",
+    "startedAt": "2026-09-23T13:40:38.323Z",
+    "renewals": 0,
+    "navigations": 0,
+    "popups": 0,
+    "recounted": 0
+  }
+}

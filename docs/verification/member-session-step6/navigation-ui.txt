@@ -1,0 +1,1 @@
+PASS navigation UI desktop/mobile: same-name identities, admin separation, self/other/anonymous, login, retry, logout invalidation, native draft cancellation and keyboard link.

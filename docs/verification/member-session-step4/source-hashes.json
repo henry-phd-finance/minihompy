@@ -1,0 +1,14 @@
+{
+  "member-writing-client.js": "5b50831f5649f4fb9b54fd53ef53cb7d85407f38abd1b99e8e39179292eb7c0a",
+  "member-writing-runtime.js": "ce8221a90290364abebb45b6144e85ce30ce1a2ed6f315f23c6cd56f9bd9855e",
+  "visitor-identity.js": "6e90af95ac68e4f8c5c5fce9a424c2c1f077242f6daa56139f19df006c31168a",
+  "admin-auth.js": "8d4c570dbd952a1cfd6b710942b0103567e67eae056057a3da837c7db9972b9a",
+  "member-navigation.js": "60def89b2e773ceedadec09800a5d9333a6857938a8991064f93fcc3df5a83cd",
+  "comments.js": "e7133b63f43810260d05e035c6729d582b539dd57d62e633992e120bb35073f8",
+  "views/guestbook.js": "cff2c6d0bac6bfa13840cde9670a6e2d60eccfa61364b8908de6614e79ffb36f",
+  "index.html": "ce21799524fe5433fbb2f632b86b450f04a7581c09af08fb29d4b90edd3dbcc8",
+  "scripts/verify-member-comments.mjs": "9954b1748365baa6782a33b3af8bffe251f0dd5272a1463508b240e71f7d4c4b",
+  "scripts/helpers/automatic-session-browser.mjs": "8f12c7177f67fdb325fab4839cbe232b65cb549e68061bec66773e3a0f06a83e",
+  "scripts/verify-member-session-runtime.mjs": "63d9a23fc2181926213fd300c03eac63fd88d49048a028dd7b9083cd7b939540",
+  "scripts/verify-member-session-client.mjs": "4926bf1ec498ac60f81e79951daa4e99d3cc6d540de6bc787c14e3b3767fb9a7"
+}

@@ -1,0 +1,12 @@
+PASS 1: combined visit signs v2 proof bound to member, site, PKCE and attempt
+PASS 2: anonymous and v1 visits never issue v2 writing credentials
+PASS 3: expired initial grant renews with site-scoped delegation, not grant bearer
+PASS 4: concurrent renewal is bounded and rate-limited with Retry-After
+PASS 5: delegation revoke is idempotent and invalidates all family grants
+PASS 6: member/version/home/target/binding changes block delegation renewal
+PASS 7: login-intent stores writing challenge; completion returns DB-bound values
+PASS 8: central logout blocks renewal and grants but preserves another login
+PASS 9: renewal respects central absolute expiry and delegation expiry
+PASS 10: private delegation/RPC roles and hash-only persistence
+PASS 11: database failure is 503 and never exposes internals
+All 11 v2 session groups passed (actual API + PGlite SQL; concurrent requests serialized by PGlite).

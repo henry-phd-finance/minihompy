@@ -1,0 +1,11 @@
+PASS: A first top-level visit exchanges a PKCE proof
+PASS: B first top-level visit exchanges a PKCE proof
+PASS: expired access rejected, independent refresh survives inactivity
+PASS: renewal preserves URL, draft, focus; no central browser access/popups
+PASS: refresh cannot authorize content or another personal site
+PASS: central delegation is site bound
+PASS: anonymous issue, wrong PKCE and expired proof denied
+PASS: outage distinct from logout, recovery keeps draft
+PASS: central logout denies delegated renewal
+PASS: central absolute expiry cannot be extended
+{"passed":10,"scope":"HTTP/browser architecture fixture; not production SQL or API implementation","centralBrowserRequestsDuringRenewal":0}

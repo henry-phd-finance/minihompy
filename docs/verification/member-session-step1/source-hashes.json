@@ -1,0 +1,11 @@
+{
+  "docs/member-session-contract.md": "33c6df1c457279749ccd287d0bb76f14b7423b4c2ff1638f8295bb37cb28482d",
+  "scripts/verify-member-session-prototype.mjs": "a86aa4c8a3b819fa4323fec351ded44ebce662f19c83eb105af4e7009804af16",
+  "scripts/verify-member-writing-session.mjs": "030e987003e89ed0b8376618bd80aa79fe2ab269fc9d8a51c98c20b5f4d4633e",
+  "member-writing-runtime.js": "a7a1cb157c93f60125a738ea270024665667607a596442df24eb568e666627c6",
+  "visitor-identity.js": "c707fb06dd25951182af7936cc8aa285b2934b090b30f07ef79e02a267c43526",
+  "supabase/functions/member-writing/handler.js": "68bbd4cd6ac205134472d1c890b74088eb351894a3d87e6b6d276088800cc26a",
+  "../minihompy-central/public/visit-flow.js": "793e230d02ac4a53fe9857925d71fc1c0313dc4bffa1e976087965a85172a6b2",
+  "../minihompy-central/public/writing-flow.js": "91dbda4cadfc00042fecee4c37bdd895fb63f355fdf3179a5704cd5d1f9d4c0c",
+  "../minihompy-central/supabase/functions/identity-api/writing-auth.js": "24243c118c0c30a940f7dbf723858d3a480ff488ad30cdfb1d0ffd0d987b3365"
+}

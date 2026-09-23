@@ -1,0 +1,10 @@
+{
+  "supabase/migrations/202609230009_member_session_renewal.sql": "da14202e15044d24af967ec10fa07c351bc57e32f3d206ca5b559101ef6cbc85",
+  "supabase/functions/member-writing/handler.js": "c815abbf17953d4228a2f72e1cfe3c5b2bbef73b7e9cd8e97ca7251a213fb4ca",
+  "scripts/helpers/member-writing-db.mjs": "c8dc6af1fa1c7d5302ec7267cb685718471876f104ef65159c61d647633f84a2",
+  "scripts/verify-member-session-renewal.mjs": "87a88297b61c61ed7acdc7daf3d5903c33afad2b662f8e55c21a6a7059efbc3b",
+  "scripts/verify-member-session-local-concurrency.mjs": "6f05bdd88eeb98d4d63fa228b3e069219086d4eb465e3b91e706e1648343e4a8",
+  "scripts/verify-member-writing-session.mjs": "030e987003e89ed0b8376618bd80aa79fe2ab269fc9d8a51c98c20b5f4d4633e",
+  "scripts/verify-member-guestbook.mjs": "26e70a22a2a274f475ede06cad2e90d71d0f5b30d61f3d33cb1daae5342c4e61",
+  "scripts/verify-member-comments.mjs": "beb8641bd6c56e9733b4c169f1dbc43ee5d5494b27f583b2c60783017e15ad70"
+}

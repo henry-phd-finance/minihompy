@@ -21,6 +21,12 @@
 
 Step 1 정책: 비회원 작성과 기존 익명 글 소유권을 유지한다. 이름이 같다는 이유로 중앙 회원에게 귀속하지 않는다. [상세 계약](member-writing-contract.md).
 
+추가 개선: [공통 회원 확인·자동 갱신 7단계 계획](member-session-plan.md). Step 1~7 완료. 중앙/A/B 운영 적용과 실제 자동 인증·15분 만료 경계 갱신, 테스트 정리·데이터 보존을 확인했다. [Step 7 운영 기록](verification/member-session-step7/README.md). 기존 회원 작성 기능의 완료 상태와 별도로 관리한다.
+
+- [x] 첫 방문 시 작성 세션을 자동 준비하고, 중앙 로그인 유지 중에는 별도 버튼 없이 갱신한다.
+- [x] 방명록·댓글의 ‘회원 확인’ 버튼을 제거하고 로그인·인증 오류 처리를 홈페이지 공통 UI로 통합한다.
+- [x] 메뉴 이탈 시 미저장 입력은 폐기하고, 같은 화면의 자동 인증 갱신 중에는 유지한다. [Step 5 로컬 검증](verification/member-session-step5/README.md) 및 [Step 7 운영 적용](verification/member-session-step7/README.md) 완료.
+
 ### 2. 미니홈피 사이 이동과 사용자 상태 표시
 
 실행 계획: [6단계 구현 계획](member-navigation-plan.md). Step 1~6 완료. [운영 검증 기록](verification/member-navigation-step6/README.md). 이동·사용자 구분과 잘못된 관계 표시 제거를 배포했다. 실제 일촌 관계는 5번의 미완료 의존성으로 남긴다.
@@ -72,7 +78,7 @@ Step 1 정책: 비회원 작성과 기존 익명 글 소유권을 유지한다. 
 
 부분 완료: 홈 데이터 작업에서 네 종류 글 주소·직접 진입·새로고침/history와 기존 초안 이동 확인을 A/B에 배포했다. [근거](verification/home-data-step7/README.md). 전체 작성 흐름 통일·임시저장/복귀 기능은 후속 범위이므로 아래 전체 항목은 미완료로 유지한다.
 
-- [ ] 메뉴 이동 시 저장하지 않은 내용 확인과 초안 유지 방식을 통일한다.
+- [x] 메뉴 이동 시 미저장 입력 폐기 방식을 통일한다. [공통 회원 확인 계획 Step 5](member-session-plan.md) 구현·검증 및 Step 7 운영 적용 완료.
 - [ ] 임시저장 및 저장 후 원래 화면 복귀를 지원한다.
 - [ ] 글별 고유 주소와 직접 진입·새로고침·뒤로가기를 정리한다.
 

@@ -92,7 +92,7 @@ node setup/setup.mjs writing --config setup/config.json --dry-run
 node setup/setup.mjs writing --config setup/config.json
 ```
 
-기존과 같이 `MINIHOMPY_OWNER_EMAIL`, `MINIHOMPY_OWNER_PASSWORD`, `SUPABASE_ACCESS_TOKEN`을 비공개 환경변수로 전달한다. 이 명령은 중앙 버전과 개인 소유자 연결을 확인하고, 회원용 추가 마이그레이션 4개만 해시 이력으로 적용한다. 기존 콘텐츠/관리자/사이트 ID를 재생성하지 않는다. 고정 사이트 설정과 개인 `member-writing` 함수 배포·관리자 확인이 성공한 후에만 `member-writing-config.js`를 활성화한다. 중앙 서명키는 개인 프로젝트에 넣지 않는다.
+기존과 같이 `MINIHOMPY_OWNER_EMAIL`, `MINIHOMPY_OWNER_PASSWORD`, `SUPABASE_ACCESS_TOKEN`을 비공개 환경변수로 전달한다. 이 명령은 중앙 버전과 개인 소유자 연결을 확인하고, 회원용 추가 마이그레이션 001~004와 자동 갱신 009만 해시 이력으로 적용한다. 기존 콘텐츠/관리자/사이트 ID를 재생성하지 않는다. 고정 사이트 설정과 개인 `member-writing` 함수 배포·관리자 확인이 성공한 후에만 `member-writing-config.js`를 활성화한다. 중앙 서명키는 개인 프로젝트에 넣지 않는다.
 
 최신 런타임 파일과 생성된 `member-writing-config.js`를 Pages에 배포해야 화면이 활성화된다. `writing`은 Git commit/push를 수행하지 않는다. 기본 저장소의 기능 설정은 새 설치 보호를 위해 false이며, 성공한 사이트의 배포 설정만 true가 된다.
 

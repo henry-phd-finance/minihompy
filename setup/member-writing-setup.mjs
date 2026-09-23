@@ -29,7 +29,7 @@ export function deployWriting(c,token,target){return new Promise((done,reject)=>
 export async function upgradeMemberWriting({config,target,email,password,managementToken,dryRun=false,fetcher=fetch,deploy=deployWriting,log=console.log}){
  const c=validateConfig(config);target=resolve(target);
  if(!c.siteId)throw Error('중앙 검증이 끝난 siteId가 필요합니다. 신규 설치는 verify 이후 실행하세요.');
- for(const file of ['member-writing-runtime.js','login/writing.html','supabase/functions/member-writing/index.ts',...writingMigrations.map(n=>'supabase/migrations/'+n)])await readFile(join(target,file));
+ for(const file of ['member-writing-runtime.js','member-writing-client.js','login/writing.html','supabase/functions/member-writing/index.ts',...writingMigrations.map(n=>'supabase/migrations/'+n)])await readFile(join(target,file));
  if(dryRun){log(`[DRY RUN] writing: ${c.homepage} / ${c.projectRef}; 중앙·소유자 확인 → 추가 마이그레이션 → 고정 사이트 설정 → 함수 → 활성화 파일. 변경 없음.`);return;}
  if(!email||!password||!managementToken)throw Error('개인 소유자 로그인과 Management token이 필요합니다.');
  const call=(url,args)=>request(url,args,fetcher),base=`https://api.supabase.com/v1/projects/${c.projectRef}`;

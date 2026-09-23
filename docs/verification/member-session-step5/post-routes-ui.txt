@@ -1,0 +1,10 @@
+PASS 1280: four real views direct entry/reload, target beyond first page and diary date
+PASS 1280: same-menu guard, cross-menu discard without confirmation, history and page restoration
+PASS 1280: navigation during save clears old draft; late save cannot replace new editor
+PASS 1280: actual document departure and browser back do not restore input or show a leave prompt
+PASS 1280: late response, deleted target, invalid ID and hidden menu fail safely
+PASS 375: four real views direct entry/reload, target beyond first page and diary date
+PASS 375: same-menu guard, cross-menu discard without confirmation, history and page restoration
+PASS 375: navigation during save clears old draft; late save cannot replace new editor
+PASS 375: actual document departure and browser back do not restore input or show a leave prompt
+PASS 375: late response, deleted target, invalid ID and hidden menu fail safely

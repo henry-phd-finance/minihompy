@@ -1,0 +1,100 @@
+[
+  {
+    "label": "central",
+    "ref": "pcwovvdgggpbghvqraex",
+    "migrations": [
+      {
+        "name": "202609230002_member_writing.sql",
+        "sha256": "8a0ba2e5f4a6da5d4f8cbc881d5614a714120407369e26d77b15595bf2938aa7"
+      },
+      {
+        "name": "202609230004_member_sessions.sql",
+        "sha256": "1fa5b9ac744bfc4cbf10733c5cad855f8a6ead893ede62018b1f9371e2b69e45"
+      }
+    ]
+  },
+  {
+    "label": "A",
+    "ref": "itkymmxnbjylyzbmdxdb",
+    "migrations": [
+      {
+        "name": "202609230001_member_writing_foundation.sql",
+        "sha256": "d0ffae5c4e32d11e4c36b5ff57837b5e41d4483e90dc4a8df7dbb563231a1285"
+      },
+      {
+        "name": "202609230002_member_writing_sessions.sql",
+        "sha256": "c513691083de1042847932a2e80448390fbe7c4771cbaa3f2b95073de5c007a2"
+      },
+      {
+        "name": "202609230003_member_guestbook.sql",
+        "sha256": "383ff5a1fa6ac299ee858b7db7e01f5a9338b508ccd93dffadad5dd1b1041e75"
+      },
+      {
+        "name": "202609230004_member_comments.sql",
+        "sha256": "f43c36a1104b7f1f8b4f3dcb3ab079427edfca69229c971b94bc31411ba3f96c"
+      },
+      {
+        "name": "202609230005_home_summary.sql",
+        "sha256": "5511ebf6c6800c69682e922f516977c21e3c24f64746a2c1ab238e9fb6ecc886"
+      },
+      {
+        "name": "202609230006_post_location.sql",
+        "sha256": "7007972c17c67334b959fa78d2f9d7d5667d426a18094efc4e4105e659a5c7e4"
+      },
+      {
+        "name": "202609230007_guestbook_post_location.sql",
+        "sha256": "cb32856a783b31677603ebf59eb8f5fa4e39a1afb6ca96081ffa85211c994c71"
+      },
+      {
+        "name": "202609230008_visit_counts.sql",
+        "sha256": "d966cac82fdba93d994bb8cbe6640709eb1b4263d4e88d1f8d17e48c01dbbfd0"
+      },
+      {
+        "name": "202609230009_member_session_renewal.sql",
+        "sha256": "da14202e15044d24af967ec10fa07c351bc57e32f3d206ca5b559101ef6cbc85"
+      }
+    ]
+  },
+  {
+    "label": "B",
+    "ref": "zcaodcujqbjrogffwalk",
+    "migrations": [
+      {
+        "name": "202609230001_member_writing_foundation.sql",
+        "sha256": "d0ffae5c4e32d11e4c36b5ff57837b5e41d4483e90dc4a8df7dbb563231a1285"
+      },
+      {
+        "name": "202609230002_member_writing_sessions.sql",
+        "sha256": "c513691083de1042847932a2e80448390fbe7c4771cbaa3f2b95073de5c007a2"
+      },
+      {
+        "name": "202609230003_member_guestbook.sql",
+        "sha256": "383ff5a1fa6ac299ee858b7db7e01f5a9338b508ccd93dffadad5dd1b1041e75"
+      },
+      {
+        "name": "202609230004_member_comments.sql",
+        "sha256": "f43c36a1104b7f1f8b4f3dcb3ab079427edfca69229c971b94bc31411ba3f96c"
+      },
+      {
+        "name": "202609230005_home_summary.sql",
+        "sha256": "5511ebf6c6800c69682e922f516977c21e3c24f64746a2c1ab238e9fb6ecc886"
+      },
+      {
+        "name": "202609230006_post_location.sql",
+        "sha256": "7007972c17c67334b959fa78d2f9d7d5667d426a18094efc4e4105e659a5c7e4"
+      },
+      {
+        "name": "202609230007_guestbook_post_location.sql",
+        "sha256": "cb32856a783b31677603ebf59eb8f5fa4e39a1afb6ca96081ffa85211c994c71"
+      },
+      {
+        "name": "202609230008_visit_counts.sql",
+        "sha256": "d966cac82fdba93d994bb8cbe6640709eb1b4263d4e88d1f8d17e48c01dbbfd0"
+      },
+      {
+        "name": "202609230009_member_session_renewal.sql",
+        "sha256": "da14202e15044d24af967ec10fa07c351bc57e32f3d206ca5b559101ef6cbc85"
+      }
+    ]
+  }
+]
