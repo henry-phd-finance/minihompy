@@ -24,9 +24,14 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v6
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
       - uses: actions/configure-pages@v5
       - name: Prepare static site
-        run: node scripts/build-pages.mjs
+        run: |
+          node scripts/build-pages.mjs
+          node scripts/verify-artifact.mjs
       - uses: actions/upload-pages-artifact@v4
         with:
           path: _site

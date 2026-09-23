@@ -64,262 +64,148 @@
     });
   };
 
-  // ============================================================================
-  // 2. 분산 미니홈피 공통 방문자 식별 모듈 (Distributed Shared Visitor Identity)
-  // 중앙 식별 허브와의 1회 왕복, 리다이렉트 가드, 타임아웃 폴백, 상태 관리
-  // ============================================================================
-
-  function generateRandomAttemptId() {
-    if (window.crypto?.randomUUID) {
-      return window.crypto.randomUUID();
-    }
-    const bytes = new Uint8Array(16);
-    if (window.crypto?.getRandomValues) {
-      window.crypto.getRandomValues(bytes);
-    } else {
-      for (let i = 0; i < 16; i++) bytes[i] = Math.floor(Math.random() * 256);
-    }
-    return Array.from(bytes, b => b.toString(16).padStart(2, '0')).join('');
-  }
-
-  function getGuardKey(siteId) {
-    return `minihompy.identity.redirect.v1:${siteId}`;
-  }
-
-  function readGuard(storage, siteId, timeoutMs) {
-    try {
-      const raw = storage?.getItem(getGuardKey(siteId));
-      if (!raw) return null;
-      const guard = JSON.parse(raw);
-      if (!guard || typeof guard !== 'object' || typeof guard.started_at !== 'number') return null;
-      if (Date.now() - guard.started_at > timeoutMs) {
-        storage?.removeItem(getGuardKey(siteId));
-        return null;
-      }
-      return guard;
-    } catch {
-      return null;
-    }
-  }
-
-  function setGuard(storage, siteId, guard) {
-    try {
-      storage?.setItem(getGuardKey(siteId), JSON.stringify(guard));
-    } catch { /* Ignore storage errors */ }
-  }
-
-  function clearGuard(storage, siteId) {
-    try {
-      storage?.removeItem(getGuardKey(siteId));
-    } catch { /* Ignore storage errors */ }
-  }
-
-  // URL fragment에서 #vt=... 파싱
-  function parseFragmentToken(hash) {
-    if (!hash || !hash.startsWith('#')) return null;
-    const content = hash.slice(1);
-    if (content.startsWith('vt=')) {
-      const params = new URLSearchParams(content);
-      const vt = params.get('vt');
-      const path = params.get('path');
-      return vt ? { vt, path } : null;
-    }
-    return null;
-  }
-
-  window.createMinihompySharedIdentity = (config, storage = window.sessionStorage) => {
-    let state = Object.freeze({
-      status: 'unverified', // 'unverified' | 'identified' | 'anonymous' | 'error'
-      visitor: null, // { id, handle, display_name, homepage_url }
-      siteId: config?.siteId || null,
-    });
-
-    function publish(next) {
-      state = Object.freeze(next);
+  const guardKey = siteId => `minihompy.identity.redirect.v1:${siteId}`;
+  window.createMinihompySharedIdentity = (config, storage) => {
+    if (storage === undefined) { try { storage = window.sessionStorage; } catch { storage = null; } }
+    const siteId = config?.siteId || null;
+    let state = Object.freeze({ status: 'unverified', visitor: null, siteId });
+    let pending = null, generation = 0;
+    const publish = (status, visitor = null) => {
+      state = Object.freeze({ status, visitor, siteId });
       window.dispatchEvent(new CustomEvent('minihompy:visitor-identity', { detail: state }));
+      return state;
+    };
+    const read = () => { try { return JSON.parse(storage?.getItem(guardKey(siteId)) || 'null'); } catch { return null; } };
+    const clear = () => { try { storage?.removeItem(guardKey(siteId)); } catch {} };
+    function save(value) {
+      const raw = JSON.stringify(value);
+      storage?.setItem(guardKey(siteId), raw);
+      if (storage?.getItem(guardKey(siteId)) !== raw) throw Error('Storage unavailable');
     }
-
-    async function checkHealth(url, timeoutMs) {
+    const returnPath = () => location.pathname + location.search + location.hash;
+    function begin(kind) {
+      const guard = { attempt_id: window.crypto.randomUUID(), status: kind, started_at: Date.now(), return_path: returnPath() };
+      save(guard); ++generation; return guard;
+    }
+    function page(name, guard) {
+      const base = (config.centralPageUrl || config.centralUrl).replace(/\/$/, '');
+      return `${base}/${name}.html?site_id=${encodeURIComponent(siteId)}&attempt_id=${encodeURIComponent(guard.attempt_id)}&return_path=${encodeURIComponent(guard.return_path)}`;
+    }
+    async function request(path, body, timeout) {
       const controller = new AbortController();
-      const timer = setTimeout(() => controller.abort(), timeoutMs);
+      const timer = setTimeout(() => controller.abort(), timeout);
       try {
-        const res = await fetch(`${url}/health`, {
-          method: 'GET',
-          signal: controller.signal,
-          mode: 'cors',
+        const response = await fetch(`${config.centralApiUrl || config.centralUrl}/${path}`, {
+          method: body ? 'POST' : 'GET', signal: controller.signal, credentials: 'omit', redirect: 'error',
+          ...(body ? { headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) } : {}),
         });
-        return res.ok || res.status === 204;
-      } catch {
-        return false;
-      } finally {
-        clearTimeout(timer);
-      }
+        if (!response.ok) throw Error('Identity request failed');
+        return body ? await response.json() : null;
+      } finally { clearTimeout(timer); }
     }
-
-    async function resolve() {
-      if (!config || config.enabled === false || !config.siteId || (!config.centralApiUrl && !config.centralUrl)) {
-        publish({ status: 'anonymous', visitor: null, siteId: config?.siteId || null });
-        return state;
-      }
-      
-      const fragment = parseFragmentToken(location.hash);
-      if (fragment && fragment.vt) {
-      }
-
-      const { siteId, centralUrl, centralApiUrl = centralUrl, centralPageUrl = centralUrl, healthTimeoutMs = 1500, guardTimeoutMs = 120000 } = config;
-
-      // 1. URL fragment에 방문자 식별표(#vt=...)가 실려 복귀했는지 확인
-      if (fragment && fragment.vt) {
-        // 이미 #vt 가 있다면 login_intent보다 우선시 (로그인이 성공해서 돌아온 것임)
-        const storage = window.sessionStorage;
-        const guard = readGuard(storage, siteId, guardTimeoutMs);
+    function restore(path) {
+      const restored = new URL(path, location.origin);
+      if (restored.origin !== location.origin || !path.startsWith('/') || path.startsWith('//')) throw Error('Invalid return path');
+      restored.searchParams.delete('login_intent');
+      history.replaceState(null, '', restored.pathname + restored.search + (restored.hash || '#/home'));
+    }
+    async function run() {
+      if (window.MINIHOMPY_LOGIN_REDIRECTING) return state;
+      if (!config?.enabled || !siteId || !(config.centralApiUrl || config.centralUrl)) return publish('anonymous');
+      if (new URLSearchParams(location.search).get('admin') === 'login' || location.search.includes('login_intent=')) return state;
+      const current = ++generation;
+      const guard = read();
+      const fragment = new URLSearchParams(location.hash.slice(1));
+      const ticket = location.hash.startsWith('#vt=') ? fragment.get('vt') : null;
+      if (ticket) {
+        // Remove credentials synchronously, before the router or any network request.
+        window.MINIHOMPY_IDENTITY_RETURN_PENDING = true;
+        history.replaceState(null, '', location.pathname + location.search + '#/home');
         try {
-          const res = await fetch(`${centralApiUrl}/visits/resolve`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ visit_token: fragment.vt, site_id: siteId }),
-            mode: 'cors',
-          });
-
-          if (!res.ok) {
-            clearGuard(storage, siteId);
-            publish({ status: 'error', visitor: null, siteId });
-            return state;
-          }
-
-          const data = await res.json();
-          // attempt_id 확인
-          if (guard && data.attempt_id && guard.attempt_id !== data.attempt_id) {
-            clearGuard(storage, siteId);
-            publish({ status: 'error', visitor: null, siteId });
-            return state;
-          }
-
-          clearGuard(storage, siteId);
-
-          // URL fragment 정리 및 원래 경로 복원 (login_intent 파라미터도 함께 제거)
-          const restoredHash = fragment.path || (data.return_path && data.return_path.includes('#') ? '#' + data.return_path.split('#')[1] : '#/home');
-          try {
-            const cleanUrl = new URL(location.href);
-            cleanUrl.searchParams.delete('login_intent');
-            cleanUrl.hash = restoredHash.startsWith('#') ? restoredHash : '#/home';
-            history.replaceState(null, '', cleanUrl.pathname + cleanUrl.search + cleanUrl.hash);
-          } catch { /* Ignore history state errors */ }
-
-          if (data.status === 'identified' && data.profile) {
-            publish({ status: 'identified', visitor: data.profile, siteId });
-          } else {
-            publish({ status: 'anonymous', visitor: null, siteId });
-          }
-          return state;
-        } catch (err) {
-          clearGuard(storage, siteId);
-          publish({ status: 'error', visitor: null, siteId });
-          return state;
+          if (!guard?.attempt_id || Date.now() - guard.started_at > 10 * 60 * 1000) throw Error('Unrelated return');
+          const data = await request('visits/resolve', { visit_token: ticket, site_id: siteId }, config.resolveTimeoutMs || 10000);
+          if (current !== generation) return state;
+          if (data.attempt_id !== guard.attempt_id) throw Error('Unrelated return');
+          restore(data.return_path);
+          clear();
+          return publish(data.status === 'identified' && data.profile ? 'identified' : 'anonymous', data.status === 'identified' ? data.profile : null);
+        } catch {
+          if (current !== generation) return state;
+          // Only the locally saved path is safe before a successful signed response.
+          try { if (guard?.return_path) restore(guard.return_path); } catch {}
+          try { save({ ...guard, status: 'error', started_at: Date.now() }); } catch {}
+          return publish('error');
+        } finally {
+          window.MINIHOMPY_IDENTITY_RETURN_PENDING = false;
+          window.dispatchEvent(new Event('hashchange'));
         }
       }
-
-      // 2. 로그인_intent 파라미터가 있고 #vt 가 없으면, 로그인 처리기(visitor-identity-login.js)가 처리하도록 대기
-      if (location.search.includes('login_intent=')) {
-        return state;
+      if (guard && Date.now() - guard.started_at < (config.guardTimeoutMs || 120000)) return publish('error');
+      try {
+        await request('health', null, config.healthTimeoutMs || 1500);
+        if (current !== generation) return state;
+        // Navigation during initial loading may replace the original history entry.
+        // Preserve it so central errors can return to this site's saved route.
+        if (typeof document !== 'undefined' && document.readyState !== 'complete') {
+          await new Promise((done, reject) => {
+            const loaded = () => { clearTimeout(timer); done(); };
+            const timer = setTimeout(() => {
+              window.removeEventListener('load', loaded);
+              reject(Error('Page loading timeout'));
+            }, config.loadTimeoutMs || 5000);
+            window.addEventListener('load', loaded, { once: true });
+          });
+        }
+        await new Promise(done => setTimeout(done, 0));
+        if (current !== generation) return state;
+        const next = begin('checking');
+        location.assign(page('visit', next));
+      } catch {
+        if (current !== generation) return state;
+        try { save({ status: 'error', started_at: Date.now() }); } catch {}
+        return publish('error');
       }
-
-      // 3. 이미 리다이렉트 가드가 걸려있는지 확인 (재진입 또는 이미 확인한 세션)
-      const existingGuard = readGuard(storage, siteId, guardTimeoutMs);
-      if (existingGuard) {
-        // 이번 세션에서 이미 중앙 확인을 시도했으므로 추가 리다이렉트 없이 익명 확정
-        publish({ status: 'anonymous', visitor: null, siteId });
-        return state;
-      }
-
-      // 3. 중앙 헬스체크 (1.5초 타임아웃)
-      const isHealthy = await checkHealth(centralApiUrl, healthTimeoutMs);
-      if (!isHealthy) {
-        // 중앙 응답 지연 또는 장애 시 익명 상태로 즉시 폴백 (무한 루프/지연 방지)
-        setGuard(storage, siteId, { attempt_id: 'fallback', status: 'fallback', started_at: Date.now() });
-        publish({ status: 'error', visitor: null, siteId });
-        return state;
-      }
-
-      // 4. 리다이렉트 가드 설정 후 중앙 /visit 으로 최상위 이동
-      const attemptId = generateRandomAttemptId();
-      setGuard(storage, siteId, { attempt_id: attemptId, status: 'checking', started_at: Date.now() });
-
-      const currentReturnPath = location.pathname + location.search + location.hash;
-      const visitUrl = `${centralPageUrl}/visit?site_id=${encodeURIComponent(siteId)}&attempt_id=${encodeURIComponent(attemptId)}&return_path=${encodeURIComponent(currentReturnPath)}`;
-
-      location.replace(visitUrl);
       return state;
     }
-
+    function resolve() {
+      if (!pending) pending = run().finally(() => { pending = null; });
+      return pending;
+    }
     return Object.freeze({
-      get state() { return state; },
-      resolve,
-      getLoginUrl() {
-        if (!config?.centralPageUrl && !config?.centralUrl) return '#';
-        const url = config.centralPageUrl || config.centralUrl;
-        const returnPath = location.pathname + location.search + location.hash;
-        return `${url}/login?site_id=${encodeURIComponent(config.siteId)}&return_path=${encodeURIComponent(returnPath)}`;
-      },
-      getLogoutUrl() {
-        if (!config?.centralPageUrl && !config?.centralUrl) return '#';
-        const url = config.centralPageUrl || config.centralUrl;
-        const returnPath = location.pathname + location.search + location.hash;
-        return `${url}/logout?site_id=${encodeURIComponent(config.siteId)}&return_path=${encodeURIComponent(returnPath)}`;
-      },
+      get state() { return state; }, resolve,
+      retry() { if (pending) return pending; clear(); return resolve(); },
+      getLoginUrl() { return page('login', begin('login')); },
+      getLogoutUrl() { return page('logout', begin('logout')); },
     });
   };
 
-  // DOM UI 바인딩 (검색창 우측 방문자 이름 표시 및 우측 상단 방문자 로그인/로그아웃 버튼)
+  // One renderer owns both the local administrator and central visitor UI.
   const bindVisitorUI = shared => {
     const display = document.querySelector('#visitor-display');
-    const nameEl = document.querySelector('#visitor-name');
+    const name = document.querySelector('#visitor-name');
     const toggle = document.querySelector('#login-auth-toggle');
-
-    function updateUI(sharedState) {
-      if (!toggle) return;
-      const isAdmin = document.documentElement.dataset.identity === 'admin';
-      
-      if (sharedState.status === 'identified' && sharedState.visitor) {
-        if (!isAdmin) {
-          toggle.textContent = '로그아웃';
-          toggle.title = '로그아웃';
-        }
-        if (display && nameEl) {
-          nameEl.textContent = sharedState.visitor.display_name || sharedState.visitor.handle;
-          display.hidden = false;
-        }
-      } else {
-        if (!isAdmin) {
-          toggle.textContent = '로그인';
-          toggle.title = '로그인';
-        }
-        if (display && nameEl) {
-          nameEl.textContent = '';
-          display.hidden = true;
-        }
+    const retry = document.querySelector('#visitor-identity-retry');
+    let visitorState = shared.state;
+    function render() {
+      const identified = visitorState.status === 'identified' && visitorState.visitor;
+      const admin = document.documentElement?.dataset.identity === 'admin';
+      if (toggle) toggle.textContent = toggle.title = admin || identified ? '로그아웃' : '로그인';
+      if (display && name) {
+        display.hidden = !identified;
+        name.textContent = identified ? visitorState.visitor.display_name || visitorState.visitor.handle : '';
       }
+      if (retry) retry.hidden = visitorState.status !== 'error';
     }
-
-    // click event is now fully handled by admin-auth.js to coordinate the unified modal
-
-    window.addEventListener('minihompy:visitor-identity', ev => {
-      updateUI(ev.detail);
-    });
-
-    updateUI(shared.state);
+    retry?.addEventListener('click', () => { void shared.retry(); });
+    window.addEventListener('minihompy:visitor-identity', event => { visitorState = event.detail; render(); });
+    window.addEventListener('minihompy:identity', render);
+    render();
   };
-
-  // 브라우저 로드 시 싱글톤 인스턴스 준비 및 초기화
-  const initShared = () => {
-    const config = window.MINIHOMPY_VISITOR_IDENTITY_CONFIG;
-    window.MinihompySharedIdentity = window.createMinihompySharedIdentity(config);
-    bindVisitorUI(window.MinihompySharedIdentity);
-    void window.MinihompySharedIdentity.resolve();
-  };
-
-  // defer 속성으로 인해 이미 DOM은 파싱되어 있으므로 바로 실행합니다.
-  // app.js가 바로 이어서 실행되면서 location.hash를 '#/home'으로 덮어쓰기 전에,
-  // 우리가 먼저 location.hash의 #vt= 토큰을 가로채야 합니다!
-  initShared();
+  if (typeof document !== 'undefined' && typeof document.querySelector === 'function') {
+    const shared = window.MinihompySharedIdentity = window.createMinihompySharedIdentity(window.MINIHOMPY_VISITOR_IDENTITY_CONFIG);
+    bindVisitorUI(shared);
+    void shared.resolve();
+    // A restored page may predate a logout in another tab or on another site.
+    window.addEventListener('pageshow', event => { if (event.persisted) { void shared.resolve(); void window.MinihompyAdmin?.refresh(); } });
+  }
 })();

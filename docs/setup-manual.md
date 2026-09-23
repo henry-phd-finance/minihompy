@@ -1,5 +1,7 @@
 # 미니홈피 수동 셋업 가이드
 
+중앙 분산 로그인 설치·전환은 [현재 설치 안내](install-and-upgrade.md)를 기준으로 합니다. 아래 Part A~C는 개인 사이트 기본 설정이며, 중앙 등록은 Part D를 따릅니다.
+
 이 가이드는 CLI 도구를 사용하지 않고 웹 브라우저(GitHub 및 Supabase 웹사이트)를 통해 직접 미니홈피를 구축하고자 하는 사용자를 위한 수동 설정 매뉴얼입니다.
 
 **예상 소요 시간**: 약 25분 (Part A: ~5분, Part B: ~15분, Part C: ~5분)
@@ -29,17 +31,31 @@
 
 ---
 
-### Step 3: GitHub Pages 활성화
+### Step 3: GitHub Pages 활성화 및 Actions 허용
 - **설정 위치**: Fork한 본인 저장소의 상단 메뉴 중 **'Settings'** 탭 클릭 → 좌측 사이드바에서 **'Pages'** 선택.
 - **Source 설정**: **'Build and deployment'** 섹션의 Source 드롭다운에서 **'GitHub Actions'**를 선택합니다.
-- **참고**: 설정을 마친 후 첫 배포가 완료되기까지 수 분 정도 소요될 수 있습니다.
+
+> [!IMPORTANT]
+> **1. 폴더(`/(root)`나 `/docs`)를 선택하지 마세요!**
+> GitHub Pages의 기본값인 `Deploy from a branch` 상태에서는 브랜치나 폴더를 선택하라는 창이 뜹니다. 
+> 하지만 본 프로젝트는 정적 사이트 자동 빌드 워크플로우를 내장하고 있으므로, 폴더를 고르지 마시고 **Source 드롭다운을 눌러 반드시 `GitHub Actions`로 변경**해야 합니다. (변경 즉시 브랜치/폴더 선택창이 사라지고 Actions 모드로 전환됩니다.)
+
+> [!WARNING]
+> **2. Fork 저장소 Actions 활성화 및 첫 배포 수동 실행 (최초 1회 필수!)**
+> GitHub는 보안을 위해 Fork된 저장소의 Actions를 기본적으로 꺼둡니다 (`Workflows aren't being run on this forked repository`).
+> 저장소 상단의 **'Actions'** 탭으로 이동하여 다음을 순서대로 진행해 주세요:
+> 1. 화면 중앙의 초록색 버튼인 **'I understand my workflows, go ahead and enable them'**을 클릭합니다.
+> 2. **첫 배포 수동 실행**: Actions를 켜기 전에 push가 이미 발생했기 때문에 자동으로 돌지 않습니다. 좌측 메뉴에서 **'Deploy GitHub Pages'**를 클릭한 뒤, 우측 상단의 **'Run workflow'** 버튼을 눌러 **'Run workflow'**를 직접 클릭해 주셔야 첫 배포가 즉시 시작됩니다!
+> *(이후 새로운 커밋을 push할 때는 자동으로 배포됩니다.)*
+
+- **참고**: 설정을 마친 후 상단 **'Actions'** 탭에서 첫 배포가 완료되기까지 수 분 정도 소요될 수 있습니다.
 
 ![GitHub Pages 설정 화면](screenshots/03-github-pages.png)
 > 💡 *화면 안내: Build and deployment의 Source를 Deploy from a branch에서 'GitHub Actions'로 변경합니다.*
 
 ---
 
-### Step 4: GitHub Personal Access Token 발급 (선택/CLI용)
+### Step 4: GitHub Personal Access Token 발급 (별도 Git 자동화용, 현재 CLI는 요구하지 않음)
 - **설정 위치**: 우측 상단 프로필 아이콘 클릭 → **'Settings'** → 좌측 사이드바 최하단 **'Developer settings'** → **'Personal access tokens'** → **'Fine-grained tokens'** 클릭 후 **'Generate new token'** 버튼 클릭.
 - **필요한 권한 (Repository permissions)**: 
   - **Contents**: Read and Write
@@ -157,7 +173,7 @@ window.MINIHOMPY_VISITOR_IDENTITY_CONFIG = Object.freeze({
   enabled: true,  // 또는 false
   siteId: '발급받은-site-id-uuid',
   centralApiUrl: 'https://중앙서버.supabase.co/functions/v1/identity-api',
-  centralPageUrl: 'https://중앙서버.supabase.co/functions/v1/identity-page',
+  centralPageUrl: 'https://중앙계정.github.io/minihompy-central',
   healthTimeoutMs: 1500,
   guardTimeoutMs: 120000,
 });
@@ -179,29 +195,13 @@ window.MINIHOMPY_VISITOR_IDENTITY_CONFIG = Object.freeze({
 
 ---
 
-## Part D: 중앙 허브 오픈 연동 (선택)
+## Part D: 중앙 허브 소유권 검증 (선택)
 
-### Step 14: 중앙 허브 사이트 셀프 등록
-중앙 허브에 내 미니홈피를 등록하여 다른 사용자들과 계정을 공유하고 방문자 식별을 사용하려면, 오픈 등록 API를 통해 `siteId`를 발급받을 수 있습니다.
+### Step 14: 개인 인증과 Pages 확인 파일을 통한 등록
 
-- **방법**: 터미널에서 다음 명령어로 간편하게 발급받거나 중앙 허브 웹 페이지에서 신청합니다:
-```bash
-curl -X POST https://{중앙서버}/functions/v1/identity-api/sites \
-  -H "Content-Type: application/json" \
-  -d '{
-    "handle": "내_아이디",
-    "display_name": "내_표시_이름",
-    "origin": "https://{username}.github.io",
-    "base_path": "/{repo}/",
-    "homepage_url": "https://{username}.github.io/{repo}/",
-    "login_url": "https://{username}.github.io/{repo}/?login_intent=",
-    "supabase_project_ref": "내_supabase_project_ref"
-  }'
-```
-- **응답 확인**: 반환되는 JSON 결과에서 `site_id`를 복사하여 Step 12의 `visitor-identity-config.js`에 입력합니다.
+현재 중앙은 무인증 `/sites` 호출로 siteId를 즉시 발급하지 않습니다. 개인 소유자의 Supabase access token과 해당 Pages의 확인 파일을 모두 검증해야 합니다. UUID만 입력하는 구형 등록/로그인 방법은 사용할 수 없습니다.
 
-![중앙 허브 오픈 등록 화면](screenshots/14-central-registration.png)
-> 💡 *화면 안내: 오픈 등록 요청을 통해 발급받은 고유 site_id를 내 미니홈피 설정 파일에 저장합니다.*
+개인 DB를 위 절차로 수동 설정했다면 [설치 안내](install-and-upgrade.md)의 `register` → 확인 파일 Pages 배포 → `verify` 순서로 진행합니다. 이미 중앙 siteId가 있다면 `upgrade` → 배포 → `verify`를 사용합니다. 개인 `owner-login` 함수와 소유자 매핑도 이 단계에서 배포합니다. 검증 완료 후 생성된 `visitor-identity-config.js`를 배포해야 연동이 켜집니다.
 
 ---
 

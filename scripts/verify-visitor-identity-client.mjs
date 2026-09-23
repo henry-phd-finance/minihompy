@@ -24,13 +24,16 @@ function createMockWindow(overrides = {}) {
       randomUUID: () => 'test-attempt-uuid-1234',
     },
     location: {
+      origin: 'https://site.test',
+      href: 'https://site.test/minihompy/#/home',
       pathname: '/minihompy/',
       search: '',
       hash: '#/home',
+      assign: url => { win.location.lastRedirect = url; },
       replace: url => { win.location.lastRedirect = url; },
     },
     history: {
-      replaceState: (_state, _title, url) => { win.location.hash = url; },
+      replaceState: (_state, _title, url) => { const next = new URL(url, win.location.href); Object.assign(win.location, { href: next.href, hash: next.hash, pathname: next.pathname, search: next.search }); },
     },
     sessionStorage: mockStorage,
     localStorage: mockStorage,
@@ -38,6 +41,7 @@ function createMockWindow(overrides = {}) {
       if (!listeners.has(type)) listeners.set(type, []);
       listeners.get(type).push(fn);
     },
+    removeEventListener: (type, fn) => { listeners.set(type, (listeners.get(type) || []).filter(listener => listener !== fn)); },
     dispatchEvent: event => {
       const fns = listeners.get(event.type) || [];
       for (const fn of fns) fn(event);
@@ -50,6 +54,7 @@ function createMockWindow(overrides = {}) {
       }
     },
     document: { readyState: 'complete' },
+    fetch: async () => { throw Error('Unexpected network'); },
     ...overrides,
   };
 
@@ -61,14 +66,15 @@ function createMockWindow(overrides = {}) {
     localStorage: win.localStorage,
     document: win.document,
     CustomEvent: win.CustomEvent,
-    fetch: globalThis.fetch,
+    URL, URLSearchParams, Event,
+    fetch: (...args) => win.fetch(...args),
     setTimeout: globalThis.setTimeout,
     clearTimeout: globalThis.clearTimeout,
     AbortController: globalThis.AbortController,
   };
 
   runInNewContext(scriptContent, context);
-  runInNewContext(loginScriptContent, context);
+  win.runLogin = () => runInNewContext(loginScriptContent, context);
   return win;
 }
 
@@ -143,7 +149,7 @@ const sharedIdentityVisit = mockWin4.createMinihompySharedIdentity({
 });
 
 await sharedIdentityVisit.resolve();
-assert(mockWin4.location.lastRedirect.includes('/visit?site_id=site-a-uuid'));
+assert(mockWin4.location.lastRedirect.includes('/visit.html?site_id=site-a-uuid'));
 assert(mockWin4.location.lastRedirect.includes('attempt_id=test-attempt-uuid-1234'));
 assert(mockWin4.location.lastRedirect.includes('return_path=%2Fminihompy%2F%23%2Fhome'));
 
@@ -172,7 +178,7 @@ const sharedIdentityLoopPrevent = mockWin5.createMinihompySharedIdentity({
 });
 
 await sharedIdentityLoopPrevent.resolve();
-assert.equal(sharedIdentityLoopPrevent.state.status, 'anonymous');
+assert.equal(sharedIdentityLoopPrevent.state.status, 'error');
 assert.equal(mockWin5.location.lastRedirect, undefined, 'Must NOT loop when guard exists');
 
 console.log('   ✓ Loop prevention guard prevents repetitive redirects.');
@@ -204,6 +210,7 @@ mockWin6.fetch = async (url, options) => {
       json: async () => ({
         status: 'identified',
         attempt_id: 'test-attempt-xyz',
+        return_path: '/minihompy/#/board',
         profile: {
           id: 'common-user-uuid-1',
           handle: 'henry',
@@ -242,9 +249,9 @@ console.log('7. Testing UI element binding (search-bar visitor display & button 
 const mockElements = {
   '#visitor-display': { hidden: true },
   '#visitor-name': { textContent: '' },
-  '#visitor-auth-toggle': {
+  '#login-auth-toggle': {
     textContent: '로그인',
-    title: '방문자 로그인',
+    title: '로그인',
     listeners: {},
     addEventListener(type, fn) { this.listeners[type] = fn; },
     click() { if (this.listeners.click) this.listeners.click(); },
@@ -254,6 +261,7 @@ const mockElements = {
 const mockWin7 = createMockWindow({
   document: {
     readyState: 'complete',
+    documentElement: { dataset: {} },
     querySelector: selector => mockElements[selector] || null,
   },
 });
@@ -266,7 +274,7 @@ const sharedIdentityUI = mockWin7.createMinihompySharedIdentity({
 
 // Initially anonymous
 assert.equal(mockElements['#visitor-display'].hidden, true);
-assert.equal(mockElements['#visitor-auth-toggle'].textContent, '로그인');
+assert.equal(mockElements['#login-auth-toggle'].textContent, '로그인');
 
 // Simulate identified visitor event
 mockWin7.dispatchEvent(new mockWin7.CustomEvent('minihompy:visitor-identity', {
@@ -278,8 +286,8 @@ mockWin7.dispatchEvent(new mockWin7.CustomEvent('minihompy:visitor-identity', {
 
 assert.equal(mockElements['#visitor-display'].hidden, false);
 assert.equal(mockElements['#visitor-name'].textContent, '홍길동');
-assert.equal(mockElements['#visitor-auth-toggle'].textContent, '로그아웃');
-assert.equal(mockElements['#visitor-auth-toggle'].title, '방문자 로그아웃');
+assert.equal(mockElements['#login-auth-toggle'].textContent, '로그아웃');
+assert.equal(mockElements['#login-auth-toggle'].title, '로그아웃');
 
 // Simulate anonymous visitor event
 mockWin7.dispatchEvent(new mockWin7.CustomEvent('minihompy:visitor-identity', {
@@ -291,74 +299,90 @@ mockWin7.dispatchEvent(new mockWin7.CustomEvent('minihompy:visitor-identity', {
 
 assert.equal(mockElements['#visitor-display'].hidden, true);
 assert.equal(mockElements['#visitor-name'].textContent, '');
-assert.equal(mockElements['#visitor-auth-toggle'].textContent, '로그인');
-assert.equal(mockElements['#visitor-auth-toggle'].title, '방문자 로그인');
+assert.equal(mockElements['#login-auth-toggle'].textContent, '로그인');
+assert.equal(mockElements['#login-auth-toggle'].title, '로그인');
 
 console.log('   ✓ UI element binding verified: visitor name shown/hidden, toggle button text/title updated.');
 
-// --- 8. Visitor Identity Login: Login Intent & Activation Ticket Flow ---
-console.log('8. Testing login intent handling and activation ticket exchange...');
+// --- 8. Legacy homepage login URL preserves the personal base path ---
+const mockWin8 = createMockWindow({ document: { querySelector: () => null } });
+mockWin8.location.search = '?login_intent=example-intent';
+mockWin8.runLogin();
+assert.equal(mockWin8.location.lastRedirect, 'https://site.test/minihompy/login/?login_intent=example-intent');
+assert.equal(mockWin8.MINIHOMPY_LOGIN_REDIRECTING, true);
+console.log('   ✓ Legacy login entry redirects to the personal password page.');
+console.log('PASS: shared visitor state, local identity, .html routes, guards, return restoration, unified display and legacy login entry.');
 
-let activationRequestPayload = null;
-const mockWin8 = createMockWindow({
-  document: {
-    readyState: 'complete',
-    querySelector: () => null,
-  },
-});
+// An uncorrelated or failed return never leaves credentials in the address bar.
+for (const mismatch of [true, false]) {
+  const win = createMockWindow();
+  win.location.hash = '#vt=secret&path=https://evil.test/';
+  win.sessionStorage.setItem('minihompy.identity.redirect.v1:test', JSON.stringify({attempt_id:'expected',started_at:Date.now(),return_path:'/minihompy/?keep=yes#/board'}));
+  win.fetch = async () => {
+    if (!mismatch) throw Error('offline');
+    return {ok:true,json:async()=>({attempt_id:'wrong',status:'identified',profile:{handle:'attacker'},return_path:'/minihompy/#/home'})};
+  };
+  const identity = win.createMinihompySharedIdentity({enabled:true,siteId:'test',centralUrl:'https://central.test'});
+  await identity.resolve();
+  assert.equal(identity.state.status,'error');
+  assert.equal(win.location.hash,'#/board');
+  assert.equal(win.location.search,'?keep=yes');
+  assert.ok(!win.location.href.includes('secret'));
+}
+{
+  const win = createMockWindow();
+  win.fetch = async () => ({ok:true});
+  const identity = win.createMinihompySharedIdentity({enabled:true,siteId:'test',centralUrl:'https://central.test'}, {setItem(){throw Error('blocked');},getItem(){return null;}});
+  await identity.resolve();
+  assert.equal(identity.state.status,'error');
+  assert.equal(win.location.lastRedirect,undefined);
+}
+{
+  const win = createMockWindow(); let calls = 0;
+  win.fetch = async (_url,{signal}) => { calls++; return new Promise((_resolve,reject)=>signal.addEventListener('abort',()=>reject(Error('timeout')))); };
+  const identity = win.createMinihompySharedIdentity({enabled:true,siteId:'test',centralUrl:'https://central.test',healthTimeoutMs:10});
+  await Promise.all([identity.resolve(),identity.resolve()]);
+  assert.equal(calls,1); assert.equal(identity.state.status,'error');
+}
+console.log('PASS: failed/mismatched return cleanup, local path recovery, blocked storage, timeout and concurrent resolve.');
+{
+  const win = createMockWindow();
+  win.location.hash = '#vt=expired-or-stalled';
+  win.sessionStorage.setItem('minihompy.identity.redirect.v1:test', JSON.stringify({attempt_id:'expected',started_at:Date.now(),return_path:'/minihompy/#/board'}));
+  win.fetch = async (_url,{signal}) => new Promise((_resolve,reject)=>signal.addEventListener('abort',()=>reject(Error('timeout'))));
+  const identity = win.createMinihompySharedIdentity({enabled:true,siteId:'test',centralUrl:'https://central.test',resolveTimeoutMs:10});
+  await identity.resolve(); assert.equal(identity.state.status,'error'); assert.equal(win.location.hash,'#/board');
+}
+{
+  const win = createMockWindow();
+  Object.defineProperty(win,'sessionStorage',{get(){throw Error('blocked property');}});
+  win.fetch = async () => ({ok:true});
+  const identity = win.createMinihompySharedIdentity({enabled:true,siteId:'test',centralUrl:'https://central.test'});
+  await identity.resolve(); assert.equal(identity.state.status,'error');
+}
+mockWin7.document.documentElement.dataset.identity='admin';
+mockWin7.dispatchEvent(new mockWin7.CustomEvent('minihompy:identity'));
+assert.equal(mockElements['#login-auth-toggle'].textContent,'로그아웃');
+mockWin7.dispatchEvent(new mockWin7.CustomEvent('minihompy:visitor-identity',{detail:{status:'anonymous',visitor:null}}));
+assert.equal(mockElements['#login-auth-toggle'].textContent,'로그아웃');
+mockWin7.document.documentElement.dataset.identity='reader';
+mockWin7.dispatchEvent(new mockWin7.CustomEvent('minihompy:identity'));
+assert.equal(mockElements['#login-auth-toggle'].textContent,'로그인');
+console.log('PASS: stalled ticket timeout, throwing storage getter and coordinated admin/visitor rendering.');
 
-mockWin8.fetch = async (url, options) => {
-  if (url.includes('/activation-tickets')) {
-    activationRequestPayload = JSON.parse(options.body);
-    return {
-      ok: true,
-      json: async () => ({
-        activation_ticket: 'ticket-result-999',
-      }),
-    };
-  }
-  throw new Error('Unexpected fetch: ' + url);
-};
-
-const mockClientProvider = () => ({
-  auth: {
-    async getSession() {
-      return {
-        data: {
-          session: {
-            user: { id: 'local-owner-uuid-777' },
-          },
-        },
-      };
-    },
-    async getUser() {
-      return {
-        data: {
-          user: { id: 'local-owner-uuid-777' },
-        },
-      };
-    },
-  },
-});
-
-const visitorLogin = mockWin8.createMinihompyVisitorLogin(
-  {
-    enabled: true,
-    siteId: 'site-a-uuid',
-    centralUrl: 'http://central.local',
-  },
-  mockClientProvider
-);
-
-const activated = await visitorLogin.handleLoginIntent('incoming-intent-token-xyz');
-assert.equal(activated, true);
-assert.equal(activationRequestPayload.login_intent, 'incoming-intent-token-xyz');
-assert.equal(activationRequestPayload.site_id, 'site-a-uuid');
-assert.equal(activationRequestPayload.local_user_id, 'local-owner-uuid-777');
-assert(mockWin8.location.lastRedirect.includes('/complete#ticket=ticket-result-999'));
-
-console.log('   ✓ Login intent flow verified: existing local session reused, activation ticket issued, redirected to /complete.');
-
-console.log('\n=============================================================');
-console.log('ALL CLIENT VISITOR IDENTITY TESTS PASSED (100% SUCCESS)');
-console.log('=============================================================\n');
+{
+  const win=createMockWindow({document:{readyState:'loading'}});
+  win.fetch=async()=>({ok:true});
+  const identity=win.createMinihompySharedIdentity({enabled:true,siteId:'test',centralUrl:'https://central.test'});
+  const pending=identity.resolve(); await new Promise(resolve=>setTimeout(resolve,5));
+  assert.equal(win.location.lastRedirect,undefined,'do not navigate during initial page loading');
+  win.dispatchEvent(new Event('load')); await pending;
+  assert.ok(win.location.lastRedirect.includes('/visit.html'));
+}
+{
+  const win=createMockWindow({document:{readyState:'loading'}});win.fetch=async()=>({ok:true});
+  const identity=win.createMinihompySharedIdentity({enabled:true,siteId:'test',centralUrl:'https://central.test',loadTimeoutMs:10});
+  await identity.resolve();assert.equal(identity.state.status,'error');assert.equal(win.location.lastRedirect,undefined);
+  win.dispatchEvent(new Event('load'));assert.equal(win.location.lastRedirect,undefined,'late load cannot trigger a failed redirect');
+}
+console.log('PASS: initial load preserves return history; stalled load times out without late navigation.');

@@ -64,6 +64,7 @@
     currentView = id; markSelection(); window.MinihompyContent.fit();
   }
   function renderView(requestedId, replace = false, force = false) {
+    if (window.MINIHOMPY_IDENTITY_RETURN_PENDING) return false;
     // An early Auth result must not replace a pending deep link with settings.
     if (window.MinihompySettings.status === 'loading' && requestedId !== 'settings') { unavailable(); return false; }
     if (requestedId === 'settings' && !authResolved && !admin()) { unavailable(); return false; }

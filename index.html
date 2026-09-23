@@ -2,16 +2,17 @@
 <html lang="ko" data-settings-status="loading">
 <head>
   <meta charset="utf-8">
+  <meta name="referrer" content="no-referrer">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title data-config="page.browserTitle">미니홈피</title>
   <link rel="stylesheet" href="styles.css">
   <script src="config.js" defer></script>
   <script src="visitor-identity-config.js" defer></script>
+  <script src="visitor-identity-login.js" defer></script>
   <script src="visitor-identity.js" defer></script>
   <script src="supabase-config.js" defer></script>
   <script src="assets/vendor/supabase-2.116.0.js" defer></script>
   <script src="supabase-client.js" defer></script>
-  <script src="visitor-identity-login.js" defer></script>
   <script src="visitor-session.js" defer></script>
   <script src="comments-repository.js" defer></script>
   <script src="comments.js" defer></script>
@@ -50,7 +51,8 @@
         <span class="history-links">◀ 주　 › 정　 › 정</span>
         <span>내모아보기<span class="tiny-orange">▴</span></span>
         <span>바로가기 ▴</span><span>랜덤</span>
-        <span><button id="login-auth-toggle" type="button" title="로그인">로그인</button></span>
+        <span><button type="button" id="visitor-identity-retry" hidden title="방문자 확인에 실패했습니다. 다시 시도합니다.">방문자 확인 재시도</button>
+          <button id="login-auth-toggle" type="button" title="로그인">로그인</button></span>
       </div>
     </header>
 
@@ -102,22 +104,15 @@
     <form id="login-form">
       <h2 id="login-dialog-title">로그인</h2>
       
-      <div id="login-step-1">
-        <label for="login-handle">미니홈피 아이디 (Handle)</label>
-        <input id="login-handle" type="text" autocomplete="username" required maxlength="254" placeholder="예: alice">
-      </div>
-      
-      <div id="login-step-2" style="display: none;">
-        <label for="login-email">이메일</label>
-        <input id="login-email" type="email" autocomplete="email" maxlength="254">
-        <label for="login-password">비밀번호</label>
-        <input id="login-password" type="password" autocomplete="current-password">
-      </div>
-      
+      <label for="login-email">이메일</label>
+      <input id="login-email" type="email" autocomplete="username" maxlength="254" required>
+      <label for="login-password">비밀번호</label>
+      <input id="login-password" type="password" autocomplete="current-password" required>
+
       <p class="login-auth-message" role="status" aria-live="polite"></p>
       
       <div class="login-dialog-actions">
-        <button id="login-submit" type="submit">다음</button>
+        <button id="login-submit" type="submit">로그인</button>
         <button id="login-close" type="button">닫기</button>
       </div>
     </form>

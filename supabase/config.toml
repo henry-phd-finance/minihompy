@@ -1,0 +1,3 @@
+# Password authentication happens in this personal Supabase project.
+[functions.owner-login]
+verify_jwt = false

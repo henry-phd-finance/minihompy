@@ -1,0 +1,44 @@
+{
+  "checkedAt": "2026-09-23T04:52:18.856Z",
+  "mode": "real-pages-with-central-disabled-in-test-browser-only",
+  "results": [
+    {
+      "label": "A",
+      "origin": "https://henry-phd-finance.github.io",
+      "path": "/minihompy/",
+      "settingsStatus": "ready",
+      "sharedStatus": "anonymous",
+      "menus": [
+        "home",
+        "profile",
+        "diary",
+        "photos",
+        "board",
+        "guestbook"
+      ],
+      "mainView": "home",
+      "brokenImages": 0,
+      "browserErrorCount": 0,
+      "failedResponses": [],
+      "blockedWrites": []
+    },
+    {
+      "label": "B",
+      "origin": "https://henry-hs-jung.github.io",
+      "path": "/minihompy/",
+      "settingsStatus": "error",
+      "sharedStatus": "anonymous",
+      "menus": [],
+      "mainView": null,
+      "brokenImages": 0,
+      "browserErrorCount": 0,
+      "failedResponses": [
+        {
+          "status": 404,
+          "url": "https://zcaodcujqbjrogffwalk.supabase.co/rest/v1/rest/v1/minihompy_settings"
+        }
+      ],
+      "blockedWrites": []
+    }
+  ]
+}

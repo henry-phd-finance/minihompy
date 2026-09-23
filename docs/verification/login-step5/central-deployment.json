@@ -1,0 +1,13 @@
+{
+  "checkedAt": "2026-09-23T04:55:49.626Z",
+  "migration": "202609230001_verified_identity.sql",
+  "membersPreserved": 2,
+  "sitesPreserved": 2,
+  "bindingsPreserved": 1,
+  "sessionVersionsIncrementedOnce": true,
+  "functionsDeployed": [
+    "identity-api",
+    "identity-page"
+  ],
+  "identityProtocol": 2
+}

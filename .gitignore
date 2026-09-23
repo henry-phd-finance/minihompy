@@ -17,3 +17,10 @@ __pycache__/
 /docs/verification/**/*.html
 /docs/verification/**/*.png
 !/docs/verification/step7/579x349.png
+
+# Local setup progress; contains public registration metadata, not credentials.
+/.minihompy-registration.json
+/setup/config.json
+
+# Supabase CLI local metadata
+/supabase/.temp/

@@ -1,0 +1,10 @@
+{
+  "githubUser": "your-account",
+  "githubRepo": "minihompy",
+  "projectRef": "aaaaaaaaaaaaaaaaaaaa",
+  "publishableKey": "sb_publishable_REPLACE_WITH_YOUR_PUBLIC_KEY",
+  "handle": "your-handle",
+  "displayName": "내 미니홈피",
+  "centralApiUrl": "https://pcwovvdgggpbghvqraex.supabase.co/functions/v1/identity-api",
+  "centralPageUrl": "https://henry-phd-finance.github.io/minihompy-central"
+}

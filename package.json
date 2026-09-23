@@ -8,14 +8,18 @@
   },
   "files": [
     "setup/",
-    "supabase/migrations/"
+    "supabase/migrations/",
+    "supabase/functions/",
+    "supabase/config.toml"
   ],
   "engines": {
     "node": ">=18.0.0"
   },
   "scripts": {
     "setup": "node setup/setup.mjs",
-    "build": "node scripts/build-pages.mjs"
+    "build": "node scripts/build-pages.mjs",
+    "test:setup": "node scripts/verify-setup.mjs",
+    "test:artifact": "node scripts/verify-artifact.mjs"
   },
   "keywords": [
     "minihompy",

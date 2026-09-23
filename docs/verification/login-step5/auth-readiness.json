@@ -1,0 +1,35 @@
+{
+  "checkedAt": "2026-09-23T04:51:46.024681+00:00",
+  "mode": "real-personal-auth-and-read",
+  "credentialSource": "cyworld/.env (values not recorded)",
+  "sites": [
+    {
+      "site": "A",
+      "projectRef": "itkymmxnbjylyzbmdxdb",
+      "loginStatus": 200,
+      "adminCheckStatus": 200,
+      "isAdmin": true,
+      "tablesRead": {
+        "minihompy_settings": 200,
+        "minihompy_profile": 200,
+        "board_posts": 200
+      },
+      "testSessionLogoutStatus": 204
+    },
+    {
+      "site": "B",
+      "projectRef": "zcaodcujqbjrogffwalk",
+      "loginStatus": 200,
+      "adminCheckStatus": 200,
+      "isAdmin": true,
+      "tablesRead": {
+        "minihompy_settings": 200,
+        "minihompy_profile": 200,
+        "board_posts": 200
+      },
+      "testSessionLogoutStatus": 204
+    }
+  ],
+  "contentWrites": 0,
+  "centralLoginPerformed": false
+}

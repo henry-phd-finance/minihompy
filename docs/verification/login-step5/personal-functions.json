@@ -1,0 +1,23 @@
+{
+  "checkedAt": "2026-09-23T04:54:02.259Z",
+  "sites": [
+    {
+      "site": "A",
+      "projectRef": "itkymmxnbjylyzbmdxdb",
+      "function": "owner-login",
+      "deployed": true,
+      "passwordAuthenticationVerified": true,
+      "ownerMappingVerified": true,
+      "testSessionsClosed": true
+    },
+    {
+      "site": "B",
+      "projectRef": "zcaodcujqbjrogffwalk",
+      "function": "owner-login",
+      "deployed": true,
+      "passwordAuthenticationVerified": true,
+      "ownerMappingVerified": true,
+      "testSessionsClosed": true
+    }
+  ]
+}

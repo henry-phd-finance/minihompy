@@ -14,6 +14,7 @@ try {
     await mockSettings(page);
     page.on('pageerror', error => errors.push(error.message));
     await page.addInitScript(() => {
+      Object.defineProperty(window, 'MINIHOMPY_VISITOR_IDENTITY_CONFIG', { get: () => ({ enabled: false }), set() {} });
       let backend;
       let user = null;
       window.testMode = 'invalid';
@@ -43,30 +44,30 @@ try {
       });
     });
     await page.goto(new URL('../index.html', import.meta.url).href);
-    await page.locator('#admin-auth-toggle').click();
-    await page.locator('#admin-email').fill('owner@example.com');
-    await page.locator('#admin-password').fill('not-a-real-password');
+    await page.locator('#login-auth-toggle').click();
+    await page.locator('#login-email').fill('owner@example.com');
+    await page.locator('#login-password').fill('not-a-real-password');
     await page.screenshot({ path: new URL(`dialog-${width}.png`, out).pathname });
-    await page.locator('#admin-submit').click();
-    await page.waitForFunction(() => document.querySelector('.admin-auth-message').textContent.includes('입력 정보'));
-    assert.equal(await page.locator('#admin-password').inputValue(), '');
+    await page.locator('#login-submit').click();
+    await page.waitForFunction(() => document.querySelector('.login-auth-message').textContent.includes('입력 정보'));
+    assert.equal(await page.locator('#login-password').inputValue(), '');
     for (const mode of ['visitor', 'network', 'admin']) {
       await page.evaluate(mode => { window.testMode = mode; }, mode);
-      await page.locator('#admin-password').fill('not-a-real-password');
-      await page.locator('#admin-submit').click();
-      await page.waitForFunction(() => !document.querySelector('#admin-submit').disabled);
+      await page.locator('#login-password').fill('not-a-real-password');
+      await page.locator('#login-submit').click();
+      await page.waitForFunction(() => !document.querySelector('#login-submit').disabled);
       assert.equal(await page.evaluate(() => window.MinihompyAdmin.state.role), mode === 'admin' ? 'admin' : 'reader');
     }
-    assert.equal(await page.locator('.admin-dialog').isVisible(), false);
-    assert.equal(await page.locator('#admin-auth-toggle').textContent(), '로그아웃');
-    await page.locator('#admin-auth-toggle').click();
-    await page.waitForFunction(() => !document.querySelector('#admin-auth-toggle').disabled);
+    assert.equal(await page.locator('.login-dialog').isVisible(), false);
+    assert.equal(await page.locator('#login-auth-toggle').textContent(), '로그아웃');
+    await page.locator('#login-auth-toggle').click();
+    await page.waitForFunction(() => !document.querySelector('#login-auth-toggle').disabled);
     assert.equal(await page.evaluate(() => window.MinihompyAdmin.state.role), 'reader');
     assert.equal(await page.evaluate(() => localStorage.getItem('visitor-sentinel')), 'untouched');
     assert((await page.evaluate(() => window.logoutScopes)).every(scope => scope === 'local'));
-    await page.locator('#admin-auth-toggle').click();
+    await page.locator('#login-auth-toggle').click();
     await page.keyboard.press('Escape');
-    assert.equal(await page.locator('.admin-dialog').isVisible(), false);
+    assert.equal(await page.locator('.login-dialog').isVisible(), false);
     assert.deepEqual(errors, []);
     await page.close();
   }
