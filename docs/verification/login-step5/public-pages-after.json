@@ -1,0 +1,46 @@
+{
+  "checkedAt": "2026-09-23T05:03:38.108Z",
+  "mode": "public-browser-read",
+  "results": [
+    {
+      "label": "A",
+      "origin": "https://henry-phd-finance.github.io",
+      "path": "/minihompy/",
+      "settingsStatus": "ready",
+      "sharedStatus": "anonymous",
+      "menus": [
+        "home",
+        "profile",
+        "diary",
+        "photos",
+        "board",
+        "guestbook"
+      ],
+      "mainView": "home",
+      "brokenImages": 0,
+      "browserErrorCount": 0,
+      "failedResponses": [],
+      "blockedWrites": []
+    },
+    {
+      "label": "B",
+      "origin": "https://henry-hs-jung.github.io",
+      "path": "/minihompy/",
+      "settingsStatus": "ready",
+      "sharedStatus": "anonymous",
+      "menus": [
+        "home",
+        "profile",
+        "diary",
+        "photos",
+        "board",
+        "guestbook"
+      ],
+      "mainView": "home",
+      "brokenImages": 0,
+      "browserErrorCount": 0,
+      "failedResponses": [],
+      "blockedWrites": []
+    }
+  ]
+}

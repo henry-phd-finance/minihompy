@@ -1,9 +1,17 @@
-# 5단계 검수 상태
+# 5단계 완료 — 실제 A/B 배포 검증
 
-2026-09-23: 진행 중. 실제 환경 사전점검과 로컬 통합 검사는 실행했으나 운영 배포/실제 로그인은 미완료다.
+2026-09-23. A/B 개인 사이트, 개인 owner-login 함수, 중앙 DB v2·함수·Pages 배포를 완료했다.
 
-실제 A/B는 henry-phd-finance.github.io/minihompy/와 henry-hs-jung.github.io/minihompy/이며 서로 다른 Supabase 프로젝트를 사용한다. 중앙 저장소의 `docs/verification/login-step5/live-result.json`은 GET-only 배포 검사 28개 중 6개 통과를 기록한다. 중앙 DB는 아직 v2 전환 전이며 새 로그인 화면도 미배포 상태다. 두 개인 프로젝트의 Management 접근은 403이고 B 저장소는 읽기 권한만 있다. 개인 로그인 정보도 준비되지 않았다. 원격 쓰기는 실행하지 않았다.
+- A: https://henry-phd-finance.github.io/minihompy/ — itkymmxnbjylyzbmdxdb
+- B: https://henry-hs-jung.github.io/minihompy/ — zcaodcujqbjrogffwalk
+- 중앙 저장소: https://github.com/henry-phd-finance/minihompy-central
 
-로컬 브라우저에서는 A/B 계정 전환, C 방문, 직접 이동/새로고침, 관리자 권한 분리, 로그아웃, 장애·저장소 오류를 검증했다. 검사 중 발견한 초기 로딩 리다이렉트의 방문 기록 대체 문제를 수정했다. load 완료 후 이동하고 5초 로딩 타임아웃과 늦은 이벤트 차단을 검사했다. 개인 방문자 단위 검사와 build/artifact 검사도 통과했다.
+A/B의 기존 계정·콘텐츠와 siteId를 보존했고 두 사이트 모두 verified 상태다. A의 미배포 커밋/작업 코드도 GitHub에 반영했다. B의 잘못된 Supabase URL(/rest/v1 중복)을 바로잡았다. [배포 후 실제 기본 화면 확인](public-pages-after.json)은 양쪽 설정 ready, 기본 6개 메뉴, 깨진 이미지/브라우저 오류/실패 응답 없음으로 통과했다.
 
-실제 검수 도구·대상 공개 설정·상세 접근 조회는 중앙 저장소 `scripts/verify-live-identity.mjs`, `scripts/live-targets.json`, `docs/verification/login-step5/`에 있다. A/B 개인 프로젝트 배포 권한, B GitHub 쓰기 권한, 각 소유자 인증 정보를 로컬 비공개 경로로 준비한 뒤 중앙→개인 순서로 전환하고 실제 브라우저 로그인을 검증해야 완료된다.
+[실제 통합 결과](live-result.json): 사전점검 28/28, A↔B 로그인·복귀·새로고침·직접 방문·계정 전환·로그아웃·상대 사이트 관리자 권한 분리 통과.
+
+[실제 오류 경로](live-failures.json): 비밀번호 오류, 활성화 티켓 재사용 거부, 기존 개인 세션 재사용, 실제 방문 티켓 만료 거부 통과. 브라우저에서 저장소/네트워크 장애를 주입한 복구 검사도 통과했다. 게시물/댓글/프로필을 쓰지 않았고 비밀값을 보고서에 저장하지 않았다.
+
+초기 로딩 중 왕복 기록 소실, 중앙 폼 초기화 전 제출, Secrets API의 빈 성공 응답 처리 문제를 수정하고 배포했다. [기존 ID 및 런타임 배포 참조](deployed-state.json). 상세 재검수 방법은 중앙 저장소 docs/verification/login-step5/README.md를 참고한다.
+
+public-pages.json / personal-pages-isolated.json 등은 수정 전 원인 조사 기록이다. 당시 권한 부족과 미배포 상태는 해소되었다. 실물 모바일/Safari 및 실제 세 번째 사이트 검수는 수행하지 않았고, C 방문은 로컬 모의 통합 검사 범위다.

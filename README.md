@@ -80,4 +80,4 @@ node scripts/verify-integration.mjs /path/to/playwright/index.mjs
 
 `scripts/compare-home.mjs`는 저장된 원본·작업 5·작업 6 캡처를 비교하는 별도 도구다. 현재 페이지를 직접 캡처하지 않는다. 기존 단계의 검증·비교 기록은 각 폴더에 보존했다.
 
-분산 로그인 3단계(방문 인식·복귀·로그아웃) 로컬 구현과 검증을 완료했습니다. [검수 결과](docs/verification/login-step3/README.md). 운영 배포는 후속 단계입니다.
+분산 로그인 1~5단계의 구현·A/B 및 중앙 운영 배포·실제 로그인 검증을 완료했습니다. [최종 검수 결과](docs/verification/login-step5/README.md).
