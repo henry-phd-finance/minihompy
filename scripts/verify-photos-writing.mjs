@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { mkdir, readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { initialSettings } from './settings-fixture.mjs';
+import { initialSettings, mockHomeSummary } from './settings-fixture.mjs';
 const { chromium } = await import(pathToFileURL(resolve(process.argv[2])).href);
 const out = new URL('../docs/verification/photos-writing/', import.meta.url);
 await mkdir(out, { recursive: true });
@@ -16,6 +16,8 @@ try {
     const owner = '20ce5711-bac1-434b-a67d-86e994066b8f';
     const folder = 'ac04c50a-29da-4183-8634-2b5a4437fc0f';
     let posts = [], uploads = 0, rejectUpload = false, rejectWrite = false, failRead = false, duplicateUpload = false, abortUpload = false;
+    // This isolated editor test must never visit the production central login.
+    await page.addInitScript(()=>Object.defineProperty(window,'MINIHOMPY_VISITOR_IDENTITY_CONFIG',{get:()=>({enabled:false}),set:()=>{}}));
     await page.addInitScript(owner => {
       let backend; window.testAdmin = true;
       Object.defineProperty(window, 'MinihompyBackend', {
@@ -73,6 +75,7 @@ try {
       const offset = Number(url.searchParams.get('offset') || 0), limit = Number(url.searchParams.get('limit') || 2);
       return send(posts.slice(offset, offset + limit), 200, { 'content-range': `${offset}-${Math.max(offset, offset + Math.min(limit, posts.length) - 1)}/${posts.length}` });
     });
+    await mockHomeSummary(page);
     await page.goto(`${new URL('../index.html', import.meta.url).href}#/photos`);
     await page.locator('.photo-write').click();
     await page.locator('.photo-editor-title').fill('본문 속의 사진');

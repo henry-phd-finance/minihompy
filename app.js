@@ -6,8 +6,17 @@
   const tabs = document.querySelector('.page-tabs');
   let currentView = null, menus = [], visibleIds = new Set(), authResolved = false;
   const admin = () => window.MinihompyAdmin?.state.role === 'admin';
-  function locationId() {
-    try { return location.hash.startsWith('#/') ? decodeURIComponent(location.hash.slice(2)) : null; } catch { return null; }
+  const routes=window.MinihompyPostRoutes;
+  const parse=routes.parse;
+  const href=route=>routes.href(route.id,route.post);
+  let currentRoute=null,acceptedHash=location.hash,index=Number.isInteger(history.state?.minihompyIndex)?history.state.minihompyIndex:0,restoring=false;
+  history.replaceState({...history.state,minihompyIndex:index},'',location.href);
+  function locationId(){return parse(location.hash);}
+  function canLeave(destination){
+    const blockers=[];blockers.destination=destination;window.dispatchEvent(new CustomEvent('minihompy:before-navigate',{detail:blockers}));
+    if(blockers.some(s=>s.busy))return false;
+    if(blockers.some(s=>s.dirty)&&!confirm(destination?.post?'글 주소로 이동하면 해당 화면의 초안이 초기화될 수 있습니다. 이동할까요?':'작성 중인 내용이 있습니다. 다른 화면으로 이동할까요?'))return false;
+    for(const state of blockers)state.discard?.();return true;
   }
   function markSelection() {
     for (const link of tabs.children) {
@@ -51,10 +60,10 @@
     }
     markSelection();
   }
-  function showView(id) {
+  function showView(id,route) {
     if (id === 'settings' && !admin()) return;
     const view = window.MINIHOMPY_VIEWS[id];
-    const left = view.createLeft(), main = view.createMain();
+    const left = view.createLeft(), main = view.createMain(route);
     if (!(left instanceof DocumentFragment) || !(main instanceof DocumentFragment)) throw new TypeError(`View ${id} must create two DocumentFragments.`);
     window.MinihompyContent.apply(left); window.MinihompyContent.apply(main);
     leftSlot.replaceChildren(left); mainSlot.replaceChildren(main);
@@ -63,36 +72,71 @@
     leftSlot.scrollTop = mainSlot.scrollTop = 0; scrollbar.hidden = !view.showScrollbar;
     currentView = id; markSelection(); window.MinihompyContent.fit();
   }
-  function renderView(requestedId, replace = false, force = false) {
+  function renderView(requested, replace = false, force = false, fromHistory=false) {
     if (window.MINIHOMPY_IDENTITY_RETURN_PENDING) return false;
-    // An early Auth result must not replace a pending deep link with settings.
-    if (window.MinihompySettings.status === 'loading' && requestedId !== 'settings') { unavailable(); return false; }
-    if (requestedId === 'settings' && !authResolved && !admin()) { unavailable(); return false; }
-    const fallback = menus.find(item => item.id === 'home')?.id || menus[0]?.id;
-    const id = visibleIds.has(requestedId) ? requestedId : fallback;
-    if (!id) { unavailable(); return false; }
-    if (id !== currentView || force) showView(id);
-    const hash = `#/${encodeURIComponent(id)}`;
-    if (location.hash !== hash) history[replace ? 'replaceState' : 'pushState'](null, '', hash);
-    return id === requestedId;
+    const route=typeof requested==='string'?parse('#/'+requested):requested||locationId();
+    if (window.MinihompySettings.status === 'loading' && route.id !== 'settings') { unavailable(); return false; }
+    if (route.id === 'settings' && !authResolved && !admin()) { unavailable(); return false; }
+    const blocked=route.invalid||(route.post&&!visibleIds.has(route.id));
+    const fallback=menus.find(item=>item.id==='home')?.id||menus[0]?.id;
+    const id=blocked?null:visibleIds.has(route.id)?route.id:fallback;
+    const next={id,post:id===route.id?route.post:null};
+    const changed=blocked||!currentRoute||currentRoute.id!==next.id||currentRoute.post!==next.post;
+    if(changed&&currentView&&!canLeave(next)){
+      if(fromHistory){
+        const target=history.state?.minihompyIndex;
+        if(Number.isInteger(target)&&target!==index){restoring=true;history.go(index-target);}
+        else history.replaceState({...history.state,minihompyIndex:index},'',acceptedHash||location.pathname+location.search);
+      }
+      return false;
+    }
+    if(blocked){
+      const badHash=route.hash||href(route);
+      if(fromHistory&&Number.isInteger(history.state?.minihompyIndex))index=history.state.minihompyIndex;
+      if(location.hash!==badHash){if(!replace&&!fromHistory)index++;history[replace||fromHistory?'replaceState':'pushState']({...history.state,minihompyIndex:index},'',badHash);}
+      unavailable();mainSlot.replaceChildren();const message=document.createElement('p');message.setAttribute('role','status');message.textContent='글 주소가 잘못되었거나 표시할 수 없는 메뉴입니다.';mainSlot.append(message);currentRoute=null;acceptedHash=location.hash;
+      return false;
+    }
+    if(!id){unavailable();return false;}
+    currentRoute=next;
+    if(changed||force)showView(id,next);
+    const hash=href(next);
+    if(fromHistory&&Number.isInteger(history.state?.minihompyIndex))index=history.state.minihompyIndex;
+    if(location.hash!==hash||!Number.isInteger(history.state?.minihompyIndex)){
+      if(!replace&&!fromHistory)index++;
+      history[replace||fromHistory?'replaceState':'pushState']({...history.state,minihompyIndex:index},'',hash);
+    }
+    acceptedHash=hash;
+    return id===route.id;
   }
   function updateSettings() {
     document.documentElement.dataset.settingsStatus = window.MinihompySettings.status;
     window.MinihompyContent.apply(); rebuildMenus();
     // Keep the settings form/draft intact while its own save publishes new values.
-    renderView(currentView || locationId(), true, currentView !== 'settings');
+    renderView(currentRoute || locationId(), true, currentView !== 'settings');
   }
   tabs.addEventListener('click', event => {
     const link = event.target.closest('a[data-menu]');
     if (!link || !tabs.contains(link) || event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
     event.preventDefault(); renderView(link.dataset.menu);
   });
-  window.addEventListener('hashchange', () => renderView(locationId(), true));
+  function historyChanged(){
+    if(restoring){if(location.hash===acceptedHash){restoring=false;}return;}
+    if(location.hash===acceptedHash&&currentRoute)return;
+    renderView(locationId(),true,false,true);
+  }
+  window.addEventListener('hashchange',historyChanged);
+  window.addEventListener('popstate',historyChanged);
+  document.addEventListener('click',event=>{
+    const link=event.target.closest('a[href]');if(event.defaultPrevented||!link||link.target&&link.target!=='_self'||link.hasAttribute('download')||event.button!==0||event.ctrlKey||event.metaKey||event.shiftKey||event.altKey)return;
+    const url=new URL(link.href,location.href);if(url.origin!==location.origin||url.pathname!==location.pathname||url.search!==location.search||!url.hash.startsWith('#/'))return;
+    event.preventDefault();renderView(parse(url.hash));
+  });
   window.addEventListener('minihompy:settings', updateSettings);
   window.addEventListener('minihompy:identity', () => {
-    authResolved = true; rebuildMenus(); renderView(currentView || locationId(), true);
+    authResolved = true; rebuildMenus(); renderView(currentRoute || locationId(), true);
   });
-  window.MinihompyApp = { renderView, get currentView() { return currentView; } };
+  window.MinihompyApp = { renderView, clearPost(){if(currentRoute?.post){currentRoute={id:currentRoute.id,post:null};acceptedHash=href(currentRoute);history.replaceState({...history.state,minihompyIndex:index},'',acceptedHash);}}, get route(){return currentRoute;}, get currentView() { return currentView; } };
   window.MinihompyContent.apply(); unavailable();
   void window.MinihompySettings.load();
 })();

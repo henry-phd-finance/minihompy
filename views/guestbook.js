@@ -4,6 +4,8 @@
   let content, context, draft, page = 1, request = 0, epoch = 0, busy = false, dirty = false, notice = '', refreshScroll = () => {};
   let roleKey = 'reader:';
   const pageSize = 5;
+  let target=null;
+  function clearTarget(){target=null;window.MinihompyApp?.clearPost?.();}
   const controlLocks = new WeakMap();
   const admin = () => context?.role === 'admin';
   function freshDraft() { return { id: crypto.randomUUID(), name: repository.nickname(), body: '', visibility: 'public' }; }
@@ -85,7 +87,7 @@
       try {
         await repository.save({ ...draft });
         if (token !== epoch) return;
-        draft = freshDraft(); dirty = false; page = 1; notice = '저장했습니다.'; busy = false; load();
+        if(!draft.revision)clearTarget();draft = freshDraft(); dirty = false; page = 1; notice = '저장했습니다.'; busy = false; load();
       } catch (error) {
         if (token === epoch) {
           notice = `방명록 저장 실패: ${error.message || '서버와 통신하지 못했습니다.'}\n작성 내용은 유지됩니다.`;
@@ -150,15 +152,18 @@
     content.replaceChildren(node('p', 'guestbook-status', '방명록을 불러오고 있습니다.'));
     try {
       const next = await repository.context(); if (token !== request) return;
-      const result = await repository.list(next, page, pageSize); if (token !== request) return;
+      const result = await repository.list(next, page, pageSize,target); if (token !== request) return;
+      if(target&&!result.items.some(p=>p.id===target))throw Error('글이 삭제되었거나 조회할 수 없습니다.');
+      if(target)page=result.page;
       context = next;
       const maximum = Math.max(1, Math.ceil(result.count / pageSize));
       if (page > maximum) { page = maximum; return load(); }
       content.replaceChildren(composer(), ...result.items.map(postElement));
+      requestAnimationFrame(()=>window.MinihompyPostRoutes?.focus(content,target));
       if (!result.items.length) content.append(node('p', 'guestbook-empty', '등록된 방명록이 없습니다.'));
       if (maximum > 1) {
         const nav = node('nav', 'guestbook-pagination'); nav.setAttribute('aria-label', '방명록 페이지');
-        const change = delta => { if (!busy) { page += delta; load(); } };
+        const change = delta => { if (!busy) { clearTarget();page += delta; load(); } };
         const previous = action('‹', () => change(-1)); previous.title = '이전 페이지'; previous.setAttribute('aria-label', previous.title); previous.disabled = page === 1;
         const next = action('›', () => change(1)); next.title = '다음 페이지'; next.setAttribute('aria-label', next.title); next.disabled = page === maximum;
         nav.append(previous, node('span', '', `${page} / ${maximum}`), next); content.append(nav);
@@ -227,7 +232,8 @@
     label: '방명록',
     showScrollbar: false,
     createLeft: () => window.MINIHOMPY_VIEWS.home.createLeft(),
-    createMain() {
+    createMain(route={}) {
+      target=route.post||null;
       content = node('div', 'guestbook-scroll');
       content.id = 'guestbook-content';
       content.tabIndex = 0;
@@ -263,5 +269,6 @@
   });
   window.addEventListener('focus',()=>{if(window.MinihompyMemberWriting?.enabled() && content?.isConnected && !busy)load();});
   window.addEventListener('minihompy:writing-authorize',event=>{if(dirty && !confirm('회원 확인 화면으로 이동하면 작성 중인 내용은 초기화됩니다. 계속할까요?'))event.preventDefault();});
+  window.MinihompyPostRoutes?.guard(next=>(content?.isConnected||next?.id==='guestbook'&&next.post)?{busy,dirty,discard:()=>{if(next?.id==='guestbook'&&next.post){draft=null;dirty=false;}}}:null);
   window.addEventListener('beforeunload', event => { if (dirty || busy) { event.preventDefault(); event.returnValue = ''; } });
 })();

@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { mkdir } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { initialSettings } from './settings-fixture.mjs';
+import { initialSettings, mockHomeSummary } from './settings-fixture.mjs';
 const { chromium } = await import(pathToFileURL(resolve(process.argv[2])).href);
 const out = new URL('../docs/verification/board-writing/', import.meta.url);
 await mkdir(out, { recursive: true });
@@ -19,6 +19,8 @@ try {
     let posts = [], writes = 0, rejectWrite = false, failRead = false, loseResponse = false;
     let holdResponse = false, releaseResponse, responseStarted;
     const started = new Promise(resolve => { responseStarted = resolve; });
+    // This isolated editor test must never visit the production central login.
+    await page.addInitScript(()=>Object.defineProperty(window,'MINIHOMPY_VISITOR_IDENTITY_CONFIG',{get:()=>({enabled:false}),set:()=>{}}));
     await page.addInitScript(owner => {
       let backend;
       window.testAdmin = true;
@@ -86,6 +88,7 @@ try {
       const offset = Number(url.searchParams.get('offset') || 0), limit = Number(url.searchParams.get('limit') || 10);
       return send(filtered.slice(offset, offset + limit), 200, { 'content-range': `${offset}-${Math.max(offset, offset + Math.min(limit, filtered.length) - 1)}/${filtered.length}` });
     });
+    await mockHomeSummary(page);
     await page.goto(`${new URL('../index.html', import.meta.url).href}#/board`);
     await page.locator('.board-write').waitFor();
     assert.equal(await page.locator('.board-empty').count(), 1);

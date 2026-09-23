@@ -81,8 +81,7 @@
       field(form, '자기소개', ['profile','introduction'], { multiline: true, max: 2000 });
       field(form, '이름 옆 문구', ['profile','detail'], { max: 80 });
     } else if (section === 'home') {
-      field(form, 'TODAY', ['home','today'], { numeric: true, required: true });
-      field(form, 'TOTAL', ['home','total'], { numeric: true, required: true });
+      form.append(node('p', 'settings-visit-note', 'TODAY/TOTAL은 실제 방문으로 자동 집계됩니다. 수동으로 수정할 수 없습니다.'));
       for (let i = 0; i < 3; i++) field(form, `최근게시물 문구 ${i + 1}`, ['home','recentEmptyLines',i]);
       field(form, '미니룸 말풍선', ['home','roomMessage']);
       field(form, '일촌평 문구', ['home','friendsMessage']);
@@ -112,4 +111,5 @@
     createLeft() { left = node('nav', 'settings-sidebar'); left.setAttribute('aria-label', '관리자 설정'); renderLeft(); return fragment(left); },
     createMain() { main = node('div', 'settings-scroll'); if (!draft) adopt(); renderMain(); return fragment(main); },
   };
+  window.MinihompyPostRoutes?.guard(()=>main?.isConnected?{busy,dirty}:null);
 })();

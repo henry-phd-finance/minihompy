@@ -2,6 +2,8 @@
   'use strict';
   const repository = window.MinihompyDiaryRepository;
   const koreaNow = () => new Intl.DateTimeFormat('sv-SE', { timeZone: 'Asia/Seoul', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(new Date());
+  let target=null;
+  function clearTarget(){target=null;window.MinihompyApp?.clearPost?.();}
   let folders = [], folderId;
   let selectedDate = koreaNow().slice(0, 10);
   let writtenDates = new Set(), request = 0, page = 1;
@@ -87,7 +89,7 @@
         const token = epoch;
         setBusy(true);
         try {
-          await repository.remove(entry);
+          await repository.remove(entry);if(target===entry.id)clearTarget();
           window.MinihompyComments.forget('diary', entry.id);
           if (token !== epoch) return;
           notice = '일기를 삭제했습니다.';
@@ -109,7 +111,7 @@
       if (draft || busy) return;
       const next = new Date(Date.UTC(year, month - 1 + delta, 1));
       if (next.getUTCFullYear() < 1900 || next.getUTCFullYear() > 9999) return;
-      selectedDate = dateKey(next.getUTCFullYear(), next.getUTCMonth() + 1, Math.min(day, daysInMonth(next.getUTCFullYear(), next.getUTCMonth() + 1)));
+      clearTarget();selectedDate = dateKey(next.getUTCFullYear(), next.getUTCMonth() + 1, Math.min(day, daysInMonth(next.getUTCFullYear(), next.getUTCMonth() + 1)));
       page = 1; writtenDates.clear(); notice = '';
       render().then(() => calendar.querySelector(`[data-month="${delta}"]`)?.focus({ preventScroll: true }));
     };
@@ -124,7 +126,7 @@
       const weekday = new Date(Date.UTC(year, month - 1, number)).getUTCDay();
       const el = button(String(number), `${key}${written ? ' 일기 있음' : ''}`, () => {
         if (draft || busy) return;
-        selectedDate = key; page = 1; notice = '';
+        clearTarget();selectedDate = key; page = 1; notice = '';
         render().then(() => calendar.querySelector(`[data-date="${key}"]`)?.focus({ preventScroll: true }));
       }, `diary-day${written ? ' written' : ''}${weekday === 0 ? ' sunday' : weekday === 6 ? ' saturday' : ''}`);
       el.dataset.date = key; el.setAttribute('aria-pressed', String(number === day)); numbers.append(el);
@@ -152,6 +154,7 @@
   function start(entry) {
     if (!admin() || busy || !folderId) return;
     if (draft && dirty && !confirm('작성 중인 내용을 버릴까요?')) return;
+    if(!entry)clearTarget();
     resetDraft();
     draft = entry ? { ...entry, entry_time: entry.entry_time.slice(0, 5) } : {
       id: crypto.randomUUID(), folder_id: folderId, entry_date: selectedDate, entry_time: koreaNow().slice(11, 16), weather: '', body: '',
@@ -212,7 +215,7 @@
     for (const folder of folders) {
       const el = button('', folder.label, () => {
         if (draft || busy) return;
-        folderId = folder.id; page = 1; writtenDates.clear(); notice = ''; render();
+        clearTarget();folderId = folder.id; page = 1; writtenDates.clear(); notice = ''; render();
       }, 'photo-folder');
       el.dataset.diaryFolder = folder.id;
       el.append(element('i', 'photo-folder-icon'), element('span', '', folder.label)); nav.append(el);
@@ -233,6 +236,7 @@
         folders = await repository.folders(); if (token !== request) return;
         populateFolders();
       }
+      if(target){const location=await window.MinihompyPostLocation.locate('diary',target,pageSize);if(token!==request)return;folderId=location.folder_id;selectedDate=location.entry_date;page=location.page;}
       if (!folders.some(f => f.id === folderId)) folderId = folders[0]?.id;
       if (!folderId) { content.replaceChildren(element('p', 'diary-empty', '등록된 폴더가 없습니다.')); renderCalendar(); return; }
       const dates = await repository.dates(folderId, selectedDate.slice(0, 7));
@@ -240,15 +244,17 @@
       writtenDates = new Set(dates); renderCalendar();
       const result = await repository.list(folderId, selectedDate, page, pageSize);
       if (token !== request) return;
+      if(target&&!result.items.some(p=>p.id===target))throw Error('글이 삭제되었거나 조회할 수 없습니다.');
       const maximum = Math.max(1, Math.ceil(result.count / pageSize));
       if (page > maximum) { page = maximum; return render(); }
       const status = element('p', 'diary-status', notice); status.setAttribute('role', 'status');
       content.replaceChildren(status, ...result.items.map(entryView));
+      requestAnimationFrame(()=>window.MinihompyPostRoutes?.focus(content,target));
       if (!result.items.length) content.append(element('p', 'diary-empty', '등록된 일기가 없습니다.'));
       if (maximum > 1) {
         const nav = element('nav', 'diary-actions'); nav.setAttribute('aria-label', '일기 페이지');
-        const prev = button('‹', '이전 일기 페이지', () => { page--; render(); }); prev.disabled = page === 1;
-        const next = button('›', '다음 일기 페이지', () => { page++; render(); }); next.disabled = page === maximum;
+        const prev = button('‹', '이전 일기 페이지', () => { clearTarget();page--; render(); }); prev.disabled = page === 1;
+        const next = button('›', '다음 일기 페이지', () => { clearTarget();page++; render(); }); next.disabled = page === maximum;
         nav.append(prev, element('span', '', `${page} / ${maximum}`), next); content.append(nav);
       }
     } catch (error) {
@@ -259,6 +265,7 @@
     content.scrollTop = 0;
     requestAnimationFrame(updateScroll);
   }
+  window.MinihompyPostRoutes?.guard(next=>(content?.isConnected||next?.id==='diary'&&next.post)?{busy,dirty,discard:()=>{if(next?.id==='diary'&&next.post)resetDraft();}}:null);
   window.addEventListener('beforeunload', event => { if (dirty || busy) { event.preventDefault(); event.returnValue = ''; } });
   window.addEventListener('minihompy:identity', () => {
     if (!admin()) { resetDraft(); notice = ''; }
@@ -280,7 +287,8 @@
       footer.append(element('p', '', '포도 : 0알'), element('div', 'diary-manage', '다이어리 관리하기'));
       sidebar.append(nav, footer); populateFolders(); return fragment(sidebar);
     },
-    createMain() {
+    createMain(route={}) {
+      target=route.post||null;
       calendar = element('div', 'diary-calendar');
       const summary = element('p', 'diary-summary', '전체 공개 다이어리 폴더입니다.');
       content = element('div', 'diary-scroll'); content.id = 'diary-content'; content.tabIndex = 0; content.setAttribute('aria-label', '일기 본문');

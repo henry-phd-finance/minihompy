@@ -76,6 +76,15 @@ try{
   await change(21,'update',{request_id:id(201),revision:1,body:'attack'},b,'member',404);
   await change(21,'delete',{request_id:id(202),revision:999},b,'member',404);
  });
+ await check('post address uses the same public/member/owner authorization and rejects invalid IDs',async()=>{
+  const path='/guestbook?size=1&post='+id(21);
+  assert.ok((await request(path,{token:aFresh})).items.some(x=>x.id===id(21)));
+  assert.ok((await request(path,{token:ownerToken,mode:'owner'})).items.some(x=>x.id===id(21)));
+  await request(path,{mode:'public',expected:404});await request(path,{token:b,expected:404});
+  await request('/guestbook?post=bad',{mode:'public',expected:400});
+  await request('/guestbook?post='+id(20)+'&post='+id(21),{mode:'public',expected:400});
+  const publicPost=await request('/guestbook?size=1&post='+id(20),{mode:'public'});assert.equal(publicPost.items[0].id,id(20));
+ });
  await check('author edits with revision checks; owner cannot edit another member body',async()=>{
   const payload={request_id:id(203),revision:1,body:'수정한 본문'};
   assert.equal((await change(21,'update',payload,aFresh)).revision,2);

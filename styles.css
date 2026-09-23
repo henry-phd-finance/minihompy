@@ -490,3 +490,29 @@ button.surf-select { display: block; width: 100%; text-align: left; color: inher
 #surf-results a { color: #26778c; }
 .surf-actions { display: flex; gap: 8px; justify-content: flex-end; }
 .surf-dialog :focus-visible, button.surf-select:focus-visible, #random-visit:focus-visible { outline: 2px solid #26778c; outline-offset: 2px; }
+
+/* Real public home activity stays within the existing 240 × 44 home region. */
+.home-activity { column-gap: 3px; grid-template-columns: 120px 117px; font-size: 6px; line-height: 8px; }
+.home-recent-list { list-style: none; padding: 0; margin: 0; min-width: 0; overflow: auto; }
+.home-recent-item { height: 8px; }
+.home-post-link { display: flex; align-items: baseline; gap: 2px; min-width: 0; color: #666; text-decoration: none; }
+.home-post-link:hover, .home-post-link:focus-visible { color: #24748d; text-decoration: underline; }
+.home-post-kind { flex: 0 0 24px; color: #41758c; }
+.home-post-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; min-width: 0; }
+.home-post-date { font-size: 5px; white-space: nowrap; }
+.home-post-comments { color: #c45b1a; font-size: 5px; }
+.home-activity-counts { min-width: 0; }
+.home-count-caption, .home-today-comments { margin: 0; line-height: 8px; }
+.home-activity .board-counts { grid-template-columns: repeat(2,minmax(0,1fr)); grid-template-rows: repeat(2,12px); margin: 0; line-height: 11px; font-size: 6px; }
+.home-activity .board-counts dd { font-size: 5px; line-height: 11px; overflow: hidden; text-overflow: ellipsis; }
+.home-activity .board-counts dt { flex-shrink: 0; }
+.home-activity-message { grid-column: 1 / -1; margin: 3px 0; }
+.home-activity-empty { margin: 4px 3px 0 0; white-space: normal; }
+.home-activity-retry { justify-self: start; align-self: start; font: inherit; padding: 1px 3px; }
+.home-post-link:focus-visible, .home-activity-retry:focus-visible { outline: 1px solid #24748d; outline-offset: -1px; }
+
+/* Keep visit totals inside the existing header at large count values. */
+.visit-count { max-width: 112px; }
+.visit-count > span { overflow: hidden; text-overflow: ellipsis; }
+.visit-count small { white-space: nowrap; font: inherit; }
+.visit-count button { flex: none; font: inherit; line-height: 8px; padding: 0 2px; border: 1px solid #aaa; background: white; cursor: pointer; }

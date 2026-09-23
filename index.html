@@ -23,7 +23,13 @@
   <script src="comments-repository.js" defer></script>
   <script src="comments.js" defer></script>
   <script src="content.js" defer></script>
+  <script src="post-routes.js" defer></script>
+  <script src="post-location-repository.js" defer></script>
   <script src="views/index.js" defer></script>
+  <script src="home-data-config.js" defer></script>
+  <script src="visit-counts.js" defer></script>
+  <script src="home-repository.js" defer></script>
+  <script src="home-activity.js" defer></script>
   <script src="views/home.js" defer></script>
   <script src="profile-data.js" defer></script>
   <script src="views/profile.js" defer></script>
@@ -70,7 +76,7 @@
       <path class="frame-spread" data-region="A05" d="M21 14 H120 Q125 14 130 16 Q135 14 140 14 H412 Q419 14 419 21 V271 Q419 278 412 278 H140 Q135 278 130 276 Q125 278 120 278 H21 Q14 278 14 271 V21 Q14 14 21 14 Z"/>
     </svg>
 
-    <div class="visit-count"><span>TODAY <b data-config="home.today">1</b></span><span>TOTAL <span data-config="home.total">2</span></span></div>
+    <div class="visit-count" aria-label="방문 통계" aria-live="polite"><span>TODAY <b data-visit="today">—</b></span><span>TOTAL <span data-visit="total">—</span></span><small data-visit="status">준비 중</small><button type="button" aria-label="방문 통계 다시 시도" hidden>↻</button></div>
     <h1 class="homepage-title" data-config="page.title">님의 미니홈피</h1>
     <!-- Relationship actions are added with the verified relationship feature (backlog 5). -->
     <section class="profile-panel" data-region="A06" data-view-slot="left" aria-label="홈 왼쪽 영역"></section>

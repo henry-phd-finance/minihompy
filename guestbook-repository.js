@@ -25,11 +25,12 @@
     context,
     nickname: session.nickname,
     authorize: () => window.MinihompyMemberWriting.authorize(),
-    async list(ctx, page, size) {
-      if (ctx.api) return content(`/guestbook?page=${page}&size=${size}`, { mode: ctx.mode }, ctx);
+    async list(ctx, page, size, postId) {
+      if (ctx.api) return content(`/guestbook?page=${page}&size=${size}${postId?"&post="+encodeURIComponent(postId):""}`, { mode: ctx.mode }, ctx);
+      if(postId)page=(await window.MinihompyPostLocation.locate('guestbook',postId,size,ctx.client)).page;
       const result = checked(await ctx.client.from('guestbook_posts').select('*', { count: 'exact' })
         .order('created_at', { ascending: false }).order('id', { ascending: false }).range((page - 1) * size, page * size - 1));
-      return { items: result.data, count: result.count };
+      return { items: result.data, count: result.count, page };
     },
     async save(draft) {
       const stamp=window.MinihompyMemberWriting?.snapshot();

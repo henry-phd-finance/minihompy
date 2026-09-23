@@ -174,4 +174,5 @@
       states.get(key)?.root?.replaceChildren(); states.delete(key);
     },
   });
+  window.MinihompyPostRoutes?.guard(()=>{const active=[...states.values()].filter(s=>s.root?.isConnected);return {busy:active.some(s=>s.busy),dirty:active.some(s=>s.dirty)};});
 })();

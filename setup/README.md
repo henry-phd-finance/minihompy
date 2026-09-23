@@ -110,3 +110,20 @@ node scripts/verify-artifact.mjs
 ```
 
 `navigation`은 비밀번호나 관리 토큰 없이 중앙의 지원 버전·등록 주소·목록과 개인 런타임 연결을 확인하는 읽기 전용 명령입니다. 설정의 `siteId`는 등록 완료된 값이어야 합니다. 개인 DB 마이그레이션이나 새로운 비밀 설정은 없습니다. 성공 후 자신의 저장소에서 Pages를 배포합니다. 중앙 장애 시 오래된 주소로 우회하지 않고 화면의 재확인을 이용합니다. 실제 일촌 기능은 별도 백로그입니다.
+
+## 홈 데이터와 방문 통계 설치·업그레이드
+
+신규 설치는 `install → 등록 확인 파일 Pages 배포 → verify → writing`을 마친 뒤, 기존 사이트는 회원 작성 DB까지 준비된 상태에서 아래 명령을 실행합니다. `install`은 최신 SQL을 포함하지만 홈 기능을 자동 활성화하지 않습니다. 다음 점검·함수 설치를 완료해야 합니다.
+
+```sh
+node setup/setup.mjs home-data --config setup/config.json --dry-run
+node setup/setup.mjs home-data --config setup/config.json
+```
+
+공개 config와 기존 소유자 로그인 환경변수 `MINIHOMPY_OWNER_EMAIL`, `MINIHOMPY_OWNER_PASSWORD`, `SUPABASE_ACCESS_TOKEN`을 사용합니다. dry run은 로컬 파일·런타임 연결·프로젝트 일치만 검사하며 네트워크/파일 변경 없이 끝납니다. 실제 실행은 소유자 권한과 회원 스키마를 확인하고 홈 요약/글 위치/방문 SQL 005~008을 해시 이력으로 적용합니다. 기존 수동 TODAY/TOTAL이나 콘텐츠를 초기화하지 않습니다. 기존 `install`이 적용한 해시는 그대로 인정하고, 이력 없는 홈 SQL은 멱등 적용으로 이력에 등록합니다. 이력이 있는 SQL의 내용이 달라졌다면 중단합니다.
+
+프로젝트에 `MINIHOMPY_VISIT_SECRET` 이름이 있으면 값을 읽거나 교체하지 않습니다. 없으면 방문 TOTAL이 0인지 확인하고 32바이트 난수 secret을 최초 생성합니다. 기존 방문이 있는데 secret이 없으면 자동 재생성하지 않고 중단합니다. `MINIHOMPY_SITE_ORIGIN`을 설정하고 `visit-counts`를 배포한 뒤, 허용 Origin으로 통계 조회와 공개 홈 요약을 검사합니다. 검증은 방문 수를 늘리지 않습니다. 모두 성공해야 프로젝트 URL·홈페이지에 묶인 `home-data-config.js`가 활성화됩니다.
+
+실패 원인을 해결한 뒤 같은 명령을 재실행할 수 있습니다. 이미 적용한 SQL·secret은 유지됩니다. 동일 프로젝트에 대한 설치는 한 번에 한 관리자만 실행하세요. 같은 폴더의 동시 실행은 `.minihompy-home-data.lock`으로 차단합니다. 프로세스가 강제 종료되어 잠금이 남았다면 진행 중인 작업이 없는지 확인한 후 그 잠금 파일만 제거하세요. 자동 secret 교체는 지원하지 않습니다. 교체 시 날짜 중복 영향을 피하는 절차는 [방문 계약](../docs/visit-counts-contract.md)을 따릅니다.
+
+성공 후 최신 런타임과 생성된 `home-data-config.js`를 함께 Pages에 배포합니다. 이 명령은 commit/push를 하지 않습니다. 준비되지 않은 사이트는 기본 `enabled: false`를 유지하세요. 이때 홈 요약과 방문 API를 호출하지 않고 준비 중으로 표시합니다. 다른 사이트의 활성화 파일을 복사해도 프로젝트/홈페이지가 다르면 호출하지 않습니다. 비활성화로 복구할 때도 통계 테이블이나 secret을 삭제하지 마세요. 기능 준비를 확인한 뒤 같은 명령으로 재활성화합니다.

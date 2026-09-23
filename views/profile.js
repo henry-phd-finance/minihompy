@@ -203,4 +203,5 @@
       return fragment(main);
     },
   };
+  window.MinihompyPostRoutes?.guard(()=>main?.isConnected?{busy,dirty}:null);
 })();

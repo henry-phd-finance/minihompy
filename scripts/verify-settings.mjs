@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { mkdir } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { initialSettings } from './settings-fixture.mjs';
+import { initialSettings, mockHomeSummary } from './settings-fixture.mjs';
 const { chromium } = await import(pathToFileURL(resolve(process.argv[2])).href);
 const out = new URL('../docs/verification/settings/', import.meta.url); await mkdir(out,{recursive:true});
 const browser = await chromium.launch({executablePath:process.env.CHROMIUM_PATH,headless:true});
@@ -11,6 +11,8 @@ try {
     const page = await browser.newPage({viewport:{width,height:812},deviceScaleFactor:dpr});
     const errors=[]; page.on('pageerror',e=>errors.push(e.message)); page.on('dialog',d=>d.accept());
     let payload=structuredClone(initialSettings),revision=1, fail=false, deny=false;
+    // This isolated editor test must never visit the production central login.
+    await page.addInitScript(()=>Object.defineProperty(window,'MINIHOMPY_VISITOR_IDENTITY_CONFIG',{get:()=>({enabled:false}),set:()=>{}}));
     await page.addInitScript(()=>{
       let backend; window.testAdmin=true;
       Object.defineProperty(window,'MinihompyBackend',{
@@ -35,6 +37,7 @@ try {
       return route.fulfill({json:[{payload,revision}]});
     });
     await page.route('**/rest/v1/board_*',route=>route.fulfill({json:[],headers:{'content-range':'*/0','access-control-expose-headers':'content-range'}}));
+    await mockHomeSummary(page);
     await page.goto(`${new URL('../index.html',import.meta.url).href}#/settings`);
     await page.locator('.settings-form').waitFor();
     assert.equal(await page.locator('.page-tab').last().getAttribute('data-menu'),'settings');
@@ -61,11 +64,11 @@ try {
     await page.locator('.settings-save').click();
     await page.getByRole('status').filter({hasText:'저장했습니다.'}).waitFor();
     await page.locator('[data-settings-section="home"]').click();
-    await page.locator('#setting-home-today').fill('42');
+    assert.equal(await page.locator('#setting-home-today, #setting-home-total').count(),0);
     await page.locator('#setting-home-recentEmptyLines-0').fill('새 소식');
     await page.locator('.settings-save').click();
     await page.getByRole('status').filter({hasText:'저장했습니다.'}).waitFor();
-    assert.equal(payload.home.today,42);
+    assert.equal(payload.home.today,initialSettings.home.today);
     await page.locator('[data-settings-section="menus"]').click();
     assert.equal(await page.locator('[data-setting-menu="settings"]').count(),0);
     for(const checkbox of await page.locator('.settings-menu-row input[type="checkbox"]').all())await checkbox.check();
@@ -77,7 +80,7 @@ try {
     assert.equal(await page.locator('.page-tab').last().getAttribute('data-menu'),'settings');
     assert(await page.locator('[data-menu="home"] .tab-label').evaluate(e=>e.classList.contains('text-clipped')));
     const geometry=await page.locator('.page-tab').evaluateAll(elements=>elements.map(e=>({top:e.getBoundingClientRect().top,height:e.getBoundingClientRect().height})));
-    const scale=width>=900?1.5:1;
+    const scale=await page.locator('.minihompy').evaluate(e=>e.getBoundingClientRect().width/e.offsetWidth);
     assert.equal(geometry[9].top,234*scale); assert.equal(geometry[9].height,18*scale);
     assert(await page.locator('.settings-scroll').evaluate(e=>e.scrollWidth<=e.clientWidth));
     await page.screenshot({path:new URL(`menus-${width}-dpr${dpr}.png`,out).pathname});

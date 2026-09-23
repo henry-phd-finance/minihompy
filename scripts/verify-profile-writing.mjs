@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { mkdir, readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { mockSettings, initialProfile } from './settings-fixture.mjs';
+import { mockSettings, initialProfile, mockHomeSummary } from './settings-fixture.mjs';
 const { chromium } = await import(pathToFileURL(resolve(process.argv[2])).href);
 const out = new URL('../docs/verification/profile-writing/', import.meta.url); await mkdir(out, { recursive: true });
 const jpg = await readFile(new URL('../assets/photos/lake.jpg', import.meta.url));
@@ -13,6 +13,8 @@ try {
     const errors = []; page.on('pageerror', e => errors.push(e.message)); page.on('dialog', d => d.accept());
     let row = structuredClone(initialProfile), deny = false, failRead = false, failUpload = false, loseSave = false, uploaded = 0;
     const objects = new Set();
+    // This isolated editor test must never visit the production central login.
+    await page.addInitScript(()=>Object.defineProperty(window,'MINIHOMPY_VISITOR_IDENTITY_CONFIG',{get:()=>({enabled:false}),set:()=>{}}));
     await page.addInitScript(() => {
       let backend; window.testAdmin = true;
       Object.defineProperty(window, 'MinihompyBackend', {
@@ -47,6 +49,7 @@ try {
       if (req.method() === 'DELETE') return route.fulfill({ json: [] });
       return route.fulfill({ contentType: 'image/jpeg', body: jpg });
     });
+    await mockHomeSummary(page);
     await page.goto(`${new URL('../index.html', import.meta.url).href}#/profile`);
     await page.locator('.profile-edit').waitFor();
     await page.locator('.profile-edit').click();

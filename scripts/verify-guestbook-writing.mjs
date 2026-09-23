@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { mkdir } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { initialSettings } from './settings-fixture.mjs';
+import { initialSettings, mockHomeSummary } from './settings-fixture.mjs';
 const { chromium } = await import(pathToFileURL(resolve(process.argv[2])).href);
 const out = new URL('../docs/verification/guestbook-writing/', import.meta.url);
 await mkdir(out, { recursive: true });
@@ -76,6 +76,7 @@ try {
       }, next);
       await page.locator('.guestbook-save').waitFor();
     }
+    await mockHomeSummary(page);
     await page.goto(`${new URL('../index.html', import.meta.url).href}#/guestbook`);
     await page.locator('.guestbook-empty').waitFor(); assert.equal(signups, 0); assert.equal(await page.evaluate(() => typeof window.MinihompyCaptcha), 'undefined');
     await page.locator('.guestbook-name').fill('방문객'); await page.locator('.guestbook-body-input').fill('첫 인사\n<script>window.bad=true</script>');

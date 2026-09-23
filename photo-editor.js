@@ -184,6 +184,7 @@
       return root;
     },
   };
+  window.MinihompyPostRoutes?.guard(next=>(root?.isConnected||next?.id==='photos'&&next.post)?{busy,dirty,discard:()=>{if(next?.id==='photos'&&next.post)reset();}}:null);
   window.addEventListener('beforeunload', event => { if (dirty || busy) { event.preventDefault(); event.returnValue = ''; } });
   window.addEventListener('minihompy:identity', () => { if (!admin()) reset(); });
 })();

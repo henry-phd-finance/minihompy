@@ -3,6 +3,9 @@ import {readFile} from 'node:fs/promises';
 import {resolve,extname} from 'node:path';
 import {pathToFileURL} from 'node:url';
 const {chromium}=await import(pathToFileURL(resolve(process.argv[2])));
+const withVisits=process.env.HOME_VISITS_INTEGRATION==='1';
+const {memberWritingDb}=await import('./helpers/member-writing-db.mjs');
+const {handleVisitCounts}=await import('../supabase/functions/visit-counts/handler.js');
 const centralRoot=resolve('../minihompy-central'),root=resolve('.');
 const {createIdentityDb}=await import(pathToFileURL(centralRoot+'/scripts/helpers/identity-db.mjs'));
 const {handleIdentityApiRequest}=await import(pathToFileURL(centralRoot+'/supabase/functions/identity-api/handler.js'));
@@ -22,8 +25,10 @@ const browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH,he
 const width=Number(process.argv[3]||1280);
 const context=await browser.newContext({viewport:{width,height:820},hasTouch:width===375});
 const retained=new Set(['visitor-identity-config.js','visitor-identity-login.js','visitor-identity.js','member-navigation.js','author-navigation.js','surf-navigation.js','views/home.js','admin-auth.js']);
+if(withVisits)for(const name of ['supabase-config.js','home-data-config.js','visit-counts.js'])retained.add(name);
 try{
  for(const s of sites){
+  if(withVisits){const {PGlite}=await import(pathToFileURL(centralRoot+'/node_modules/@electric-sql/pglite/dist/index.js'));s.personal=await memberWritingDb(PGlite,{siteId:s.site,centralUrl:api});}
   await pg.query('insert into private.identity_members(id,handle,display_name) values($1,$2,$3)',[s.member,s.name,'동명']);
   await pg.query("insert into private.identity_sites(id,member_id,origin,base_path,homepage_url,login_url,supabase_project_ref,supabase_publishable_key,verification_status) values($1,$2,$3,'/home/',$4,$5,$6,$7,'verified')",[s.site,s.member,s.origin,s.home,s.home+'login/',s.ref,'sb_publishable_fixture123456789']);
   await pg.query('insert into private.identity_bindings(site_id,member_id,local_user_id) values($1,$2,$3)',[s.site,s.member,s.owner]);
@@ -44,10 +49,17 @@ try{
    return route.fulfill({body:await readFile(resolve(centralRoot,'public',name)),contentType:name.endsWith('.js')?'text/javascript':name.endsWith('.css')?'text/css':'text/html'});
   }
   const auth=sites.find(s=>u.hostname===s.ref+'.supabase.co');
+  if(auth&&withVisits&&u.pathname.endsWith('/visit-counts')){
+   const response=await handleVisitCounts(new Request(req.url(),{method:req.method(),headers:req.headers(),...(req.postData()?{body:req.postData()}:{})}),{env:{MINIHOMPY_SITE_ORIGIN:auth.origin,SUPABASE_URL:`https://${auth.ref}.supabase.co`,SUPABASE_SERVICE_ROLE_KEY:'fixture-service',MINIHOMPY_VISIT_SECRET:'fixture-visit-secret-'.repeat(3)},rpc:async(name,args)=>{
+    const result=await auth.personal.pg.query(name==='visit_stats'?'select public.visit_stats() as data':'select public.visit_record($1,$2) as data',name==='visit_stats'?[]:[args.p_day,args.p_digest]);return result.rows[0].data;
+   }});
+   return route.fulfill({status:response.status,body:await response.text(),headers:Object.fromEntries(response.headers)}).catch(()=>{});
+  }
   if(auth){assert.ok(u.pathname.endsWith('/owner-login'));assert.equal(req.postDataJSON().password,'fixture-password');return route.fulfill({json:{access_token:'header.'+auth.name+'.signature',refresh_token:'fixture-refresh'}});}
   const s=sites.find(s=>s.origin===u.origin);if(!s)throw Error('Unexpected origin');
   let name=u.pathname.slice('/home/'.length)||'index.html';if(name==='login/')name='login/index.html';
   if(name==='visitor-identity-config.js')return route.fulfill({contentType:'text/javascript',body:`window.MINIHOMPY_VISITOR_IDENTITY_CONFIG=${JSON.stringify({enabled:true,siteId:s.site,centralApiUrl:api,centralPageUrl:central,healthTimeoutMs:1000,navigationTimeoutMs:1000})};`});
+  if(name==='home-data-config.js')return route.fulfill({contentType:'text/javascript',body:`window.MINIHOMPY_HOME_DATA_CONFIG={enabled:true,supabaseUrl:'https://${s.ref}.supabase.co',homepage:'${s.home}'};`});
   if(name==='supabase-config.js')return route.fulfill({contentType:'text/javascript',body:`window.MINIHOMPY_SUPABASE={url:'https://${s.ref}.supabase.co'};`});
   const backend=`window.MINIHOMPY_VIEWS={};window.MinihompyBackend={getClient:()=>({auth:{getSession:async()=>({data:{session:localStorage.getItem('fixture-owner')?{access_token:'header.${s.name}.signature'}:null}}),setSession:async value=>{localStorage.setItem('fixture-owner','yes');return {data:{session:value}};},getUser:async()=>({data:{user:localStorage.getItem('fixture-owner')?{id:'${s.owner}'}:null}}),signOut:async()=>{localStorage.removeItem('fixture-owner');return {};},onAuthStateChange:()=>({data:{subscription:{unsubscribe(){}}}})},rpc:async()=>({data:Boolean(localStorage.getItem('fixture-owner'))})})};`;
   if(name==='index.html'){
@@ -63,7 +75,7 @@ try{
  const page=await context.newPage();page.setDefaultTimeout(15000);page.on('pageerror',e=>errors.push(e.message));
  const wait=async(p,status)=>{await p.waitForFunction(status=>window.MinihompyNavigation?.state.status===status,status).catch(async error=>{throw Error(JSON.stringify({expected:status,url:new URL(p.url()).origin+new URL(p.url()).pathname,body:await p.locator('body').innerText(),errors})+' '+error.message);});assert.ok(!p.url().includes('vt='));};
  async function login(p,s){const expected=new URL(p.url()).origin===s.origin?'self':'other';await p.locator('#my-home-login').click();await p.waitForURL(central+'/login.html**');await p.locator('#handle').fill(s.name);await p.locator('#submit').click();await p.waitForURL(s.home+'login/**');if(await p.locator('#password').isVisible()){await p.locator('#password').fill('fixture-password');await p.locator('#submit').click();}await wait(p,expected);}
- await page.goto(sites[0].home+'#/home');await wait(page,'anonymous');await login(page,sites[0]);
+ const deepHash='#/board?post='+id(501);await page.goto(sites[0].home+deepHash);await wait(page,'anonymous');assert.equal(new URL(page.url()).hash,deepHash);await login(page,sites[0]);assert.equal(new URL(page.url()).hash,deepHash);
  assert.equal(await page.evaluate(()=>MinihompyAdmin.state.role),'admin');
  await page.locator('[data-surf-open]').click();await page.locator('#surf-results a').filter({hasText:'@bob'}).click();await wait(page,'other');assert.equal(page.url(),sites[1].home+'#/home');assert.equal(await page.evaluate(()=>MinihompyAdmin.state.role),'reader');
  assert.equal(await page.locator('#my-home-link').getAttribute('href'),sites[0].home);await page.locator('#my-home-link').click();await wait(page,'self');
@@ -106,4 +118,9 @@ try{
  await peer.reload();await wait(peer,'anonymous');assert.equal(await peer.locator('#my-home-link').getAttribute('href'),null);
  assert.ok(issued.includes(sites[0].site)&&issued.includes(sites[1].site));assert.deepEqual(errors,[]);
  console.log('PASS central outage/retry, SQL session expiration and no credential-bearing final URLs');
-}finally{release?.();await context.close();await browser.close();await pg.close();}
+ if(withVisits){
+  await peer.waitForFunction(()=>document.querySelector('.visit-count')?.dataset.status==='ready');
+  for(const s of sites){const stats=(await s.personal.pg.query('select public.visit_stats() as data')).rows[0].data;assert.equal(stats.today,1);assert.equal(stats.total,1);assert.equal((await s.personal.pg.query('select count(*) from private.visit_keys')).rows[0].count,1);}
+  console.log('PASS actual A/B personal visit SQL + Edge + browser during central login/return, cross-site navigation, extra tabs, logout/account switch and central outage: exactly one per site');
+ }
+}finally{release?.();await context.close();await browser.close();for(const s of sites)await s.personal?.pg.close();await pg.close();}

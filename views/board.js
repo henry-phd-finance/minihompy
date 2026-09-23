@@ -2,6 +2,8 @@
   'use strict';
   const repository = window.MinihompyBoardRepository;
   const pageSize = 10;
+  let target=null;
+  function clearTarget(){target=null;window.MinihompyApp?.clearPost?.();}
   let selected = null, page = 1, total = 0;
   let folders = [], items = [], post = null, draft = null;
   let sidebar, main, request = 0, loading = false, saving = false, foldersLoaded = false, epoch = 0;
@@ -43,7 +45,7 @@
       }
       const entry = button('', 'board-folder', () => {
         if (!discard()) return;
-        selected = item.id; page = 1; post = null; listScroll = 0; void load();
+        clearTarget();selected = item.id; page = 1; post = null; listScroll = 0; void load();
       });
       entry.dataset.boardFolder = item.id || '__all__'; entry.title = item.label;
       entry.classList.toggle('active', selected === item.id); entry.setAttribute('aria-pressed', String(selected === item.id));
@@ -63,6 +65,7 @@
         folders = result; foldersLoaded = true;
         if (selected && !realFolders().some(item => item.id === selected)) { selected = null; page = 1; post = null; }
       }
+      if(target){const location=await window.MinihompyPostLocation.locate('board',target,pageSize);if(token!==request)return;selected=location.folder_id;page=location.page;post={id:target};}
       if (post) {
         const result = await repository.get(post.id);
         if (token !== request) return;
@@ -75,7 +78,7 @@
         if (token !== request) return;
         items = result.items; total = result.count;
       }
-    } catch (cause) { if (token === request) error = cause.message || '불러오지 못했습니다.'; }
+    } catch (cause) { if (token === request) {if(target)post=null;error = cause.message || '불러오지 못했습니다.';} }
     finally {
       if (token === request) {
         loading = false; renderFolders(); renderMain();
@@ -90,10 +93,11 @@
   }
   function back() {
     if (!discard()) return;
-    restoreFocus = post?.id; post = null; void load();
+    clearTarget();restoreFocus = post?.id; post = null; void load();
   }
   function compose(edit = false) {
     if (!admin() || saving || loading || !realFolders().length) return;
+    if(!edit)clearTarget();
     ++request;
     draft = edit ? { ...post, dirty: false } : { folder_id: selected || realFolders()[0].id, title: '', body: '', dirty: false };
     error = ''; renderMain(); main.querySelector('#board-edit-title').focus();
@@ -101,7 +105,7 @@
   async function remove() {
     if (!admin() || saving || !window.confirm('이 글을 삭제할까요?')) return;
     saving = true; error = ''; renderFolders(); renderMain();
-    try { await repository.remove(post); window.MinihompyComments.forget('board', post.id); post = null; listScroll = 0; }
+    try { await repository.remove(post); window.MinihompyComments.forget('board', post.id); clearTarget();post = null; listScroll = 0; }
     catch (cause) { error = cause.message || '삭제 결과를 확인하지 못했습니다. 다시 조회해 주세요.'; }
     finally { saving = false; }
     if (!error) await load(); else { renderFolders(); renderMain(); }
@@ -203,11 +207,13 @@
     if (draft && main?.querySelector('.board-save')) main.querySelector('.board-save').disabled = saving || !admin();
     else renderMain();
   });
+  window.MinihompyPostRoutes?.guard(next=>(main?.isConnected||next?.id==='board'&&next.post)?{busy:saving,dirty:!!draft?.dirty,discard:()=>{if(next?.id==='board'&&next.post)draft=null;}}:null);
   window.addEventListener('beforeunload', event => { if (draft?.dirty || saving) { event.preventDefault(); event.returnValue = ''; } });
   window.MINIHOMPY_VIEWS.board = {
     label: '게시판', showScrollbar: false,
     createLeft() { sidebar = node('div', 'board-sidebar'); renderFolders(); return fragment(sidebar); },
-    createMain() {
+    createMain(route={}) {
+      target=route.post||null;if(target){post=null;draft=null;}
       main = node('div', 'board-scroll'); main.tabIndex = 0; main.setAttribute('aria-label', '게시판 본문');
       if (draft) renderMain(); else void load(true);
       return fragment(main);
