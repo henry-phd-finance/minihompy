@@ -9,7 +9,7 @@
   window.Quill.register(LocalImage, true);
   const Delta = window.Quill.import('delta');
   let draft, quill, root, message, busy = false, dirty = false, selection = 0;
-  let generation = 0;
+  let generation = 0, submitted=false;
   const node = (tag, className, text) => {
     const element = document.createElement(tag);
     if (className) element.className = className;
@@ -23,7 +23,7 @@
     for (const src of previews.keys()) URL.revokeObjectURL(src);
     previews.clear();
     quill?.disable();
-    draft = null; quill = null; dirty = false; busy = false;
+    draft = null; quill = null; dirty = false; busy = false; submitted=false;
     root?.replaceChildren();
   }
   function capture() { if (draft && quill) draft.delta = quill.getContents(); }
@@ -71,7 +71,7 @@
         dirty = true;
       }
       notify('');
-    } catch (error) { notify(error.message); }
+    } catch (error) { if (generation === token) notify(error.message); }
     finally { if (generation === token) { capture(); lock(false); } }
   }
   window.MinihompyPhotoEditor = {
@@ -150,7 +150,7 @@
       lock(busy);
       root.addEventListener('submit', async event => {
         event.preventDefault(); if (busy || !admin()) return;
-        capture(); const token = generation;
+        capture(); const token = generation, cleanupSafe=!submitted;
         let stage = '본문 확인';
         try {
           const payload = { ...draft, body: blocks() }; repository.validate(payload);
@@ -160,11 +160,11 @@
             stage = `사진 업로드 (${index + 1}/${pending.length})`;
             notify(`${stage} 중입니다.`);
             await repository.upload(local.path, local.file); local.uploaded = true;
-            if (token !== generation || !admin()) return;
+            if (token !== generation || !admin()){if(cleanupSafe)await repository.cleanup(pending.filter(p=>p.uploaded).map(p=>p.path)).catch(()=>{});return;}
           }
           stage = '글 저장';
           notify('글을 저장하고 있습니다.');
-          const saved = await repository.save(payload);
+          submitted=true;const saved = await repository.save(payload);
           if (token !== generation || !admin()) return;
           const used = new Set(saved.body.filter(b => b.type === 'image').map(b => b.path));
           const unused = [...draft.originalPaths, ...[...previews.values()].filter(p => p.uploaded).map(p => p.path)].filter(path => !used.has(path));
@@ -185,6 +185,12 @@
     },
   };
   window.MinihompyPostRoutes?.guard(next=>(root?.isConnected||next?.id==='photos'&&next.post)?{busy,dirty,discard:()=>{if(next?.id==='photos'&&next.post)reset();}}:null);
-  window.addEventListener('beforeunload', event => { if (dirty || busy) { event.preventDefault(); event.returnValue = ''; } });
   window.addEventListener('minihompy:identity', () => { if (!admin()) reset(); });
+  window.addEventListener('minihompy:menu-leave', event => {
+    if (event.detail.id !== null && event.detail.id !== 'photos') return;
+    // A submitted write may already have committed even if its response was lost.
+    const unused = submitted ? [] : [...previews.values()].filter(p => p.uploaded).map(p => p.path);
+    reset();
+    if (unused.length) void repository.cleanup(unused).catch(() => {});
+  });
 })();

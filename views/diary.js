@@ -89,7 +89,7 @@
         const token = epoch;
         setBusy(true);
         try {
-          await repository.remove(entry);if(target===entry.id)clearTarget();
+          await repository.remove(entry);if(token!==epoch)return;if(target===entry.id)clearTarget();
           window.MinihompyComments.forget('diary', entry.id);
           if (token !== epoch) return;
           notice = '일기를 삭제했습니다.';
@@ -266,7 +266,6 @@
     requestAnimationFrame(updateScroll);
   }
   window.MinihompyPostRoutes?.guard(next=>(content?.isConnected||next?.id==='diary'&&next.post)?{busy,dirty,discard:()=>{if(next?.id==='diary'&&next.post)resetDraft();}}:null);
-  window.addEventListener('beforeunload', event => { if (dirty || busy) { event.preventDefault(); event.returnValue = ''; } });
   window.addEventListener('minihompy:identity', () => {
     if (!admin()) { resetDraft(); notice = ''; }
     if (content?.isConnected) {
@@ -296,4 +295,8 @@
       return fragment(calendar, summary, content, rail);
     },
   };
+  window.addEventListener('minihompy:menu-leave', event => {
+    if (event.detail.id !== null && event.detail.id !== 'diary') return;
+    resetDraft(); request++; notice = ''; content?.replaceChildren();
+  });
 })();

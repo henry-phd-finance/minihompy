@@ -25,20 +25,22 @@
   function edit() { if (!admin() || busy || !row) return; draft = structuredClone(row); notice = ''; renderMain(); }
   async function save(event) {
     event.preventDefault(); if (busy || !admin() || !draft) return;
-    const token = identity, value = structuredClone(draft), previous = row.image_path;
+    const token = identity, value = structuredClone(draft), previous = row.image_path, selectedPhoto=photo;
     try { repo.validate(value); } catch (error) { notice = error.message; renderMain(); return; }
     busy = true; notice = ''; renderMain();
     try {
-      if (photo) await repo.upload(value.image_path, photo.file);
+      if (selectedPhoto){await repo.upload(value.image_path, selectedPhoto.file);selectedPhoto.uploaded=true;}
+      if(token!==identity){if(selectedPhoto&&!selectedPhoto.submitted)await repo.cleanup(value.image_path).catch(()=>{});return;}
       if (token !== identity || !admin()) return;
+      if(selectedPhoto)selectedPhoto.submitted=true;
       const saved = await repo.save(value);
       if (token !== identity || !admin()) return;
       row = saved; draft = null; dirty = false; releasePhoto(); notice = '저장했습니다.';
       if (previous !== saved.image_path) {
-        try { await repo.cleanup(previous); } catch { notice = '저장했습니다. 이전 사진 파일은 저장소에 남아 있습니다.'; }
+        try { await repo.cleanup(previous); } catch { if(token===identity)notice = '저장했습니다. 이전 사진 파일은 저장소에 남아 있습니다.'; }
       }
     } catch (error) { if (token === identity) notice = error.message || '저장하지 못했습니다. 입력은 유지됩니다.'; }
-    finally { busy = false; renderMain(); }
+    finally { if(token===identity){busy = false; renderMain();} }
   }
   function renderEditor() {
     const form = node('form', 'profile-editor settings-form'); form.addEventListener('submit', save);
@@ -151,7 +153,6 @@
     if (!admin()) { identity++; releasePhoto(); draft = null; dirty = false; notice = ''; }
     renderMain();
   });
-  window.addEventListener('beforeunload', event => { if (dirty || busy) { event.preventDefault(); event.returnValue = ''; } });
   window.MINIHOMPY_VIEWS.profile = {
     label: '프로필',
     showScrollbar: false,
@@ -204,4 +205,11 @@
     },
   };
   window.MinihompyPostRoutes?.guard(()=>main?.isConnected?{busy,dirty}:null);
+  window.addEventListener('minihompy:menu-leave', event => {
+    if (event.detail.id !== null && event.detail.id !== 'profile') return;
+    identity++; request++;
+    if (photo?.uploaded && !photo?.submitted) void repo.cleanup(draft?.image_path).catch(() => {});
+    releasePhoto(); draft = null; dirty = false; busy = false; loading = false;
+    notice = ''; main?.replaceChildren();
+  });
 })();

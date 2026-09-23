@@ -42,6 +42,9 @@ try {
     await page.locator('.settings-form').waitFor();
     assert.equal(await page.locator('.page-tab').last().getAttribute('data-menu'),'settings');
     assert.equal(await page.locator('[data-menu="settings"]').count(),1);
+    await page.locator('#setting-page-title').fill('discard settings');
+    await page.locator('[data-menu=home]').click(); await page.locator('[data-menu=settings]').click();
+    assert.equal(await page.locator('#setting-page-title').inputValue(), initialSettings.page.title);
     await page.locator('#setting-page-title').fill('새 미니홈피');
     await page.locator('.settings-save').click();
     await page.getByRole('status').filter({hasText:'저장했습니다.'}).waitFor();

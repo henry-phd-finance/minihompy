@@ -98,7 +98,11 @@ try {
     await page.screenshot({ path: new URL(`editor-${width}-dpr${dpr}.png`, out).pathname });
     await page.locator('[data-menu="home"]').click();
     await page.locator('[data-menu="board"]').click();
-    assert.equal(await page.locator('#board-edit-title').inputValue(), '첫 번째 글');
+    assert.equal(await page.locator('#board-edit-title').count(), 0);
+    await page.locator('.board-write').click();
+    assert.equal(await page.locator('#board-edit-title').inputValue(), '');
+    await page.locator('#board-edit-title').fill('첫 번째 글');
+    await page.locator('#board-edit-body').fill('반가워요.\n<script>window.bad=true</script>');
     rejectWrite = true;
     await page.locator('.board-save').click();
     await page.locator('.board-status').filter({ hasText: '입력 내용은 남아' }).waitFor();

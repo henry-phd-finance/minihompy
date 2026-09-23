@@ -82,11 +82,11 @@
   }
   const navigation = window.MinihompyNavigation = window.createMinihompyNavigation({config:window.MINIHOMPY_VISITOR_IDENTITY_CONFIG,publish:render});
   link?.addEventListener('click', event => { if (!link.hasAttribute('href')) event.preventDefault(); });
-  login?.addEventListener('click', () => {
+  login?.addEventListener('click', async () => {
     // Do not click the admin toggle: a local administrator can be centrally anonymous.
     const preparing = new Event('minihompy:writing-authorize',{cancelable:true});
     window.dispatchEvent(preparing); if (preparing.defaultPrevented) return;
-    try { location.assign(shared.getLoginUrl()); } catch { navigation.invalidate('error'); if(status)status.textContent='로그인에 필요한 브라우저 저장소를 사용할 수 없습니다.'; }
+    try { location.assign(await shared.getLoginUrl()); } catch { navigation.invalidate('error'); if(status)status.textContent='로그인에 필요한 브라우저 저장소를 사용할 수 없습니다.'; }
   });
   retry?.addEventListener('click', () => {
     void shared?.retry();

@@ -103,7 +103,8 @@ try {
     await page.locator('.board-post-link').click(); await page.locator('.comment-body').waitFor(); assert.equal(signups, 0);
     await page.locator('.comment-name').fill('방문객'); await page.locator('.comment-body').fill('첫 댓글 <script>window.bad=true</script>');
     await page.locator('[data-menu="home"]').click(); await navigate('board');
-    assert((await page.locator('.comment-body').inputValue()).includes('첫 댓글'));
+    assert.equal(await page.locator('.comment-body').inputValue(), '');
+    await page.locator('.comment-name').fill('방문객'); await page.locator('.comment-body').fill('첫 댓글 <script>window.bad=true</script>');
     rejectWrite = true; await page.locator('.comment-save').click(); await page.locator('.comment-status').filter({ hasText: 'write denied' }).waitFor();
     assert.equal(signups, 1); assert.equal(comments.length, 0);
     rejectWrite = false; lostResponse = true; await page.locator('.comment-save').click(); await page.locator('.comment-status').filter({ hasText: 'Failed to fetch' }).waitFor(); assert.equal(comments.length, 1);
@@ -112,6 +113,9 @@ try {
     assert.match(await page.locator('.photo-comment-date').textContent(), /^\(\d{2}\.\d{2} \d{2}:\d{2}\)$/);
     for (const kind of ['photos', 'diary', 'guestbook']) {
       await navigate(kind); assert.equal(await page.locator('.comment-name').inputValue(), '방문객');
+      await page.locator('.comment-body').fill('discard comment');
+      await page.locator('[data-menu=home]').click(); await navigate(kind);
+      assert.equal(await page.locator('.comment-body').inputValue(), '');
       await page.locator('.comment-body').fill(`${kind} 댓글`); await page.locator('.comment-save').click(); await page.locator('[data-comment]').waitFor();
       assert.equal(comments.at(-1)[columns[kind]], ids[kind]);
       if (width === 375) await page.evaluate(() => window.scrollTo(120, 0));

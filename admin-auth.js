@@ -66,7 +66,7 @@
     }
   });
 
-  function openLogin() {
+  async function openLogin() {
     const preparing = new Event('minihompy:writing-authorize', {cancelable:true});
     window.dispatchEvent(preparing); if (preparing.defaultPrevented) return;
     const config = window.MINIHOMPY_VISITOR_IDENTITY_CONFIG;
@@ -76,7 +76,7 @@
         clean.searchParams.delete('admin');
         history.replaceState(null, '', clean.pathname + clean.search + clean.hash);
       }
-      try { location.assign(window.MinihompySharedIdentity.getLoginUrl()); }
+      try { location.assign(await window.MinihompySharedIdentity.getLoginUrl()); }
       catch { message.textContent = '로그인을 위해 브라우저 저장소 사용을 허용해 주세요.'; dialog.showModal(); form.hidden = true; }
     } else {
       dialog.showModal(); email.focus();

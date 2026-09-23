@@ -89,7 +89,8 @@
     }
     function page(name, guard) {
       const base = (config.centralPageUrl || config.centralUrl).replace(/\/$/, '');
-      return `${base}/${name}.html?site_id=${encodeURIComponent(siteId)}&attempt_id=${encodeURIComponent(guard.attempt_id)}&return_path=${encodeURIComponent(guard.return_path)}`;
+      const writing=guard.writing?`&writing_protocol=2&code_challenge=${encodeURIComponent(guard.writing.code_challenge)}`:'';
+      return `${base}/${name}.html?site_id=${encodeURIComponent(siteId)}&attempt_id=${encodeURIComponent(guard.attempt_id)}&return_path=${encodeURIComponent(guard.return_path)}${writing}`;
     }
     async function request(path, body, timeout) {
       const controller = new AbortController();
@@ -100,7 +101,7 @@
           ...(body ? { headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) } : {}),
         });
         if (!response.ok) throw Error('Identity request failed');
-        return body ? await response.json() : null;
+        return body||window.MinihompyMemberWriting?.enabled()?await response.json():null;
       } finally { clearTimeout(timer); }
     }
     function restore(path) {
@@ -118,6 +119,7 @@
       const guard = read();
       const fragment = new URLSearchParams(location.hash.slice(1));
       const ticket = location.hash.startsWith('#vt=') ? fragment.get('vt') : null;
+      const writingProof=fragment.get('wp');
       if (ticket) {
         // Remove credentials synchronously, before the router or any network request.
         window.MINIHOMPY_IDENTITY_RETURN_PENDING = true;
@@ -128,6 +130,10 @@
           if (current !== generation) return state;
           if (data.attempt_id !== guard.attempt_id) throw Error('Unrelated return');
           restore(data.return_path);
+          if(data.status==='identified'&&window.MinihompyMemberWriting?.enabled()){
+            await window.MinihompyMemberWriting.acceptVisit(writingProof,guard.writing,guard.attempt_id,data.profile.id);
+            if(current!==generation)return state;
+          }
           clear();
           return publish(data.status === 'identified' && data.profile ? 'identified' : 'anonymous', data.status === 'identified' ? data.profile : null);
         } catch {
@@ -143,7 +149,8 @@
       }
       if (guard && Date.now() - guard.started_at < (config.guardTimeoutMs || 120000)) return publish('error');
       try {
-        await request('health', null, config.healthTimeoutMs || 1500);
+        const health=await request('health', null, config.healthTimeoutMs || 1500);
+        if(window.MinihompyMemberWriting?.enabled()&&health.member_session_protocol!==2)throw Error('중앙 서버 업데이트가 필요합니다.');
         if (current !== generation) return state;
         // Navigation during initial loading may replace the original history entry.
         // Preserve it so central errors can return to this site's saved route.
@@ -159,7 +166,7 @@
         }
         await new Promise(done => setTimeout(done, 0));
         if (current !== generation) return state;
-        const next = begin('checking');
+        const next = await prepare('checking');
         // The central round trip replaces this visit, not an extra history entry.
         location.replace(page('visit', next));
       } catch {
@@ -168,6 +175,11 @@
         return publish('error');
       }
       return state;
+    }
+    async function prepare(kind){
+      const next=begin(kind),stamp=generation;
+      if(window.MinihompyMemberWriting?.enabled()){next.writing=await window.MinihompyMemberWriting.prepareVisit();if(stamp!==generation)throw Error('방문 요청이 변경되었습니다.');save(next);}
+      return next;
     }
     function resolve() {
       if (!pending) pending = run().finally(() => { pending = null; });
@@ -182,7 +194,7 @@
         if (preparing.defaultPrevented) return Promise.resolve(state);
         clear(); return resolve();
       },
-      getLoginUrl() { return page('login', begin('login')); },
+      getLoginUrl() { return window.MinihompyMemberWriting?.enabled()?prepare('login').then(g=>page('login',g)):page('login',begin('login')); },
       getLogoutUrl() { return page('logout', begin('logout')); },
     });
   };

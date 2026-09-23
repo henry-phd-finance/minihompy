@@ -111,8 +111,7 @@ try{
   await change(140,'board','update',2,a,'member',404);await change(140,'board','delete',2,a,'member',404);
   await change(140,'board','delete',2,ownerToken,'owner');
  });
- if(process.env.PLAYWRIGHT_PATH){const {verifyCommentsBrowser}=await import('./helpers/comments-browser.mjs');await verifyCommentsBrowser({playwrightPath:process.env.PLAYWRIGHT_PATH,centralRoot,centralHandler:handleIdentityApiRequest,centralOptions,centralSession,ownerCentralSession,personal,options,member,memberB,owner,ownerToken,parents});}
- if(process.env.LIFECYCLE_BROWSER==='1'){const {verifyLifecycleBrowser}=await import('./helpers/lifecycle-browser.mjs');await verifyLifecycleBrowser({playwrightPath:process.env.PLAYWRIGHT_PATH,centralRoot,centralHandler:handleIdentityApiRequest,centralOptions,centralSession,ownerCentralSession,personal,options,member,memberB,owner,ownerToken,parents});}
+ if(process.env.PLAYWRIGHT_PATH){const {verifyAutomaticSessionBrowser}=await import('./helpers/automatic-session-browser.mjs');await verifyAutomaticSessionBrowser({playwrightPath:process.env.PLAYWRIGHT_PATH,centralRoot,centralHandler:handleIdentityApiRequest,centralOptions,centralSession,ownerCentralSession,personal,options,member,memberB,parents});}
  await check('parent delete cascades; stale requests cannot recreate or read any of four parents',async()=>{
   for(const [kind,table] of Object.entries({board:'board_posts',photos:'photo_posts',diary:'diary_entries',guestbook:'guestbook_posts'})){
    await unlock();await create(body(n,kind));await personal.pg.query('delete from public.'+table+' where id=$1',[parents[kind]]);

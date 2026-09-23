@@ -127,15 +127,17 @@
       const remove = node('button', 'photo-delete', '삭제'); remove.type = 'button';
       remove.addEventListener('click', async () => {
         if (!admin() || !confirm('이 사진글을 삭제할까요?')) return;
+        const token = request;
         for (const button of actions.querySelectorAll('button')) button.disabled = true;
         try {
           await repository.remove(post);
-          window.MinihompyComments.forget('photos', post.id);if(target===post.id)clearTarget();
-          notice = '글을 삭제했습니다.';
+          let message = '글을 삭제했습니다.';
           try { await repository.cleanup(post.body.filter(b => b.type === 'image').map(b => b.path)); }
-          catch { notice = '글은 삭제했지만 이미지 파일 정리는 완료하지 못했습니다.'; }
-          renderMain();
-        } catch (error) { notice = error.message; renderMain(); }
+          catch { message = '글은 삭제했지만 이미지 파일 정리는 완료하지 못했습니다.'; }
+          if (token !== request) return;
+          window.MinihompyComments.forget('photos', post.id);if(target===post.id)clearTarget();
+          notice = message; renderMain();
+        } catch (error) { if(token===request){notice = error.message; renderMain();} }
       });
       actions.append(remove); article.append(actions);
     }
@@ -274,4 +276,8 @@
       return result;
     },
   };
+  window.addEventListener('minihompy:menu-leave', event => {
+    if (event.detail.id !== null && event.detail.id !== 'photos') return;
+    request++; mainRoot?.replaceChildren();
+  });
 })();

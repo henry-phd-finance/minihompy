@@ -20,11 +20,13 @@
   function render(state) {
     if (!current(state)) return;
     const root = state.root;
+    const focused=root.contains(document.activeElement)?document.activeElement:null;
+    if(focused?.matches('input,textarea'))state.focus={cls:focused.className,start:focused.selectionStart,end:focused.selectionEnd};
     root.replaceChildren();
     const status = node('p', 'comment-status', state.loading ? '댓글을 불러오고 있습니다.' : state.message); status.setAttribute('role', 'status');
     if (state.loading || !state.context) {
       root.append(status);
-      if (!state.loading) root.append(button('다시 시도', 'comment-retry', async () => {try{await window.MinihompyMemberWriting?.retry();await load(state);}catch{}}));
+      if (!state.loading && !window.MinihompyMemberWriting?.enabled()) root.append(button('다시 시도', 'comment-retry', async () => {try{await window.MinihompyMemberWriting?.retry();await load(state);}catch{}}));
       resize(state); return;
     }
     const list = node('div', 'comment-list');
@@ -97,13 +99,11 @@
       navigation.append(previous, node('span', '', `${state.page}/${pages}`), next);
     }
     navigation.append(button('↻', 'comment-reload', () => { if (!state.busy) load(state); }, '댓글 새로고침'));
-    const authorization = node('div', 'comment-authorization', '로그인한 계정으로 댓글을 쓰려면 회원 확인이 필요합니다.');
-    authorization.append(button('회원 확인','comment-authorize',async () => {
-      try { await repository.authorize(); } catch (error) { state.message=error.message;render(state); }
-    }));
+    const authorization = node('div', 'comment-authorization', '상단에서 로그인 상태를 확인해 주세요.');
     root.append(list, state.context.requiresAuth ? authorization : form, status, navigation);
     if (state.busy) for (const el of root.querySelectorAll('input,button')) el.disabled = true;
-    resize(state);
+    if(state.focus){const el=[...root.querySelectorAll('input,textarea')].find(e=>e.className===state.focus.cls);if(el){el.focus();el.setSelectionRange(state.focus.start,state.focus.end);}state.focus=null;}
+    applySessionState();resize(state);
   }
   async function load(state) {
     const token = ++state.request;
@@ -130,6 +130,7 @@
       state = { key, kind, id, draft: fresh(), dirty: false, busy: false, page: 1, count: 0, request: 0, items: [], context: null, message: '' };
       states.set(key, state);
     }
+    if(state.root&&state.root!==root)state.root.replaceChildren();
     state.root = root; load(state); return root;
   }
   function clearIdentity() {
@@ -149,6 +150,7 @@
   window.addEventListener('minihompy:visitor-identity', () => { if (window.MinihompyMemberWriting?.enabled()) identityChanged(); });
   window.addEventListener('minihompy:writing-reset',event=>{
     epoch++;
+    if(!event.detail.clearDraft){for(const state of states.values()){state.request++;state.items=[];state.loading=false;state.busy=false;state.context=null;state.root?.querySelector('.comment-list')?.remove();const msg=state.root?.querySelector('.comment-status');if(msg)msg.textContent=event.detail.reason;}applySessionState();return;}
     for(const state of states.values()){
       state.request++;state.context=null;state.items=[];state.loading=false;state.busy=false;state.message=event.detail.reason;
       if(event.detail.clearDraft){state.draft=fresh();state.dirty=false;state.page=1;}
@@ -156,17 +158,27 @@
     }
   });
   window.addEventListener('storage', event => { if (event.key === null || event.key.endsWith('-visitor-v1')) clearIdentity(); });
-  window.addEventListener('focus', () => { for (const state of states.values()) if (state.root?.isConnected && !state.busy && !state.loading) load(state); });
-  window.addEventListener('minihompy:writing-authorize',event=>{if([...states.values()].some(state=>state.dirty) && !confirm('회원 확인 화면으로 이동하면 작성 중인 내용은 초기화됩니다. 계속할까요?'))event.preventDefault();});
-  window.addEventListener('beforeunload', event => {
-    if ([...states.values()].some(state => state.dirty || state.busy)) { event.preventDefault(); event.returnValue = ''; }
-  });
-  // Retain drafts across view changes, not detached read-only widgets and their private data.
+  window.addEventListener('focus', () => { if(window.MinihompyMemberWriting?.enabled())return; for (const state of states.values()) if (state.root?.isConnected && !state.busy && !state.loading) load(state); });
+  function applySessionState(){
+    if(!window.MinihompyMemberWriting?.enabled())return;
+    const status=window.MinihompyMemberWriting.state?.status;
+    for(const s of states.values())for(const b of s.root?.querySelectorAll('.comment-save,.comment-edit,.comment-delete')||[])b.disabled=s.busy||!['ready','anonymous'].includes(status);
+  }
+  window.addEventListener('minihompy:member-session',()=>{applySessionState();if(window.MinihompyMemberWriting.state.status==='ready')for(const s of states.values())if(s.root?.isConnected&&!s.context&&!s.loading)void load(s);});
+  // Same-menu view changes retain drafts; menu-leave explicitly discards them.
   new MutationObserver(() => {
     for (const [key, state] of states) {
       if (!state.root?.isConnected && !state.dirty && !state.busy) { state.request++; states.delete(key); }
     }
   }).observe(document.documentElement, { childList: true, subtree: true });
+  window.addEventListener('minihompy:menu-leave', event => {
+    epoch++;
+    for (const [key, state] of states) {
+      if (event.detail.id === null || state.kind === event.detail.id) {
+        state.request++; state.root?.replaceChildren(); states.delete(key);
+      }
+    }
+  });
   window.MinihompyComments = Object.freeze({
     create,
     forget(kind, id) {

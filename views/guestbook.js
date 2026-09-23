@@ -48,10 +48,7 @@
   }
   function composer() {
     if (context?.requiresAuth) {
-      const box = node('div', 'guestbook-status', '로그인한 계정으로 방명록을 이용하려면 회원 확인이 필요합니다.');
-      box.append(action('회원 확인', async () => {
-        try { await repository.authorize(); } catch (error) { box.append(node('p', '', error.message)); }
-      }, 'guestbook-authorize'));
+      const box = node('div', 'guestbook-status', '상단에서 로그인 상태를 확인해 주세요.');
       return box;
     }
     draft ||= freshDraft();
@@ -147,7 +144,10 @@
     } catch (error) { if (token === epoch) notice = error.message; }
     finally { if (token === epoch) { busy = false; load(); } }
   }
+  let savedFocus;
   async function load() {
+    const focused=content?.contains(document.activeElement)?document.activeElement:null;
+    if(focused?.matches('input,textarea'))savedFocus={cls:focused.className,start:focused.selectionStart,end:focused.selectionEnd};
     const token = ++request;
     content.replaceChildren(node('p', 'guestbook-status', '방명록을 불러오고 있습니다.'));
     try {
@@ -169,10 +169,11 @@
         nav.append(previous, node('span', '', `${page} / ${maximum}`), next); content.append(nav);
       }
       if (busy) setBusy(true);
+      applySessionState();if(savedFocus){const el=[...content.querySelectorAll('input,textarea')].find(e=>e.className===savedFocus.cls);if(el){el.focus();if(el.type!=='checkbox')el.setSelectionRange(savedFocus.start,savedFocus.end);}savedFocus=null;}
     } catch (error) {
       if (token !== request) return;
       context = null;
-      content.replaceChildren(node('p', 'guestbook-status', `방명록을 불러오지 못했습니다. ${error.message || ''}`), action('다시 시도', async () => { try { await window.MinihompyMemberWriting?.retry();await load(); } catch {} }, 'guestbook-retry'));
+      content.replaceChildren(node('p', 'guestbook-status', `방명록을 불러오지 못했습니다. ${error.message || ''}`), ...(window.MinihompyMemberWriting?.enabled()?[]:[action('다시 시도', async () => {try{await load();}catch{}},'guestbook-retry')]));
     }
     content.scrollTop = 0; requestAnimationFrame(refreshScroll);
   }
@@ -262,13 +263,21 @@
   });
   window.addEventListener('minihompy:writing-reset', event => {
     epoch++;request++;context=null;busy=false;notice=event.detail.reason;
+    if(!event.detail.clearDraft){const form=content?.querySelector('.guestbook-composer');if(content){for(const child of [...content.children])if(child!==form)child.remove();content.append(node('p','guestbook-status',notice));}applySessionState();return;}
     if(event.detail.clearDraft){draft=null;dirty=false;page=1;}
-    if(content)content.replaceChildren(node('p','guestbook-status',notice),action('다시 확인',async()=>{
-      try { await window.MinihompyMemberWriting.retry();await load(); } catch(error){notice=error.message;}
-    },'guestbook-retry'));
+    if(content)content.replaceChildren(node('p','guestbook-status',notice));
   });
-  window.addEventListener('focus',()=>{if(window.MinihompyMemberWriting?.enabled() && content?.isConnected && !busy)load();});
-  window.addEventListener('minihompy:writing-authorize',event=>{if(dirty && !confirm('회원 확인 화면으로 이동하면 작성 중인 내용은 초기화됩니다. 계속할까요?'))event.preventDefault();});
+  window.addEventListener('focus',()=>{if(!window.MinihompyMemberWriting?.enabled() && content?.isConnected && !busy)load();});
+  function applySessionState(){
+    if(!window.MinihompyMemberWriting?.enabled())return;
+    const status=window.MinihompyMemberWriting.state?.status;
+    for(const b of content?.querySelectorAll('button')||[])b.disabled=busy||!['ready','anonymous'].includes(status);
+  }
+  window.addEventListener('minihompy:member-session',()=>{applySessionState();if(window.MinihompyMemberWriting.state.status==='ready'&&content?.isConnected&&!context)void load();});
   window.MinihompyPostRoutes?.guard(next=>(content?.isConnected||next?.id==='guestbook'&&next.post)?{busy,dirty,discard:()=>{if(next?.id==='guestbook'&&next.post){draft=null;dirty=false;}}}:null);
-  window.addEventListener('beforeunload', event => { if (dirty || busy) { event.preventDefault(); event.returnValue = ''; } });
+  window.addEventListener('minihompy:menu-leave', event => {
+    if (event.detail.id !== null && event.detail.id !== 'guestbook') return;
+    epoch++; request++; context = null; draft = null; dirty = false;
+    busy = false; notice = ''; savedFocus = null; content?.replaceChildren();
+  });
 })();

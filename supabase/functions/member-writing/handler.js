@@ -22,7 +22,7 @@ async function callRpc(db,action,args={}){
 async function central(fetcher,base,path,body,credential){
  try{
   const r=await fetcher(`${base}/${path}`,{method:'POST',headers:{'Content-Type':'application/json',...(credential?{Authorization:`Bearer ${credential}`}:{})},body:JSON.stringify(body),redirect:'error',signal:AbortSignal.timeout(10000),credentials:'omit'});
-  if(!r.ok){if(r.status===401)fail('SESSION_REVOKED');if(r.status===403)fail('FORBIDDEN');if(r.status===409)fail('REQUEST_CONFLICT');if(r.status===400)fail('BAD_REQUEST');fail('IDENTITY_UNAVAILABLE');}
+  if(!r.ok){if(r.status===429){const e=new Failure('RATE_LIMITED');const seconds=Number(r.headers.get('Retry-After'));e.retryAfter=Number.isInteger(seconds)&&seconds>=1&&seconds<=60?seconds:1;throw e;}if(r.status===401)fail('SESSION_REVOKED');if(r.status===403)fail('FORBIDDEN');if(r.status===409)fail('REQUEST_CONFLICT');if(r.status===400)fail('BAD_REQUEST');fail('IDENTITY_UNAVAILABLE');}
   return await limitedJson(r);
  }catch(e){if(e instanceof Failure)throw e;fail('IDENTITY_UNAVAILABLE');}
 }
@@ -59,7 +59,7 @@ export async function authenticateOwner(req,{fetcher,projectUrl,publicKey}){
 }
 export async function handleMemberWriting(req,options={}){
  const config=k=>options.config?.[k]??env(k),origin=req.headers.get('Origin');
- const headers={'Content-Type':'application/json','Cache-Control':'no-store',Vary:'Origin','Access-Control-Allow-Methods':'GET, POST, PATCH, DELETE, OPTIONS','Access-Control-Allow-Headers':'Content-Type, Authorization, apikey, X-Minihompy-Auth-Mode'};
+ const headers={'Content-Type':'application/json','Cache-Control':'no-store',Vary:'Origin','Access-Control-Expose-Headers':'Retry-After','Access-Control-Allow-Methods':'GET, POST, PATCH, DELETE, OPTIONS','Access-Control-Allow-Headers':'Content-Type, Authorization, apikey, X-Minihompy-Auth-Mode'};
  const reply=(status,body)=>new Response(JSON.stringify(body),{status,headers});
  if(origin&&origin===config('MINIHOMPY_SITE_ORIGIN'))headers['Access-Control-Allow-Origin']=origin;
  if(!config('MINIHOMPY_SITE_ORIGIN'))return reply(503,{error:{code:'NOT_CONFIGURED'}});
@@ -93,24 +93,47 @@ export async function handleMemberWriting(req,options={}){
   async function revoke(token){
    if(!OPAQUE.test(token))fail('AUTH_REQUIRED');
    const s=await callRpc(db,'revoke',{site_id:siteId,token_hash:await tokenHash(token)});
-   await central(fetcher,centralUrl,'writing-grants/revoke',{},s.central_grant);
+   if(s.central_delegation){
+    await central(fetcher,centralUrl,'writing-delegations/revoke',{},s.central_delegation);
+    await callRpc(db,'cleanup_done',{site_id:siteId,renewal_hash:s.renewal_hash});
+   }else await central(fetcher,centralUrl,'writing-grants/revoke',{},s.central_grant);
   }
   if(path==='/sessions/revoke'){
    if(Object.keys(body).length)fail('BAD_REQUEST');await revoke(bearer(req));return reply(200,{revoked:true});
   }
+  if(path==='/sessions/renew'){
+   if(Object.keys(body).length)fail('BAD_REQUEST');
+   const credential=bearer(req);if(!OPAQUE.test(credential))fail('AUTH_REQUIRED');
+   const renewal_hash=await tokenHash(credential);
+   const family=await callRpc(db,'family',{site_id:siteId,renewal_hash});
+   const raw=await central(fetcher,centralUrl,'writing-delegations/renew',{site_id:siteId},family.central_delegation);
+   const token=secret();let stored;
+   try{
+    const g=checkedGrant(raw,siteId);
+    if(!OPAQUE.test(g.grant||'')||g.member.id!==family.member_id||g.central_session_id!==family.central_session_id||g.proof_id!==family.proof_id)fail('FORBIDDEN');
+    const expiry=Date.parse(family.expires_at),centralExpiry=Date.parse(g.delegation_expires_at);
+    if(!Number.isFinite(centralExpiry)||centralExpiry>expiry||Date.parse(g.expires_at)>Math.min(expiry,centralExpiry))fail('SESSION_EXPIRED');
+    stored=await callRpc(db,'renew_create',{site_id:siteId,renewal_hash,member_id:g.member.id,central_session_id:g.central_session_id,proof_id:g.proof_id,token_hash:await tokenHash(token),central_grant:g.grant,display_name:g.member.display_name,homepage_url:g.member.homepage_url,expires_at:g.expires_at});
+   }catch(e){if(OPAQUE.test(raw.grant||''))await central(fetcher,centralUrl,'writing-grants/revoke',{},raw.grant).catch(()=>{});throw e;}
+   return reply(200,{session_token:token,...publicSession(stored)});
+  }
   if(path!=='/sessions/exchange')fail('NOT_FOUND');
-  if(Object.keys(body).some(k=>!['writing_proof','code_verifier'].includes(k))||typeof body.writing_proof!=='string'||body.writing_proof.length>4096||typeof body.code_verifier!=='string'||!/^[A-Za-z0-9._~-]{43,128}$/.test(body.code_verifier))fail('BAD_REQUEST');
-  // Renewal replaces the old session only after server-side revocation succeeds.
+  const v2=body.protocol===2;
+  if(body.protocol!==undefined&&!v2)fail('BAD_REQUEST');
+  if(v2&&(typeof body.attempt_id!=='string'||!body.attempt_id||body.attempt_id.length>128||/[\u0000-\u001f\u007f]/.test(body.attempt_id)))fail('BAD_REQUEST');
+  if(Object.keys(body).some(k=>!(v2?['writing_proof','code_verifier','protocol','attempt_id']:['writing_proof','code_verifier']).includes(k))||typeof body.writing_proof!=='string'||body.writing_proof.length>4096||typeof body.code_verifier!=='string'||!/^[A-Za-z0-9._~-]{43,128}$/.test(body.code_verifier))fail('BAD_REQUEST');
+  // A new proof replaces the previous family/session after revocation; renewal above reuses the family.
   if(req.headers.has('Authorization'))await revoke(bearer(req));
   const raw=await central(fetcher,centralUrl,'writing-proofs/redeem',{...body,site_id:siteId});
   let stored;
-  const token=secret();
+  const token=secret(),renewal=v2?secret():null;
   try{
    const g=checkedGrant(raw,siteId);if(!OPAQUE.test(g.grant||''))fail('IDENTITY_UNAVAILABLE');
-   stored=await callRpc(db,'create',{site_id:siteId,member_id:g.member.id,central_session_id:g.central_session_id,proof_id:g.proof_id,token_hash:await tokenHash(token),central_grant:g.grant,display_name:g.member.display_name,homepage_url:g.member.homepage_url,expires_at:g.expires_at});
-  }catch(e){if(OPAQUE.test(raw.grant||''))await central(fetcher,centralUrl,'writing-grants/revoke',{},raw.grant).catch(()=>{});throw e;}
-  return reply(200,{session_token:token,...publicSession(stored)});
- }catch(e){return reply(e instanceof Failure?e.status:503,{error:{code:e instanceof Failure?e.code:'IDENTITY_UNAVAILABLE',message:'회원 인증을 확인하지 못했습니다. 다시 시도해 주세요.'}});}
+   if(v2){const deadline=Date.parse(g.delegation_expires_at);if(!OPAQUE.test(g.delegation||'')||!Number.isFinite(deadline)||deadline<=Date.now()||deadline>Date.now()+30*86400000||Date.parse(g.expires_at)>deadline)fail('IDENTITY_UNAVAILABLE');}
+   stored=await callRpc(db,v2?'create_v2':'create',{...(v2?{renewal_hash:await tokenHash(renewal),central_delegation:g.delegation,renewal_expires_at:g.delegation_expires_at}:{}),site_id:siteId,member_id:g.member.id,central_session_id:g.central_session_id,proof_id:g.proof_id,token_hash:await tokenHash(token),central_grant:g.grant,display_name:g.member.display_name,homepage_url:g.member.homepage_url,expires_at:g.expires_at});
+  }catch(e){if(v2&&OPAQUE.test(raw.delegation||''))await central(fetcher,centralUrl,'writing-delegations/revoke',{},raw.delegation).catch(()=>{});if(OPAQUE.test(raw.grant||''))await central(fetcher,centralUrl,'writing-grants/revoke',{},raw.grant).catch(()=>{});throw e;}
+  return reply(200,{session_token:token,...publicSession(stored),...(v2?{renewal_token:renewal,renewal_expires_at:raw.delegation_expires_at}:{})});
+ }catch(e){if(e.status===429)headers['Retry-After']=String(e.retryAfter||1);return reply(e instanceof Failure?e.status:503,{error:{code:e instanceof Failure?e.code:'IDENTITY_UNAVAILABLE',message:'회원 인증을 확인하지 못했습니다. 다시 시도해 주세요.'}});}
 }
 
 async function guestbook(req,context,mode,path,reply){
@@ -122,6 +145,7 @@ async function guestbook(req,context,mode,path,reply){
  if(path==='/guestbook'&&req.method==='GET'){
   const q=new URL(req.url).searchParams;
   args={page:Number(q.get('page')||1),size:Number(q.get('size')||5)};
+  if(q.has('post')){if(q.getAll('post').length!==1||!UUID.test(q.get('post')||''))fail('BAD_REQUEST');args.post=q.get('post');}
   if(!Number.isInteger(args.page)||args.page<1||args.page>100000||!Number.isInteger(args.size)||args.size<1||args.size>20)fail('BAD_REQUEST');action='list';
  }else{
   if(mode==='public')fail('FORBIDDEN');

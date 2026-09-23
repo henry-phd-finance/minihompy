@@ -13,6 +13,7 @@
   history.replaceState({...history.state,minihompyIndex:index},'',location.href);
   function locationId(){return parse(location.hash);}
   function canLeave(destination){
+    if(destination?.id!==currentView)return true;
     const blockers=[];blockers.destination=destination;window.dispatchEvent(new CustomEvent('minihompy:before-navigate',{detail:blockers}));
     if(blockers.some(s=>s.busy))return false;
     if(blockers.some(s=>s.dirty)&&!confirm(destination?.post?'글 주소로 이동하면 해당 화면의 초안이 초기화될 수 있습니다. 이동할까요?':'작성 중인 내용이 있습니다. 다른 화면으로 이동할까요?'))return false;
@@ -90,6 +91,7 @@
       }
       return false;
     }
+    if(currentView&&currentView!==next.id)routes.leave(currentView);
     if(blocked){
       const badHash=route.hash||href(route);
       if(fromHistory&&Number.isInteger(history.state?.minihompyIndex))index=history.state.minihompyIndex;
@@ -127,6 +129,7 @@
   }
   window.addEventListener('hashchange',historyChanged);
   window.addEventListener('popstate',historyChanged);
+  window.addEventListener('pageshow',event=>{if(event.persisted)renderView(locationId(),true,true);});
   document.addEventListener('click',event=>{
     const link=event.target.closest('a[href]');if(event.defaultPrevented||!link||link.target&&link.target!=='_self'||link.hasAttribute('download')||event.button!==0||event.ctrlKey||event.metaKey||event.shiftKey||event.altKey)return;
     const url=new URL(link.href,location.href);if(url.origin!==location.origin||url.pathname!==location.pathname||url.search!==location.search||!url.hash.startsWith('#/'))return;

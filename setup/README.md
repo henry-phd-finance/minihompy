@@ -127,3 +127,9 @@ node setup/setup.mjs home-data --config setup/config.json
 실패 원인을 해결한 뒤 같은 명령을 재실행할 수 있습니다. 이미 적용한 SQL·secret은 유지됩니다. 동일 프로젝트에 대한 설치는 한 번에 한 관리자만 실행하세요. 같은 폴더의 동시 실행은 `.minihompy-home-data.lock`으로 차단합니다. 프로세스가 강제 종료되어 잠금이 남았다면 진행 중인 작업이 없는지 확인한 후 그 잠금 파일만 제거하세요. 자동 secret 교체는 지원하지 않습니다. 교체 시 날짜 중복 영향을 피하는 절차는 [방문 계약](../docs/visit-counts-contract.md)을 따릅니다.
 
 성공 후 최신 런타임과 생성된 `home-data-config.js`를 함께 Pages에 배포합니다. 이 명령은 commit/push를 하지 않습니다. 준비되지 않은 사이트는 기본 `enabled: false`를 유지하세요. 이때 홈 요약과 방문 API를 호출하지 않고 준비 중으로 표시합니다. 다른 사이트의 활성화 파일을 복사해도 프로젝트/홈페이지가 다르면 호출하지 않습니다. 비활성화로 복구할 때도 통계 테이블이나 secret을 삭제하지 마세요. 기능 준비를 확인한 뒤 같은 명령으로 재활성화합니다.
+
+## 공통 회원 세션 v2 업그레이드
+
+중앙의 `deploy-member-sessions.mjs --apply`와 v2 함수/Pages를 먼저 적용한다. 중앙 health가 `member_session_protocol:2`를 제공해야 한다. 개인 사이트는 기존 `writing` 명령을 다시 실행하면 해시 이력에 없는 `202609230009_member_session_renewal.sql`만 추가 적용한다. 신규 설치는 install → verify → writing 순서이며 writing에 001~004·009가 포함된다. 기존 홈 데이터 마이그레이션/설정을 다시 만들지 않는다.
+
+`writing --dry-run`은 파일·공개 설정만 확인한다. 실제 실행은 기존 소유자 연결 검증, 마이그레이션, 함수 배포, owner 및 renewal endpoint 확인 후 활성화 파일을 생성한다. 기존 설정을 유지한 Pages 빌드가 뒤따라야 한다. 중앙 signing secret을 개인에게 복제하지 않는다. [배포 순서와 복구](../docs/member-session-deployment.md).

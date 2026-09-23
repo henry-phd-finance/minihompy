@@ -55,7 +55,7 @@
         if (profile.site_id === config.siteId.toLowerCase()) throw Error('현재 홈이 아닌 방문 대상을 확인하지 못했습니다.');
         list.append(item(profile,config.siteId));
         status.textContent = '선택한 미니홈피로 이동합니다. 이동을 취소했다면 아래 링크로 다시 방문할 수 있습니다.';
-        // Normal same-tab navigation retains existing beforeunload draft protection.
+        // Actual same-tab departure clears unsaved input through the shared pagehide handler.
         location.assign(profile.homepage_url);
       } else {
         if (!Array.isArray(data.items) || data.items.length > 20) throw Error('Invalid directory');

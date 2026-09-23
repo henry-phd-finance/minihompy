@@ -3,7 +3,7 @@ import {join,resolve} from 'node:path';
 import {createHash,randomBytes} from 'node:crypto';
 import {spawn} from 'node:child_process';
 import {validateConfig,request} from './identity-setup.mjs';
-export const writingMigrations=['202609230001_member_writing_foundation.sql','202609230002_member_writing_sessions.sql','202609230003_member_guestbook.sql','202609230004_member_comments.sql'];
+export const writingMigrations=['202609230001_member_writing_foundation.sql','202609230002_member_writing_sessions.sql','202609230003_member_guestbook.sql','202609230004_member_comments.sql','202609230009_member_session_renewal.sql'];
 const literal=s=>"'"+s.replaceAll("'","''")+"'";
 export async function applyWritingMigrations({target,query,log=console.log}){
  const [schema]=await query("select to_regclass('public.guestbook_posts') is not null and to_regclass('public.post_comments') is not null and to_regprocedure('private.guard_comment()') is not null as ready, exists(select 1 from information_schema.columns where table_schema='public' and table_name='guestbook_posts' and column_name='author_kind') as member_columns");
@@ -11,6 +11,8 @@ export async function applyWritingMigrations({target,query,log=console.log}){
  await query('create table if not exists private.minihompy_setup_migrations(name text primary key,sha256 text not null); revoke all on private.minihompy_setup_migrations from public,anon,authenticated;');
  const applied=await query('select name,sha256 from private.minihompy_setup_migrations');
  if(schema.member_columns && !applied.some(r=>r.name===writingMigrations[0]))throw Error('추적되지 않은 회원 스키마입니다. 적용 이력을 확인한 뒤 진행해 주세요.');
+ const [renewal]=await query("select to_regclass('private.member_writing_families') is not null as exists");
+ if(renewal.exists&&!applied.some(r=>r.name===writingMigrations.at(-1)))throw Error('추적되지 않은 자동 갱신 스키마입니다. 적용 이력을 확인해 주세요.');
  for(const name of writingMigrations){
   const sql=await readFile(join(target,'supabase/migrations',name),'utf8'),hash=createHash('sha256').update(sql).digest('hex');
   const prior=applied.find(r=>r.name===name);
@@ -32,7 +34,7 @@ export async function upgradeMemberWriting({config,target,email,password,managem
  if(!email||!password||!managementToken)throw Error('개인 소유자 로그인과 Management token이 필요합니다.');
  const call=(url,args)=>request(url,args,fetcher),base=`https://api.supabase.com/v1/projects/${c.projectRef}`;
  const manage=(path,body)=>call(base+'/'+path,{method:'POST',token:managementToken,body});
- const health=await call(c.centralApiUrl+'/health');if(health?.writing_protocol!==1)throw Error('중앙 회원 작성 서버를 먼저 배포해 주세요.');
+ const health=await call(c.centralApiUrl+'/health');if(health?.writing_protocol!==1||health?.member_session_protocol!==2)throw Error('중앙 회원 작성 서버를 먼저 배포해 주세요.');
  const session=await call(c.supabaseUrl+'/auth/v1/token?grant_type=password',{method:'POST',key:c.publishableKey,body:{email,password}});
  const token=session?.access_token;if(!token)throw Error('소유자 인증 실패');
  try{
@@ -50,6 +52,8 @@ export async function upgradeMemberWriting({config,target,email,password,managem
   // Explicit mode header is mandatory; use the transport directly for this probe.
   const response=await fetcher(c.supabaseUrl+'/functions/v1/member-writing/sessions/current',{headers:{Authorization:'Bearer '+token,'X-Minihompy-Auth-Mode':'owner'},redirect:'error',signal:AbortSignal.timeout(30000)});
   const actor=await response.json();if(!response.ok||actor.actor?.kind!=='owner')throw Error('배포된 작성 함수의 관리자 확인 실패');
+  const renewalProbe=await fetcher(c.supabaseUrl+'/functions/v1/member-writing/sessions/renew',{method:'POST',headers:{'Content-Type':'application/json','X-Minihompy-Auth-Mode':'member',Authorization:'Bearer '+randomBytes(32).toString('base64url')},body:'{}',redirect:'error',signal:AbortSignal.timeout(30000)});
+  if(renewalProbe.status!==401)throw Error('배포된 자동 갱신 함수 확인 실패');
   await writeFile(join(target,'member-writing-config.js'),'// Enable only after central and personal migrations/functions have been deployed.\nwindow.MINIHOMPY_MEMBER_WRITING_CONFIG = Object.freeze({ enabled: true });\n');
   log('회원 작성 준비 완료. 런타임과 member-writing-config.js를 Pages에 배포하세요.');return {siteId:c.siteId,ready:true};
  }finally{await call(c.supabaseUrl+'/auth/v1/logout?scope=local',{method:'POST',token,key:c.publishableKey}).catch(()=>{});}

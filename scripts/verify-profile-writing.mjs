@@ -62,7 +62,14 @@ try {
     assert.equal(uploaded,0);
     assert.match(await page.locator('.profile-edit-preview').getAttribute('src'), /^blob:/);
     await page.locator('[data-menu="home"]').click(); await page.locator('[data-menu="profile"]').click();
-    assert.equal(await page.locator('#profile-edit-name').inputValue(),'프로필 이름');
+    assert.equal(await page.locator('#profile-edit-name').count(),0);
+    await page.locator('.profile-edit').click();
+    await page.locator('[data-profile-inherit="name"]').uncheck();
+    await page.locator('#profile-edit-name').fill('프로필 이름');
+    await page.locator('[data-profile-inherit="paragraphs"]').uncheck();
+    await page.locator('#profile-edit-paragraphs').fill('<script>문자 그대로</script>\n\n두 번째 문단');
+    await page.locator('#profile-edit-file').setInputFiles({ name: 'lake.jpg', mimeType: 'image/jpeg', buffer: jpg });
+
     await page.locator('.profile-content-scroll').evaluate(e => { e.scrollTop = 0; });
     await page.evaluate(w => window.scrollTo(w === 375 ? 145 : 0,0),width);
     await page.screenshot({ path: new URL(`editor-${width}.png`,out).pathname });

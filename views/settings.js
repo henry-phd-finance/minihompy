@@ -4,7 +4,7 @@
   const sections = [['page','기본 설정'],['profile','프로필'],['home','홈 화면'],['menus','메뉴 관리']];
   const catalog = [['home','홈'],['profile','프로필'],['diary','다이어리'],['photos','사진첩'],['board','게시판'],['guestbook','방명록'],['music','쥬크박스'],['gallery','갤러리'],['video','동영상']];
   let section = 'page', draft = null, revision = null, dirty = false, busy = false, notice = '';
-  let left, main;
+  let left, main, generation=0;
   const admin = () => window.MinihompyAdmin?.state.role === 'admin';
   function node(tag, className, text) { const element = document.createElement(tag); if (className) element.className = className; if (text !== undefined) element.textContent = text; return element; }
   function fragment(element) { const result = document.createDocumentFragment(); result.append(element); return result; }
@@ -27,8 +27,8 @@
   }
   async function reload() {
     if (busy || (dirty && !window.confirm('저장하지 않은 설정을 버리고 다시 불러올까요?'))) return;
-    busy = true; notice = ''; renderLeft(); renderMain();
-    await store.load(); adopt(); busy = false;
+    const token=generation;busy = true; notice = ''; renderLeft(); renderMain();
+    await store.load();if(token!==generation)return; adopt(); busy = false;
     if (store.status === 'error') notice = store.error;
     renderLeft(); renderMain();
   }
@@ -92,10 +92,10 @@
     actions.append(save, button('다시 불러오기', 'settings-button', reload)); form.append(actions);
     form.addEventListener('submit', async event => {
       event.preventDefault(); if (busy || !admin()) return;
-      busy = true; notice = ''; renderLeft(); renderMain();
-      try { await store.save(structuredClone(draft), revision); if (admin()) { adopt(); notice = '저장했습니다.'; } }
-      catch (error) { notice = error.message; }
-      finally { busy = false; renderLeft(); renderMain(); }
+      const token=generation;busy = true; notice = ''; renderLeft(); renderMain();
+      try { await store.save(structuredClone(draft), revision); if (token===generation&&admin()) { adopt(); notice = '저장했습니다.'; } }
+      catch (error) { if(token===generation)notice = error.message; }
+      finally { if(token===generation){busy = false; renderLeft(); renderMain();} }
     });
     main.append(form);
   }
@@ -103,13 +103,17 @@
     if (!busy && !dirty) { adopt(); renderMain(); }
   });
   window.addEventListener('minihompy:identity', () => {
-    if (!admin()) { draft = null; revision = null; dirty = false; notice = ''; renderLeft(); renderMain(); }
+    if (!admin()) { generation++; busy = false; draft = null; revision = null; dirty = false; notice = ''; renderLeft(); renderMain(); }
   });
-  window.addEventListener('beforeunload', event => { if (dirty || busy) { event.preventDefault(); event.returnValue = ''; } });
   window.MINIHOMPY_VIEWS.settings = {
     label: '설정', showScrollbar: false,
     createLeft() { left = node('nav', 'settings-sidebar'); left.setAttribute('aria-label', '관리자 설정'); renderLeft(); return fragment(left); },
     createMain() { main = node('div', 'settings-scroll'); if (!draft) adopt(); renderMain(); return fragment(main); },
   };
   window.MinihompyPostRoutes?.guard(()=>main?.isConnected?{busy,dirty}:null);
+  window.addEventListener('minihompy:menu-leave', event => {
+    if (event.detail.id !== null && event.detail.id !== 'settings') return;
+    generation++; draft = null; revision = null; dirty = false;
+    busy = false; notice = ''; main?.replaceChildren();
+  });
 })();

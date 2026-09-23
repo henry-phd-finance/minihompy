@@ -78,6 +78,14 @@ try {
     await mockHomeSummary(page);
     await page.goto(`${new URL('../index.html', import.meta.url).href}#/photos`);
     await page.locator('.photo-write').click();
+    await page.locator('.photo-editor-title').fill('Discard me');
+    await page.locator('.photo-editor-file').setInputFiles({ name: 'discard.jpg', mimeType: 'image/jpeg', buffer: picture });
+    await page.waitForFunction(() => document.querySelector('.ql-editor img')?.complete && !window.MinihompyPhotoEditor.busy);
+    await page.locator('[data-menu=home]').click(); await page.locator('[data-menu=photos]').click();
+    assert.equal(await page.locator('.ql-editor').count(), 0);
+    assert.equal(uploads, 0);
+    await page.locator('.photo-write').click();
+    assert.equal(await page.locator('.photo-editor-title').inputValue(), '');
     await page.locator('.photo-editor-title').fill('본문 속의 사진');
     const body = page.locator('.ql-editor');
     await body.fill('사진 앞의 글\n');
@@ -97,9 +105,6 @@ try {
     await page.screenshot({ path: new URL(`editor-${width}.png`, out).pathname });
     await page.locator('.photos-scroll').evaluate(el => { el.scrollTop = 0; });
     await page.screenshot({ path: new URL(`editor-top-${width}.png`, out).pathname });
-    await page.locator('[data-menu="home"]').click(); await page.locator('[data-menu="photos"]').click();
-    assert.equal(await page.locator('.ql-editor img').count(), 2);
-    assert((await body.innerText()).includes('사진 사이의 글'));
     abortUpload = true; await page.locator('.photo-save').click();
     await page.locator('.photo-editor-message').filter({ hasText: '사진 업로드 (1/2) 실패: Failed to fetch' }).waitFor();
     assert.equal(posts.length, 0); assert.equal(await page.locator('.ql-editor img').count(), 2);

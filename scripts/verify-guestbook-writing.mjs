@@ -83,7 +83,9 @@ try {
     await page.locator('.guestbook-visibility').check();
     // Mobile fixed-width tabs may lie outside the viewport; exercise route changes directly.
     await page.locator('[data-menu="home"]').dispatchEvent('click'); await page.locator('[data-menu="guestbook"]').dispatchEvent('click');
-    assert((await page.locator('.guestbook-body-input').inputValue()).includes('첫 인사'));
+    assert.equal(await page.locator('.guestbook-body-input').inputValue(), '');
+    await page.locator('.guestbook-name').fill('방문객'); await page.locator('.guestbook-body-input').fill('첫 인사\n<script>window.bad=true</script>');
+    await page.locator('.guestbook-visibility').check();
     rejectWrite = true; await page.locator('.guestbook-save').click();
     await page.locator('.guestbook-status').filter({ hasText: 'write denied' }).waitFor();
     assert.equal(signups, 1); assert.equal(posts.length, 0); assert.equal(await page.locator('.guestbook-name').inputValue(), '방문객');

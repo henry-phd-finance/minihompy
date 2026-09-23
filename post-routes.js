@@ -23,5 +23,7 @@
   function guard(read) {
     window.addEventListener('minihompy:before-navigate',event=>{const state=read(event.detail.destination);if(state&&(state.busy||state.dirty))event.detail.push(state);});
   }
-  window.MinihompyPostRoutes=Object.freeze({parse,href,focus,guard,validId:id=>uuid.test(id||'')});
+  function leave(id=null){window.dispatchEvent(new CustomEvent('minihompy:menu-leave',{detail:{id}}));}
+  window.addEventListener('pagehide',()=>leave());
+  window.MinihompyPostRoutes=Object.freeze({parse,href,focus,guard,leave,validId:id=>uuid.test(id||'')});
 })();

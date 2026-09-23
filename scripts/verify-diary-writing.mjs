@@ -82,8 +82,13 @@ try {
     await page.locator('.diary-field-body').fill(`윤년의 기록\n\n<script>window.bad=true</script>\n${'긴문구LongUnbrokenText'.repeat(150)}`);
     await page.screenshot({ path: new URL(`editor-${width}.png`, out).pathname });
     await page.locator('[data-menu="home"]').click(); await page.locator('[data-menu="diary"]').click();
-    assert.equal(await page.locator('.diary-field-entry_date').inputValue(), '2024-02-29');
-    assert((await page.locator('.diary-field-body').inputValue()).includes('윤년'));
+    assert.equal(await page.locator('.diary-field-body').count(), 0);
+    await page.locator('.diary-write').click();
+    assert.equal(await page.locator('.diary-field-body').inputValue(), '');
+    await page.locator('.diary-field-entry_date').fill('2024-02-29');
+    await page.locator('.diary-field-entry_time').fill('23:15');
+    await page.locator('.diary-field-weather').selectOption('맑음');
+    await page.locator('.diary-field-body').fill(`윤년의 기록\n\n<script>window.bad=true</script>\n${'긴문구LongUnbrokenText'.repeat(150)}`);
     rejectWrite = true; await page.locator('.diary-save').click();
     await page.locator('.diary-status').filter({ hasText: 'write denied' }).waitFor();
     assert.equal(entries.length, 0);

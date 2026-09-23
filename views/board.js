@@ -104,10 +104,11 @@
   }
   async function remove() {
     if (!admin() || saving || !window.confirm('이 글을 삭제할까요?')) return;
+    const token = epoch, removed = post;
     saving = true; error = ''; renderFolders(); renderMain();
-    try { await repository.remove(post); window.MinihompyComments.forget('board', post.id); clearTarget();post = null; listScroll = 0; }
-    catch (cause) { error = cause.message || '삭제 결과를 확인하지 못했습니다. 다시 조회해 주세요.'; }
-    finally { saving = false; }
+    try { await repository.remove(removed); if (token !== epoch) return; window.MinihompyComments.forget('board', removed.id); clearTarget();post = null; listScroll = 0; }
+    catch (cause) { if (token !== epoch) return; error = cause.message || '삭제 결과를 확인하지 못했습니다. 다시 조회해 주세요.'; }
+    finally { if (token === epoch) saving = false; }
     if (!error) await load(); else { renderFolders(); renderMain(); }
   }
   function renderEditor() {
@@ -139,7 +140,7 @@
         if (!writing.id) { selected = saved.folder_id; page = 1; listScroll = 0; }
         post = saved; draft = null;
       } catch (cause) { if (token === epoch) error = `${cause.message || '저장 결과를 확인하지 못했습니다.'} 입력 내용은 남아 있습니다. 재등록 전 목록을 확인해 주세요.`; }
-      finally { saving = false; renderFolders(); renderMain(); }
+      finally { if(token===epoch){saving = false; renderFolders(); renderMain();} }
     });
     main.append(form);
   }
@@ -201,14 +202,13 @@
     main.scrollTop = draft ? scroll : 0;
   }
   window.addEventListener('minihompy:identity', () => {
-    if (!admin()) { epoch++; draft = null; error = ''; }
+    if (!admin()) { epoch++; draft = null; saving = false; error = ''; }
     renderFolders();
     // Preserve editor focus and selection when an Auth token refreshes.
     if (draft && main?.querySelector('.board-save')) main.querySelector('.board-save').disabled = saving || !admin();
     else renderMain();
   });
   window.MinihompyPostRoutes?.guard(next=>(main?.isConnected||next?.id==='board'&&next.post)?{busy:saving,dirty:!!draft?.dirty,discard:()=>{if(next?.id==='board'&&next.post)draft=null;}}:null);
-  window.addEventListener('beforeunload', event => { if (draft?.dirty || saving) { event.preventDefault(); event.returnValue = ''; } });
   window.MINIHOMPY_VIEWS.board = {
     label: '게시판', showScrollbar: false,
     createLeft() { sidebar = node('div', 'board-sidebar'); renderFolders(); return fragment(sidebar); },
@@ -219,4 +219,10 @@
       return fragment(main);
     },
   };
+  window.addEventListener('minihompy:menu-leave', event => {
+    if (event.detail.id !== null && event.detail.id !== 'board') return;
+    epoch++; request++; draft = null; post = null;
+    saving = false; loading = false; error = ''; restoreFocus = null;
+    main?.replaceChildren();
+  });
 })();
