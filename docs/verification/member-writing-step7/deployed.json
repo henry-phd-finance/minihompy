@@ -1,0 +1,59 @@
+{
+  "checkedAt": "2026-09-23T08:21:42.244Z",
+  "central": {
+    "projectRef": "pcwovvdgggpbghvqraex",
+    "commit": "e099478c923e0a2f47b1a14f30b6d90c44acd9e2",
+    "actionsRun": 35835910564,
+    "writingProtocol": 1
+  },
+  "sites": [
+    {
+      "label": "A",
+      "homepage": "https://henry-phd-finance.github.io/minihompy/",
+      "projectRef": "itkymmxnbjylyzbmdxdb",
+      "runtimeCommit": "1260d1a3485e0b7e5f0aabd368f522b925f5dec9",
+      "actionsRun": 35836177209,
+      "enabled": true,
+      "filesMatchRelease": [
+        "member-writing-config.js",
+        "member-writing-client.js",
+        "member-writing-runtime.js",
+        "guestbook-repository.js",
+        "comments-repository.js",
+        "comments.js",
+        "views/guestbook.js",
+        "admin-auth.js",
+        "login/writing.html"
+      ],
+      "function": {
+        "slug": "member-writing",
+        "version": 3,
+        "verify_jwt": false
+      }
+    },
+    {
+      "label": "B",
+      "homepage": "https://henry-hs-jung.github.io/minihompy/",
+      "projectRef": "zcaodcujqbjrogffwalk",
+      "runtimeCommit": "6ef16bfe0c093fdac3a72fed0e7e31f11d1671ff",
+      "actionsRun": 35836181769,
+      "enabled": true,
+      "filesMatchRelease": [
+        "member-writing-config.js",
+        "member-writing-client.js",
+        "member-writing-runtime.js",
+        "guestbook-repository.js",
+        "comments-repository.js",
+        "comments.js",
+        "views/guestbook.js",
+        "admin-auth.js",
+        "login/writing.html"
+      ],
+      "function": {
+        "slug": "member-writing",
+        "version": 1,
+        "verify_jwt": false
+      }
+    }
+  ]
+}
