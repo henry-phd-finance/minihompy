@@ -1,0 +1,22 @@
+{
+  "checkedAt": "2026-09-23T12:27:22.774Z",
+  "passed": true,
+  "phase": "fresh B session",
+  "checks": [
+    "Anonymous A shows owner and login prompt",
+    "A login uses central ID then private password and shows own home",
+    "Surf A → B retains A identity without B administrator rights",
+    "My home from B returns to registered A",
+    "Random excludes A and navigates to B with A identity",
+    "Reload on B retains verified A identity",
+    "A member guestbook name and house on B link to registered A; name click arrives at A",
+    "A logout clears identity and own-home link",
+    "Same browser switches to B and shows B own home",
+    "B visitor on A is other; existing local A administrator remains separate",
+    "B logout returns to anonymous",
+    "Fresh B login visits A without A administrator rights"
+  ],
+  "testContentCreated": true,
+  "testContentCleaned": true,
+  "homeVisitsChecked": true
+}

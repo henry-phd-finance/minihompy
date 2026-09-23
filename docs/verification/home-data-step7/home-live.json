@@ -1,0 +1,84 @@
+{
+  "checkedAt": "2026-09-23T12:26:16.460Z",
+  "results": [
+    {
+      "site": "A",
+      "recentLinks": 5,
+      "kinds": [
+        "board",
+        "photos",
+        "diary",
+        "guestbook"
+      ],
+      "counts": {
+        "board": {
+          "today": 0,
+          "total": 1
+        },
+        "diary": {
+          "today": 0,
+          "total": 3
+        },
+        "photos": {
+          "today": 0,
+          "total": 1
+        },
+        "guestbook": {
+          "today": 0,
+          "total": 5
+        }
+      },
+      "todayComments": 0,
+      "reloadDeduplicated": true,
+      "newTabDeduplicated": true,
+      "visitsBefore": {
+        "counted": false,
+        "today": 2,
+        "total": 2
+      },
+      "visitsAfter": {
+        "counted": false,
+        "today": 2,
+        "total": 2
+      }
+    },
+    {
+      "site": "B",
+      "recentLinks": 2,
+      "kinds": [
+        "guestbook"
+      ],
+      "counts": {
+        "board": {
+          "today": 0,
+          "total": 0
+        },
+        "diary": {
+          "today": 0,
+          "total": 0
+        },
+        "photos": {
+          "today": 0,
+          "total": 0
+        },
+        "guestbook": {
+          "today": 2,
+          "total": 2
+        }
+      },
+      "todayComments": 0,
+      "reloadDeduplicated": true,
+      "newTabDeduplicated": true,
+      "visitsBefore": {
+        "counted": false,
+        "today": 1,
+        "total": 1
+      },
+      "visitsAfter": {
+        "counted": false,
+        "today": 1,
+        "total": 1
+      }
+    }
+  ]
+}

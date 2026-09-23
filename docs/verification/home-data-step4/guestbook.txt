@@ -1,0 +1,10 @@
+PASS 1: member writes use verified name and identity; replay does not duplicate or charge twice
+PASS 2: private posts and count only visible to member author on a fresh session or local owner
+PASS 3: post address uses the same public/member/owner authorization and rejects invalid IDs
+PASS 4: author edits with revision checks; owner cannot edit another member body
+PASS 5: owner may hide/delete; deleted posts never resurrect through an old retry
+PASS 6: minute and daily quotas survive session changes/deletion; failed inserts rollback
+PASS 7: old anonymous authors retain private ownership and cannot become a member by UUID collision
+PASS 8: member private parent comments remain hidden to legacy readers
+PASS 9: expired or centrally revoked sessions cannot read member private posts or write
+PASS: 9 guestbook integration groups; actual local central/personal SQL and handlers.

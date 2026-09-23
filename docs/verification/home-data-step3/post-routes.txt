@@ -1,0 +1,6 @@
+PASS 1280: four real views direct entry/reload, target beyond first page and diary date
+PASS 1280: back/forward and canceled tab/history navigation retain URL, view and draft
+PASS 1280: late response, deleted target, invalid ID and hidden menu fail safely
+PASS 375: four real views direct entry/reload, target beyond first page and diary date
+PASS 375: back/forward and canceled tab/history navigation retain URL, view and draft
+PASS 375: late response, deleted target, invalid ID and hidden menu fail safely

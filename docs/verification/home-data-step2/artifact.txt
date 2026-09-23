@@ -1,0 +1,2 @@
+Prepared _site with 36 runtime entries. No references, docs, SQL or test scripts.
+PASS: Pages includes login/runtime assets and excludes backend/setup/secrets.

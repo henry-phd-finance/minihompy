@@ -1,0 +1,1 @@
+PASS: profile introduction, empty sections/groups, keyboard, navigation, image, long text, desktop/mobile.

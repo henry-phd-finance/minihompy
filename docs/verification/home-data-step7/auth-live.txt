@@ -1,0 +1,12 @@
+PASS: Anonymous A shows owner and login prompt
+PASS: A login uses central ID then private password and shows own home
+PASS: Surf A → B retains A identity without B administrator rights
+PASS: My home from B returns to registered A
+PASS: Random excludes A and navigates to B with A identity
+PASS: Reload on B retains verified A identity
+PASS: A member guestbook name and house on B link to registered A; name click arrives at A
+PASS: A logout clears identity and own-home link
+PASS: Same browser switches to B and shows B own home
+PASS: B visitor on A is other; existing local A administrator remains separate
+PASS: B logout returns to anonymous
+PASS: Fresh B login visits A without A administrator rights

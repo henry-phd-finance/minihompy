@@ -1,0 +1,1 @@
+PASS: actual vendored SDK, isolated sessions, client reuse, reader identity, settings/profile reads only, no user creation.

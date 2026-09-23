@@ -1,0 +1,1 @@
+PASS: profile edit, upload preview/retry, save response loss, CAS, drafts, inheritance, removal, permission loss, read failure/retry, empty sections, desktop/mobile. Mock API with real SDK.

@@ -1,0 +1,527 @@
+{
+  "checkedAt": "2026-09-23T12:25:29.941Z",
+  "sites": [
+    {
+      "label": "A",
+      "files": [
+        {
+          "file": "admin-auth.js",
+          "sha256": "2e62b2605cdce06546837fd938b4368886f011c82cb1e618f1bfd2d929dedf64"
+        },
+        {
+          "file": "app.js",
+          "sha256": "5c1abcf825e28c8a2414582c8c8ccce1f8aeb27bb9be6f35ef92a416a83e378f"
+        },
+        {
+          "file": "assets/cyworld-reference-sprite.png",
+          "sha256": "5a68654f3ac052afcc715995858155bb530d5ad2426d45ff52d27616e902b00c"
+        },
+        {
+          "file": "assets/fonts/Galmuri11-extended.woff2",
+          "sha256": "8bad9322b3340bfb5cb26cb00f4752bf4c8e7d1b526bb07205f4af458eebed31"
+        },
+        {
+          "file": "assets/fonts/Galmuri11-home.woff2",
+          "sha256": "17ba9aeb3294c16fa01480897e2573bca9c89b24e0a4e17ece693357275de60d"
+        },
+        {
+          "file": "assets/fonts/Galmuri11-tabs.woff2",
+          "sha256": "d58a9df5503c88fd9bf3a2b9227ac669fbf622c18ed7dc51750332b8e108fc2b"
+        },
+        {
+          "file": "assets/fonts/OFL.txt",
+          "sha256": "86a3ee9495f942f0243f18c103da9faca27adb88142613edb8bb852e56c892c1"
+        },
+        {
+          "file": "assets/fonts/README.md",
+          "sha256": "868c762ee604d8ee5eaacc7b5cbd442d6de5cf3c3fa8d8c478aedd29f7f16778"
+        },
+        {
+          "file": "assets/guestbook-title-reference.png",
+          "sha256": "c14075a62c6fe3e2b0a94ce782a83c1232b41d542264f0085ce5ad2e9e4b7606"
+        },
+        {
+          "file": "assets/login-flow.js",
+          "sha256": "f7b6d2249a0e590f067c11f454d1359da0933aa99f99a5bb4f5c0af0a9af9b58"
+        },
+        {
+          "file": "assets/login.css",
+          "sha256": "eb8dcc8d14b83700e6f1b7879a9787be3d6f64c0896341f71c258c203cda835f"
+        },
+        {
+          "file": "assets/photos/README.md",
+          "sha256": "026526e591aed3157bef6bba3e48753ada7654e19ba8c8fe8cf4332f5518041a"
+        },
+        {
+          "file": "assets/photos/forest.jpg",
+          "sha256": "b944abd87e265d383d021181a00eb153babf605d2746d859be6be910a2deb1ed"
+        },
+        {
+          "file": "assets/photos/lake.jpg",
+          "sha256": "9badc6a7fbf149c25d16ca55340e17a5294f88068e546d812594f2e6c05127f6"
+        },
+        {
+          "file": "assets/vendor/README.md",
+          "sha256": "0a41c2a84382748fa924f9c83c192e19e415b1f3e6697323ecd5fd8e39e31352"
+        },
+        {
+          "file": "assets/vendor/quill-2.0.3.js",
+          "sha256": "f6157c72ac9b3f51cdead426335688a027b12405d9d6a4daadd38a676b2d7ff2"
+        },
+        {
+          "file": "assets/vendor/quill-LICENSE",
+          "sha256": "395c12b616d6f58238b4be39284d4d9221b58dd6e1f1e34d9ab537e34abbb022"
+        },
+        {
+          "file": "assets/vendor/supabase-2.116.0.js",
+          "sha256": "84ee9bf45695c1dd3ba1595b6bcfb0f09672434631351ffc8ebe9140545d5ff6"
+        },
+        {
+          "file": "assets/vendor/supabase-LICENSE",
+          "sha256": "334dd6820e2eaeab2064e7c59001b810566728a28a41a7c1dbf69bbee17d0936"
+        },
+        {
+          "file": "author-navigation.js",
+          "sha256": "5b75d4e3924e7bf51e9d4bb03971471bcaa0832c8ce2c337397261d18a3b6d2f"
+        },
+        {
+          "file": "board-data.js",
+          "sha256": "dc483900dd94a4552df680ca46b8788dcaaa69b47aa9ff381dbe3f47028048ae"
+        },
+        {
+          "file": "board-repository.js",
+          "sha256": "cbd442f591a979253034eb265c4afed1af36fb2010baef23848108cc1d1021da"
+        },
+        {
+          "file": "comments-repository.js",
+          "sha256": "6623e32c36e9fb7857045c768e3c68fc91d3dfdcfb6c20b223ab5692a799bb22"
+        },
+        {
+          "file": "comments.js",
+          "sha256": "f2ee675e981809e0a79fc971127a7db5b4a1eeb191347de523aa5766992ef23d"
+        },
+        {
+          "file": "config.js",
+          "sha256": "a76d4946127f058b886dd4ae730c4c57f8ed8c93d346fddf475bb23c4a8dbc36"
+        },
+        {
+          "file": "content.js",
+          "sha256": "a145d7a7a5631e969132aee71beabae2d46a787d92f9da8d83e8d552bc334048"
+        },
+        {
+          "file": "diary-data.js",
+          "sha256": "fb9e809d478a81e8b76d53792f636d576ff810c1d0178dd99941df3f3695352a"
+        },
+        {
+          "file": "diary-repository.js",
+          "sha256": "47339eb11a005039be2b4f68269d0b86271a3b4d9bcd8344a92f2d107aa5b755"
+        },
+        {
+          "file": "guestbook-data.js",
+          "sha256": "14a369955dc05013255f0c0ccc3f4d7b0b7e997c161335d4aa820381385348da"
+        },
+        {
+          "file": "guestbook-repository.js",
+          "sha256": "bc02609b53f57659abc5a90f00189f8ea494fa00215b2d5eff00d9d96a4ec475"
+        },
+        {
+          "file": "home-activity.js",
+          "sha256": "1f0d54871b2fbff45ff7db12f25eaf25d4d37abf71cfd4727b40ed2e48a97e57"
+        },
+        {
+          "file": "home-data-config.js",
+          "sha256": "72701b094367b369ff3ad08f60092101815935a5c7c6dd7f08ce1782df30487a"
+        },
+        {
+          "file": "home-repository.js",
+          "sha256": "df24964f3128db1b09fdd29b89b6df4a6cae970f2eb4852dcf93907b54806cb3"
+        },
+        {
+          "file": "index.html",
+          "sha256": "ca35dd597251e1beb41bcccab3185035f67fba71a67fd6f9925dd104e574f588"
+        },
+        {
+          "file": "login/index.html",
+          "sha256": "2c1a55894d8d3255c9096252c052a0b7b9b7dd9c112e10d342be6520de816bcf"
+        },
+        {
+          "file": "login/writing.html",
+          "sha256": "ad237b0f818d5039480684a9a64f95608a7c8c3422bc3a93b5e6cf4fb38cafe0"
+        },
+        {
+          "file": "member-navigation.js",
+          "sha256": "b2e0047a07a4b90b152cb68f7e2954aa0662762b57dd65d9b883d9d3c655544c"
+        },
+        {
+          "file": "member-writing-client.js",
+          "sha256": "5c6cd7254b830025c861e7731e47c33272411478bd917b92492160f723753dd9"
+        },
+        {
+          "file": "member-writing-config.js",
+          "sha256": "3989b7348765e79ad93d7d71c66e1bcdc8985a9f2d02bc7c7f2041032be23a20"
+        },
+        {
+          "file": "member-writing-runtime.js",
+          "sha256": "a7a1cb157c93f60125a738ea270024665667607a596442df24eb568e666627c6"
+        },
+        {
+          "file": "minihompy-identity/3a833998-fed7-4e2e-a0fb-d54b8df40cbf.json",
+          "sha256": "91f24b39f0c38fcff2fc0d89d2d5dd0662ffcb5e043ba51acdeac2e2014c1272"
+        },
+        {
+          "file": "photo-editor.js",
+          "sha256": "9dd2dec02f8051d7bc83bb07cf329521832da6ae73036b9997ff196f433a8137"
+        },
+        {
+          "file": "photos-data.js",
+          "sha256": "6801e7e17e118f74b5250fe2ed829b10a10c527dd0cbf29b0a789eff1176b0ec"
+        },
+        {
+          "file": "photos-repository.js",
+          "sha256": "69fd401ed08ef4b3c0f3a3a23a0a8037b4843ac57141be83ba1e04e065a84c6b"
+        },
+        {
+          "file": "post-location-repository.js",
+          "sha256": "3ebad4d60aeb10c79752083d264faf6c97f2f4622f92943a03e143be10734635"
+        },
+        {
+          "file": "post-routes.js",
+          "sha256": "0a2ce2277c54a885cc308ee45fffcdf737c4b2e484902f9b7b5efd0a75f10fef"
+        },
+        {
+          "file": "profile-data.js",
+          "sha256": "15dd2b7849cd44a378decf92e7d52e7685b528e51862d8f87dc0379a60e27a73"
+        },
+        {
+          "file": "styles.css",
+          "sha256": "d4564b752beafe7b3d152bc0d36791b34085ab99126e22211a49903230a4af5b"
+        },
+        {
+          "file": "supabase-client.js",
+          "sha256": "e45d715d7e04120d48b63c5d2b16a3c35c7700951373a30d6aa8fcb72e34e611"
+        },
+        {
+          "file": "supabase-config.js",
+          "sha256": "f301277b83898b1482ff43b813d94e95b6bb0e25b28290571fbb43929d8e3e69"
+        },
+        {
+          "file": "surf-navigation.js",
+          "sha256": "9dc9afda616f690e4f33941e82336a0dfff97a6808f59004be11b931a507799d"
+        },
+        {
+          "file": "views/board.js",
+          "sha256": "5df4430bf120af2bd0960986ac1efe481b6e4a20dfadddca262b0631ddcf0dbe"
+        },
+        {
+          "file": "views/diary.js",
+          "sha256": "2fc14d5a19eab87c4ac0b0e03494edf508d095a8532b91cdc4149b87e18edf32"
+        },
+        {
+          "file": "views/guestbook.js",
+          "sha256": "371eb29275051303239993a55276d1a7e91efcddc32ce016d906abaa46202f03"
+        },
+        {
+          "file": "views/home.js",
+          "sha256": "f60ba5edf15231501efd9167ed7ce9479612e45415d159e6c83bd1b1a010a979"
+        },
+        {
+          "file": "views/index.js",
+          "sha256": "f3b336ff4e4a76c6dc4b4b3e07bf644f04dbe7a6127e243d9784c425ef578b28"
+        },
+        {
+          "file": "views/photos.js",
+          "sha256": "5d306814671b9a99285d5972548fb42d803cbade0d0bbdff2155f3bc0de10c13"
+        },
+        {
+          "file": "views/profile.js",
+          "sha256": "2b4103751d1523e0add6f2ef72947e8dd5ed391c6855fc5fc1b96f660afaf85f"
+        },
+        {
+          "file": "views/settings.js",
+          "sha256": "cbf291ac54d48649b48c2af767a50b1979a3763ee6e681757bac713c9b56ec1a"
+        },
+        {
+          "file": "visit-counts.js",
+          "sha256": "b4e5778fb4cbe322b34df64bfbafda72a69fbd011150ef88693703b91d3fb861"
+        },
+        {
+          "file": "visitor-identity-config.js",
+          "sha256": "ea0450a9b474db546698620e8de2f763c57f2ee11171afa4892d5724a5861a90"
+        },
+        {
+          "file": "visitor-identity-login.js",
+          "sha256": "9a955f73f9b98e75d4244ba0dfda5718e451bee23cc9bbb4a63ef614b888f908"
+        },
+        {
+          "file": "visitor-identity.js",
+          "sha256": "c707fb06dd25951182af7936cc8aa285b2934b090b30f07ef79e02a267c43526"
+        },
+        {
+          "file": "visitor-session.js",
+          "sha256": "840efe1ff08451987439324ccc2fdabbe66443c86c77ae829c97f42ab6f2f2ac"
+        }
+      ]
+    },
+    {
+      "label": "B",
+      "files": [
+        {
+          "file": "admin-auth.js",
+          "sha256": "2e62b2605cdce06546837fd938b4368886f011c82cb1e618f1bfd2d929dedf64"
+        },
+        {
+          "file": "app.js",
+          "sha256": "5c1abcf825e28c8a2414582c8c8ccce1f8aeb27bb9be6f35ef92a416a83e378f"
+        },
+        {
+          "file": "assets/cyworld-reference-sprite.png",
+          "sha256": "5a68654f3ac052afcc715995858155bb530d5ad2426d45ff52d27616e902b00c"
+        },
+        {
+          "file": "assets/fonts/Galmuri11-extended.woff2",
+          "sha256": "8bad9322b3340bfb5cb26cb00f4752bf4c8e7d1b526bb07205f4af458eebed31"
+        },
+        {
+          "file": "assets/fonts/Galmuri11-home.woff2",
+          "sha256": "17ba9aeb3294c16fa01480897e2573bca9c89b24e0a4e17ece693357275de60d"
+        },
+        {
+          "file": "assets/fonts/Galmuri11-tabs.woff2",
+          "sha256": "d58a9df5503c88fd9bf3a2b9227ac669fbf622c18ed7dc51750332b8e108fc2b"
+        },
+        {
+          "file": "assets/fonts/OFL.txt",
+          "sha256": "86a3ee9495f942f0243f18c103da9faca27adb88142613edb8bb852e56c892c1"
+        },
+        {
+          "file": "assets/fonts/README.md",
+          "sha256": "868c762ee604d8ee5eaacc7b5cbd442d6de5cf3c3fa8d8c478aedd29f7f16778"
+        },
+        {
+          "file": "assets/guestbook-title-reference.png",
+          "sha256": "c14075a62c6fe3e2b0a94ce782a83c1232b41d542264f0085ce5ad2e9e4b7606"
+        },
+        {
+          "file": "assets/login-flow.js",
+          "sha256": "f7b6d2249a0e590f067c11f454d1359da0933aa99f99a5bb4f5c0af0a9af9b58"
+        },
+        {
+          "file": "assets/login.css",
+          "sha256": "eb8dcc8d14b83700e6f1b7879a9787be3d6f64c0896341f71c258c203cda835f"
+        },
+        {
+          "file": "assets/photos/README.md",
+          "sha256": "026526e591aed3157bef6bba3e48753ada7654e19ba8c8fe8cf4332f5518041a"
+        },
+        {
+          "file": "assets/photos/forest.jpg",
+          "sha256": "b944abd87e265d383d021181a00eb153babf605d2746d859be6be910a2deb1ed"
+        },
+        {
+          "file": "assets/photos/lake.jpg",
+          "sha256": "9badc6a7fbf149c25d16ca55340e17a5294f88068e546d812594f2e6c05127f6"
+        },
+        {
+          "file": "assets/vendor/README.md",
+          "sha256": "0a41c2a84382748fa924f9c83c192e19e415b1f3e6697323ecd5fd8e39e31352"
+        },
+        {
+          "file": "assets/vendor/quill-2.0.3.js",
+          "sha256": "f6157c72ac9b3f51cdead426335688a027b12405d9d6a4daadd38a676b2d7ff2"
+        },
+        {
+          "file": "assets/vendor/quill-LICENSE",
+          "sha256": "395c12b616d6f58238b4be39284d4d9221b58dd6e1f1e34d9ab537e34abbb022"
+        },
+        {
+          "file": "assets/vendor/supabase-2.116.0.js",
+          "sha256": "84ee9bf45695c1dd3ba1595b6bcfb0f09672434631351ffc8ebe9140545d5ff6"
+        },
+        {
+          "file": "assets/vendor/supabase-LICENSE",
+          "sha256": "334dd6820e2eaeab2064e7c59001b810566728a28a41a7c1dbf69bbee17d0936"
+        },
+        {
+          "file": "author-navigation.js",
+          "sha256": "5b75d4e3924e7bf51e9d4bb03971471bcaa0832c8ce2c337397261d18a3b6d2f"
+        },
+        {
+          "file": "board-data.js",
+          "sha256": "dc483900dd94a4552df680ca46b8788dcaaa69b47aa9ff381dbe3f47028048ae"
+        },
+        {
+          "file": "board-repository.js",
+          "sha256": "cbd442f591a979253034eb265c4afed1af36fb2010baef23848108cc1d1021da"
+        },
+        {
+          "file": "comments-repository.js",
+          "sha256": "6623e32c36e9fb7857045c768e3c68fc91d3dfdcfb6c20b223ab5692a799bb22"
+        },
+        {
+          "file": "comments.js",
+          "sha256": "f2ee675e981809e0a79fc971127a7db5b4a1eeb191347de523aa5766992ef23d"
+        },
+        {
+          "file": "config.js",
+          "sha256": "a76d4946127f058b886dd4ae730c4c57f8ed8c93d346fddf475bb23c4a8dbc36"
+        },
+        {
+          "file": "content.js",
+          "sha256": "a145d7a7a5631e969132aee71beabae2d46a787d92f9da8d83e8d552bc334048"
+        },
+        {
+          "file": "diary-data.js",
+          "sha256": "fb9e809d478a81e8b76d53792f636d576ff810c1d0178dd99941df3f3695352a"
+        },
+        {
+          "file": "diary-repository.js",
+          "sha256": "47339eb11a005039be2b4f68269d0b86271a3b4d9bcd8344a92f2d107aa5b755"
+        },
+        {
+          "file": "guestbook-data.js",
+          "sha256": "14a369955dc05013255f0c0ccc3f4d7b0b7e997c161335d4aa820381385348da"
+        },
+        {
+          "file": "guestbook-repository.js",
+          "sha256": "bc02609b53f57659abc5a90f00189f8ea494fa00215b2d5eff00d9d96a4ec475"
+        },
+        {
+          "file": "home-activity.js",
+          "sha256": "1f0d54871b2fbff45ff7db12f25eaf25d4d37abf71cfd4727b40ed2e48a97e57"
+        },
+        {
+          "file": "home-data-config.js",
+          "sha256": "d529f8d9d4743c7b7d40f0a3a02def035fabc845a46499f733dc0aa4168858f9"
+        },
+        {
+          "file": "home-repository.js",
+          "sha256": "df24964f3128db1b09fdd29b89b6df4a6cae970f2eb4852dcf93907b54806cb3"
+        },
+        {
+          "file": "index.html",
+          "sha256": "ca35dd597251e1beb41bcccab3185035f67fba71a67fd6f9925dd104e574f588"
+        },
+        {
+          "file": "login/index.html",
+          "sha256": "2c1a55894d8d3255c9096252c052a0b7b9b7dd9c112e10d342be6520de816bcf"
+        },
+        {
+          "file": "login/writing.html",
+          "sha256": "ad237b0f818d5039480684a9a64f95608a7c8c3422bc3a93b5e6cf4fb38cafe0"
+        },
+        {
+          "file": "member-navigation.js",
+          "sha256": "b2e0047a07a4b90b152cb68f7e2954aa0662762b57dd65d9b883d9d3c655544c"
+        },
+        {
+          "file": "member-writing-client.js",
+          "sha256": "5c6cd7254b830025c861e7731e47c33272411478bd917b92492160f723753dd9"
+        },
+        {
+          "file": "member-writing-config.js",
+          "sha256": "3989b7348765e79ad93d7d71c66e1bcdc8985a9f2d02bc7c7f2041032be23a20"
+        },
+        {
+          "file": "member-writing-runtime.js",
+          "sha256": "a7a1cb157c93f60125a738ea270024665667607a596442df24eb568e666627c6"
+        },
+        {
+          "file": "minihompy-identity/3f3c7718-7f8a-49f4-84af-c2afaef3b922.json",
+          "sha256": "640c6dabbcea85073461e9785418c2aeffc88b98e85fcc39f15f047f3e9a192a"
+        },
+        {
+          "file": "photo-editor.js",
+          "sha256": "9dd2dec02f8051d7bc83bb07cf329521832da6ae73036b9997ff196f433a8137"
+        },
+        {
+          "file": "photos-data.js",
+          "sha256": "6801e7e17e118f74b5250fe2ed829b10a10c527dd0cbf29b0a789eff1176b0ec"
+        },
+        {
+          "file": "photos-repository.js",
+          "sha256": "69fd401ed08ef4b3c0f3a3a23a0a8037b4843ac57141be83ba1e04e065a84c6b"
+        },
+        {
+          "file": "post-location-repository.js",
+          "sha256": "3ebad4d60aeb10c79752083d264faf6c97f2f4622f92943a03e143be10734635"
+        },
+        {
+          "file": "post-routes.js",
+          "sha256": "0a2ce2277c54a885cc308ee45fffcdf737c4b2e484902f9b7b5efd0a75f10fef"
+        },
+        {
+          "file": "profile-data.js",
+          "sha256": "15dd2b7849cd44a378decf92e7d52e7685b528e51862d8f87dc0379a60e27a73"
+        },
+        {
+          "file": "styles.css",
+          "sha256": "d4564b752beafe7b3d152bc0d36791b34085ab99126e22211a49903230a4af5b"
+        },
+        {
+          "file": "supabase-client.js",
+          "sha256": "e45d715d7e04120d48b63c5d2b16a3c35c7700951373a30d6aa8fcb72e34e611"
+        },
+        {
+          "file": "supabase-config.js",
+          "sha256": "1aa9586a19acaa2d5e94cb8cb3aa046dcc6d8a2418dfc707ab39fce99276f15b"
+        },
+        {
+          "file": "surf-navigation.js",
+          "sha256": "9dc9afda616f690e4f33941e82336a0dfff97a6808f59004be11b931a507799d"
+        },
+        {
+          "file": "views/board.js",
+          "sha256": "5df4430bf120af2bd0960986ac1efe481b6e4a20dfadddca262b0631ddcf0dbe"
+        },
+        {
+          "file": "views/diary.js",
+          "sha256": "2fc14d5a19eab87c4ac0b0e03494edf508d095a8532b91cdc4149b87e18edf32"
+        },
+        {
+          "file": "views/guestbook.js",
+          "sha256": "371eb29275051303239993a55276d1a7e91efcddc32ce016d906abaa46202f03"
+        },
+        {
+          "file": "views/home.js",
+          "sha256": "f60ba5edf15231501efd9167ed7ce9479612e45415d159e6c83bd1b1a010a979"
+        },
+        {
+          "file": "views/index.js",
+          "sha256": "f3b336ff4e4a76c6dc4b4b3e07bf644f04dbe7a6127e243d9784c425ef578b28"
+        },
+        {
+          "file": "views/photos.js",
+          "sha256": "5d306814671b9a99285d5972548fb42d803cbade0d0bbdff2155f3bc0de10c13"
+        },
+        {
+          "file": "views/profile.js",
+          "sha256": "2b4103751d1523e0add6f2ef72947e8dd5ed391c6855fc5fc1b96f660afaf85f"
+        },
+        {
+          "file": "views/settings.js",
+          "sha256": "cbf291ac54d48649b48c2af767a50b1979a3763ee6e681757bac713c9b56ec1a"
+        },
+        {
+          "file": "visit-counts.js",
+          "sha256": "b4e5778fb4cbe322b34df64bfbafda72a69fbd011150ef88693703b91d3fb861"
+        },
+        {
+          "file": "visitor-identity-config.js",
+          "sha256": "dedb08b5313829b27316c716cd49b3de1c3447ee39c6dfc32c75c00aac7010aa"
+        },
+        {
+          "file": "visitor-identity-login.js",
+          "sha256": "9a955f73f9b98e75d4244ba0dfda5718e451bee23cc9bbb4a63ef614b888f908"
+        },
+        {
+          "file": "visitor-identity.js",
+          "sha256": "c707fb06dd25951182af7936cc8aa285b2934b090b30f07ef79e02a267c43526"
+        },
+        {
+          "file": "visitor-session.js",
+          "sha256": "840efe1ff08451987439324ccc2fdabbe66443c86c77ae829c97f42ab6f2f2ac"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,306 @@
+{
+  "checkedAt": "2026-09-23T12:15:19.287Z",
+  "results": [
+    {
+      "name": "identity",
+      "passed": true,
+      "seconds": 0.022,
+      "stdout": "PASS: nickname, persistence failure, lazy anonymous identity without CAPTCHA, deduplication, verified admin lookup, fail closed.\n",
+      "stderr": ""
+    },
+    {
+      "name": "post-location",
+      "passed": true,
+      "seconds": 1.265,
+      "stdout": "PASS: actual SQL four-kind positions beyond first page, ties, diary date, private/missing IDs, invalid input, owner vs public page, revoked member, migration repeat\n",
+      "stderr": ""
+    },
+    {
+      "name": "post-routes",
+      "passed": true,
+      "seconds": 0.022,
+      "stdout": "PASS: four route round trips, legacy menus, malformed/duplicate/extra parameters, bounded location request\n",
+      "stderr": ""
+    },
+    {
+      "name": "post-routes-ui",
+      "passed": true,
+      "seconds": 2.956,
+      "stdout": "PASS 1280: four real views direct entry/reload, target beyond first page and diary date\nPASS 1280: back/forward and canceled tab/history navigation retain URL, view and draft\nPASS 1280: late response, deleted target, invalid ID and hidden menu fail safely\nPASS 375: four real views direct entry/reload, target beyond first page and diary date\nPASS 375: back/forward and canceled tab/history navigation retain URL, view and draft\nPASS 375: late response, deleted target, invalid ID and hidden menu fail safely\n",
+      "stderr": ""
+    },
+    {
+      "name": "home-summary",
+      "passed": true,
+      "seconds": 1.237,
+      "stdout": "PASS 1: empty success, all hidden, invalid arguments, missing settings distinct from zero\nPASS 2: private-only site remains empty with no metadata\nPASS 3: four kinds, deterministic top five, bounded plain text, no full bodies or private IDs\nPASS 4: central-member and local authors share public-only rules without author metadata\nPASS 5: Korean midnight boundary, entry date ignored, new comments on old posts included\nPASS 6: server settings exclude hidden menus from recent, counts and comments even when requested\nPASS 7: delete, make private, edit preserve correct counts; no stale summary; migration repeat preserves rows\nPASS 8: anonymous, member, owner RPC agree; private clock/text helpers and writes not accessible\nPASS: 8 home summary groups (actual PostgreSQL/PGlite, no deployment)\n",
+      "stderr": ""
+    },
+    {
+      "name": "visit-counts",
+      "passed": true,
+      "seconds": 4.348,
+      "stdout": "PASS 1: read-only initial zero and separated write endpoint\nPASS 2: overlapping callers and lost-response retry do not duplicate\nPASS 3: Korean midnight, stale/future dates and rollover between signing and recording\nPASS 4: HMAC isolates days/sites and database stores no raw browser key or credentials\nPASS 5: per-key, new-visitor and site request limits keep counters correct\nPASS 6: retention removes only expired dedup keys and keeps daily/cumulative totals\nPASS 7: overflow rolls back dedup/counters and failures can retry safely\nPASS 8: browser roles cannot write/read dedup or execute clock helpers; service RPC only\nPASS 9: API rejects forged fields, invalid keys, oversized streamed bytes, wrong origin/method; sanitized failures\nPASS 10: slow request bodies time out without a database call\nPASS: 10 visit count groups; actual SQL and edge handler, no deployment\n",
+      "stderr": ""
+    },
+    {
+      "name": "visit-counts-ui",
+      "passed": true,
+      "seconds": 7.643,
+      "stdout": "PASS: direct content entry, reload, tabs, account/menu changes, login return preserve key; separate sites use separate keys\nPASS: server date change, storage blocked read-only and hidden/visible tab\nPASS: failure/retry/timeout do not block content; rate-limit cooldown, disabled readiness and login intent prevent recording\nPASS: simultaneous first tabs create one durable key; separate browser context creates another\n",
+      "stderr": ""
+    },
+    {
+      "name": "home-data-setup",
+      "passed": true,
+      "seconds": 1.246,
+      "stdout": "PASS: offline dry run, admin preflight, failed deploy leaves disabled, first secret creation, retry preserves secret, readiness is read-only\nPASS: migration hash mismatch, missing secret with existing counts, concurrent local installer and missing runtime rejection\n",
+      "stderr": ""
+    },
+    {
+      "name": "home-repository",
+      "passed": true,
+      "seconds": 0.024,
+      "stdout": "PASS: one visitor RPC, menu validation, abort forwarding, bounded strict response, no error-to-empty fallback or privileged metadata\n",
+      "stderr": ""
+    },
+    {
+      "name": "home-activity",
+      "passed": true,
+      "seconds": 2.086,
+      "stdout": "PASS 1280: actual home markup/styles, five escaped titles, four real route links, counters and keyboard\nPASS 1280: empty/error/retry, account invalidation, late responses, reentry after content change, hidden menus\nPASS 1280: bounded display lifetime, hidden tab invalidation and visible retry\nPASS 375: actual home markup/styles, five escaped titles, four real route links, counters and keyboard\nPASS 375: empty/error/retry, account invalidation, late responses, reentry after content change, hidden menus\nPASS 375: bounded display lifetime, hidden tab invalidation and visible retry\n",
+      "stderr": ""
+    },
+    {
+      "name": "navigation-setup",
+      "passed": true,
+      "seconds": 0.049,
+      "stdout": "PASS: navigation install/upgrade readiness, dry run, old central and missing module rejection\n",
+      "stderr": ""
+    },
+    {
+      "name": "member-navigation-state",
+      "passed": true,
+      "seconds": 0.059,
+      "stdout": "PASS navigation state: self/other/anonymous/pending/error, same name, latest URL, inactive/malformed targets, timeout, stale response and credential-free reads.\n",
+      "stderr": ""
+    },
+    {
+      "name": "member-navigation-ui",
+      "passed": true,
+      "seconds": 2.656,
+      "stdout": "PASS navigation UI desktop/mobile: same-name identities, admin separation, self/other/anonymous, login, retry, logout invalidation, native draft cancellation and keyboard link.\n",
+      "stderr": ""
+    },
+    {
+      "name": "author-navigation",
+      "passed": true,
+      "seconds": 1.556,
+      "stdout": "PASS author navigation desktop/mobile: actual guestbook + four comment parents, batched lookup, nonblocking content, latest URLs, same names, anonymous/inactive/error/retry, real draft guards and stale detached responses.\n",
+      "stderr": ""
+    },
+    {
+      "name": "surf-navigation",
+      "passed": true,
+      "seconds": 2.989,
+      "stdout": "PASS list scenarios 1280\nPASS list scenarios 375\nPASS surf desktop/mobile: list/search/pages, zero/one/many candidates, current-home exclusion, empty/error/retry, search/close races, duplicate random, native unload cancellation, keyboard/focus and viewport.\n",
+      "stderr": ""
+    },
+    {
+      "name": "navigation-integration",
+      "passed": true,
+      "seconds": 7.261,
+      "stdout": "PASS real central login/PKCE and A → B → own home, author link, reload/history and separate administrator\nPASS cross-origin logout, stale-tab invalidation, same-browser A → B\nPASS late profile, cancelled recheck, display lease and restored-page revalidation\nPASS central outage/retry, SQL session expiration and no credential-bearing final URLs\n",
+      "stderr": ""
+    },
+    {
+      "name": "board-db",
+      "passed": true,
+      "seconds": 1.137,
+      "stdout": "PASS: board migrations including retry grant; public reads; admin writes; ownership; 16 rejected operations; unique retry ID; divider FK; safe folder deletion. Local PGlite, not hosted Supabase.\n",
+      "stderr": ""
+    },
+    {
+      "name": "settings-db",
+      "passed": true,
+      "seconds": 1.121,
+      "stdout": "PASS: settings migration, seed, public read, admin-only update, immutable revision, CAS conflict, invalid fields/menus, reserved settings tab, empty menu set. Local PGlite.\n",
+      "stderr": ""
+    },
+    {
+      "name": "photos-db",
+      "passed": true,
+      "seconds": 1.089,
+      "stdout": "PASS: photo migration, public reads, admin CRUD, content validation, revisions, FK protection, Storage upload/delete RLS. Local emulated Storage tables, not hosted writes.\n",
+      "stderr": ""
+    },
+    {
+      "name": "diary-db",
+      "passed": true,
+      "seconds": 1.165,
+      "stdout": "PASS: diary migration, public reads/calendar, admin writes, revisions/ownership, date/time/weather/body constraints, FK, >1000-entry markers. Local PGlite.\n",
+      "stderr": ""
+    },
+    {
+      "name": "guestbook-db",
+      "passed": true,
+      "seconds": 1.115,
+      "stdout": "PASS: guestbook migration, anonymous denial, author/admin/public visibility, ownership, immutable metadata, one-way privacy, revisions, rate limits including deletion and reset. Local PGlite.\n",
+      "stderr": ""
+    },
+    {
+      "name": "comments-db",
+      "passed": true,
+      "seconds": 1.21,
+      "stdout": "PASS: actual parent migrations + comment RLS for all four targets, inherited privacy including former author, edit/delete ownership, immutable metadata/parent, revisions, FK cascades, rate limits. Local PGlite.\n",
+      "stderr": ""
+    },
+    {
+      "name": "profile-db",
+      "passed": true,
+      "seconds": 1.082,
+      "stdout": "PASS: profile seed, public read, admin-only updates, CAS, validation, immutable metadata, image policies and published image protection. Local PGlite.\n",
+      "stderr": ""
+    },
+    {
+      "name": "member-writing-foundation",
+      "passed": true,
+      "seconds": 1.222,
+      "stdout": "PASS: upgrade preserves every legacy value and local ownership\nPASS: public/private reads and private-parent comments keep existing RLS\nPASS: browser and local administrator cannot inject or reassign member fields\nPASS: legacy edits, conflicts, moderation and one-way privacy still work\nPASS: legacy inserts, rate limits and deletes remain functional after upgrade\nPASS: member rows cannot be adopted by legacy UUIDs or mutated through old admin routes\nPASS: both tables enforce identity shape and immutable member metadata\nPASS: session data stays private even with hosted default grants and BYPASSRLS\nPASS: limits and retry tombstones are independent of sessions and content lifetime\nPASS: central members need no local auth account; old deleted-account rows remain valid\nPASS: 10 foundation groups. Local PGlite; no hosted database or content changed.\n",
+      "stderr": ""
+    },
+    {
+      "name": "member-writing-setup",
+      "passed": true,
+      "seconds": 1.179,
+      "stdout": "PASS: actual legacy DB upgrade preserves rows, tracked migrations retry without replay, failed probe never enables UI, owner binding proof, no central secret, hash/untracked fail-stop, dry-run.\n",
+      "stderr": ""
+    },
+    {
+      "name": "member-writing-session",
+      "passed": true,
+      "seconds": 2.296,
+      "stdout": "PASS 1: real central proof exchanges for personal opaque session; DB stores hash only\nPASS 2: wrong target, altered proof, PKCE and caller-supplied identity are denied\nPASS 3: renewal revokes the old session and consumes a fresh proof\nPASS 4: central outage has no anonymous fallback; local logout race wins\nPASS 5: revocation fails closed locally, retries central cleanup, and is idempotent\nPASS 6: owner mode requires personal Auth and admin RPC, never central member authority\nPASS 7: browser roles cannot invoke session RPC or inspect private state\nPASS 8: mismatched central identity, forbidden origin and oversized bodies fail closed\nPASS 9: failed local persistence revokes the consumed central grant and returns no token\nPASS 10: expired local sessions and centrally revoked login are rejected\nPASS: 10 personal session integration groups; actual central/personal SQL and handlers, no hosted changes.\n",
+      "stderr": ""
+    },
+    {
+      "name": "member-writing-client",
+      "passed": true,
+      "seconds": 0.041,
+      "stdout": "PASS: PKCE preparation, scoped session storage, renewal, no fallback, revocation retry, storage failure cleanup, late-response isolation and owner/anonymous storage separation.\n",
+      "stderr": ""
+    },
+    {
+      "name": "member-guestbook",
+      "passed": true,
+      "seconds": 2.324,
+      "stdout": "PASS 1: member writes use verified name and identity; replay does not duplicate or charge twice\nPASS 2: private posts and count only visible to member author on a fresh session or local owner\nPASS 3: post address uses the same public/member/owner authorization and rejects invalid IDs\nPASS 4: author edits with revision checks; owner cannot edit another member body\nPASS 5: owner may hide/delete; deleted posts never resurrect through an old retry\nPASS 6: minute and daily quotas survive session changes/deletion; failed inserts rollback\nPASS 7: old anonymous authors retain private ownership and cannot become a member by UUID collision\nPASS 8: member private parent comments remain hidden to legacy readers\nPASS 9: expired or centrally revoked sessions cannot read member private posts or write\nPASS: 9 guestbook integration groups; actual local central/personal SQL and handlers.\n",
+      "stderr": ""
+    },
+    {
+      "name": "member-comments",
+      "passed": true,
+      "seconds": 2.461,
+      "stdout": "PASS 1: board: verified author, fresh session edit, stranger denied, owner delete only, replay\nPASS 2: photos: verified author, fresh session edit, stranger denied, owner delete only, replay\nPASS 3: diary: verified author, fresh session edit, stranger denied, owner delete only, replay\nPASS 4: guestbook: verified author, fresh session edit, stranger denied, owner delete only, replay\nPASS 5: member quota shared across parents/sessions; rollback, replay and tombstones\nPASS 6: private parent authorization precedes even retries by former comment author\nPASS 7: browser RLS preserves old local ownership, rejects member injection and private parent access\nPASS 8: parent delete cascades; stale requests cannot recreate or read any of four parents\nPASS 9: central outage and revoked sessions never write anonymously\nPASS: 9 member comment integration groups; actual central/personal SQL and handlers.\n",
+      "stderr": ""
+    },
+    {
+      "name": "member-writing-lifecycle",
+      "passed": true,
+      "seconds": 8.775,
+      "stdout": "PASS 1: board: verified author, fresh session edit, stranger denied, owner delete only, replay\nPASS 2: photos: verified author, fresh session edit, stranger denied, owner delete only, replay\nPASS 3: diary: verified author, fresh session edit, stranger denied, owner delete only, replay\nPASS 4: guestbook: verified author, fresh session edit, stranger denied, owner delete only, replay\nPASS 5: member quota shared across parents/sessions; rollback, replay and tombstones\nPASS 6: private parent authorization precedes even retries by former comment author\nPASS 7: browser RLS preserves old local ownership, rejects member injection and private parent access\nPASS: Chromium four comment widgets, shared member confirmation, fixed names, private parent, fresh-browser edits and owner deletes.\nPASS: lifecycle browser private DOM clearing, outage draft recovery, late response isolation, A→B, logout failure/retry, multi-tab logout, restored page, expiration/renewal.\nPASS 8: parent delete cascades; stale requests cannot recreate or read any of four parents\nPASS 9: central outage and revoked sessions never write anonymously\nPASS: 9 member comment integration groups; actual central/personal SQL and handlers.\n",
+      "stderr": ""
+    },
+    {
+      "name": "backend",
+      "passed": false,
+      "seconds": 0.626,
+      "stdout": "",
+      "stderr": "node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: Reading must not create a remote user\n    at file:///home/henry91-jung/cyworld/scripts/verify-backend.mjs:28:3 {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: false,\n  expected: true,\n  operator: '==',\n  diff: 'simple'\n}\n\nNode.js v24.15.0\n"
+    },
+    {
+      "name": "admin",
+      "passed": true,
+      "seconds": 1.354,
+      "stdout": "PASS: admin UI desktop/mobile; invalid/non-admin/network denied; verified admin; local logout; password cleared; Escape. Auth calls mocked.\n",
+      "stderr": ""
+    },
+    {
+      "name": "settings",
+      "passed": true,
+      "seconds": 17.227,
+      "stdout": "PASS: DB settings load/save/error/conflict; administrator-only immutable last tab; 10-tab geometry; all hidden; logout/direct URL; no fallback; desktop/mobile. API mocked.\n",
+      "stderr": ""
+    },
+    {
+      "name": "board-writing",
+      "passed": true,
+      "seconds": 19.279,
+      "stdout": "PASS: real SDK with intercepted API; create/edit/move/delete, conflicts, denied writes, draft retention, auth change, pagination, error recovery, desktop/mobile. No hosted writes.\n",
+      "stderr": ""
+    },
+    {
+      "name": "photos-writing",
+      "passed": true,
+      "seconds": 18.079,
+      "stdout": "PASS: inline local images, text/image order, no early upload, save/edit/delete, retained drafts, failed upload/write, conflict, logout, invalid file, recovery, desktop/mobile. Mock API; real SDK and Quill.\n",
+      "stderr": ""
+    },
+    {
+      "name": "diary-writing",
+      "passed": true,
+      "seconds": 19.232,
+      "stdout": "PASS: diary create/edit/date+folder move/delete, calendar/leap year/months, drafts, denied/lost response retry, conflict, pagination, logout, errors; desktop/mobile, actual SDK with mock API.\n",
+      "stderr": ""
+    },
+    {
+      "name": "guestbook-writing",
+      "passed": true,
+      "seconds": 18.277,
+      "stdout": "PASS: lazy anonymous identity without CAPTCHA, remembered nickname, private visibility, own edit/delete, admin private-only moderation, conflict, denied/lost writes, drafts, logout/read failure clears private DOM; desktop/mobile. Mock auth/API, actual SDK.\n",
+      "stderr": ""
+    },
+    {
+      "name": "comments-writing",
+      "passed": true,
+      "seconds": 20.385,
+      "stdout": "PASS: comments on all four real views, shared nickname/one anonymous identity, no CAPTCHA, drafts, failed/lost writes, retry dedup, ownership/edit/delete/conflicts, private parent access loss, admin moderation, pagination, read errors, desktop/mobile. Mock API/Auth, actual SDK.\n",
+      "stderr": ""
+    },
+    {
+      "name": "profile-writing",
+      "passed": true,
+      "seconds": 19.218,
+      "stdout": "PASS: profile edit, upload preview/retry, save response loss, CAS, drafts, inheritance, removal, permission loss, read failure/retry, empty sections, desktop/mobile. Mock API with real SDK.\n",
+      "stderr": ""
+    },
+    {
+      "name": "profile",
+      "passed": false,
+      "seconds": 32.356,
+      "stdout": "",
+      "stderr": "node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nlocator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-menu=\"profile\"]')\u001b[22m\n\u001b[2m    - locator resolved to <a title=\"프로필\" class=\"page-tab\" href=\"#/profile\" data-menu=\"profile\">…</a>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\n    at /home/henry91-jung/cyworld/scripts/verify-profile.mjs:49:49 {\n  name: 'TimeoutError'\n}\n\nNode.js v24.15.0\n"
+    },
+    {
+      "name": "navigation",
+      "passed": false,
+      "seconds": 32.049,
+      "stdout": "",
+      "stderr": "node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nlocator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-menu=\"guestbook\"]')\u001b[22m\n\u001b[2m    - locator resolved to <a title=\"방명록\" class=\"page-tab\" href=\"#/guestbook\" data-menu=\"guestbook\">…</a>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\n    at /home/henry91-jung/cyworld/scripts/verify-navigation.mjs:33:49 {\n  name: 'TimeoutError'\n}\n\nNode.js v24.15.0\n"
+    },
+    {
+      "name": "scale",
+      "passed": false,
+      "seconds": 30.595,
+      "stdout": "",
+      "stderr": "node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nlocator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#admin-auth-toggle')\u001b[22m\n\u001b[2m    - waiting for\" https://henry-phd-finance.github.io/minihompy-central/visit.html?site_id=afd287c3-0f9f-44b4-8811-3cf11774f859&attempt_id=dcb59373-105d-49db-b55d-5aab59aefbf8&return_path=%2Fhome%2Fhenry91-jung%2Fcywo…\" navigation to finish...\u001b[22m\n\u001b[2m    - navigated to \"https://henry-phd-finance.github.io/minihompy-central/visit.html?site_id=afd287c3-0f9f-44b4-8811-3cf11774f859&attempt_id=dcb59373-105d-49db-b55d-5aab59aefbf8&return_path=%2Fhome%2Fhenry91-jung%2Fcywo…\"\u001b[22m\n\n    at /home/henry91-jung/cyworld/scripts/verify-scale.mjs:18:46 {\n  name: 'TimeoutError'\n}\n\nNode.js v24.15.0\n"
+    },
+    {
+      "name": "fonts",
+      "passed": true,
+      "seconds": 2.367,
+      "stdout": "PASS: one Dotum family, regular/bold only, zero added spacing, no text scaling, no Galmuri downloads; desktop/mobile/login/profile. System fallback allowed.\n",
+      "stderr": ""
+    }
+  ]
+}

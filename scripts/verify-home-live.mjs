@@ -7,7 +7,7 @@ const homes=['https://henry-phd-finance.github.io/minihompy/','https://henry-hs-
 try{for(const [index,home] of homes.entries()){
  const context=await browser.newContext({viewport:{width:1280,height:820}}),page=await context.newPage();page.setDefaultTimeout(45000);
  try{
-  await page.goto(home);await page.waitForFunction(()=>MinihompySharedIdentity?.state.status==='anonymous');
+  await page.goto(home);await page.waitForFunction(()=>window.MinihompySharedIdentity?.state.status==='anonymous');
   const ready=()=>page.waitForFunction(()=>document.querySelector('.home-activity')?.dataset.status==='ready'&&document.querySelector('.visit-count')?.dataset.status==='ready');await ready();
   const data=await page.evaluate(()=>MinihompyHomeRepository.summary());
   const shown=await page.locator('.home-post-link').evaluateAll(nodes=>nodes.map(n=>n.getAttribute('href')));
