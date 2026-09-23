@@ -11,7 +11,7 @@ async function as(uid, fn) {
   try { return await fn(); } finally { await db.exec('reset role'); }
 }
 try {
-  await db.exec(`create role anon; create role authenticated; create schema auth;
+  await db.exec(`create role anon; create role authenticated; create role service_role bypassrls; create schema auth;
     create table auth.users (id uuid primary key);
     create function auth.uid() returns uuid language sql stable as $$ select nullif(current_setting('request.jwt.claim.sub', true), '')::uuid $$;
     grant usage on schema auth, public to anon, authenticated;
@@ -22,7 +22,7 @@ try {
     alter table storage.objects enable row level security;
     grant usage on schema storage to anon, authenticated;
     grant select, insert, update, delete on storage.objects to anon, authenticated;`);
-  for (const file of ['202609130001_identity.sql', '202609130002_board.sql', '202609130003_settings.sql', '202609130004_photos.sql', '202609130005_diary.sql', '202609130006_guestbook.sql', '202609130007_guestbook_clock.sql', '202609130008_comments.sql', '202609130009_profile.sql', '202609130010_board_retry.sql']) await db.exec(await readFile(new URL(`../supabase/migrations/${file}`, import.meta.url), 'utf8'));
+  for (const file of ['202609130001_identity.sql', '202609130002_board.sql', '202609130003_settings.sql', '202609130004_photos.sql', '202609130005_diary.sql', '202609130006_guestbook.sql', '202609130007_guestbook_clock.sql', '202609130008_comments.sql', '202609130009_profile.sql', '202609130010_board_retry.sql', '202609230001_member_writing_foundation.sql', '202609230002_member_writing_sessions.sql', '202609230003_member_guestbook.sql', '202609230004_member_comments.sql']) await db.exec(await readFile(new URL(`../supabase/migrations/${file}`, import.meta.url), 'utf8'));
   await db.query('insert into auth.users values ($1),($2),($3)', [admin, writer, other]);
   await db.query('insert into private.minihompy_admins values ($1)', [admin]);
   const parents = await as(admin, async () => {

@@ -9,6 +9,13 @@ await mkdir(out, { recursive: true });
 const tests = [
   ['identity'],
   ...['board','settings','photos','diary','guestbook','comments','profile'].map(name => [`${name}-db`, pglite]),
+  ['member-writing-foundation', pglite],
+  ['member-writing-setup', pglite],
+  ['member-writing-session', pglite],
+  ['member-writing-client'],
+  ['member-guestbook', pglite],
+  ['member-comments', pglite],
+  ['member-writing-lifecycle', playwright],
   ...['backend','admin','settings','board-writing','photos-writing','diary-writing','guestbook-writing','comments-writing','profile-writing','profile','navigation','scale','fonts'].map(name => [name, playwright]),
 ];
 const results = [];

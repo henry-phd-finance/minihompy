@@ -2,6 +2,7 @@
 import { readFile } from 'node:fs/promises';
 import { createInterface } from 'node:readline/promises';
 import { Writable } from 'node:stream';
+import { upgradeMemberWriting } from './member-writing-setup.mjs';
 import { runSetup } from './identity-setup.mjs';
 
 async function secret(question) {
@@ -13,7 +14,7 @@ async function secret(question) {
 }
 const args=process.argv.slice(2);
 if(args.includes('--help') || args.length===0) {
-  console.log('사용법: node setup/setup.mjs install|register|upgrade|verify --config setup/config.json [--dry-run]\n공개 설정 형식: setup/config.example.json. 비밀: MINIHOMPY_OWNER_EMAIL, MINIHOMPY_OWNER_PASSWORD, SUPABASE_ACCESS_TOKEN (환경변수 또는 마스킹 입력).\n현재 개인 저장소에서 실행합니다. Git commit/push는 직접 실행합니다.');
+  console.log('사용법: node setup/setup.mjs install|register|upgrade|verify|writing --config setup/config.json [--dry-run]\n공개 설정 형식: setup/config.example.json. 비밀: MINIHOMPY_OWNER_EMAIL, MINIHOMPY_OWNER_PASSWORD, SUPABASE_ACCESS_TOKEN (환경변수 또는 마스킹 입력).\n현재 개인 저장소에서 실행합니다. Git commit/push는 직접 실행합니다.');
 } else {
   try {
     const command=args.shift(); let configPath, dryRun=false;
@@ -21,6 +22,6 @@ if(args.includes('--help') || args.length===0) {
     if(!configPath)throw Error('--config 파일이 필요합니다.');
     const config=JSON.parse(await readFile(configPath,'utf8'));
     const credentials=dryRun?{}:{email:process.env.MINIHOMPY_OWNER_EMAIL||await secret('소유자 이메일: '),password:process.env.MINIHOMPY_OWNER_PASSWORD||await secret('소유자 비밀번호: '),managementToken:command==='verify'?undefined:process.env.SUPABASE_ACCESS_TOKEN||await secret('Supabase Management access token: ')};
-    await runSetup({config,command,target:process.cwd(),dryRun,...credentials});
+    await (command==='writing'?upgradeMemberWriting:runSetup)({config,command,target:process.cwd(),dryRun,...credentials});
   } catch(error){console.error(error.message);process.exitCode=1;}
 }

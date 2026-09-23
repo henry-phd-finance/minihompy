@@ -82,3 +82,18 @@ npm publish
 
 - **마이그레이션 경고(HTTP 400/500)**: 이미 테이블이 생성된 상태일 수 있습니다. 메시지 확인 후 `y`를 눌러 계속 진행할 수 있습니다.
 - **관리자 생성 실패**: 이미 동일한 이메일이 등록되어 있다면 Supabase 대시보드 Authentication → Users에서 해당 사용자의 UUID를 복사하여 직접 입력할 수 있습니다.
+
+## 회원 방명록·댓글 설치/업그레이드
+
+중앙 회원 작성 버전을 먼저 배포한다. 신규 설치는 `install` → 확인 파일 Pages 배포 → `verify`를 마친 다음, 생성된 `visitor-identity-config.js`의 `siteId`를 공개 설정 파일에 추가한다. 이미 검증된 사이트는 기존 siteId를 그대로 사용한다.
+
+```sh
+node setup/setup.mjs writing --config setup/config.json --dry-run
+node setup/setup.mjs writing --config setup/config.json
+```
+
+기존과 같이 `MINIHOMPY_OWNER_EMAIL`, `MINIHOMPY_OWNER_PASSWORD`, `SUPABASE_ACCESS_TOKEN`을 비공개 환경변수로 전달한다. 이 명령은 중앙 버전과 개인 소유자 연결을 확인하고, 회원용 추가 마이그레이션 4개만 해시 이력으로 적용한다. 기존 콘텐츠/관리자/사이트 ID를 재생성하지 않는다. 고정 사이트 설정과 개인 `member-writing` 함수 배포·관리자 확인이 성공한 후에만 `member-writing-config.js`를 활성화한다. 중앙 서명키는 개인 프로젝트에 넣지 않는다.
+
+최신 런타임 파일과 생성된 `member-writing-config.js`를 Pages에 배포해야 화면이 활성화된다. `writing`은 Git commit/push를 수행하지 않는다. 기본 저장소의 기능 설정은 새 설치 보호를 위해 false이며, 성공한 사이트의 배포 설정만 true가 된다.
+
+이력 없는 회원 스키마나 기존 적용 파일의 해시 차이는 자동으로 덮어쓰지 않고 중단한다. 오류를 해결한 후 같은 명령으로 재시도한다. 자세한 순서와 복구 범위는 [회원 작성 배포 안내](../docs/member-writing-deployment.md)를 참고한다.

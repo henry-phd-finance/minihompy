@@ -18,7 +18,7 @@
       }
     }
     const privateToggle = content.querySelector('.guestbook-visibility');
-    if (privateToggle && draft?.wasPrivate) privateToggle.disabled = true;
+    if (privateToggle && (draft?.wasPrivate || (draft?.revision && draft?.scope === 'member'))) privateToggle.disabled = true;
   }
   function action(label, fn, cls = '') {
     const button = node('button', cls, label); button.type = 'button'; button.addEventListener('click', fn); return button;
@@ -45,11 +45,20 @@
     return wrapper;
   }
   function composer() {
+    if (context?.requiresAuth) {
+      const box = node('div', 'guestbook-status', '로그인한 계정으로 방명록을 이용하려면 회원 확인이 필요합니다.');
+      box.append(action('회원 확인', async () => {
+        try { await repository.authorize(); } catch (error) { box.append(node('p', '', error.message)); }
+      }, 'guestbook-authorize'));
+      return box;
+    }
     draft ||= freshDraft();
+    draft.scope ||= context?.member ? 'member' : 'local';
+    if(context?.member) draft.memberId ||= context.memberId;
     const root = node('form', 'guestbook-composer');
     const nameRow = node('label', 'guestbook-name-row', '이름');
-    const name = node('input', 'guestbook-name'); name.value = draft.revision ? draft.name : admin() ? window.MINIHOMPY_CONFIG.profile.name : draft.name;
-    name.readOnly = Boolean(admin() || draft.revision); name.required = true; name.maxLength = 40; name.setAttribute('aria-label', '방명록 이름');
+    const name = node('input', 'guestbook-name'); name.value = draft.revision ? draft.name : context?.member ? context.member.display_name : admin() ? window.MINIHOMPY_CONFIG.profile.name : draft.name;
+    name.readOnly = Boolean(context?.member || admin() || draft.revision); name.required = true; name.maxLength = 40; name.setAttribute('aria-label', '방명록 이름');
     name.addEventListener('input', () => { draft.name = name.value; dirty = true; }); nameRow.append(name);
     const input = node('textarea');
     input.className = 'guestbook-body-input'; input.value = draft.body; input.required = true; input.maxLength = 5000;
@@ -59,7 +68,7 @@
     input.addEventListener('input', () => { draft.body = input.value; dirty = true; });
     const options = node('div', 'guestbook-compose-options');
     const privateLabel = checkbox('비밀로 하기'), privateToggle = privateLabel.querySelector('input');
-    privateToggle.className = 'guestbook-visibility'; privateToggle.checked = draft.visibility === 'private'; privateToggle.disabled = Boolean(draft.wasPrivate);
+    privateToggle.className = 'guestbook-visibility'; privateToggle.checked = draft.visibility === 'private'; privateToggle.disabled = Boolean(draft.wasPrivate || (draft.revision && draft.scope === 'member'));
     privateToggle.addEventListener('change', () => { draft.visibility = privateToggle.checked ? 'private' : 'public'; dirty = true; });
     const save = node('button', 'guestbook-save', draft.revision ? '저장' : '확인'); save.type = 'submit';
     options.append(node('span', 'guestbook-minime-label', '미니미 · 사진'), privateLabel, save);
@@ -93,17 +102,20 @@
     article.dataset.post = post.id;
     article.setAttribute('aria-label', `${privatePost ? '비공개' : '공개'} 방명록 ${post.number}`);
     const header = node('header', 'guestbook-post-header');
-    const name = node('span', 'guestbook-author', post.author_name);
+    let homepage;
+    try { const u = new URL(post.author_homepage_url); if (post.author_kind === 'member' && u.protocol === 'https:' && !u.username && !u.password) homepage = u.href; } catch {}
+    const name = node(homepage ? 'a' : 'span', 'guestbook-author', post.author_name);
+    if (homepage) { name.href = homepage; name.rel = 'noopener noreferrer'; name.title = '작성자의 미니홈피 방문'; }
     name.title = post.author_name;
     const house = node('i', 'guestbook-house');
     house.setAttribute('aria-hidden', 'true');
     const date = new Intl.DateTimeFormat('sv-SE', { timeZone: 'Asia/Seoul', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(new Date(post.created_at)).replaceAll('-', '.');
     header.append(node('span', 'guestbook-number', `NO.${post.number}`), name, house, node('time', '', `(${date})`));
     const actions = node('span', 'guestbook-actions');
-    const own = context?.userId && post.author_id === context.userId;
+    const own = post.author_kind === 'member' ? Boolean(context?.memberId && post.author_member_id === context.memberId) : Boolean(context?.userId && post.author_id === context.userId);
     if (own) actions.append(action('수정', () => {
       if (busy || (dirty && !confirm('작성 중인 내용을 버릴까요?'))) return;
-      draft = { id: post.id, revision: post.revision, name: post.author_name, body: post.body, visibility: post.visibility, wasPrivate: privatePost };
+      draft = { memberId: context?.memberId, scope: post.author_kind === 'member' ? 'member' : 'local', id: post.id, revision: post.revision, name: post.author_name, body: post.body, visibility: post.visibility, wasPrivate: privatePost };
       dirty = false; notice = ''; content.querySelector('.guestbook-composer').replaceWith(composer()); content.scrollTop = 0; refreshScroll();
     }, 'guestbook-edit'));
     if (own || admin()) {
@@ -122,8 +134,8 @@
     }
     text.append(node('p', 'guestbook-text', post.body));
     body.append(minime(), text);
-    const comments = window.MinihompyComments.create('guestbook', post.id);
-    article.append(header, body, comments);
+    article.append(header, body);
+    article.append(window.MinihompyComments.create('guestbook', post.id));
     return article;
   }
   async function mutate(post, operation) {
@@ -160,7 +172,7 @@
     } catch (error) {
       if (token !== request) return;
       context = null;
-      content.replaceChildren(node('p', 'guestbook-status', `방명록을 불러오지 못했습니다. ${error.message || ''}`), action('다시 시도', load, 'guestbook-retry'));
+      content.replaceChildren(node('p', 'guestbook-status', `방명록을 불러오지 못했습니다. ${error.message || ''}`), action('다시 시도', async () => { try { await window.MinihompyMemberWriting?.retry();await load(); } catch {} }, 'guestbook-retry'));
     }
     content.scrollTop = 0; requestAnimationFrame(refreshScroll);
   }
@@ -231,18 +243,30 @@
       return fragment;
     },
   };
-  window.addEventListener('minihompy:identity', () => {
+  function identityChanged() {
     const state = window.MinihompyAdmin?.state;
-    const next = `${state?.role || 'reader'}:${state?.userId || ''}`;
+    const shared = window.MinihompyMemberWriting?.enabled() ? window.MinihompySharedIdentity?.state : null;
+    const next = `${state?.role || 'reader'}:${state?.userId || ''}` + (shared ? `:${shared.status}:${shared.visitor?.id || ''}` : '');
     if (next === roleKey) return;
     roleKey = next; epoch++; request++; context = null; draft = null; dirty = false; busy = false; notice = ''; page = 1;
     content?.replaceChildren();
     if (content?.isConnected) load();
-  });
+  }
+  window.addEventListener('minihompy:identity', identityChanged);
+  window.addEventListener('minihompy:visitor-identity', () => { if (window.MinihompyMemberWriting?.enabled()) identityChanged(); });
   window.addEventListener('storage', event => {
     if (event.key !== null && !event.key.endsWith('-visitor-v1')) return;
     epoch++; request++; context = null; draft = null; dirty = false; busy = false; notice = ''; content?.replaceChildren();
     if (content?.isConnected) load();
   });
+  window.addEventListener('minihompy:writing-reset', event => {
+    epoch++;request++;context=null;busy=false;notice=event.detail.reason;
+    if(event.detail.clearDraft){draft=null;dirty=false;page=1;}
+    if(content)content.replaceChildren(node('p','guestbook-status',notice),action('다시 확인',async()=>{
+      try { await window.MinihompyMemberWriting.retry();await load(); } catch(error){notice=error.message;}
+    },'guestbook-retry'));
+  });
+  window.addEventListener('focus',()=>{if(window.MinihompyMemberWriting?.enabled() && content?.isConnected && !busy)load();});
+  window.addEventListener('minihompy:writing-authorize',event=>{if(dirty && !confirm('회원 확인 화면으로 이동하면 작성 중인 내용은 초기화됩니다. 계속할까요?'))event.preventDefault();});
   window.addEventListener('beforeunload', event => { if (dirty || busy) { event.preventDefault(); event.returnValue = ''; } });
 })();

@@ -90,8 +90,10 @@
     if (isVisitor) {
       e.preventDefault();
       e.stopImmediatePropagation();
-      try { location.assign(window.MinihompySharedIdentity.getLogoutUrl()); }
-      catch { message.textContent = '로그아웃을 위해 브라우저 저장소 사용을 허용해 주세요.'; dialog.showModal(); form.hidden = true; }
+      setBusy(true);
+      try { await window.MinihompyMemberWriting?.logout();location.assign(window.MinihompySharedIdentity.getLogoutUrl()); }
+      catch { message.textContent = '로그아웃을 완료하지 못했습니다. 연결 상태를 확인한 뒤 다시 시도해 주세요.'; dialog.showModal(); form.hidden = true; }
+      finally { setBusy(false); }
       return;
     }
 
@@ -100,6 +102,7 @@
     setBusy(true);
     publish({ role: 'reader' });
     try {
+      await window.MinihompyMemberWriting?.logout();
       const { error } = await client.auth.signOut({ scope: 'local' });
       if (error) throw error;
       if (window.MINIHOMPY_VISITOR_IDENTITY_CONFIG?.enabled) location.assign(window.MinihompySharedIdentity.getLogoutUrl());

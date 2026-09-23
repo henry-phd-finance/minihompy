@@ -1,3 +1,7 @@
 # Password authentication happens in this personal Supabase project.
 [functions.owner-login]
 verify_jwt = false
+
+# Opaque member sessions are validated by the handler, not Supabase JWT auth.
+[functions.member-writing]
+verify_jwt = false

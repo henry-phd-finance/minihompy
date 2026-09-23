@@ -24,7 +24,7 @@
     const status = node('p', 'comment-status', state.loading ? '댓글을 불러오고 있습니다.' : state.message); status.setAttribute('role', 'status');
     if (state.loading || !state.context) {
       root.append(status);
-      if (!state.loading) root.append(button('다시 시도', 'comment-retry', () => load(state)));
+      if (!state.loading) root.append(button('다시 시도', 'comment-retry', async () => {try{await window.MinihompyMemberWriting?.retry();await load(state);}catch{}}));
       resize(state); return;
     }
     const list = node('div', 'comment-list');
@@ -33,12 +33,16 @@
       const parts = new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Seoul', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(new Date(comment.created_at));
       const part = type => parts.find(item => item.type === type).value;
       const date = `${part('month')}.${part('day')} ${part('hour')}:${part('minute')}`;
-      row.append(node('span', 'photo-comment-name', comment.author_name), document.createTextNode(` : ${comment.body} `), node('time', 'photo-comment-date', `(${date})`));
-      const own = state.context.userId && comment.author_id === state.context.userId;
+      let homepage;
+      try { const u = new URL(comment.author_homepage_url); if (comment.author_kind === 'member' && u.protocol === 'https:' && !u.username && !u.password) homepage = u.href; } catch {}
+      const author = node(homepage ? 'a' : 'span', 'photo-comment-name', comment.author_name);
+      if (homepage) { author.href = homepage; author.rel = 'noopener noreferrer'; }
+      row.append(author, document.createTextNode(` : ${comment.body} `), node('time', 'photo-comment-date', `(${date})`));
+      const own = comment.author_kind === 'member' ? Boolean(state.context.memberId && comment.author_member_id === state.context.memberId) : Boolean((!state.context.api || state.context.role === 'admin') && state.context.userId && comment.author_id === state.context.userId);
       const actions = node('span', 'comment-actions');
-      if (own) actions.append(button('수정', 'comment-edit', () => {
+      if (own && !state.context.requiresAuth) actions.append(button('수정', 'comment-edit', () => {
         if (state.busy || (state.dirty && !confirm('작성 중인 댓글을 버릴까요?'))) return;
-        state.draft = { id: comment.id, revision: comment.revision, body: comment.body, name: comment.author_name };
+        state.draft = { memberId:state.context.memberId, scope: comment.author_kind === 'member' ? 'member' : 'local', id: comment.id, revision: comment.revision, body: comment.body, name: comment.author_name };
         state.dirty = false; state.message = ''; render(state); root.querySelector('.comment-body').focus();
       }));
       if (own || state.context.role === 'admin') actions.append(button('삭제', 'comment-delete', async () => {
@@ -56,10 +60,12 @@
       }));
       row.append(actions); list.append(row);
     }
+    state.draft.scope ||= state.context.member ? 'member' : 'local';
+    if(state.context.member)state.draft.memberId ||= state.context.memberId;
     const form = node('form', 'photo-comment-input comment-form');
     const name = node('input', 'comment-name'); name.setAttribute('aria-label', '댓글 이름'); name.placeholder = '이름'; name.required = true; name.maxLength = 40;
-    name.value = state.draft.revision ? state.draft.name : state.context.role === 'admin' ? window.MINIHOMPY_CONFIG.profile.name : state.draft.name;
-    name.readOnly = state.context.role === 'admin' || Boolean(state.draft.revision);
+    name.value = state.draft.revision ? state.draft.name : state.context.member ? state.context.member.display_name : state.context.role === 'admin' ? window.MINIHOMPY_CONFIG.profile.name : state.draft.name;
+    name.readOnly = Boolean(state.context.member) || state.context.role === 'admin' || Boolean(state.draft.revision);
     const body = node('input', 'comment-body'); body.setAttribute('aria-label', '댓글 내용'); body.required = true; body.maxLength = 1000; body.value = state.draft.body;
     name.addEventListener('input', () => { state.draft.name = name.value; state.dirty = true; });
     const recallName = () => { if (!name.value && !state.draft.revision && !name.readOnly) { name.value = session.nickname(); state.draft.name = name.value; } };
@@ -93,7 +99,11 @@
       navigation.append(previous, node('span', '', `${state.page}/${pages}`), next);
     }
     navigation.append(button('↻', 'comment-reload', () => { if (!state.busy) load(state); }, '댓글 새로고침'));
-    root.append(list, form, status, navigation);
+    const authorization = node('div', 'comment-authorization', '로그인한 계정으로 댓글을 쓰려면 회원 확인이 필요합니다.');
+    authorization.append(button('회원 확인','comment-authorize',async () => {
+      try { await repository.authorize(); } catch (error) { state.message=error.message;render(state); }
+    }));
+    root.append(list, state.context.requiresAuth ? authorization : form, status, navigation);
     if (state.busy) for (const el of root.querySelectorAll('input,button')) el.disabled = true;
     resize(state);
   }
@@ -131,13 +141,25 @@
     states.clear();
     for (const { root, kind, id } of roots) root.replaceWith(create(kind, id));
   }
-  window.addEventListener('minihompy:identity', () => {
+  function identityChanged() {
     const identity = window.MinihompyAdmin?.state;
-    const next = `${identity?.role || 'reader'}:${identity?.userId || ''}`;
+    const shared = window.MinihompyMemberWriting?.enabled() ? window.MinihompySharedIdentity?.state : null;
+    const next = `${identity?.role || 'reader'}:${identity?.userId || ''}` + (shared ? `:${shared.status}:${shared.visitor?.id || ''}` : '');
     if (next !== roleKey) { roleKey = next; clearIdentity(); }
+  }
+  window.addEventListener('minihompy:identity', identityChanged);
+  window.addEventListener('minihompy:visitor-identity', () => { if (window.MinihompyMemberWriting?.enabled()) identityChanged(); });
+  window.addEventListener('minihompy:writing-reset',event=>{
+    epoch++;
+    for(const state of states.values()){
+      state.request++;state.context=null;state.items=[];state.loading=false;state.busy=false;state.message=event.detail.reason;
+      if(event.detail.clearDraft){state.draft=fresh();state.dirty=false;state.page=1;}
+      render(state);
+    }
   });
   window.addEventListener('storage', event => { if (event.key === null || event.key.endsWith('-visitor-v1')) clearIdentity(); });
   window.addEventListener('focus', () => { for (const state of states.values()) if (state.root?.isConnected && !state.busy && !state.loading) load(state); });
+  window.addEventListener('minihompy:writing-authorize',event=>{if([...states.values()].some(state=>state.dirty) && !confirm('회원 확인 화면으로 이동하면 작성 중인 내용은 초기화됩니다. 계속할까요?'))event.preventDefault();});
   window.addEventListener('beforeunload', event => {
     if ([...states.values()].some(state => state.dirty || state.busy)) { event.preventDefault(); event.returnValue = ''; }
   });

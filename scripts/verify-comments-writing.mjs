@@ -26,6 +26,7 @@ try {
     let actor = 'reader', signups = 0, comments = [], rejectWrite = false, lostResponse = false, failRead = false;
     await page.exposeFunction('recordSignup', () => { signups++; actor = 'visitor'; });
     await page.addInitScript(users => {
+      Object.defineProperty(window, 'MINIHOMPY_VISITOR_IDENTITY_CONFIG', { get: () => ({enabled:false}), set: () => {} });
       let backend; window.testActor = 'reader';
       Object.defineProperty(window, 'MinihompyBackend', {
         set(value) { backend = value; },
