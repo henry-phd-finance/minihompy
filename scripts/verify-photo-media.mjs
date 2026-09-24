@@ -83,7 +83,7 @@ try{
  });
  await check('actual save attaches; public bytes no-store; private/absent/other path indistinguishable',async()=>{
   await save(10);const r=await read(10);assert.equal(r.status,200);assert.deepEqual(new Uint8Array(await r.arrayBuffer()),png);
-  assert.equal(r.headers.get('cache-control'),'private, no-store');assert.equal(r.headers.get('content-type'),'image/png');assert.equal(r.headers.get('x-content-type-options'),'nosniff');assert.equal(r.headers.get('vary'),'Origin, Authorization');assert.equal(r.headers.get('location'),null);
+  assert.equal(r.headers.get('cache-control'),'private, no-store');assert.equal(r.headers.get('content-type'),'image/png');assert.equal(r.headers.get('x-content-type-options'),'nosniff');assert.equal(r.headers.get('vary'),'Origin, Authorization, X-Minihompy-Auth-Mode');assert.equal(r.headers.get('location'),null);
   assert.equal((await request('read',{post_id:id(11),path:path(10)})).status,400);
   await actor(owner,()=>pg.query("update public.photo_posts set visibility='private' where id=$1",[id(10)]));
   assert.deepEqual(await (await read(10)).json(),await (await read(99)).json());assert.equal((await read(10,true)).status,200);

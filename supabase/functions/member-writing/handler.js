@@ -1,3 +1,5 @@
+import {commentCapability,protectedComments} from './protected-comments.js';
+import {contentRead,contentTransport,bounded} from './content-read.js';
 import {friendReviews} from './friend-reviews.js';
 import {relationships} from './relationships.js';
 const UUID=/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
@@ -8,9 +10,10 @@ class Failure extends Error{constructor(code){super('회원 인증을 확인하�
 const fail=code=>{throw new Failure(code);};
 export async function tokenHash(token){return [...new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(token)))].map(x=>x.toString(16).padStart(2,'0')).join('');}
 const secret=()=>btoa(String.fromCharCode(...crypto.getRandomValues(new Uint8Array(32)))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
-async function limitedJson(response,max=16384){
+async function limitedJson(response,max=16384,signal){
  const reader=response.body?.getReader();if(!reader)fail('BAD_REQUEST');let size=0;const chunks=[];
- try{for(;;){const {done,value}=await reader.read();if(done)break;size+=value.length;if(size>max)fail('BAD_REQUEST');chunks.push(value);}}finally{await reader.cancel().catch(()=>{});}
+ const cancel=()=>{void reader.cancel().catch(()=>{});};signal?.addEventListener('abort',cancel,{once:true});
+ try{for(;;){const {done,value}=await reader.read();if(done)break;size+=value.length;if(size>max)fail('BAD_REQUEST');chunks.push(value);}}finally{signal?.removeEventListener('abort',cancel);await reader.cancel().catch(()=>{});}
  const bytes=new Uint8Array(size);let offset=0;for(const chunk of chunks){bytes.set(chunk,offset);offset+=chunk.length;}
  try{const v=JSON.parse(new TextDecoder().decode(bytes));if(!v||Array.isArray(v)||typeof v!=='object')fail('BAD_REQUEST');return v;}catch{fail('BAD_REQUEST');}
 }
@@ -60,8 +63,10 @@ export async function authenticateOwner(req,{fetcher,projectUrl,publicKey}){
  }catch(e){if(e instanceof Failure)throw e;fail('IDENTITY_UNAVAILABLE');}
 }
 export async function handleMemberWriting(req,options={}){
+ const contentRequest=new URL(req.url).pathname.includes('/content/');
  const config=k=>options.config?.[k]??env(k),origin=req.headers.get('Origin');
  const headers={'Content-Type':'application/json','Cache-Control':'no-store',Vary:'Origin','Access-Control-Expose-Headers':'Retry-After','Access-Control-Allow-Methods':'GET, POST, PATCH, DELETE, OPTIONS','Access-Control-Allow-Headers':'Content-Type, Authorization, apikey, X-Minihompy-Auth-Mode'};
+ if(contentRequest||/\/comments(?:\/|$)/.test(new URL(req.url).pathname)){headers['Cache-Control']='private, no-store';headers.Vary='Origin, Authorization, X-Minihompy-Auth-Mode';}
  const reply=(status,body,extra={})=>new Response(JSON.stringify(body),{status,headers:{...headers,...extra}});
  if(origin&&origin===config('MINIHOMPY_SITE_ORIGIN'))headers['Access-Control-Allow-Origin']=origin;
  if(!config('MINIHOMPY_SITE_ORIGIN'))return reply(503,{error:{code:'NOT_CONFIGURED'}});
@@ -72,14 +77,16 @@ export async function handleMemberWriting(req,options={}){
   if(!UUID.test(siteId||''))fail('NOT_CONFIGURED');
   const projectUrl=cleanUrl(config('SUPABASE_URL'));
   if(!/^https:\/\/[a-z]{20}\.supabase\.co$/.test(projectUrl))fail('NOT_CONFIGURED');
-  const fetcher=options.fetcher||fetch;
+  let fetcher=options.fetcher||fetch;
   let db=options.db;
   if(!db){const key=config('SUPABASE_SERVICE_ROLE_KEY');if(!key)fail('NOT_CONFIGURED');const {createClient}=await import('npm:@supabase/supabase-js@2.39.8');db=createClient(projectUrl,key,{auth:{persistSession:false}});}
+  if(contentRequest)({db,fetcher}=contentTransport(req,db,fetcher));
   const cfg=await callRpc(db,'site');if(cfg.site_id!==siteId||cleanUrl(cfg.central_api_url)!==centralUrl)fail('NOT_CONFIGURED');
   const context={db,fetcher,siteId,centralUrl,projectUrl,transportPeerIp:options.transportPeerIp,publicKey:config('MINIHOMPY_PUBLIC_KEY')||config('SUPABASE_ANON_KEY')};
   const path=new URL(req.url).pathname.replace(/^\/(?:functions\/v1\/)?member-writing(?=\/|$)/,'');
   const mode=req.headers.get('X-Minihompy-Auth-Mode');
   if(!['member','owner','public'].includes(mode))fail('BAD_REQUEST');
+  if(path.startsWith('/content/'))return await contentRead(req,context,mode,path,reply);
   if(path==='/friend-reviews'||path.startsWith('/friend-reviews/'))return await friendReviews(req,context,mode,path,reply);
   if(path.startsWith('/relationships/'))return await relationships(req,context,mode,path,reply);
   if(path==='/comments'||path.startsWith('/comments/'))return await comments(req,context,mode,path,reply);
@@ -174,18 +181,19 @@ async function guestbook(req,context,mode,path,reply){
 
 async function comments(req,context,mode,path,reply){
  const {db,siteId}=context;const auth={site_id:siteId,mode};
- if(mode==='member')auth.token_hash=(await authenticateMember(req,context)).tokenHash;
- else if(mode==='owner'){if(!context.publicKey)fail('NOT_CONFIGURED');auth.owner_id=(await authenticateOwner(req,context)).local_user_id;}
  let action,args;
- if(path==='/comments'&&req.method==='GET'){
+ const operationMatch=/^\/comments\/operations\/([0-9a-f-]+)$/i.exec(path);
+ if((path==='/comments'||operationMatch)&&req.method==='GET'){
   const q=new URL(req.url).searchParams;
+  for(const k of q.keys())if(!['kind','parent_id',...(operationMatch?[]:['page','size'])].includes(k)||q.getAll(k).length!==1)fail('BAD_REQUEST');
   args={kind:q.get('kind'),parent_id:q.get('parent_id'),page:Number(q.get('page')||1),size:Number(q.get('size')||20)};
   if(!Number.isInteger(args.page)||args.page<1||args.page>100000||!Number.isInteger(args.size)||args.size<1||args.size>100)fail('BAD_REQUEST');
-  action='list';
+  action=operationMatch?'operations':'list';
+  if(operationMatch){if(!UUID.test(operationMatch[1]))fail('BAD_REQUEST');args={kind:args.kind,parent_id:args.parent_id,request_id:operationMatch[1]};}
  }else{
   if(mode==='public')fail('FORBIDDEN');
   if(!req.headers.get('Content-Type')?.startsWith('application/json'))fail('BAD_REQUEST');
-  const body=await limitedJson(req,8192);const match=/^\/comments\/([0-9a-f-]+)$/i.exec(path);
+  const body=await bounded(signal=>limitedJson(req,8192,signal),req.signal,5000);const match=/^\/comments\/([0-9a-f-]+)$/i.exec(path);
   if(path.startsWith('/relationships/'))return await relationships(req,context,mode,path,reply);
   if(path==='/comments'&&req.method==='POST')action='create';
   else if(match&&UUID.test(match[1])&&req.method==='PATCH')action='update';
@@ -199,6 +207,15 @@ async function comments(req,context,mode,path,reply){
   args={...body,...(match?{id:match[1]}:{})};
  }
  if(!['board','photos','diary','guestbook'].includes(args.kind)||!UUID.test(args.parent_id||''))fail('BAD_REQUEST');
+ for(const key of ['parent_id','id','request_id'])if(args[key])args[key]=args[key].toLowerCase();
+ if(args.kind!=='guestbook'){
+  const capability=await commentCapability(req,context);
+  if(capability.active)return protectedComments(req,context,mode,action,args,reply);
+  if(capability.failure)return reply(503,{error:{code:'NOT_CONFIGURED',message:'댓글 기능을 확인하지 못했습니다.'}});
+ }
+ if(action==='operations')fail('NOT_CONFIGURED');
+ if(mode==='member')auth.token_hash=(await authenticateMember(req,context)).tokenHash;
+ else if(mode==='owner'){if(!context.publicKey)fail('NOT_CONFIGURED');auth.owner_id=(await authenticateOwner(req,context)).local_user_id;}
  const result=await db.rpc('member_comments',{p_action:action,p_args:{...args,...auth}});
  if(result.error||!result.data)fail('IDENTITY_UNAVAILABLE');if(result.data.failure)fail(result.data.failure);
  return reply(200,result.data);

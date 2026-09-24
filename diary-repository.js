@@ -15,8 +15,9 @@
     context: () => window.MinihompyContentAccess.open(),
     validate,
     async folders() { return checked(await (await reader()).from('diary_folders').select('*').order('sort_order').order('id')).data; },
-    async dates(folder, month, ctx) { return checked(await (ctx?.client || await reader()).rpc('diary_written_dates', { selected_folder: folder, month_start: `${month}-01` })).data; },
+    async dates(folder, month, ctx) { const r=await window.MinihompyContentAccess.read?.('calendar',{month,folder_id:folder});ctx?.assert?.();if(r&&!r.legacy)return r.data.dates;return checked(await (ctx?.client || await reader()).rpc('diary_written_dates', { selected_folder: folder, month_start: `${month}-01` })).data; },
     async list(folder, date, page, size, ctx) {
+      const r=await window.MinihompyContentAccess.read?.('list',{kind:'diary',folder_id:folder,date,page,size});ctx?.assert?.();if(r&&!r.legacy)return r.data;
       const result = checked(await (ctx?.client || await reader()).from('diary_entries').select('*', { count: 'exact' }).eq('folder_id', folder).eq('entry_date', date)
         .order('entry_time').order('id').range((page - 1) * size, page * size - 1));
       return { items: result.data, count: result.count };
@@ -25,7 +26,7 @@
       validate(draft);
       const client = await writer();
       const fields = { folder_id: draft.folder_id, entry_date: draft.entry_date, entry_time: draft.entry_time, weather: draft.weather, body: draft.body, visibility: draft.visibility || 'public' };
-      if (!['public','private'].includes(fields.visibility)) throw Error('공개범위를 확인해 주세요.');
+      if (!['public','friends','private'].includes(fields.visibility)||fields.visibility==='friends'&&!await window.MinihompyContentAccess.friendsReady()) throw Error('공개범위를 확인해 주세요.');
       const existing = async () => checked(await client.from('diary_entries').select('*').eq('id', draft.id).maybeSingle()).data;
       const same = row => row && Object.entries(fields).every(([key, value]) => (key === 'entry_time' ? row[key].slice(0, 5) : row[key]) === value);
       if (!draft.revision) {

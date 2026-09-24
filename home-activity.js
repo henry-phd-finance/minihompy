@@ -15,12 +15,12 @@
       if(item.today_comments)link.append(node('span','home-post-comments',`[${item.today_comments}]`));
       const time=node('time','home-post-date',date);time.dateTime=item.created_at;link.append(time);row.append(link);list.append(row);
     }
-    const aside=node('div','home-activity-counts');aside.append(node('p','home-count-caption','공개 글 · 오늘 / 전체'));
+    const aside=node('div','home-activity-counts');aside.append(node('p','home-count-caption','읽을 수 있는 글 · 오늘 / 전체'));
     const counts=node('dl','board-counts');
     for(const kind of data.menus){const row=node('div','');const term=node('dt','',labels[kind]),value=node('dd','',`${data.counts[kind].today} / ${data.counts[kind].total}`);row.dataset.kind=kind;row.title=`${labels[kind]}: 오늘 ${data.counts[kind].today}, 전체 ${data.counts[kind].total}`;row.append(term,value);counts.append(row);}
-    const comments=node('p','home-today-comments',`오늘 댓글 ${data.today_comments}`);comments.title=`${data.date} 한국 시간 · 공개 글에 오늘 작성된 댓글 (미읽음 알림 아님)`;
+    const comments=node('p','home-today-comments',`오늘 댓글 ${data.today_comments}`);comments.title=`${data.date} 한국 시간 · 읽을 수 있는 글에 오늘 작성된 댓글 (미읽음 알림 아님)`;
     aside.append(counts,comments);
-    state.root.replaceChildren(data.recent.length?list:node('p','home-activity-empty',data.menus.length?'등록된 공개 게시물이 없습니다.':'표시할 공개 메뉴가 없습니다.'),aside);
+    state.root.replaceChildren(data.recent.length?list:node('p','home-activity-empty',data.menus.length?'읽을 수 있는 게시물이 없습니다.':'표시할 메뉴가 없습니다.'),aside);
     state.root.dataset.status='ready';state.root.setAttribute('aria-busy','false');
   }
   async function refresh(state){
@@ -34,9 +34,9 @@
     const current=()=>active===state&&state.root.isConnected&&generation===state.generation;
     const fail=()=>{
       if(!current())return;message(state,'error','홈 소식을 불러오지 못했습니다.');
-      const retry=node('button','home-activity-retry','다시 시도');retry.type='button';retry.addEventListener('click',()=>void refresh(state));state.root.append(retry);
+      const retry=node('button','home-activity-retry','다시 시도');retry.type='button';retry.addEventListener('click',async()=>{retry.disabled=true;const before=state.generation;try{await window.MinihompyContentAccess?.retry?.();if(active===state&&before===state.generation)await refresh(state);}catch{if(current())fail();}finally{retry.disabled=false;}});state.root.append(retry);
     };
-    state.timeout=setTimeout(()=>{if(!current())return;controller.abort();fail();state.generation++;},8000);
+    state.timeout=setTimeout(()=>{if(!current())return;controller.abort();fail();state.generation++;},25000);
     try{
       const menus=(window.MINIHOMPY_CONFIG?.menus||[]).filter(m=>m.visible===true&&Object.hasOwn(labels,m.id)).map(m=>m.id);
       const data=await window.MinihompyHomeRepository.summary(menus,{signal:controller.signal});
@@ -48,10 +48,11 @@
     }catch{fail();}finally{if(current())clearTimeout(state.timeout);}
   }
   function invalidate(){if(active?.root.isConnected)void refresh(active);}
-  for(const event of ['focus','pageshow','minihompy:identity','minihompy:visitor-identity','minihompy:writing-reset','minihompy:content-changed'])window.addEventListener(event,invalidate);
+  for(const event of ['focus','pageshow','minihompy:identity','minihompy:visitor-identity','minihompy:writing-reset','minihompy:content-changed','minihompy:content-access-reset'])window.addEventListener(event,invalidate);
+  window.addEventListener('minihompy:member-session',e=>{if(e.detail?.status==='ready'&&active?.root.dataset.status==='error')invalidate();});
   document.addEventListener('visibilitychange',invalidate);
   new MutationObserver(()=>{if(active&&!active.root.isConnected){stop(active);active=null;}}).observe(document.documentElement,{childList:true,subtree:true});
   window.MinihompyHomeActivity=Object.freeze({
-    attach(root){if(active)stop(active);const state=active={root,generation:0};root.setAttribute('role','region');root.setAttribute('aria-label','공개 최근게시물과 활동');message(state,'loading','홈 소식을 불러오는 중입니다.');queueMicrotask(()=>void refresh(state));},
+    attach(root){if(active)stop(active);const state=active={root,generation:0};root.setAttribute('role','region');root.setAttribute('aria-label','최근게시물과 활동');message(state,'loading','홈 소식을 불러오는 중입니다.');queueMicrotask(()=>void refresh(state));},
   });
 })();

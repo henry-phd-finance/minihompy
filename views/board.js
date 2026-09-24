@@ -2,7 +2,7 @@
   'use strict';
   const repository = window.MinihompyBoardRepository;
   const pageSize = 10;
-  let target=null;
+  let target=null, friendsReady=false;
   function clearTarget(){target=null;window.MinihompyApp?.clearPost?.();}
   let selected = null, page = 1, total = 0;
   let folders = [], items = [], post = null, draft = null;
@@ -73,7 +73,7 @@
     const token = ++request;
     loading = true; error = ''; renderFolders(); renderMain();
     try {
-      const ctx = await repository.context(); if(token!==request)return;
+      const ctx = await repository.context(); if(token!==request)return;friendsReady=admin()?await window.MinihompyContentAccess.friendsReady?.()===true:false;if(token!==request)return;
       if (refreshFolders || !foldersLoaded) {
         const result = await repository.folders();
         if (token !== request) return;
@@ -93,7 +93,7 @@
         if (token !== request) return;
         items = result.items; total = result.count;
       }
-    } catch (cause) { if (token === request) {if(target)post=null;error = cause.message || '불러오지 못했습니다.';} }
+    } catch (cause) { if (token === request) {post=null;items=[];total=0;error = cause.message || '불러오지 못했습니다.';} }
     finally {
       if (token === request) {
         loading = false; renderFolders(); renderMain();
@@ -134,7 +134,7 @@
     for (const item of realFolders()) { const option = node('option', '', item.label); option.value = item.id; folder.append(option); }
     folder.value = draft.folder_id; titleRow.append(title, folder);
     const visibility = node('select'); visibility.id='board-edit-visibility'; visibility.setAttribute('aria-label','공개범위');
-    for(const [value,label] of [['public','공개'],['private','나만보기']]){const option=node('option','',label);option.value=value;visibility.append(option);}
+    for(const [value,label] of [['public','공개'],...(friendsReady?[['friends','일촌 공개']]:[]),['private','나만보기']]){const option=node('option','',label);option.value=value;visibility.append(option);}
     visibility.value=draft.visibility||'public'; titleRow.append(visibility);
     const body = node('textarea'); body.id = 'board-edit-body'; body.value = draft.body; body.required = true; body.maxLength = 50000; body.setAttribute('aria-label', '내용');
     for (const [element, key] of [[visibility,'visibility'],[title, 'title'], [folder, 'folder_id'], [body, 'body']]) {
@@ -175,13 +175,14 @@
         catch(e){if(token===epoch)error=e.message;}
         finally{if(token===epoch){saving=false;if(error)renderMain();else void load();}}
       }),button('삭제', 'board-delete', remove));
+      if(friendsReady&&post.visibility!=='friends')actions.append(button('일촌 공개로 변경','board-friends',async()=>{if(saving)return;const current=post,token=epoch;saving=true;try{await window.MinihompyContentAccess.visibility('board',current,'friends');if(token===epoch)window.MinihompyComments.forget('board',current.id);}catch(e){if(token===epoch)error=e.message;}finally{if(token===epoch){saving=false;if(error)renderMain();else void load();}}}));
     }
     const comments = window.MinihompyComments.create('board', post.id);
     const footer = node('div', 'board-actions');
     if (admin()) footer.append(button('글쓰기', 'board-small-button board-write', () => compose()));
     footer.append(button('목록', 'board-small-button board-back', back));
     const title = node('h3', 'board-post-title', post.title); title.tabIndex = -1;
-    article.append(title, meta, node('div', 'board-body', post.body), node('p', 'board-privacy', post.visibility==='private'?'공개설정 : 나만보기':'공개설정 : 공개'), actions, comments, footer);
+    article.append(title, meta, node('div', 'board-body', post.body), node('p', 'board-privacy', post.visibility==='private'?'공개설정 : 나만보기':post.visibility==='friends'?'공개설정 : 일촌 공개':'공개설정 : 공개'), actions, comments, footer);
     main.append(article);
   }
   function renderList() {
@@ -193,7 +194,7 @@
     head.append(row); const body = node('tbody');
     items.forEach((item, index) => {
       const row = node('tr'), title = node('td', 'board-list-title');
-      const link = button(item.title, 'board-post-link', () => { listScroll = main.scrollTop; post = item; void load(); }); link.dataset.boardPost = item.id; link.title = item.title; title.append(link);if(admin()&&item.visibility==='private')title.append(node('span','content-private-label',' 나만보기'));
+      const link = button(item.title, 'board-post-link', () => { listScroll = main.scrollTop; post = item; void load(); }); link.dataset.boardPost = item.id; link.title = item.title; title.append(link);if(item.visibility==='friends'||admin()&&item.visibility==='private')title.append(node('span','content-private-label',item.visibility==='friends'?' 일촌 공개':' 나만보기'));
       const author = node('td', 'board-list-author', item.author_name); author.title = item.author_name;
       const views = node('td', 'board-number', '-'); views.title = '조회수 집계 준비 전';
       row.append(node('td', 'board-number', String(total - (page - 1) * pageSize - index)), title, author, node('td', 'board-list-date', date(item.created_at).slice(0, 10)), views); body.append(row);
@@ -221,11 +222,13 @@
     if (draft) renderEditor();
     else if (loading) main.append(message('불러오는 중입니다.'));
     else if (error) {
-      main.append(message(error), button('다시 조회', 'board-small-button', () => { void load(true); }));
+      main.append(message(error), button('다시 조회', 'board-small-button', async () => {try{await window.MinihompyContentAccess.retry?.();}finally{void load(true);}}));
       if (post) main.append(button('목록', 'board-small-button board-back', back));
     } else if (post) renderDetail(); else renderList();
     main.scrollTop = draft ? scroll : 0;
   }
+  window.addEventListener('focus',()=>{if(main?.isConnected&&!draft&&!saving)void load();});
+  document.addEventListener('visibilitychange',()=>{if(!main?.isConnected||draft||saving)return;if(document.visibilityState==='hidden'){request++;main.replaceChildren();window.MinihompyComments?.clearKind?.('board');}else void load();});
   window.addEventListener('minihompy:content-access-reset', () => {
     epoch++;request++;draft=null;post=null;items=[];total=0;page=1;saving=false;loading=false;error='';
     window.MinihompyComments?.clearKind?.('board');main?.replaceChildren();

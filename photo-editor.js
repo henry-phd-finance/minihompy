@@ -9,7 +9,7 @@
   window.Quill.register(LocalImage, true);
   const Delta = window.Quill.import('delta');
   let draft, quill, root, message, busy = false, dirty = false, selection = 0;
-  let generation = 0, submitted=false, mediaScope;
+  let generation = 0, submitted=false, mediaScope, friendsReady=false;
   const node = (tag, className, text) => {
     const element = document.createElement(tag);
     if (className) element.className = className;
@@ -88,6 +88,7 @@
         originalPaths:(post?.body||[]).filter(b=>b.type==='image').map(b=>b.path)};
       busy=true;selection=0;
       try{
+        friendsReady=await window.MinihompyContentAccess.friendsReady?.()===true;if(token!==generation)return false;
         const ops=await Promise.all((post?.body||[{type:'text',text:'\n'}]).map(async block=>{
           if(block.type==='text')return {insert:block.text};
           const src=await currentScope.read(post.id,block.path);
@@ -112,7 +113,7 @@
       folder.value = draft.folder_id;
       folder.addEventListener('change', () => { draft.folder_id = folder.value; dirty = true; });
       const visibility=node('select','photo-editor-visibility');visibility.setAttribute('aria-label','공개범위');
-      for(const [value,label] of [['public','공개'],['private','나만보기']]){const option=node('option','',label);option.value=value;visibility.append(option);}
+      for(const [value,label] of [['public','공개'],...(friendsReady?[['friends','일촌 공개']]:[]),['private','나만보기']]){const option=node('option','',label);option.value=value;visibility.append(option);}
       visibility.value=draft.visibility;
       visibility.addEventListener('change',()=>{draft.visibility=visibility.value;dirty=true;});
       const visibilityLabel=node('label','','공개범위');visibilityLabel.append(visibility);

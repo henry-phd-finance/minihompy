@@ -23,6 +23,7 @@
     context:()=>window.MinihompyContentAccess.open(),
     async folders() { return checked(await (await reader()).from('photo_folders').select('*').order('sort_order').order('id')).data; },
     async list(folder, page, size, ctx) {
+      const r=await window.MinihompyContentAccess.read?.('list',{kind:'photos',folder_id:folder,page,size});ctx?.assert?.();if(r&&!r.legacy)return r.data;
       const result = checked(await (ctx?.client||await reader()).from('photo_posts').select('*', { count: 'exact' }).eq('folder_id', folder)
         .order('created_at', { ascending: false }).order('id', { ascending: false }).range((page - 1) * size, page * size - 1));
       return { items: result.data, count: result.count };
@@ -32,7 +33,7 @@
       validate(draft);
       const client = await writer();
       const fields = { folder_id: draft.folder_id, title: draft.title.trim(), body: draft.body, visibility:draft.visibility||'public' };
-      if(!['public','private'].includes(fields.visibility))throw Error('공개범위를 확인해 주세요.');
+      if(!['public','friends','private'].includes(fields.visibility)||fields.visibility==='friends'&&!await window.MinihompyContentAccess.friendsReady())throw Error('공개범위를 확인해 주세요.');
       const existing = () => client.from('photo_posts').select('*').eq('id', draft.id).maybeSingle();
       const same = row => row && row.folder_id === fields.folder_id && row.title === fields.title && row.visibility === fields.visibility && row.body.length === fields.body.length
         && row.body.every((b, i) => b.type === fields.body[i].type && (b.type === 'text' ? b.text === fields.body[i].text : b.path === fields.body[i].path));

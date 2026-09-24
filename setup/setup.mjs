@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import {upgradeFriendVisibility} from './friend-visibility-setup.mjs';
 import { readFile } from 'node:fs/promises';
 import { createInterface } from 'node:readline/promises';
 import { Writable } from 'node:stream';
@@ -18,14 +19,14 @@ async function secret(question) {
 }
 const args=process.argv.slice(2);
 if(args.includes('--help') || args.length===0) {
-  console.log('사용법: node setup/setup.mjs install|register|upgrade|verify|writing|navigation|home-data|folder-visibility|relationships --config setup/config.json [--dry-run]\n공개 설정 형식: setup/config.example.json. 비밀: MINIHOMPY_OWNER_EMAIL, MINIHOMPY_OWNER_PASSWORD, SUPABASE_ACCESS_TOKEN (환경변수 또는 마스킹 입력).\n현재 개인 저장소에서 실행합니다. Git commit/push는 직접 실행합니다.');
+  console.log('사용법: node setup/setup.mjs install|register|upgrade|verify|writing|navigation|home-data|folder-visibility|relationships|friend-visibility --config setup/config.json [--dry-run] [--phase prepare|activate|disable]\n공개 설정 형식: setup/config.example.json. 비밀: MINIHOMPY_OWNER_EMAIL, MINIHOMPY_OWNER_PASSWORD, SUPABASE_ACCESS_TOKEN (환경변수 또는 마스킹 입력).\n현재 개인 저장소에서 실행합니다. Git commit/push는 직접 실행합니다.');
 } else {
   try {
-    const command=args.shift(); let configPath, dryRun=false;
-    while(args.length){const arg=args.shift();if(arg==='--config')configPath=args.shift();else if(arg==='--dry-run')dryRun=true;else throw Error('알 수 없는 옵션입니다. --help를 확인해 주세요.');}
+    const command=args.shift(); let configPath, dryRun=false, phase='prepare';
+    while(args.length){const arg=args.shift();if(arg==='--config')configPath=args.shift();else if(arg==='--dry-run')dryRun=true;else if(arg==='--phase')phase=args.shift();else throw Error('알 수 없는 옵션입니다. --help를 확인해 주세요.');}
     if(!configPath)throw Error('--config 파일이 필요합니다.');
     const config=JSON.parse(await readFile(configPath,'utf8'));
     const credentials=(dryRun||command==='navigation')?{}:{email:process.env.MINIHOMPY_OWNER_EMAIL||await secret('소유자 이메일: '),password:process.env.MINIHOMPY_OWNER_PASSWORD||await secret('소유자 비밀번호: '),managementToken:command==='verify'?undefined:process.env.SUPABASE_ACCESS_TOKEN||await secret('Supabase Management access token: ')};
-    await (command==='navigation'?verifyNavigationSetup:command==='writing'?upgradeMemberWriting:command==='relationships'?upgradeMemberRelationships:command==='home-data'?upgradeHomeData:command==='folder-visibility'?upgradeFolderVisibility:runSetup)({config,command,target:process.cwd(),dryRun,...credentials});
+    await (command==='navigation'?verifyNavigationSetup:command==='writing'?upgradeMemberWriting:command==='relationships'?upgradeMemberRelationships:command==='home-data'?upgradeHomeData:command==='folder-visibility'?upgradeFolderVisibility:command==='friend-visibility'?upgradeFriendVisibility:runSetup)({config,command,target:process.cwd(),dryRun,phase,...credentials});
   } catch(error){console.error(error.message);process.exitCode=1;}
 }

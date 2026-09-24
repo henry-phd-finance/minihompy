@@ -22,7 +22,9 @@
   window.MinihompyHomeRepository = Object.freeze({
     async summary(menus = kinds, {signal} = {}) {
       if (!Array.isArray(menus) || menus.length>4 || new Set(menus).size!==menus.length || menus.some(m=>!kinds.includes(m))) throw new TypeError('잘못된 홈 메뉴입니다.');
-      // No member-writing grant, admin client, auth refresh or cache is required.
+      const result=await window.MinihompyContentAccess?.read?.('summary',{menus:[...menus]},{signal});
+      if(result&&!result.legacy)return validate(result.data,menus);
+      // Explicitly unsupported/unready servers retain the public-only API.
       let query = window.MinihompyBackend.getClient('visitor').rpc('home_summary',{p_menus:[...menus]});
       if(signal)query=query.abortSignal(signal);
       const {data,error}=await query;

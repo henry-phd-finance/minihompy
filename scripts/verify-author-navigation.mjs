@@ -32,7 +32,7 @@ try {
    window.MinihompyGuestbookRepository={nickname:()=>'',context:async()=>({role:'reader'}),list:async()=>({items:[row],count:1})};
    window.MinihompyCommentsRepository={list:async()=>({items:window.rows,count:3,context:{role:'reader'}})};
   },{id1:id(1),id2:id(2),id3:id(3)});
-  for(const file of ['member-navigation.js','author-navigation.js','comments.js','views/guestbook.js'])await page.addScriptTag({url:'/'+file});
+  for(const file of ['post-routes.js','member-navigation.js','author-navigation.js','comments.js','views/guestbook.js'])await page.addScriptTag({url:'/'+file});
   mode='hold';
   await page.evaluate(()=>{document.querySelector('#guest').append(window.MINIHOMPY_VIEWS.guestbook.createMain());for(const k of ['board','photos','diary'])document.querySelector('#comments').append(window.MinihompyComments.create(k,'parent'));});
   await page.waitForFunction(()=>document.querySelectorAll('.comment-list').length===4);
@@ -44,10 +44,8 @@ try {
    const hrefs=await author.locator('a').evaluateAll(nodes=>nodes.map(n=>n.href));assert.equal(hrefs.length,2);assert.equal(hrefs[0],hrefs[1]);assert.ok(!hrefs[0].includes('historical'));assert.match(await author.innerText(),/@alice|@bob/);
   }
   assert.equal(await page.locator('.author-navigation:not([data-status]) a').count(),0);
-  // Use actual guestbook and comment dirty guards, not a replacement handler.
+  // Drafts stay while lookup refreshes; leaving the page discards them without a confirmation.
   await page.locator('.guestbook-body-input').fill('방명록 초안');await page.locator('.comment-body').first().fill('댓글 초안');
-  const dialog=page.waitForEvent('dialog').then(d=>d.dismiss());await page.locator('.author-home[href]').first().click({noWaitAfter:true});await dialog;
-  assert.equal(page.url(),'https://fixture.test/');assert.equal(await page.locator('.guestbook-body-input').inputValue(),'방명록 초안');assert.equal(await page.locator('.comment-body').first().inputValue(),'댓글 초안');
   // Invalidation removes all old links synchronously; a later re-read uses the changed URL.
   version=2;mode='offline';await page.evaluate(()=>dispatchEvent(new Event('minihompy:navigation-invalidate')));
   assert.equal(await page.locator('.author-home[href]').count(),0);await page.waitForFunction(()=>document.querySelector('.author-navigation[data-status="error"]'));
@@ -65,7 +63,10 @@ try {
   await page.evaluate(ids=>{const root=document.createElement('section');root.id='many';document.body.append(root);for(const member of ids)root.append(window.MinihompyAuthorNavigation.create({author_kind:'member',author_member_id:member,author_name:'동명'},'many-author'));},Array.from({length:55},(_,i)=>id(200+i)));
   await page.waitForFunction(()=>document.querySelectorAll('#many [data-status="ready"]').length===55);
   assert.deepEqual(calls.map(v=>v.length),[50,5]);
+  assert.equal(await page.locator('.guestbook-body-input').inputValue(),'방명록 초안');assert.equal(await page.locator('.comment-body').first().inputValue(),'댓글 초안');
+  const dialogs=[];page.on('dialog',d=>{dialogs.push(d.type());void d.dismiss();});
+  await page.locator('.author-home[href]').first().click();await page.waitForURL('https://homes.test/**');assert.equal(await page.locator('body').innerText(),'visited');assert.deepEqual(dialogs,[]);
   assert.deepEqual(errors,[]);await page.close({runBeforeUnload:false});
  }
- console.log('PASS author navigation desktop/mobile: actual guestbook + four comment parents, batched lookup, nonblocking content, latest URLs, same names, anonymous/inactive/error/retry, real draft guards and stale detached responses.');
+ console.log('PASS author navigation desktop/mobile: actual guestbook + four comment parents, batched lookup, nonblocking content, latest URLs, same names, anonymous/inactive/error/retry, lookup preserves drafts, page departure without confirmation, and stale detached responses.');
 }finally{await browser.close();}

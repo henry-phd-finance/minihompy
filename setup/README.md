@@ -155,3 +155,22 @@ node setup/setup.mjs relationships --config setup/config.json
 ```
 
 소유자/중앙 연결 검증, 회원 세션·일촌평 migration, member-writing 배포와 기능 준비 상태 검사를 수행한다. Pages는 별도로 게시한다. 중단 뒤 같은 명령을 재실행하고 기존 데이터와 이력을 삭제하지 않는다. [중앙→A→B 적용·복구·테스트 정리](../docs/member-relationship-deployment.md)를 따른다.
+
+## 일촌 공개 설치·활성화
+
+중앙 일촌 공개 protocol 1, 개인 회원 세션·일촌평·사진 보호를 먼저 준비한다. 기존 소유자 로그인과 Supabase 배포 환경변수를 사용한다.
+
+```sh
+node setup/setup.mjs friend-visibility --config setup/config.json --phase prepare --dry-run
+node setup/setup.mjs friend-visibility --config setup/config.json --phase prepare
+# 해당 사이트 설정으로 빌드한 Pages를 게시하고 제공 파일을 확인한 뒤 실행
+node setup/setup.mjs friend-visibility --config setup/config.json --phase activate
+# 일촌 공개를 비활성화하여 복구
+node setup/setup.mjs friend-visibility --config setup/config.json --phase disable
+```
+
+prepare는 SQL 007~012를 해시 추적 적용하고 일촌 공개를 비활성화한 상태에서 함수를 배포·검사한다. activate는 준비된 서버, 중앙이 확인한 소유자·사이트 연결, 보호 Storage, 실제 제공되는 Pages release의 모든 파일 해시와 사이트 설정을 확인한 뒤 활성화한다. 회원 작성 설정도 enabled여야 한다. CLI가 Pages를 게시하거나 config/Secrets를 교체하지 않는다. 신규 install이 적용한 migration 이력은 재사용한다. 해시 불일치나 이력 없는 기존 스키마는 자동 채택하지 않는다.
+
+각 단계는 --dry-run을 지원한다. disable은 중앙이나 Pages가 중단되어도 개인 관리자 권한으로 실행하며, 기존 일촌 글·댓글·파일·소유자 연결은 보존한다. 로컬 잠금과 DB 활성화 세대로 오래된 활성화 요청을 차단한다. 강제 종료 뒤에는 진행 중인 작업이 없는지 확인하고 잠금을 처리한다. 네트워크 오류만으로 DB 비활성화 성공을 단정하지 않는다.
+
+[중앙→A→B 배포·비공개 백업·원본 URL 폐쇄·안전한 복구·테스트 정리](../docs/friend-visibility-deployment.md)를 따른다. 로컬 준비는 Step 12, 운영 적용은 Step 13이다.

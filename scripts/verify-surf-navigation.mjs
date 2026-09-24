@@ -46,7 +46,7 @@ try{
   mode='offline';await submit('');await page.locator('#surf-retry').waitFor();mode='normal';await page.locator('#surf-retry').click();await page.waitForFunction(()=>document.querySelectorAll('#surf-results li').length===2);
   // Modal remains inside the mobile viewport and returns keyboard focus to its opener.
   const box=await page.locator('#surf-dialog').boundingBox();assert.ok(box.x>=0&&box.width<=width&&box.y>=0);
-  await mkdir(new URL('docs/verification/member-navigation-step4/',root),{recursive:true});await page.screenshot({path:new URL(`docs/verification/member-navigation-step4/${width}.png`,root).pathname});
+  const out=resolve(process.env.VERIFICATION_DIR||'docs/verification/member-navigation-step4');await mkdir(out,{recursive:true});await page.screenshot({path:resolve(out,`${width}.png`)});
   await page.keyboard.press('Escape');await page.waitForFunction(()=>!document.querySelector('#surf-dialog').open);assert.equal(await page.evaluate(()=>document.activeElement.hasAttribute('data-surf-open')),true);
   // Closed dialog discards delayed results.
   mode='hold';held=false;await page.locator('[data-surf-open]').click();await waitHeld();await page.locator('#surf-close').click();mode='normal';release();await page.waitForTimeout(50);assert.equal(await page.locator('#surf-results li').count(),0);

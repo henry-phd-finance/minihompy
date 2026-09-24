@@ -5,7 +5,7 @@ import {resolve} from 'node:path';
 import {handleMemberWriting} from '../../supabase/functions/member-writing/handler.js';
 import {handleIdentityApiRequest} from '../../../minihompy-central/supabase/functions/identity-api/handler.js';
 export async function relationshipBrowserFlow({playwright,homes,options,fetcher,credentials,member}){
- const {chromium}=await import(pathToFileURL(resolve(playwright))),out=resolve('docs/verification/member-relationship-step8/browser');await mkdir(out,{recursive:true});
+ const {chromium}=await import(pathToFileURL(resolve(playwright))),out=resolve(process.env.VERIFICATION_DIR||'docs/verification/member-relationship-step8/browser');await mkdir(out,{recursive:true});
  const browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH,headless:true});const errors=[];
  const source=(await readFile('index.html','utf8')).replace(/<script\b[^>]*>[\s\S]*?<\/script>/g,'');
  const scripts=['member-writing-client.js','member-writing-runtime.js','member-relationships-repository.js','member-relationships.js','member-navigation.js','author-navigation.js','member-relationship-lists.js','friend-reviews-repository.js','friend-reviews.js','views/home.js'];

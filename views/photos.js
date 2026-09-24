@@ -13,7 +13,7 @@
   let scrollThumb;
   const pageSize = 2;
   let request = 0;
-  let notice = '', deleting = false, mediaScope;
+  let notice = '', deleting = false, mediaScope, friendsReady = false;
   const admin = () => window.MinihompyAdmin?.state.role === 'admin';
 
   function node(tag, className, text) {
@@ -128,17 +128,12 @@
     const body = post.body.map(block => {
       if (block.type === 'text') return node('p', 'photo-caption', block.text);
       const img = node('img', 'photo-image');
-      void scope.read(post.id,block.path).then(src=>{if(img.isConnected)img.src=src;}).catch(error=>{
-        if(!article.isConnected)return;
-        window.MinihompyComments.forget('photos',post.id);
-        scope.dispose();
-        const retry=node('button','photo-image-retry','다시 조회');retry.type='button';retry.addEventListener('click',()=>void renderMain());
-        article.replaceChildren(node('p','photo-image-error',error.message||'사진을 불러오지 못했습니다.'),retry);
-      });
+      img.src = scope.get(post.id+':'+block.path);
+      img.addEventListener('error',()=>{if(article.isConnected)showFailure(new Error('사진을 표시하지 못했습니다.'));},{once:true});
       img.alt = '';
       return img;
     });
-    const privacy = node('p', 'photo-privacy', post.visibility==='private'?'공개설정 : 나만보기':'공개설정 : 공개');
+    const privacy = node('p', 'photo-privacy', post.visibility==='private'?'공개설정 : 나만보기':post.visibility==='friends'?'공개설정 : 일촌 공개':'공개설정 : 공개');
     const comments = window.MinihompyComments.create('photos', post.id);
     article.append(title, meta, ...body, privacy, comments);
     if (admin()) {
@@ -148,13 +143,18 @@
         edit.addEventListener('click', () => { void startEditing(post); });
         actions.append(edit);
       }
-      const visibility=node('button','photo-visibility',post.visibility==='private'?'공개로 변경':'나만보기로 변경');visibility.type='button';
-      visibility.addEventListener('click',async()=>{
-        if(deleting||editor.busy)return;const token=request;deleting=true;mediaScope?.dispose();article.replaceChildren(node('p','photo-empty','공개범위를 변경하고 있습니다.'));
-        try{await window.MinihompyContentAccess.visibility('photos',post,post.visibility==='private'?'public':'private');if(token!==request)return;window.MinihompyComments.forget('photos',post.id);notice='공개범위를 변경했습니다.';}
+      const changeVisibility=async value=>{
+        if(deleting||editor.busy)return;const token=request;deleting=true;mediaScope?.dispose();
+        window.MinihompyComments?.clearKind?.('photos');mainRoot.replaceChildren(node('p','photo-empty','공개범위를 변경하고 있습니다.'));
+        try{await window.MinihompyContentAccess.visibility('photos',post,value);if(token!==request)return;notice='공개범위를 변경했습니다.';}
         catch(error){if(token===request)notice=error.message;}
         finally{if(token===request){deleting=false;void renderMain();}}
-      });actions.append(visibility);
+      };
+      const visibility=node('button','photo-visibility',post.visibility==='private'?'공개로 변경':'나만보기로 변경');visibility.type='button';
+      visibility.addEventListener('click',()=>void changeVisibility(post.visibility==='private'?'public':'private'));actions.append(visibility);
+      if(friendsReady&&post.visibility!=='friends'){
+        const friends=node('button','photo-friends','일촌 공개로 변경');friends.type='button';friends.addEventListener('click',()=>void changeVisibility('friends'));actions.append(friends);
+      }
       const remove = node('button', 'photo-delete', '삭제'); remove.type = 'button';
       remove.addEventListener('click', async () => {
         if (!admin() || deleting || editor.busy || !confirm('이 사진글을 삭제할까요?')) return;
@@ -177,6 +177,15 @@
     return article;
   }
 
+  function showFailure(error) {
+    request++;mediaScope?.dispose();mediaScope=null;
+    window.MinihompyComments?.clearKind?.('photos');
+    const retry=node('button','photo-retry','다시 시도');retry.type='button';
+    retry.addEventListener('click',async()=>{retry.disabled=true;try{await window.MinihompyContentAccess.retry?.();}catch{}if(mainRoot?.isConnected)void renderMain();});
+    mainRoot.replaceChildren(node('p','photo-empty',`사진첩을 불러오지 못했습니다. ${error.message||''}`),retry);
+    requestAnimationFrame(updateScroll);
+  }
+
   async function renderMain() {
     const token = ++request;mediaScope?.dispose();mediaScope=null;
     if (editor.active && admin()) {
@@ -192,9 +201,10 @@
     }
     mainRoot.replaceChildren(node('p', 'photo-empty', '사진첩을 불러오고 있습니다.'));
     requestAnimationFrame(updateScroll);
-    let posts, count;
+    let posts, count;const sources=new Map();
     try {
       const ctx=await repository.context();if(token!==request)return;
+      friendsReady=admin()&&await window.MinihompyContentAccess.friendsReady?.()===true;if(token!==request)return;
       if (!folders.length) { folders = await repository.folders(); if (token !== request) return; populateFolders(); }
       if(target){const location=await window.MinihompyPostLocation.locate('photos',target,pageSize,ctx.client);if(token!==request)return;selected=location.folder_id;page=location.page;}
       if (!folders.some(f => f.id === selected && f.kind === 'folder')) selected = folders.find(f => f.kind === 'folder')?.id;
@@ -206,11 +216,18 @@
       if(target&&!posts.some(p=>p.id===target))throw Error('글이 삭제되었거나 조회할 수 없습니다.');
       const maximum = Math.max(1, Math.ceil(count / pageSize));
       if (page > maximum) { page = maximum; renderMain(); return; }
+      const scope=window.MinihompyPhotoMedia.scope();mediaScope=scope;
+      await Promise.all(posts.flatMap(post=>post.body.filter(block=>block.type==='image').map(async block=>{
+        const src=await scope.read(post.id,block.path);if(token!==request)return;sources.set(post.id+':'+block.path,src);
+      })));
+      if(token!==request)return;
+      // Recheck the page after all bytes arrive; never attach stale metadata or comments.
+      const final=await repository.list(selected,page,pageSize,ctx);if(token!==request)return;
+      if(JSON.stringify(final)!==JSON.stringify(result))throw Error('사진글이 변경되었습니다. 다시 조회해 주세요.');
+      await ctx.verify();if(token!==request)return;
     } catch (error) {
       if (token !== request) return;
-      const retry = node('button', 'photo-retry', '다시 시도'); retry.type = 'button'; retry.addEventListener('click', renderMain);
-      mainRoot.replaceChildren(node('p', 'photo-empty', `사진첩을 불러오지 못했습니다. ${error.message || ''}`), retry);
-      requestAnimationFrame(updateScroll); return;
+      showFailure(error);return;
     }
     const folder = folders.find(item => item.id === selected);
     const pageCount = Math.max(1, Math.ceil(count / pageSize));
@@ -231,8 +248,7 @@
       toolbar.append(write);
     }
     const list = node('div', 'photo-post-list');
-    mediaScope=window.MinihompyPhotoMedia.scope();
-    list.append(...posts.map(post=>postElement(post,mediaScope)));
+    list.append(...posts.map(post=>postElement(post,sources)));
     if (!posts.length) list.append(node('p', 'photo-empty', '등록된 사진이 없습니다.'));
     const pagination = node('nav', 'photo-pagination');
     pagination.setAttribute('aria-label', '사진첩 페이지');
@@ -314,6 +330,13 @@
       return result;
     },
   };
+  function refreshVisible(){if(mainRoot?.isConnected&&!document.hidden&&!editor.active&&!deleting)void renderMain();}
+  window.addEventListener('focus',refreshVisible);
+  document.addEventListener('visibilitychange',()=>{
+    if(!mainRoot?.isConnected||editor.active||deleting)return;
+    if(document.hidden){request++;mediaScope?.dispose();mediaScope=null;window.MinihompyComments?.clearKind?.('photos');mainRoot.replaceChildren();}
+    else refreshVisible();
+  });
   window.addEventListener('pagehide',()=>{request++;mediaScope?.dispose();mediaScope=null;mainRoot?.replaceChildren();});
   window.addEventListener('minihompy:menu-leave', event => {
     if (event.detail.id !== null && event.detail.id !== 'photos') return;

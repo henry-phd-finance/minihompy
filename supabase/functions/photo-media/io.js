@@ -4,12 +4,14 @@ export const UUID=/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[
 const PATH=new RegExp('^'+UUID.source.slice(1,-1)+'/'+UUID.source.slice(1,-1)+'\\.(jpg|png|webp|gif)$');
 export function validPath(post,path){return UUID.test(post||'')&&typeof path==='string'&&PATH.test(path)&&path.startsWith(post+'/');}
 export function fail(code){throw Object.assign(new Error(code),{code});}
-export async function bytesOf(body,max=MAX_BYTES,timeout=15000){
+export async function bytesOf(body,max=MAX_BYTES,timeout=15000,signal){
+ if(signal?.aborted)fail('REQUEST_TIMEOUT');
  const reader=body?.getReader();if(!reader)fail('BAD_REQUEST');
+ let abort;const cancelled=new Promise((_,reject)=>{abort=()=>{void reader.cancel().catch(()=>{});reject(Object.assign(Error('REQUEST_TIMEOUT'),{code:'REQUEST_TIMEOUT'}));};signal?.addEventListener('abort',abort,{once:true});});
  let timer,total=0;const parts=[],deadline=new Promise((_,reject)=>{timer=setTimeout(()=>reject(Object.assign(new Error('REQUEST_TIMEOUT'),{code:'REQUEST_TIMEOUT'})),timeout);});
- try{for(;;){const {done,value}=await Promise.race([reader.read(),deadline]);if(done)break;total+=value.length;if(total>max)fail('TOO_LARGE');parts.push(value);}
+ try{for(;;){const {done,value}=await Promise.race([reader.read(),deadline,cancelled]);if(signal?.aborted)fail('REQUEST_TIMEOUT');if(done)break;total+=value.length;if(total>max)fail('TOO_LARGE');parts.push(value);}
  const out=new Uint8Array(total);let at=0;for(const p of parts){out.set(p,at);at+=p.length;}return out;
- }finally{clearTimeout(timer);void reader.cancel().catch(()=>{});}
+ }finally{signal?.removeEventListener('abort',abort);clearTimeout(timer);void reader.cancel().catch(()=>{});}
 }
 export async function digest(bytes){return [...new Uint8Array(await crypto.subtle.digest('SHA-256',bytes))].map(x=>x.toString(16).padStart(2,'0')).join('');}
 export function imageType(bytes,path){
@@ -26,7 +28,7 @@ export function imageType(bytes,path){
 export function adapters({projectUrl,serviceKey,fetcher=fetch}){
  const headers={apikey:serviceKey,Authorization:'Bearer '+serviceKey};
  async function request(path,options={}){
-  const r=await fetcher(projectUrl+path,{...options,headers:{...headers,...options.headers},redirect:'error',signal:AbortSignal.timeout(20000)});
+  const r=await fetcher(projectUrl+path,{...options,headers:{...headers,...options.headers},redirect:'error',signal:AbortSignal.any([AbortSignal.timeout(20000),...(options.signal?[options.signal]:[])])});
   if(!r.ok){void r.body?.cancel();fail(r.status===404?'NOT_FOUND':'STORAGE_UNAVAILABLE');}return r;
  }
  return {
@@ -35,7 +37,7 @@ export function adapters({projectUrl,serviceKey,fetcher=fetch}){
    const value=await r.json();if(value?.failure)fail(value.failure);return value;
   },
   storage:{
-   get:async(bucket,path)=>bytesOf((await request('/storage/v1/object/authenticated/'+bucket+'/'+path)).body),
+   get:async(bucket,path,signal)=>bytesOf((await request('/storage/v1/object/authenticated/'+bucket+'/'+path,{signal})).body,MAX_BYTES,15000,signal),
    put:async(bucket,path,bytes,mime)=>{await request('/storage/v1/object/'+bucket+'/'+path,{method:'POST',headers:{'Content-Type':mime,'x-upsert':'false','Cache-Control':'no-store'},body:bytes});},
    remove:async(bucket,paths)=>{await request('/storage/v1/object/'+bucket,{method:'DELETE',headers:{'Content-Type':'application/json'},body:JSON.stringify({prefixes:paths})});},
    bucket:async(bucket)=>(await request('/storage/v1/bucket/'+bucket)).json(),

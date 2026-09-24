@@ -4,7 +4,7 @@ import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { initialSettings, mockHomeSummary } from './settings-fixture.mjs';
 const { chromium } = await import(pathToFileURL(resolve(process.argv[2])).href);
-const out = new URL('../docs/verification/diary-writing/', import.meta.url);
+const out = new URL(process.env.VERIFICATION_DIR||'../docs/verification/diary-writing/', import.meta.url);
 await mkdir(out, { recursive: true });
 const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH, headless: true });
 try {
@@ -73,6 +73,8 @@ try {
       return send(filtered.slice(offset, offset + limit), 200, { 'content-range': `${offset}-${Math.max(offset, offset + Math.min(limit, filtered.length) - 1)}/${filtered.length}` });
     });
     await mockHomeSummary(page);
+    await page.route('**/functions/v1/member-writing/friend-reviews**',route=>route.fulfill({json:{items:[],next_cursor:null},headers:{'access-control-allow-origin':'*','access-control-allow-headers':'*'}}));
+    await page.route('**/functions/v1/member-writing/content/health',route=>route.fulfill({json:{friend_visibility_protocol:1,friend_visibility_ready:false,friend_media_ready:false,friend_summary_ready:false,friend_pages_ready:false},headers:{'access-control-allow-origin':'*'}}));
     await page.goto(`${new URL('../index.html', import.meta.url).href}#/diary`);
     await page.locator('.diary-empty').filter({ hasText: '등록된 일기' }).waitFor();
     await page.locator('.diary-write').click();

@@ -1,5 +1,5 @@
 import {readFile} from 'node:fs/promises';
-export async function memberWritingDb(PGlite,{siteId,centralUrl,writing=true,renewal=true,folders=writing,visibility=folders&&writing,visibilitySummary=visibility,photoMedia=globalThis.process?.env?.MINIHOMPY_TEST_PHOTO_MEDIA==='1'}){
+export async function memberWritingDb(PGlite,{siteId,centralUrl,writing=true,renewal=true,folders=writing,visibility=folders&&writing,visibilitySummary=visibility,photoMedia=globalThis.process?.env?.MINIHOMPY_TEST_PHOTO_MEDIA==='1',friendVisibility=globalThis.process?.env?.MINIHOMPY_TEST_FRIEND_VISIBILITY==='1'}){
  const pg=new PGlite();
  await pg.exec(`create role anon;create role authenticated;create role service_role bypassrls;
  create schema auth;create table auth.users(id uuid primary key);
@@ -16,13 +16,17 @@ export async function memberWritingDb(PGlite,{siteId,centralUrl,writing=true,ren
  if(visibility)await pg.exec(await readFile(new URL('../../supabase/migrations/202609240002_content_visibility.sql',import.meta.url),'utf8'));
  if(visibilitySummary)await pg.exec(await readFile(new URL('../../supabase/migrations/202609240003_visibility_summary.sql',import.meta.url),'utf8'));
  if(photoMedia)for(const file of ['202609240004_photo_media.sql','202609240005_photo_media_safeupdate.sql'])await pg.exec(await readFile(new URL('../../supabase/migrations/'+file,import.meta.url),'utf8'));
+ if(friendVisibility){
+  if(!visibility)throw Error('Friend visibility fixture requires content visibility');
+  for(const file of ['202609240007_friend_visibility.sql','202609240008_friend_comments.sql','202609240009_friend_photo_media.sql','202609240010_friend_aggregates.sql','202609240011_friend_diary_filters.sql','202609240012_friend_visibility_deployment.sql'])await pg.exec(await readFile(new URL('../../supabase/migrations/'+file,import.meta.url),'utf8'));
+ }
  if(writing)await pg.query('insert into private.member_writing_site(site_id,central_api_url) values($1,$2)',[siteId,centralUrl]);
  let queue=Promise.resolve();
  const db={rpc(name,args){
   const operation=queue.then(async()=>{
-  if(!['member_writing_session','member_guestbook','member_comments','member_friend_reviews'].includes(name))throw Error('Unexpected RPC');
+  if(!['member_writing_session','member_guestbook','member_comments','member_friend_reviews','member_content_read','friend_visibility_status','member_content_comments','member_photo_read','member_content_aggregate','friend_comments_status'].includes(name))throw Error('Unexpected RPC');
   await pg.exec('set role service_role');
-  try{const r=await pg.query('select public.'+name+'($1,$2) as value',[args.p_action,JSON.stringify(args.p_args)]);return {data:r.rows[0].value,error:null};}
+  try{const r=await pg.query('select public.'+name+(['friend_visibility_status','friend_comments_status'].includes(name)?'()':'($1,$2)')+' as value',['friend_visibility_status','friend_comments_status'].includes(name)?[]:[args.p_action,JSON.stringify(args.p_args)]);return {data:r.rows[0].value,error:null};}
   catch(e){return {data:null,error:{code:e.code}};}
   finally{await pg.exec('reset role');}
   });

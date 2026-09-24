@@ -9,14 +9,26 @@
    active++;Promise.resolve().then(task.run).then(task.resolve,task.reject).finally(()=>{active--;drain();});
   }
  }
- const scheduled=(signal,run)=>new Promise((resolve,reject)=>{queue.push({signal,run,resolve,reject});drain();});
+ const scheduled=(signal,run)=>new Promise((resolve,reject)=>{
+  const task={signal,run,resolve:v=>{signal.removeEventListener('abort',abort);resolve(v);},reject:e=>{signal.removeEventListener('abort',abort);reject(e);}};
+  const abort=()=>{const i=queue.indexOf(task);if(i>=0)queue.splice(i,1);task.reject(failure('이미지 조회가 취소되었습니다.','ABORTED'));};
+  if(signal.aborted)return abort();signal.addEventListener('abort',abort,{once:true});queue.push(task);drain();
+ });
+ async function cancellable(signal,run){
+  if(signal.aborted)throw failure('이미지 조회가 취소되었습니다.','ABORTED');let abort;
+  try{return await Promise.race([Promise.resolve().then(run),new Promise((_,reject)=>{abort=()=>reject(failure('이미지 조회가 취소되었습니다.','ABORTED'));signal.addEventListener('abort',abort,{once:true});})]);}
+  finally{signal.removeEventListener('abort',abort);}
+ }
+
  function endpoint(action){
   const config=window.MINIHOMPY_SUPABASE;
   if(!/^https:\/\/[a-z]{20}\.supabase\.co\/?$/.test(config?.url||'')||!config.publishableKey)throw Error('사진 서버 설정을 확인해 주세요.');
   return {url:config.url.replace(/\/$/,'')+'/functions/v1/photo-media/'+action,key:config.publishableKey};
  }
  async function call(action,body,{signal,ctx}={}){
-  const access=ctx||await window.MinihompyContentAccess.open(action!=='read'),auth=await access.authorization();
+  const access=ctx||await window.MinihompyContentAccess.open(action!=='read');
+  if(action==='read'){const r=await window.MinihompyContentAccess.read?.('photo',body,{signal});if(r&&!r.legacy)return {response:r.response,access:{verify:async()=>{await r.verify();await access.verify();}}};}
+  const auth=await access.authorization();
   if(action!=='read'&&!auth)throw Error('관리자 로그인이 필요합니다.');
   const {url,key}=endpoint(action),multipart=body instanceof FormData;
   const response=await fetch(url,{method:'POST',headers:{apikey:key,...(auth?{Authorization:auth}:{}),...(multipart?{}:{'Content-Type':'application/json'})},
@@ -34,21 +46,23 @@
   const result={
    async read(post,path){
     current();const key=post+':'+path;
-    if(!cache.has(key))cache.set(key,scheduled(controller.signal,async()=>{
-     current();const ctx=await window.MinihompyContentAccess.open();
-     const timer=setTimeout(()=>controller.abort(),30000);
-     try{
-      const {response}=await call('read',{post_id:post,path},{signal:controller.signal,ctx});
+    if(!cache.has(key)){
+     const timer=setTimeout(()=>result.dispose(),45000);
+     cache.set(key,scheduled(controller.signal,()=>cancellable(controller.signal,async()=>{
+      current();
+      const ctx=await window.MinihompyContentAccess.open();
+      const {response,access}=await call('read',{post_id:post,path},{signal:controller.signal,ctx});
+      if(disposed||controller.signal.aborted){void response.body?.cancel().catch(()=>{});current();}
       const type=response.headers.get('Content-Type')?.split(';')[0];
       if(!['image/jpeg','image/png','image/gif','image/webp'].includes(type)){void response.body?.cancel();throw Error('올바른 이미지 응답이 아닙니다.');}
       const reader=response.body.getReader(),chunks=[];let size=0;
-      try{for(;;){const {value,done}=await reader.read();if(done)break;size+=value.length;if(size>MAX)throw Error('이미지 크기 제한을 초과했습니다.');chunks.push(value);}}
+      try{for(;;){const {value,done}=await cancellable(controller.signal,()=>reader.read());current();if(done)break;size+=value.length;if(size>MAX)throw Error('이미지 크기 제한을 초과했습니다.');chunks.push(value);}}
       finally{void reader.cancel().catch(()=>{});}
-      await ctx.verify();current();
+      await access.verify();current();
       if(!size)throw Error('빈 이미지입니다.');
       const url=URL.createObjectURL(new Blob(chunks,{type}));urls.add(url);return url;
-     }finally{clearTimeout(timer);}
-    }).catch(error=>{cache.delete(key);throw error;}));
+    })).finally(()=>clearTimeout(timer)).catch(error=>{cache.delete(key);throw error;}));
+    }
     return cache.get(key);
    },
    dispose(){

@@ -2,7 +2,7 @@
   'use strict';
   const repository = window.MinihompyDiaryRepository;
   const koreaNow = () => new Intl.DateTimeFormat('sv-SE', { timeZone: 'Asia/Seoul', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(new Date());
-  let target=null;
+  let target=null, friendsReady=false;
   function clearTarget(){target=null;window.MinihompyApp?.clearPost?.();}
   let folders = [], folderId;
   let selectedDate = koreaNow().slice(0, 10);
@@ -80,7 +80,7 @@
     header.append(date, element('span', 'diary-weather', entry.weather));
     const body = element('div', 'diary-entry-body', entry.body);
     const comments = window.MinihompyComments.create('diary', entry.id);
-    article.append(header, body, element('p', 'photo-privacy', entry.visibility==='private'?'공개설정 : 나만보기':'공개설정 : 공개'), comments);
+    article.append(header, body, element('p', 'photo-privacy', entry.visibility==='private'?'공개설정 : 나만보기':entry.visibility==='friends'?'공개설정 : 일촌 공개':'공개설정 : 공개'), comments);
     if (admin()) {
       const actions = element('div', 'diary-actions');
       if (entry.author_id === window.MinihompyAdmin.state.userId) actions.append(button('수정', '일기 수정', () => start(entry), 'diary-edit'));
@@ -90,6 +90,7 @@
         catch(e){if(token===epoch)notice=e.message;}
         finally{if(token===epoch){setBusy(false);void render();}}
       },'diary-visibility'));
+      if(friendsReady&&entry.visibility!=='friends')actions.append(button('일촌 공개로 변경','일촌 공개로 변경',async()=>{if(busy)return;const token=epoch;setBusy(true);try{await window.MinihompyContentAccess.visibility('diary',entry,'friends');if(token===epoch)window.MinihompyComments.forget('diary',entry.id);}catch(e){if(token===epoch)notice=e.message;}finally{if(token===epoch){setBusy(false);void render();}}},'diary-friends'));
       actions.append(button('삭제', '일기 삭제', async () => {
         if (!admin() || busy || !confirm('이 일기를 삭제할까요?')) return;
         const token = epoch;
@@ -188,7 +189,7 @@
     field('folder_id', '폴더', '', folders.map(f => [f.id, f.label]));
     field('entry_date', '날짜', 'date'); field('entry_time', '시간', 'time');
     field('weather', '날씨', '', [['', '선택 안 함'], ...['맑음', '흐림', '비', '눈'].map(s => [s, s])]);
-    field('visibility','공개범위','',[['public','공개'],['private','나만보기']]);
+    field('visibility','공개범위','',[['public','공개'],...(friendsReady?[['friends','일촌 공개']]:[]),['private','나만보기']]);
     field('body', '내용', 'textarea');
     const status = element('p', 'diary-status', notice); status.setAttribute('role', 'status');
     const actions = element('div', 'diary-actions');
@@ -244,7 +245,7 @@
   }
   async function render() {
     const token = ++request;
-    renderCalendar();
+    writtenDates.clear();renderCalendar();
     if (draft && admin()) {
       content.replaceChildren(editorView()); content.scrollTop = 0;
       requestAnimationFrame(updateScroll); return;
@@ -252,7 +253,7 @@
     content.replaceChildren(element('p', 'diary-empty', '일기를 불러오고 있습니다.'));
     requestAnimationFrame(updateScroll);
     try {
-      const ctx=await repository.context();if(token!==request)return;
+      const ctx=await repository.context();if(token!==request)return;friendsReady=admin()?await window.MinihompyContentAccess.friendsReady?.()===true:false;if(token!==request)return;
       if (!folders.length) {
         folders = await repository.folders(); if (token !== request) return;
         populateFolders();
@@ -281,12 +282,14 @@
     } catch (error) {
       if (token !== request) return;
       writtenDates.clear(); renderCalendar();
-      content.replaceChildren(element('p', 'diary-status', `일기를 불러오지 못했습니다. ${error.message || ''}`), button('다시 시도', '다이어리 다시 조회', render, 'diary-retry'));
+      content.replaceChildren(element('p', 'diary-status', `일기를 불러오지 못했습니다. ${error.message || ''}`), button('다시 시도', '다이어리 다시 조회', async()=>{try{await window.MinihompyContentAccess.retry?.();}finally{void render();}}, 'diary-retry'));
     }
     content.scrollTop = 0;
     requestAnimationFrame(updateScroll);
   }
   window.MinihompyPostRoutes?.guard(next=>(content?.isConnected||next?.id==='diary'&&next.post)?{busy,dirty,discard:()=>{if(next?.id==='diary'&&next.post)resetDraft();}}:null);
+  window.addEventListener('focus',()=>{if(content?.isConnected&&!draft&&!busy)void render();});
+  document.addEventListener('visibilitychange',()=>{if(!content?.isConnected||draft||busy)return;if(document.visibilityState==='hidden'){request++;writtenDates.clear();renderCalendar();content.replaceChildren();window.MinihompyComments?.clearKind?.('diary');}else void render();});
   window.addEventListener('minihompy:content-access-reset', () => {
     resetDraft();request++;notice='';writtenDates.clear();page=1;selectedDate=koreaNow().slice(0,10);
     window.MinihompyComments?.clearKind?.('diary');content?.replaceChildren();

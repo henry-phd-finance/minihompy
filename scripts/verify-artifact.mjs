@@ -1,3 +1,4 @@
+import {friendPagesRelease} from '../setup/friend-visibility-release.mjs';
 import assert from 'node:assert/strict';
 import { readFile, readdir } from 'node:fs/promises';
 import { resolve, dirname } from 'node:path';
@@ -15,3 +16,6 @@ for(const path of paths){
   }
 }
 console.log('PASS: Pages includes login/runtime assets and excludes backend/setup/secrets.');
+
+assert.deepEqual(JSON.parse(await readFile(resolve(root,'friend-visibility-release.json'),'utf8')),await friendPagesRelease(root));
+console.log('PASS: Pages friend visibility release hashes match all JS/HTML/CSS runtime files.');

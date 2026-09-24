@@ -40,7 +40,7 @@ async function centralCall(path,body){const r=await handleIdentityApiRequest(new
 async function proof(target=siteB){const verifier=randomSecret();const p=await centralCall('/writing-proofs/issue',{central_session:centralSession,target_site_id:target,code_challenge:await sha256(verifier),return_path:'/home/',protocol:2,attempt_id:'test-attempt'});return {writing_proof:p.writing_proof,code_verifier:verifier,protocol:2,attempt_id:'test-attempt'};}
 async function request(path,{body,token,mode='member',expected=200,overrides={},method}={}){
  const r=await handleMemberWriting(new Request(projectUrl+'/functions/v1/member-writing'+path,{method:method||(body===undefined?'GET':'POST'),headers:{Origin:config.MINIHOMPY_SITE_ORIGIN,'Content-Type':'application/json','X-Minihompy-Auth-Mode':mode,...(token?{Authorization:'Bearer '+token}:{})},...(body===undefined?{}:{body:JSON.stringify(body)})}),{...options,...overrides});
- lastHeaders=r.headers;const data=await r.json();assert.equal(r.status,expected,JSON.stringify(data));assert.equal(r.headers.get('Cache-Control'),'no-store');return data;
+ lastHeaders=r.headers;const data=await r.json();assert.equal(r.status,expected,JSON.stringify(data));assert.equal(r.headers.get('Cache-Control'),path.startsWith('/comments')?'private, no-store':'no-store');return data;
 }
 let groups=0;const check=async(name,fn)=>{await fn();console.log(`PASS ${++groups}: ${name}`);};
 try{

@@ -26,7 +26,7 @@
     const status = node('p', 'comment-status', state.loading ? '댓글을 불러오고 있습니다.' : state.message); status.setAttribute('role', 'status');
     if (state.loading || !state.context) {
       root.append(status);
-      if (!state.loading && !window.MinihompyMemberWriting?.enabled()) root.append(button('다시 시도', 'comment-retry', async () => {try{await window.MinihompyMemberWriting?.retry();await load(state);}catch{}}));
+      if (!state.loading) root.append(button('다시 시도', 'comment-retry', async () => {try{await window.MinihompyMemberWriting?.retry();await load(state);}catch{}}));
       resize(state); return;
     }
     const list = node('div', 'comment-list');

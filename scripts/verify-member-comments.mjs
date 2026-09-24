@@ -35,7 +35,7 @@ async function centralCall(path,body){const r=await handleIdentityApiRequest(new
 async function proof(target=siteB){const verifier=randomSecret();const p=await centralCall('/writing-proofs/issue',{central_session:centralSession,target_site_id:target,code_challenge:await sha256(verifier),return_path:'/home/'});return {writing_proof:p.writing_proof,code_verifier:verifier};}
 async function request(path,{body,token,mode='member',expected=200,overrides={},method}={}){
  const r=await handleMemberWriting(new Request(projectUrl+'/functions/v1/member-writing'+path,{method:method||(body===undefined?'GET':'POST'),headers:{Origin:config.MINIHOMPY_SITE_ORIGIN,'Content-Type':'application/json','X-Minihompy-Auth-Mode':mode,...(token?{Authorization:'Bearer '+token}:{})},...(body===undefined?{}:{body:JSON.stringify(body)})}),{...options,...overrides});
- const data=await r.json();assert.equal(r.status,expected,JSON.stringify(data));assert.equal(r.headers.get('Cache-Control'),'no-store');return data;
+ const data=await r.json();assert.equal(r.status,expected,JSON.stringify(data));assert.equal(r.headers.get('Cache-Control'),path.startsWith('/comments')?'private, no-store':'no-store');return data;
 }
 let groups=0;const check=async(name,fn)=>{await fn();console.log(`PASS ${++groups}: ${name}`);};
 try{
@@ -59,6 +59,11 @@ try{
  await personal.pg.query("select set_config('request.jwt.claim.sub',$1,false)",[owner]);
  parents.board=(await personal.pg.query("insert into public.board_posts(folder_id,author_name,title,body) select id,'주인','게시판','본문' from public.board_folders returning id")).rows[0].id;
  parents.photos=id(60);
+ if(process.env.MINIHOMPY_TEST_PHOTO_MEDIA==='1'){
+  // Protected-media fixture metadata; this suite exercises comments, not Storage bytes.
+  await personal.pg.query("insert into private.photo_assets(path,post_id,uploaded_by,complete,size,mime,sha256) values($1,$2,$3,true,1,'image/jpeg',$4)",[`${parents.photos}/${id(61)}.jpg`,parents.photos,owner,'a'.repeat(64)]);
+  await personal.pg.exec("update private.photo_media_state set mode='protected',ready=true");
+ }
  await personal.pg.query("insert into public.photo_posts(id,folder_id,author_name,title,body) select $1,id,'주인','사진',$2 from public.photo_folders",[parents.photos,JSON.stringify([{type:'image',path:`${parents.photos}/${id(61)}.jpg`}])]);
  parents.diary=(await personal.pg.query("insert into public.diary_entries(id,folder_id,author_name,entry_date,entry_time,body) select gen_random_uuid(),id,'주인','2026-09-23','12:00','일기' from public.diary_folders returning id")).rows[0].id;
  await personal.pg.exec("select set_config('request.jwt.claim.sub','',false)");
@@ -120,7 +125,7 @@ try{
   assert.ok((await list(kind,ownerToken,'owner')).items.some(x=>x.id===id(index)));
   await change(index,kind,'delete',2,ownerToken,'owner');
   await personal.pg.query('update public.'+table+" set visibility='public' where id=$1",[parents[kind]]);
-  if(kind==='photos')await personal.pg.exec('update private.photo_media_state set ready=false');
+  if(kind==='photos'&&process.env.MINIHOMPY_TEST_PHOTO_MEDIA!=='1')await personal.pg.exec('update private.photo_media_state set ready=false');
  });
  if(process.env.PLAYWRIGHT_PATH){const {verifyAutomaticSessionBrowser}=await import('./helpers/automatic-session-browser.mjs');await verifyAutomaticSessionBrowser({playwrightPath:process.env.PLAYWRIGHT_PATH,centralRoot,centralHandler:handleIdentityApiRequest,centralOptions,centralSession,ownerCentralSession,personal,options,member,memberB,parents});}
  await check('parent delete cascades; stale requests cannot recreate or read any of four parents',async()=>{

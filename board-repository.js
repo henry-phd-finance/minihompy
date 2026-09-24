@@ -8,12 +8,14 @@
     context: () => window.MinihompyContentAccess.open(),
     async folders() { return checked(await (await reader()).from('board_folders').select('*').order('sort_order').order('id')).data; },
     async list(folder, page, size, ctx) {
+      const r=await window.MinihompyContentAccess.read?.('list',{kind:'board',...(folder?{folder_id:folder}:{}),page,size});ctx?.assert?.();if(r&&!r.legacy)return r.data;
       let query = (ctx?.client || await reader()).from('board_posts').select(columns, { count: 'exact' });
       if (folder) query = query.eq('folder_id', folder);
       const result = checked(await query.order('created_at', { ascending: false }).order('id', { ascending: false }).range((page - 1) * size, page * size - 1));
       return { items: result.data, count: result.count };
     },
     async get(id, ctx) {
+      const r=await window.MinihompyContentAccess.read?.('detail',{kind:'board',id});ctx?.assert?.();if(r&&!r.legacy)return r.data.item;
       const result = checked(await (ctx?.client || await reader()).from('board_posts').select(`${columns},body`).eq('id', id).maybeSingle());
       if (!result.data) throw new Error('글이 삭제되었거나 조회할 수 없습니다.');
       return result.data;
@@ -22,7 +24,7 @@
       const client = await writer();
       const fields = { folder_id: draft.folder_id, title: draft.title.trim(), body: draft.body, visibility: draft.visibility || 'public' };
       if (!fields.folder_id || !fields.title || [...fields.title].length > 120 || !fields.body.trim() || [...fields.body].length > 50000) throw new Error('폴더, 제목(120자 이내), 내용(50,000자 이내)을 확인해 주세요.');
-      if (!['public','private'].includes(fields.visibility)) throw Error('공개범위를 확인해 주세요.');
+      if (!['public','friends','private'].includes(fields.visibility)||fields.visibility==='friends'&&!await window.MinihompyContentAccess.friendsReady()) throw Error('공개범위를 확인해 주세요.');
       const same = row => row && row.folder_id === fields.folder_id && row.title === fields.title && row.body === fields.body && row.visibility === fields.visibility;
       let query;
       if (draft.id) query = client.from('board_posts').update(fields).eq('id', draft.id).eq('updated_at', draft.updated_at);

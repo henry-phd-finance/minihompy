@@ -102,7 +102,7 @@ try{
   downHome=2;await call(2,'/friend-reviews',undefined,undefined,503,'public');assert.equal((await reviews(1)).items.length,1);assert.equal((await state(1,ba.session_token,1)).state,'accepted');downHome=null;
  });
  await check('expired local access token renews from its family; revoking one tab blocks its renewed tokens but not independent login',async()=>{
-  await homes[2].pg.query("update private.member_writing_sessions set expires_at=clock_timestamp()-interval '1 second' where token_hash=$1",[await tokenHash(ab.session_token)]);
+  await homes[2].pg.query("update private.member_writing_sessions set issued_at=clock_timestamp()-interval '2 seconds',expires_at=clock_timestamp()-interval '1 second' where token_hash=$1",[await tokenHash(ab.session_token)]);
   await call(2,'/sessions/current',undefined,ab.session_token,401);const renewed=await call(2,'/sessions/renew',{},ab.renewal_token);assert.equal(renewed.actor.member_id,member(1));
   await state(2,renewed.session_token,2);await call(2,'/sessions/revoke',{},ab.renewal_token);await call(2,'/sessions/current',undefined,renewed.session_token,401);await state(2,tab.session_token,2);
  });
