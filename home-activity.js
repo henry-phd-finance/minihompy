@@ -9,15 +9,21 @@
     const list=node('ul','home-recent-list');
     for(const item of data.recent){
       const row=node('li','home-recent-item'),link=node('a','home-post-link');link.href=window.MinihompyPostRoutes.href(item.kind,item.id);
-      const date=new Intl.DateTimeFormat('ko-KR',{timeZone:'Asia/Seoul',month:'2-digit',day:'2-digit'}).format(new Date(item.created_at));
+      const dateParts=new Intl.DateTimeFormat('ko-KR',{timeZone:'Asia/Seoul',month:'2-digit',day:'2-digit'}).formatToParts(new Date(item.created_at));
+      const date=['month','day'].map(type=>dateParts.find(part=>part.type===type).value).join('.');
       const title=item.label||'제목 없는 글';link.title=`${labels[item.kind]} · ${title} · ${date} · 오늘 댓글 ${item.today_comments}`;link.setAttribute('aria-label',link.title);
       link.append(node('span','home-post-kind',labels[item.kind]),node('span','home-post-label',title));
       if(item.today_comments)link.append(node('span','home-post-comments',`[${item.today_comments}]`));
       const time=node('time','home-post-date',date);time.dateTime=item.created_at;link.append(time);row.append(link);list.append(row);
     }
-    const aside=node('div','home-activity-counts');aside.append(node('p','home-count-caption','읽을 수 있는 글 · 오늘 / 전체'));
+    const aside=node('div','home-activity-counts');
+    const caption=node('h3','home-count-caption');caption.title='읽을 수 있는 글의 오늘 / 전체 건수';
+    const legend=node('small','');legend.append(node('span','','오늘'),node('span','','전체'));
+    caption.append(node('span','','게시물 현황'),legend);aside.append(caption);
     const counts=node('dl','board-counts');
-    for(const kind of data.menus){const row=node('div','');const term=node('dt','',labels[kind]),value=node('dd','',`${data.counts[kind].today} / ${data.counts[kind].total}`);row.dataset.kind=kind;row.title=`${labels[kind]}: 오늘 ${data.counts[kind].today}, 전체 ${data.counts[kind].total}`;row.append(term,value);counts.append(row);}
+    for(const kind of data.menus){const row=node('div','');const term=node('dt','',labels[kind]),value=node('dd','');
+      value.append(node('span','home-count-today',String(data.counts[kind].today)),node('span','home-count-divider',' / '),node('span','home-count-total',String(data.counts[kind].total)));
+      row.dataset.kind=kind;row.title=`${labels[kind]}: 오늘 ${data.counts[kind].today}, 전체 ${data.counts[kind].total}`;value.setAttribute('aria-label',row.title);row.append(term,value);counts.append(row);}
     const comments=node('p','home-today-comments',`오늘 댓글 ${data.today_comments}`);comments.title=`${data.date} 한국 시간 · 읽을 수 있는 글에 오늘 작성된 댓글 (미읽음 알림 아님)`;
     aside.append(counts,comments);
     state.root.replaceChildren(data.recent.length?list:node('p','home-activity-empty',data.menus.length?'읽을 수 있는 게시물이 없습니다.':'표시할 메뉴가 없습니다.'),aside);
