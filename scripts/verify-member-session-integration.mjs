@@ -6,6 +6,8 @@ import { pathToFileURL } from 'node:url';
 import { memberWritingDb } from './helpers/member-writing-db.mjs';
 import { browserBackend, sqlTransport } from './helpers/home-browser-db.mjs';
 import { handleMemberWriting } from '../supabase/functions/member-writing/handler.js';
+import {prepareVisibilityFixture,routePhotoMedia,checkOwnerVisibility,checkVisitorVisibility} from './helpers/visibility-integration.mjs';
+const visibilityIntegration=process.env.MINIHOMPY_VISIBILITY_INTEGRATION==='1';
 import { handleVisitCounts } from '../supabase/functions/visit-counts/handler.js';
 const { chromium } = await import(pathToFileURL(resolve(process.argv[2])));
 const centralRoot = resolve('../minihompy-central');
@@ -27,11 +29,11 @@ const browser=await chromium.launch({headless:true,executablePath:process.env.CH
 const context=await browser.newContext({viewport:{width,height:900},hasTouch:width===375});
 const counts={visits:0,exchange:0,renew:0,popups:0},errors=[];
 context.on('page',p=>p.on('pageerror',e=>errors.push(e.message)));
-const send=async(route,res)=>route.fulfill({status:res.status,headers:Object.fromEntries(res.headers),body:await res.text()}).catch(()=>{});
+const send=async(route,res)=>route.fulfill({status:res.status,headers:Object.fromEntries(res.headers),body:Buffer.from(await res.arrayBuffer())}).catch(()=>{});
 const request=req=>new Request(req.url(),{method:req.method(),headers:req.headers(),...(req.postData()?{body:req.postData()}:{})});
 try {
  for(const s of sites){
-  s.personal=await memberWritingDb(PGlite,{siteId:s.site,centralUrl:api});
+  s.personal=await memberWritingDb(PGlite,{siteId:s.site,centralUrl:api,photoMedia:true});
   s.transport=sqlTransport(s.personal.pg,{owner:s.owner});
   s.config={MINIHOMPY_SITE_ORIGIN:s.origin,MINIHOMPY_SITE_ID:s.site,MINIHOMPY_CENTRAL_API_URL:api,SUPABASE_URL:`https://${s.ref}.supabase.co`,MINIHOMPY_PUBLIC_KEY:'fixture-public'};
   s.options={config:s.config,db:s.personal.db,fetcher:async(url,init)=>{if(centralOffline)throw Error('fixture central offline');if(url.startsWith(api))return handleIdentityApiRequest(new Request(url,init),centralOptions);return centralOptions.fetcher(url,init);}};
@@ -43,6 +45,7 @@ try {
   s.parents={};
   s.parents.board=(await s.personal.pg.query("insert into board_posts(folder_id,author_name,title,body) select id,'owner','fixture board','body' from board_folders returning id")).rows[0].id;
   s.parents.photos=id(s.name==='alice'?31:32);
+  await prepareVisibilityFixture(s,centralOptions.fetcher,id(33));
   await s.personal.pg.query("insert into photo_posts(id,folder_id,author_name,title,body) select $1,id,'owner','fixture photo',$2 from photo_folders",[s.parents.photos,JSON.stringify([{type:'image',path:`${s.parents.photos}/${id(33)}.jpg`}])]);
   s.parents.diary=(await s.personal.pg.query("insert into diary_entries(id,folder_id,author_name,entry_date,entry_time,body) select gen_random_uuid(),id,'owner',current_date,'12:00','fixture diary' from diary_folders returning id")).rows[0].id;
   await s.personal.pg.exec("select set_config('request.jwt.claim.sub','',false)");
@@ -57,6 +60,7 @@ try {
   if(u.origin===central){const name=u.pathname.slice(1);if(name==='config.js')return route.fulfill({contentType:'text/javascript',body:`window.MINIHOMPY_CENTRAL_CONFIG=${JSON.stringify({apiBaseUrl:api,pageBaseUrl:central})};`});return route.fulfill({body:await readFile(resolve(centralRoot,'public',name)),contentType:name.endsWith('.js')?'text/javascript':name.endsWith('.css')?'text/css':'text/html'});}
   const auth=sites.find(s=>u.origin===s.config.SUPABASE_URL);
   if(auth){
+   if(u.pathname.includes('/photo-media/'))return send(route,await routePhotoMedia(auth,request(req)));
    if(u.pathname.includes('/member-writing')){
     if(u.pathname.endsWith('/exchange'))counts.exchange++;if(u.pathname.endsWith('/renew'))counts.renew++;
     if(networkOffline)return route.abort('internetdisconnected');
@@ -70,14 +74,14 @@ try {
   let name=u.pathname.slice('/home/'.length)||'index.html';if(name==='login/')name='login/index.html';
   if(name==='fixture-db')return route.fulfill({json:await s.transport.handle(req.postDataJSON())});
   const configs={
-   'supabase-config.js':`window.MINIHOMPY_SUPABASE={url:'${s.config.SUPABASE_URL}'};`,
+   'supabase-config.js':`window.MINIHOMPY_SUPABASE={url:'${s.config.SUPABASE_URL}',publishableKey:'fixture-public'};`,
    'visitor-identity-config.js':`window.MINIHOMPY_VISITOR_IDENTITY_CONFIG=${JSON.stringify({enabled:true,siteId:s.site,centralApiUrl:api,centralPageUrl:central})};`,
    'member-writing-config.js':'window.MINIHOMPY_MEMBER_WRITING_CONFIG={enabled:true};',
    'home-data-config.js':`window.MINIHOMPY_HOME_DATA_CONFIG={enabled:true,supabaseUrl:'${s.config.SUPABASE_URL}',homepage:'${s.home}'};`,
   };
   if(configs[name])return route.fulfill({contentType:'text/javascript',body:configs[name]});
   const backend=browserBackend+`
-client.auth={getSession:async()=>({data:{session:localStorage.getItem('fixture-owner')?{access_token:'header.${s.name}.signature'}:null}}),setSession:async value=>{localStorage.setItem('fixture-owner','yes');return {data:{session:value}};},getUser:async()=>({data:{user:localStorage.getItem('fixture-owner')?{id:'${s.owner}'}:null}}),signOut:async()=>{localStorage.removeItem('fixture-owner');return {};},onAuthStateChange:()=>({data:{subscription:{unsubscribe(){}}}})};
+client.auth={getSession:async()=>({data:{session:localStorage.getItem('fixture-owner')?{access_token:'header.${s.name}.signature',user:{id:'${s.owner}'}}:null}}),setSession:async value=>{localStorage.setItem('fixture-owner','yes');return {data:{session:value}};},getUser:async()=>({data:{user:localStorage.getItem('fixture-owner')?{id:'${s.owner}'}:null}}),signOut:async()=>{localStorage.removeItem('fixture-owner');return {};},onAuthStateChange:()=>({data:{subscription:{unsubscribe(){}}}})};
 const originalRpc=client.rpc;client.rpc=(name,args)=>name==='is_minihompy_admin'?Promise.resolve({data:Boolean(localStorage.getItem('fixture-owner'))}):originalRpc(name,args);
 addEventListener('minihompy:identity',()=>fixtureActor=MinihompyAdmin.state.role==='admin'?'owner':'anon');`;
   if(name==='index.html'||name==='login/index.html'){
@@ -94,6 +98,7 @@ addEventListener('minihompy:identity',()=>fixtureActor=MinihompyAdmin.state.role
  await page.goto(sites[0].home);await page.waitForFunction(()=>MinihompyNavigation?.state.status==='anonymous');
  await page.locator('#my-home-login').click();await page.waitForURL(central+'/login.html**');await page.locator('#handle').fill('alice');await page.locator('#submit').click();await page.waitForURL(sites[0].home+'login/**');await page.locator('#password').fill('fixture-password');await page.locator('#submit').click();await ready();
  assert.equal(await page.evaluate(()=>MinihompyAdmin.state.role),'admin');
+ if(visibilityIntegration)await checkOwnerVisibility(page,sites[0],id);
  await page.locator('[data-surf-open]').click();await page.locator('#surf-results a').filter({hasText:'@bob'}).click();await ready();
  assert.equal(await page.evaluate(()=>MinihompySharedIdentity.state.visitor.id),sites[0].member);assert.equal(await page.evaluate(()=>MinihompyAdmin.state.role),'reader');assert.equal(await page.locator('[data-menu=settings]').count(),0);
  console.log(`PASS ${width}: real central PKCE login → A owner → B member, separate origins/DBs and no B admin`);
@@ -107,11 +112,12 @@ addEventListener('minihompy:identity',()=>fixtureActor=MinihompyAdmin.state.role
  assert.equal(counts.exchange,before.exchange);assert.equal(counts.visits,before.visits);
  assert.equal((await sites[1].personal.pg.query('select count(*)::int as n from post_comments where author_member_id=$1',[sites[0].member])).rows[0].n,4);
  assert.equal((await sites[0].personal.pg.query('select count(*)::int as n from post_comments')).rows[0].n,0);
+ if(visibilityIntegration)await checkVisitorVisibility(page,sites,id,context,routeHandler);
  console.log(`PASS ${width}: A writes B guestbook and all four comment types; menu discard, no new proofs or cross-site data`);
  await menu('guestbook');const draft=page.locator('.guestbook-body-input');await draft.fill('keep across renewal');await draft.focus();
  const stat=async()=>sites[1].transport.run(async()=>(await sites[1].personal.pg.query('select public.visit_stats() as value')).rows[0].value.total);
- await mkdir('docs/verification/member-session-step6',{recursive:true});
- await page.screenshot({path:`docs/verification/member-session-step6/ready-${width}.png`});
+ await mkdir(`docs/verification/${visibilityIntegration?'folder-visibility-step9':'member-session-step6'}`,{recursive:true});
+ await page.screenshot({path:`docs/verification/${visibilityIntegration?'folder-visibility-step9':'member-session-step6'}/ready-${width}.png`});
  const total=await stat();const priorRenew=counts.renew,priorVisits=counts.visits;let navigations=0;page.on('framenavigated',()=>navigations++);
  await page.evaluate(()=>Object.defineProperty(document,'visibilityState',{configurable:true,get:()=> 'hidden'}));
  await sites[1].transport.run(()=>sites[1].personal.pg.exec("update private.member_writing_sessions set issued_at=now()-interval '20 minutes',expires_at=now()-interval '5 minutes'"));
@@ -123,12 +129,12 @@ addEventListener('minihompy:identity',()=>fixtureActor=MinihompyAdmin.state.role
   centralOffline=failure==='central';personalOffline=failure==='personal';networkOffline=failure==='network';
   await page.evaluate(()=>dispatchEvent(new Event('focus')));await page.locator('#member-session-retry').waitFor();
   assert.equal(await page.evaluate(()=>MinihompyMemberWriting.state.status),'error');assert.equal(await draft.inputValue(),'keep across renewal');assert.equal(await page.locator('.guestbook-save').isDisabled(),true);
-  if(failure==='central')await page.screenshot({path:`docs/verification/member-session-step6/error-${width}.png`});
+  if(failure==='central')await page.screenshot({path:`docs/verification/${visibilityIntegration?'folder-visibility-step9':'member-session-step6'}/error-${width}.png`});
   centralOffline=personalOffline=networkOffline=false;
   await page.locator('#member-session-retry').focus();
   await page.keyboard.press('Tab');await page.keyboard.press('Shift+Tab');assert.equal(await page.evaluate(()=>document.activeElement.id),'member-session-retry');
   const retryBox=await page.locator('#member-session-retry').boundingBox();assert.ok(retryBox.x>=-1&&retryBox.x+retryBox.width<=width+1,'Focused common retry is within viewport');
-  if(failure==='central')await page.screenshot({path:`docs/verification/member-session-step6/retry-focus-${width}.png`});
+  if(failure==='central')await page.screenshot({path:`docs/verification/${visibilityIntegration?'folder-visibility-step9':'member-session-step6'}/retry-focus-${width}.png`});
   await page.keyboard.press('Enter');await ready();await draft.waitFor();assert.equal(await draft.inputValue(),'keep across renewal');assert.equal(navigations,0);
  }
  console.log(`PASS ${width}: central/personal outage and transport offline recover via keyboard common retry without anonymous fallback or input loss`);

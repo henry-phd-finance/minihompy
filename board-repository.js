@@ -1,32 +1,29 @@
 (() => {
   'use strict';
-  const reader = () => window.MinihompyBackend.getClient('visitor');
-  const columns = 'id,folder_id,author_id,author_name,title,created_at,updated_at';
+  const reader = async () => (await window.MinihompyContentAccess.open()).client;
+  const columns = 'id,folder_id,author_id,author_name,title,created_at,updated_at,visibility';
   function checked(result) { if (result.error) throw result.error; return result; }
-  async function writer() {
-    const client = window.MinihompyBackend.getClient('admin');
-    const identity = await window.createMinihompyIdentity(client).current();
-    if (identity.role !== 'admin') throw new Error('관리자 로그인이 필요합니다.');
-    return client;
-  }
+  const writer = async () => (await window.MinihompyContentAccess.open(true)).client;
   window.MinihompyBoardRepository = Object.freeze({
-    async folders() { return checked(await reader().from('board_folders').select('*').order('sort_order').order('id')).data; },
-    async list(folder, page, size) {
-      let query = reader().from('board_posts').select(columns, { count: 'exact' });
+    context: () => window.MinihompyContentAccess.open(),
+    async folders() { return checked(await (await reader()).from('board_folders').select('*').order('sort_order').order('id')).data; },
+    async list(folder, page, size, ctx) {
+      let query = (ctx?.client || await reader()).from('board_posts').select(columns, { count: 'exact' });
       if (folder) query = query.eq('folder_id', folder);
       const result = checked(await query.order('created_at', { ascending: false }).order('id', { ascending: false }).range((page - 1) * size, page * size - 1));
       return { items: result.data, count: result.count };
     },
-    async get(id) {
-      const result = checked(await reader().from('board_posts').select(`${columns},body`).eq('id', id).maybeSingle());
+    async get(id, ctx) {
+      const result = checked(await (ctx?.client || await reader()).from('board_posts').select(`${columns},body`).eq('id', id).maybeSingle());
       if (!result.data) throw new Error('글이 삭제되었거나 조회할 수 없습니다.');
       return result.data;
     },
     async save(draft) {
       const client = await writer();
-      const fields = { folder_id: draft.folder_id, title: draft.title.trim(), body: draft.body };
+      const fields = { folder_id: draft.folder_id, title: draft.title.trim(), body: draft.body, visibility: draft.visibility || 'public' };
       if (!fields.folder_id || !fields.title || [...fields.title].length > 120 || !fields.body.trim() || [...fields.body].length > 50000) throw new Error('폴더, 제목(120자 이내), 내용(50,000자 이내)을 확인해 주세요.');
-      const same = row => row && row.folder_id === fields.folder_id && row.title === fields.title && row.body === fields.body;
+      if (!['public','private'].includes(fields.visibility)) throw Error('공개범위를 확인해 주세요.');
+      const same = row => row && row.folder_id === fields.folder_id && row.title === fields.title && row.body === fields.body && row.visibility === fields.visibility;
       let query;
       if (draft.id) query = client.from('board_posts').update(fields).eq('id', draft.id).eq('updated_at', draft.updated_at);
       else {

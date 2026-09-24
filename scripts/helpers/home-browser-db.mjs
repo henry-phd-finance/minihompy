@@ -26,9 +26,9 @@ export function sqlTransport(pg,ids){
    const uid=ids[q.actor]||'';await pg.query("select set_config('request.jwt.claim.sub',$1,true)",[uid]);await pg.exec('set local role '+(uid?'authenticated':'anon'));
    let rows,count;
    if(q.rpc){
-    const params={home_summary:['p_menus'],post_location:['p_kind','p_id','p_size'],diary_written_dates:['selected_folder','month_start']}[q.rpc];
+    const params={set_content_visibility:['p_kind','p_id','p_visibility','p_expected_version','p_request_id'],manage_content_folders:['p_action','p_args'],home_summary:['p_menus'],post_location:['p_kind','p_id','p_size'],diary_written_dates:['selected_folder','month_start']}[q.rpc];
     if(!params)throw Error('Unexpected fixture RPC');
-    rows=(await pg.query(`select public.${name(q.rpc)}(${params.map((_,i)=>'$'+(i+1)).join(',')}) as data`,params.map(k=>q.args[k]))).rows;await pg.exec('commit');return {data:rows[0].data,error:null};
+    rows=(await pg.query(`select public.${name(q.rpc)}(${params.map((_,i)=>'$'+(i+1)).join(',')}) as data`,params.map(k=>q.args[k]))).rows;await pg.exec('commit');return {data:q.rpc==='diary_written_dates'?rows.map(row=>row.data instanceof Date?row.data.toISOString().slice(0,10):row.data):rows[0]?.data??null,error:null};
    }
    if(!tables.has(q.table))throw Error('Unexpected fixture table');
    const values=[],bind=v=>{values.push(typeof v==='object'&&v!==null?JSON.stringify(v):v);return '$'+values.length;};
@@ -41,7 +41,7 @@ export function sqlTransport(pg,ids){
    else if(q.op==='delete')sql=`delete from public.${name(q.table)}`+where()+` returning ${fields}`;
    else throw Error('Unexpected operation');
    if(q.op==='select'&&q.orders.length)sql+=' order by '+q.orders.map(([k,asc])=>name(k)+(asc?' asc':' desc')).join(',');
-   rows=(await pg.query(sql,values)).rows;count=rows.length;
+   rows=(await pg.query(sql,values)).rows;for(const row of rows)if(row.entry_date instanceof Date)row.entry_date=row.entry_date.toISOString().slice(0,10);count=rows.length;
    if(q.range)rows=rows.slice(q.range[0],q.range[1]+1);
    await pg.exec('commit');return {data:q.single?(rows[0]||null):rows,count,error:null};
   }catch(e){await pg.exec('rollback');return {data:null,error:{message:e.message,code:e.code}};}

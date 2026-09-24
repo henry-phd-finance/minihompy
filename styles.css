@@ -516,3 +516,24 @@ button.surf-select { display: block; width: 100%; text-align: left; color: inher
 .visit-count > span { overflow: hidden; text-overflow: ellipsis; }
 .visit-count small { white-space: nowrap; font: inherit; }
 .visit-count button { flex: none; font: inherit; line-height: 8px; padding: 0 2px; border: 1px solid #aaa; background: white; cursor: pointer; }
+
+/* Shared native dialog stays inside the viewport without changing the homepage scale. */
+.folder-manager { box-sizing: border-box; width: min(440px, calc(100vw - 24px)); max-height: calc(100dvh - 32px); padding: 16px; border: 1px solid #78939c; border-radius: 8px; color: #333; background: #fff; font: 13px/1.5 sans-serif; overflow: auto; }
+.folder-manager::backdrop { background: rgb(0 0 0 / 35%); }
+.folder-manager-header { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.folder-manager h2 { margin: 0; font-size: 16px; }
+.folder-manager h3 { font-size: 14px; }
+.folder-manager-status { min-height: 1.5em; color: #46626b; overflow-wrap: anywhere; }
+.folder-manager-list { padding: 0; margin: 12px 0; list-style: none; }
+.folder-manager-list li { padding: 10px 0; border-bottom: 1px solid #ddd; overflow-wrap: anywhere; }
+.folder-manager-list strong { display: block; }
+.folder-manager-list span { color: #666; }
+.folder-manager-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.folder-manager button, .photo-folder-manage, .diary-folder-manage { padding: 5px 8px; border: 1px solid #aaa; border-radius: 3px; background: #f8f8f8; color: #333; font: inherit; cursor: pointer; }
+.folder-manager button { min-height: 32px; }
+.folder-manager button:disabled { cursor: default; opacity: .5; }
+.folder-manager :focus-visible { outline: 2px solid #2484a0; outline-offset: 2px; }
+.folder-manager-form label { display: block; margin: 10px 0; }
+.folder-manager-form input, .folder-manager-form textarea, .folder-manager-form select { display: block; box-sizing: border-box; width: 100%; max-width: 100%; margin-top: 4px; padding: 6px; font: inherit; }
+.folder-manager-form textarea { min-height: 70px; resize: vertical; }
+.folder-manager-form p { overflow-wrap: anywhere; }

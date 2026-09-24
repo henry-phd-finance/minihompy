@@ -1,5 +1,5 @@
 import {readFile} from 'node:fs/promises';
-export async function memberWritingDb(PGlite,{siteId,centralUrl,writing=true,renewal=true}){
+export async function memberWritingDb(PGlite,{siteId,centralUrl,writing=true,renewal=true,folders=writing,visibility=folders&&writing,visibilitySummary=visibility,photoMedia=globalThis.process?.env?.MINIHOMPY_TEST_PHOTO_MEDIA==='1'}){
  const pg=new PGlite();
  await pg.exec(`create role anon;create role authenticated;create role service_role bypassrls;
  create schema auth;create table auth.users(id uuid primary key);
@@ -12,6 +12,10 @@ export async function memberWritingDb(PGlite,{siteId,centralUrl,writing=true,ren
  grant usage on schema storage to anon,authenticated;
  grant select,insert,update,delete on storage.objects to anon,authenticated;`);
  for(const file of ['202609130001_identity.sql','202609130002_board.sql','202609130003_settings.sql','202609130004_photos.sql','202609130005_diary.sql','202609130006_guestbook.sql','202609130007_guestbook_clock.sql','202609130008_comments.sql','202609130009_profile.sql','202609130010_board_retry.sql','202609230001_member_writing_foundation.sql','202609230002_member_writing_sessions.sql','202609230003_member_guestbook.sql','202609230004_member_comments.sql','202609230005_home_summary.sql','202609230006_post_location.sql','202609230007_guestbook_post_location.sql','202609230008_visit_counts.sql','202609230009_member_session_renewal.sql'].filter(name=>(writing||name<'202609230001')&&(renewal||name!=='202609230009_member_session_renewal.sql')))await pg.exec(await readFile(new URL('../../supabase/migrations/'+file,import.meta.url),'utf8'));
+ if(folders)await pg.exec(await readFile(new URL('../../supabase/migrations/202609240001_content_folders.sql',import.meta.url),'utf8'));
+ if(visibility)await pg.exec(await readFile(new URL('../../supabase/migrations/202609240002_content_visibility.sql',import.meta.url),'utf8'));
+ if(visibilitySummary)await pg.exec(await readFile(new URL('../../supabase/migrations/202609240003_visibility_summary.sql',import.meta.url),'utf8'));
+ if(photoMedia)for(const file of ['202609240004_photo_media.sql','202609240005_photo_media_safeupdate.sql'])await pg.exec(await readFile(new URL('../../supabase/migrations/'+file,import.meta.url),'utf8'));
  if(writing)await pg.query('insert into private.member_writing_site(site_id,central_api_url) values($1,$2)',[siteId,centralUrl]);
  let queue=Promise.resolve();
  const db={rpc(name,args){

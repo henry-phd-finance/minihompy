@@ -35,6 +35,17 @@
     if (draft?.dirty && !window.confirm('작성 중인 내용을 버릴까요?')) return false;
     draft = null; return true;
   }
+  async function refreshManagedFolders(change) {
+    if (!main?.isConnected || !admin()) return;
+    if (post && !target) target = post.id;
+    if (change?.action === 'delete' && selected === change.args.id) selected = change.args.destination_id || null;
+    await load(true);
+  }
+  function manageFolders() {
+    if (!admin() || saving || draft) return;
+    window.MinihompyContentFolders?.open({ menu: 'board', changed: refreshManagedFolders, closed: refreshManagedFolders,
+      restoreFocus: () => sidebar?.querySelector('.board-folder-manage')?.focus() });
+  }
   function renderFolders() {
     if (!sidebar) return;
     sidebar.replaceChildren(node('h2', '', 'FREE BOARD'));
@@ -53,28 +64,32 @@
       entry.append(icon, node('span', '', item.label)); nav.append(entry);
     }
     sidebar.append(nav);
-    if (admin()) sidebar.append(button('폴더관리하기', 'board-folder-manage board-small-button'));
+    if (admin()) {
+      const manage = button('폴더관리하기', 'board-folder-manage board-small-button', manageFolders);
+      manage.disabled = saving || Boolean(draft); sidebar.append(manage);
+    }
   }
   async function load(refreshFolders = false) {
     const token = ++request;
     loading = true; error = ''; renderFolders(); renderMain();
     try {
+      const ctx = await repository.context(); if(token!==request)return;
       if (refreshFolders || !foldersLoaded) {
         const result = await repository.folders();
         if (token !== request) return;
         folders = result; foldersLoaded = true;
         if (selected && !realFolders().some(item => item.id === selected)) { selected = null; page = 1; post = null; }
       }
-      if(target){const location=await window.MinihompyPostLocation.locate('board',target,pageSize);if(token!==request)return;selected=location.folder_id;page=location.page;post={id:target};}
+      if(target){const location=await window.MinihompyPostLocation.locate('board',target,pageSize,ctx.client);if(token!==request)return;selected=location.folder_id;page=location.page;post={id:target};}
       if (post) {
-        const result = await repository.get(post.id);
+        const result = await repository.get(post.id,ctx);
         if (token !== request) return;
         post = result;
       } else {
-        let result = await repository.list(selected, page, pageSize);
+        let result = await repository.list(selected, page, pageSize,ctx);
         if (token !== request) return;
         const last = Math.max(1, Math.ceil(result.count / pageSize));
-        if (page > last) { page = last; result = await repository.list(selected, page, pageSize); }
+        if (page > last) { page = last; result = await repository.list(selected, page, pageSize,ctx); }
         if (token !== request) return;
         items = result.items; total = result.count;
       }
@@ -99,14 +114,14 @@
     if (!admin() || saving || loading || !realFolders().length) return;
     if(!edit)clearTarget();
     ++request;
-    draft = edit ? { ...post, dirty: false } : { folder_id: selected || realFolders()[0].id, title: '', body: '', dirty: false };
-    error = ''; renderMain(); main.querySelector('#board-edit-title').focus();
+    draft = edit ? { ...post, dirty: false } : { folder_id: selected || realFolders()[0].id, title: '', body: '', visibility:'public', dirty: false };
+    error = ''; renderFolders(); renderMain(); main.querySelector('#board-edit-title').focus();
   }
   async function remove() {
     if (!admin() || saving || !window.confirm('이 글을 삭제할까요?')) return;
     const token = epoch, removed = post;
     saving = true; error = ''; renderFolders(); renderMain();
-    try { await repository.remove(removed); if (token !== epoch) return; window.MinihompyComments.forget('board', removed.id); clearTarget();post = null; listScroll = 0; }
+    try { await repository.remove(removed); if (token !== epoch) return; window.MinihompyComments.forget('board', removed.id); clearTarget();post = null; listScroll = 0;window.dispatchEvent(new Event('minihompy:content-changed')); }
     catch (cause) { if (token !== epoch) return; error = cause.message || '삭제 결과를 확인하지 못했습니다. 다시 조회해 주세요.'; }
     finally { if (token === epoch) saving = false; }
     if (!error) await load(); else { renderFolders(); renderMain(); }
@@ -118,17 +133,20 @@
     const folder = node('select'); folder.id = 'board-edit-folder'; folder.setAttribute('aria-label', '폴더'); folder.required = true;
     for (const item of realFolders()) { const option = node('option', '', item.label); option.value = item.id; folder.append(option); }
     folder.value = draft.folder_id; titleRow.append(title, folder);
+    const visibility = node('select'); visibility.id='board-edit-visibility'; visibility.setAttribute('aria-label','공개범위');
+    for(const [value,label] of [['public','공개'],['private','나만보기']]){const option=node('option','',label);option.value=value;visibility.append(option);}
+    visibility.value=draft.visibility||'public'; titleRow.append(visibility);
     const body = node('textarea'); body.id = 'board-edit-body'; body.value = draft.body; body.required = true; body.maxLength = 50000; body.setAttribute('aria-label', '내용');
-    for (const [element, key] of [[title, 'title'], [folder, 'folder_id'], [body, 'body']]) {
+    for (const [element, key] of [[visibility,'visibility'],[title, 'title'], [folder, 'folder_id'], [body, 'body']]) {
       element.disabled = saving;
       element.addEventListener('input', () => { draft[key] = element.value; draft.dirty = true; });
     }
-    form.append(titleRow, body, node('p', 'board-privacy', '공개설정 : 전체공개'));
+    form.append(titleRow, body);
     if (!admin()) form.append(message('관리자 로그인 후 저장할 수 있습니다.'));
     if (error) form.append(message(error));
     const actions = node('div', 'board-actions');
     const save = button(saving ? '저장 중' : '확인', 'board-small-button board-save', () => {}); save.type = 'submit'; save.disabled = saving || !admin();
-    actions.append(save, button('취소', 'board-small-button board-cancel', () => { if (discard()) { error = ''; renderMain(); } }));
+    actions.append(save, button('취소', 'board-small-button board-cancel', () => { if (discard()) { error = ''; renderFolders(); renderMain(); } }));
     form.append(actions);
     form.addEventListener('submit', async event => {
       event.preventDefault(); if (saving || !admin()) return;
@@ -138,7 +156,7 @@
         if (token !== epoch || !admin()) return;
         if (selected && selected !== saved.folder_id) { selected = saved.folder_id; page = 1; }
         if (!writing.id) { selected = saved.folder_id; page = 1; listScroll = 0; }
-        post = saved; draft = null;
+        post = saved; draft = null; window.MinihompyComments.forget('board',saved.id);window.dispatchEvent(new Event('minihompy:content-changed'));
       } catch (cause) { if (token === epoch) error = `${cause.message || '저장 결과를 확인하지 못했습니다.'} 입력 내용은 남아 있습니다. 재등록 전 목록을 확인해 주세요.`; }
       finally { if(token===epoch){saving = false; renderFolders(); renderMain();} }
     });
@@ -150,17 +168,24 @@
     meta.append(name, node('time', 'board-date', date(post.created_at)));
     const actions = node('div', 'board-post-actions');
     if (canEdit()) actions.append(button('수정', 'board-edit', () => compose(true)));
-    if (admin()) actions.append(button('삭제', 'board-delete', remove));
+    if (admin()) {
+      actions.append(button(post.visibility==='private'?'공개로 변경':'나만보기로 변경','board-visibility',async()=>{
+        if(saving)return;const token=epoch,current=post;saving=true;renderMain();
+        try{await window.MinihompyContentAccess.visibility('board',current,current.visibility==='private'?'public':'private');if(token!==epoch)return;window.MinihompyComments.forget('board',current.id);}
+        catch(e){if(token===epoch)error=e.message;}
+        finally{if(token===epoch){saving=false;if(error)renderMain();else void load();}}
+      }),button('삭제', 'board-delete', remove));
+    }
     const comments = window.MinihompyComments.create('board', post.id);
     const footer = node('div', 'board-actions');
     if (admin()) footer.append(button('글쓰기', 'board-small-button board-write', () => compose()));
     footer.append(button('목록', 'board-small-button board-back', back));
     const title = node('h3', 'board-post-title', post.title); title.tabIndex = -1;
-    article.append(title, meta, node('div', 'board-body', post.body), node('p', 'board-privacy', '공개설정 : 전체공개'), actions, comments, footer);
+    article.append(title, meta, node('div', 'board-body', post.body), node('p', 'board-privacy', post.visibility==='private'?'공개설정 : 나만보기':'공개설정 : 공개'), actions, comments, footer);
     main.append(article);
   }
   function renderList() {
-    const summary = node('p', 'board-summary', '전체공개 폴더입니다. '); summary.append(node('span', 'board-count', `[${total}]`));
+    const summary = node('p', 'board-summary', '조회 가능한 글입니다. '); summary.append(node('span', 'board-count', `[${total}]`));
     const table = node('table', 'board-table'); table.setAttribute('aria-label', '게시글 목록');
     const cols = node('colgroup'); for (const name of ['number', 'title', 'author', 'date', 'views']) cols.append(node('col', `board-col-${name}`));
     const head = node('thead'), row = node('tr');
@@ -168,7 +193,7 @@
     head.append(row); const body = node('tbody');
     items.forEach((item, index) => {
       const row = node('tr'), title = node('td', 'board-list-title');
-      const link = button(item.title, 'board-post-link', () => { listScroll = main.scrollTop; post = item; void load(); }); link.dataset.boardPost = item.id; link.title = item.title; title.append(link);
+      const link = button(item.title, 'board-post-link', () => { listScroll = main.scrollTop; post = item; void load(); }); link.dataset.boardPost = item.id; link.title = item.title; title.append(link);if(admin()&&item.visibility==='private')title.append(node('span','content-private-label',' 나만보기'));
       const author = node('td', 'board-list-author', item.author_name); author.title = item.author_name;
       const views = node('td', 'board-number', '-'); views.title = '조회수 집계 준비 전';
       row.append(node('td', 'board-number', String(total - (page - 1) * pageSize - index)), title, author, node('td', 'board-list-date', date(item.created_at).slice(0, 10)), views); body.append(row);
@@ -201,12 +226,10 @@
     } else if (post) renderDetail(); else renderList();
     main.scrollTop = draft ? scroll : 0;
   }
-  window.addEventListener('minihompy:identity', () => {
-    if (!admin()) { epoch++; draft = null; saving = false; error = ''; }
-    renderFolders();
-    // Preserve editor focus and selection when an Auth token refreshes.
-    if (draft && main?.querySelector('.board-save')) main.querySelector('.board-save').disabled = saving || !admin();
-    else renderMain();
+  window.addEventListener('minihompy:content-access-reset', () => {
+    epoch++;request++;draft=null;post=null;items=[];total=0;page=1;saving=false;loading=false;error='';
+    window.MinihompyComments?.clearKind?.('board');main?.replaceChildren();
+    renderFolders();if(main?.isConnected)void load(true);
   });
   window.MinihompyPostRoutes?.guard(next=>(main?.isConnected||next?.id==='board'&&next.post)?{busy:saving,dirty:!!draft?.dirty,discard:()=>{if(next?.id==='board'&&next.post)draft=null;}}:null);
   window.MINIHOMPY_VIEWS.board = {
@@ -221,7 +244,7 @@
   };
   window.addEventListener('minihompy:menu-leave', event => {
     if (event.detail.id !== null && event.detail.id !== 'board') return;
-    epoch++; request++; draft = null; post = null;
+    epoch++; request++; draft = null; post = null;items=[];total=0;
     saving = false; loading = false; error = ''; restoreFocus = null;
     main?.replaceChildren();
   });

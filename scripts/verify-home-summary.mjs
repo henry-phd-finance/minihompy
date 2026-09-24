@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';import {readFile} from 'node:fs/promises';import {resolve} from 'node:path';import {pathToFileURL} from 'node:url';import {memberWritingDb} from './helpers/member-writing-db.mjs';
 const {PGlite}=await import(pathToFileURL(resolve(process.argv[2]||'../minihompy-central/node_modules/@electric-sql/pglite/dist/index.js')));
 const {pg}=await memberWritingDb(PGlite,{siteId:'10000000-0000-4000-8000-000000000099',centralUrl:'https://central.test/functions/v1/identity-api'});
-const sql=await readFile(new URL('../supabase/migrations/202609230005_home_summary.sql',import.meta.url),'utf8');
+const sql=(await readFile(new URL('../supabase/migrations/202609230005_home_summary.sql',import.meta.url),'utf8'))+(await readFile(new URL('../supabase/migrations/202609240003_visibility_summary.sql',import.meta.url),'utf8'));
 const id=n=>`10000000-0000-4000-8000-${String(n).padStart(12,'0')}`,all=['board','photos','diary','guestbook'];
 const at='2026-09-23T15:00:00Z',before='2026-09-23T14:59:59.999Z';let groups=0;
 const check=async(name,fn)=>{await fn();console.log(`PASS ${++groups}: ${name}`);};

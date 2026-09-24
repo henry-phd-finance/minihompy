@@ -111,6 +111,17 @@ try{
   await change(140,'board','update',2,a,'member',404);await change(140,'board','delete',2,a,'member',404);
   await change(140,'board','delete',2,ownerToken,'owner');
  });
+ for(const [kind,table] of Object.entries({board:'board_posts',photos:'photo_posts',diary:'diary_entries'}))await check(kind+': private general parent rejects member/public and old replays; owner can moderate',async()=>{
+  const index=n++;await unlock();const created=body(index,kind);await create(created);await change(index,kind,'update',1);
+  if(kind==='photos')await personal.pg.exec('update private.photo_media_state set ready=true'); // trusted fixture, not a browser activation
+  await personal.pg.query('update public.'+table+" set visibility='private' where id=$1",[parents[kind]]);
+  await list(kind,a,'member',404);await list(kind,null,'public',404);await list(kind,b,'member',404);
+  await create(created,a,404);await change(index,kind,'update',1,a,'member',404);await change(index,kind,'delete',2,a,'member',404);
+  assert.ok((await list(kind,ownerToken,'owner')).items.some(x=>x.id===id(index)));
+  await change(index,kind,'delete',2,ownerToken,'owner');
+  await personal.pg.query('update public.'+table+" set visibility='public' where id=$1",[parents[kind]]);
+  if(kind==='photos')await personal.pg.exec('update private.photo_media_state set ready=false');
+ });
  if(process.env.PLAYWRIGHT_PATH){const {verifyAutomaticSessionBrowser}=await import('./helpers/automatic-session-browser.mjs');await verifyAutomaticSessionBrowser({playwrightPath:process.env.PLAYWRIGHT_PATH,centralRoot,centralHandler:handleIdentityApiRequest,centralOptions,centralSession,ownerCentralSession,personal,options,member,memberB,parents});}
  await check('parent delete cascades; stale requests cannot recreate or read any of four parents',async()=>{
   for(const [kind,table] of Object.entries({board:'board_posts',photos:'photo_posts',diary:'diary_entries',guestbook:'guestbook_posts'})){

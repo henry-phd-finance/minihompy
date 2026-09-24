@@ -7,13 +7,13 @@ const setup=`
  window.MinihompyContent={apply(){},fit(){}};window.MinihompyAdmin={state:{role:'admin',userId:'${id(99)}'}};
  window.MinihompySettings={status:'loading',async load(){await new Promise(r=>setTimeout(r,80));this.status='ready';window.dispatchEvent(new Event('minihompy:settings'));}};
  window.MinihompyComments={create:()=>document.createElement('div'),forget(){}};
- window.MinihompyPhotoEditor={active:false};window.MinihompyMemberWriting={enabled:()=>false};
+ window.MinihompyPhotoEditor={active:false};window.MinihompyPhotoMedia={scope:()=>({dispose(){},read:async()=>''})};window.MinihompyMemberWriting={enabled:()=>false};
  if(location.hash.startsWith('#vt='))window.MINIHOMPY_IDENTITY_RETURN_PENDING=true;
  window.calls=[];window.missing=false;window.held=false;window.release=null;
  const folder={id:'${id(98)}',kind:'folder',label:'folder',description:''};
  const item=(n)=>({id:'10000000-0000-4000-8000-'+String(n).padStart(12,'0'),folder_id:folder.id,author_name:'owner',author_id:'${id(99)}',title:'target '+n,body:'body '+n,created_at:'2026-01-01T00:00:00Z',entry_date:'2001-02-03',entry_time:'12:00:00',weather:'',visibility:'public',number:n,revision:1});
  window.MinihompyBackend={getClient:()=>({rpc:async(name,args)=>{window.calls.push(args);if(window.held)await new Promise(r=>window.release=r);return {data:window.missing?null:{id:args.p_id,folder_id:folder.id,entry_date:'2001-02-03',page:3},error:null};}})};
- const base={folders:async()=>[folder],get:async(id)=>{if(window.missing)throw Error('글이 삭제되었거나 조회할 수 없습니다.');return item(Number(id.slice(-12)));},list:async(f,p,size)=>({items:[item(p===3?25:1)],count:25})};
+ const base={context:async()=>({client:window.MinihompyBackend.getClient()}),folders:async()=>[folder],get:async(id)=>{if(window.missing)throw Error('글이 삭제되었거나 조회할 수 없습니다.');return item(Number(id.slice(-12)));},list:async(f,p,size)=>({items:[item(p===3?25:1)],count:25})};
  window.MinihompyBoardRepository={...base,save:async value=>{await new Promise(r=>window.finishWrite=r);return {...value,id:value.id||folder.id};}};
  window.MinihompyPhotosRepository={...base,list:async(f,p,size)=>({items:[{...item(p===3?25:1),body:[{type:'text',text:'photo'}]}],count:6})};
  window.MinihompyDiaryRepository={...base,dates:async()=>['2001-02-03'],list:async(f,date,p,size)=>({items:[item(p===3?25:1)],count:60})};

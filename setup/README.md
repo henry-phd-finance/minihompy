@@ -133,3 +133,14 @@ node setup/setup.mjs home-data --config setup/config.json
 중앙의 `deploy-member-sessions.mjs --apply`와 v2 함수/Pages를 먼저 적용한다. 중앙 health가 `member_session_protocol:2`를 제공해야 한다. 개인 사이트는 기존 `writing` 명령을 다시 실행하면 해시 이력에 없는 `202609230009_member_session_renewal.sql`만 추가 적용한다. 신규 설치는 install → verify → writing 순서이며 writing에 001~004·009가 포함된다. 기존 홈 데이터 마이그레이션/설정을 다시 만들지 않는다.
 
 `writing --dry-run`은 파일·공개 설정만 확인한다. 실제 실행은 기존 소유자 연결 검증, 마이그레이션, 함수 배포, owner 및 renewal endpoint 확인 후 활성화 파일을 생성한다. 기존 설정을 유지한 Pages 빌드가 뒤따라야 한다. 중앙 signing secret을 개인에게 복제하지 않는다. [배포 순서와 복구](../docs/member-session-deployment.md).
+
+## 폴더·공개범위·사진 보호 설치/업그레이드
+
+회원 세션과 홈 데이터 DB 준비 후 다음 명령을 사용한다. 신규 install이 이미 추적 적용한 SQL은 건너뛰며, 기존 사이트는 공개범위 migrations 네 개를 순서대로 적용한다.
+
+```sh
+node setup/setup.mjs folder-visibility --config setup/config.json --dry-run
+node setup/setup.mjs folder-visibility --config setup/config.json
+```
+
+개인 관리자 확인 후 SQL 해시를 추적하고 member-writing/photo-media 함수를 배포한다. `MINIHOMPY_OWNER_EMAIL`, `MINIHOMPY_OWNER_PASSWORD`, `SUPABASE_ACCESS_TOKEN`을 비공개 환경변수로 전달한다. 준비 도구는 Storage 파일 전환, ready 활성화, Pages 게시를 하지 않는다. 사진이 없는 새 사이트도 보호 준비와 원본 폐쇄 검사를 마쳐야 한다. [운영 적용 순서·활성화 조건·복구 절차](../docs/folder-visibility-deployment.md)를 반드시 함께 따른다. 중간 상태에서 사진 비공개를 활성화하지 않는다.

@@ -181,6 +181,10 @@
   });
   window.MinihompyComments = Object.freeze({
     create,
+    clearKind(kind) {
+      epoch++;
+      for(const [key,state] of states)if(state.kind===kind){state.request++;state.root?.replaceChildren();states.delete(key);}
+    },
     forget(kind, id) {
       const key = `${kind}:${id}`;
       states.get(key)?.root?.replaceChildren(); states.delete(key);

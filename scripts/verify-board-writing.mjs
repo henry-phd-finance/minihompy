@@ -31,7 +31,7 @@ try {
           if (kind !== 'admin') return real;
           return {
             from: real.from.bind(real),
-            rpc: async () => ({ data: window.testAdmin, error: null }),
+            rpc: async (name,args) => name==='is_minihompy_admin'?({ data: window.testAdmin, error: null }):real.rpc(name,args),
             auth: {
               getSession: async () => ({ data: { session: window.testAdmin ? { user: { id: owner } } : null } }),
               getUser: async () => ({ data: { user: { id: owner } } }),
@@ -59,7 +59,7 @@ try {
       if (method === 'POST') {
         writes++;
         const fields = req.postDataJSON();
-        assert.deepEqual(Object.keys(fields).sort(), ['author_name', 'body', 'folder_id', 'id', 'title']);
+        assert.deepEqual(Object.keys(fields).sort(), ['author_name', 'body', 'folder_id', 'id', 'title', 'visibility']);
         assert(!posts.some(p => p.id === fields.id));
         const post = { ...fields, author_id: owner, created_at: new Date().toISOString(), updated_at: new Date().toISOString() };
         posts.unshift(post);
@@ -74,7 +74,7 @@ try {
         const post = posts.find(p => p.id === id && p.updated_at === stamp);
         if (!post) return send(null);
         const fields = req.postDataJSON();
-        assert.deepEqual(Object.keys(fields).sort(), ['body', 'folder_id', 'title']);
+        assert.deepEqual(Object.keys(fields).sort(), ['body', 'folder_id', 'title', 'visibility']);
         Object.assign(post, fields, { updated_at: new Date().toISOString() }); return send(post);
       }
       if (method === 'DELETE') {

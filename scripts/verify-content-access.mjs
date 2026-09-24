@@ -1,0 +1,17 @@
+import assert from 'node:assert/strict';
+import vm from 'node:vm';
+import {readFile} from 'node:fs/promises';
+const events=new EventTarget(),calls=[];let verified={role:'admin',userId:'A'},pending=null,hold=false;
+const window={MinihompyAdmin:{state:{role:'reader',userId:null}},addEventListener:events.addEventListener.bind(events),dispatchEvent:events.dispatchEvent.bind(events)};
+window.MinihompyBackend={getClient:kind=>({rpc:async()=>{calls.push(kind);if(hold)await new Promise(r=>pending=r);return {data:'result'};}})};
+window.createMinihompyIdentity=()=>({current:async()=>verified});
+const context=vm.createContext({window,CustomEvent:class extends Event{constructor(n,o){super(n);this.detail=o?.detail;}},Event,crypto,Map,Proxy,Error});
+vm.runInContext(await readFile(new URL('../content-access.js',import.meta.url),'utf8'),context);
+const change=state=>{window.MinihompyAdmin.state=state;events.dispatchEvent(new Event('minihompy:identity'));};
+window.MinihompySharedIdentity={state:{status:'verified',visitor:{id:'A'}}};
+await assert.rejects(()=>window.MinihompyContentAccess.open(true));
+let ctx=await window.MinihompyContentAccess.open();await ctx.client.rpc('x');assert.equal(calls.pop(),'visitor');
+change({role:'admin',userId:'A'});ctx=await window.MinihompyContentAccess.open();await ctx.client.rpc('x');assert.equal(calls.pop(),'admin');
+hold=true;const late=Promise.resolve(ctx.client.rpc('x')).then(()=>false,()=>true);while(!pending)await new Promise(r=>setTimeout(r,1));change({role:'reader'});pending();assert.equal(await late,true);hold=false;
+change({role:'admin',userId:'A'});ctx=await window.MinihompyContentAccess.open(true);verified={role:'admin',userId:'B'};const count=calls.length;await assert.rejects(()=>Promise.resolve(ctx.client.rpc('write')));assert.equal(calls.length,count,'changed account must be rejected before request');
+console.log('PASS: actual content-access helper selects visitor/admin, drops late responses and rejects silent account change before query');

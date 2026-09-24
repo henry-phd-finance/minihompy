@@ -23,7 +23,7 @@ try {
         get() { return { getClient(kind) {
           const real = backend.getClient(kind);
           if (kind !== 'admin') return real;
-          return { from: real.from.bind(real), rpc: async () => ({ data: window.testAdmin, error: null }),
+          return { from: real.from.bind(real), rpc: async (name,args) => name==='is_minihompy_admin'?({ data: window.testAdmin, error: null }):real.rpc(name,args),
             auth: {
               getSession: async () => ({ data: { session: window.testAdmin ? { user: { id: owner } } : null } }),
               getUser: async () => ({ data: { user: { id: owner } } }), onAuthStateChange: () => ({}),
@@ -48,7 +48,7 @@ try {
       if (rejectWrite && method !== 'GET') return send({ message: 'write denied', code: '42501' }, 403);
       if (method === 'POST') {
         const fields = req.postDataJSON();
-        assert.deepEqual(Object.keys(fields).sort(), ['author_name', 'body', 'entry_date', 'entry_time', 'folder_id', 'id', 'weather']);
+        assert.deepEqual(Object.keys(fields).sort(), ['author_name', 'body', 'entry_date', 'entry_time', 'folder_id', 'id', 'visibility', 'weather']);
         const entry = { ...fields, entry_time: `${fields.entry_time}:00`, revision: 1, author_id: owner, created_at: '2026-09-13T01:00:00Z' };
         entries.push(entry);
         if (loseResponse) return route.abort('failed');
@@ -58,7 +58,7 @@ try {
         const entry = entries.find(e => e.id === id && e.revision === revision);
         if (!entry) return send(null);
         const fields = req.postDataJSON();
-        assert.deepEqual(Object.keys(fields).sort(), ['body', 'entry_date', 'entry_time', 'folder_id', 'weather']);
+        assert.deepEqual(Object.keys(fields).sort(), ['body', 'entry_date', 'entry_time', 'folder_id', 'visibility', 'weather']);
         Object.assign(entry, fields, { revision: revision + 1, entry_time: `${fields.entry_time}:00` }); return send(entry);
       }
       if (method === 'DELETE') {

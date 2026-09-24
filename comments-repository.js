@@ -12,6 +12,8 @@
   }
   const context = () => window.MinihompyMemberWriting?.enabled() ? window.MinihompyMemberWriting.context() : session.context();
   const requests = new Map();
+  window.addEventListener('minihompy:content-access-reset',()=>requests.clear());
+  window.addEventListener('minihompy:menu-leave',()=>requests.clear());
   async function memberMutation(action, kind, id, draft, ctx) {
     const value = { kind, parent_id: id, ...(action === 'create' ? {id:draft.id} : {revision:draft.revision}), ...(action !== 'delete' ? {body:draft.body} : {}) };
     const key = JSON.stringify([action,draft.id,value]);

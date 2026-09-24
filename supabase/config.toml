@@ -9,3 +9,7 @@ verify_jwt = false
 # Public approximate visitor counters; raw database writes remain service-only.
 [functions.visit-counts]
 verify_jwt = false
+
+# Public image bytes and verified personal-owner uploads; never signed URLs.
+[functions.photo-media]
+verify_jwt = false

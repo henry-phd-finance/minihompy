@@ -22,6 +22,7 @@ try {
     window.cleaned = []; window.revoked = []; window.saved = []; window.done = 0;
     const revoke = URL.revokeObjectURL.bind(URL);
     URL.revokeObjectURL = url => { revoked.push(url); revoke(url); };
+    window.MinihompyPhotoMedia={scope:()=>({dispose(){}})};
     window.MinihompyPhotosRepository = {
       url: path => 'https://fixture.test/' + path,
       validate() {},
@@ -34,8 +35,8 @@ try {
   await page.addScriptTag({ url: 'photo-editor.js' });
   const image = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+aX1sAAAAASUVORK5CYII=', 'base64');
   async function start(title, attach = true) {
-    await page.evaluate(() => {
-      MinihompyPhotoEditor.start(null, 'folder');
+    await page.evaluate(async () => {
+      await MinihompyPhotoEditor.start(null, 'folder');
       document.querySelector('#editor').replaceChildren(MinihompyPhotoEditor.render([{ id: 'folder', kind: 'folder', label: 'folder' }], () => window.done++));
     });
     await page.locator('.photo-editor-title').fill(title);

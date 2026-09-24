@@ -1,14 +1,12 @@
 (() => {
   'use strict';
-  const bucket = 'minihompy-photos';
-  const reader = () => window.MinihompyBackend.getClient('visitor');
-  const checked = result => { if (result.error) throw result.error; return result; };
-  async function writer() {
-    const client = window.MinihompyBackend.getClient('admin');
-    if ((await window.createMinihompyIdentity(client).current()).role !== 'admin') throw new Error('관리자 로그인이 필요합니다.');
-    return client;
-  }
-  const url = path => reader().storage.from(bucket).getPublicUrl(path).data.publicUrl;
+  const reader = async () => (await window.MinihompyContentAccess.open()).client;
+  const checked = result => {
+    if(result.error?.message?.includes('MEDIA_NOT_READY'))throw Error('사진 저장소 전환이 끝나지 않아 아직 저장할 수 없습니다.');
+    if(result.error?.message?.includes('INVALID_PHOTO_ASSET'))throw Error('첨부한 사진을 확인하지 못했습니다. 사진을 다시 불러와 주세요.');
+    if(result.error)throw result.error;return result;
+  };
+  const writer = async () => (await window.MinihompyContentAccess.open(true)).client;
   const paths = body => body.filter(block => block.type === 'image').map(block => block.path);
   function validate(draft) {
     if (!draft.folder_id || !draft.title.trim() || [...draft.title.trim()].length > 120) throw new Error('폴더와 제목(120자 이내)을 확인해 주세요.');
@@ -21,31 +19,22 @@
     }
   }
   window.MinihompyPhotosRepository = Object.freeze({
-    url, validate,
-    async folders() { return checked(await reader().from('photo_folders').select('*').order('sort_order').order('id')).data; },
-    async list(folder, page, size) {
-      const result = checked(await reader().from('photo_posts').select('*', { count: 'exact' }).eq('folder_id', folder)
+    validate,
+    context:()=>window.MinihompyContentAccess.open(),
+    async folders() { return checked(await (await reader()).from('photo_folders').select('*').order('sort_order').order('id')).data; },
+    async list(folder, page, size, ctx) {
+      const result = checked(await (ctx?.client||await reader()).from('photo_posts').select('*', { count: 'exact' }).eq('folder_id', folder)
         .order('created_at', { ascending: false }).order('id', { ascending: false }).range((page - 1) * size, page * size - 1));
       return { items: result.data, count: result.count };
     },
-    async upload(path, file) {
-      const client = await writer();
-      const result = await client.storage.from(bucket).upload(path, file, { contentType: file.type, upsert: false, cacheControl: '31536000' });
-      if (result.error && String(result.error.statusCode) === '409') {
-        // A lost upload response can leave the exact object behind. Never overwrite it.
-        const remote = checked(await client.storage.from(bucket).download(path)).data;
-        const left = new Uint8Array(await remote.arrayBuffer());
-        const right = new Uint8Array(await file.arrayBuffer());
-        if (left.length === right.length && left.every((byte, index) => byte === right[index])) return;
-      }
-      checked(result);
-    },
+    upload: (path,file)=>window.MinihompyPhotoMedia.upload(path,file),
     async save(draft) {
       validate(draft);
       const client = await writer();
-      const fields = { folder_id: draft.folder_id, title: draft.title.trim(), body: draft.body };
+      const fields = { folder_id: draft.folder_id, title: draft.title.trim(), body: draft.body, visibility:draft.visibility||'public' };
+      if(!['public','private'].includes(fields.visibility))throw Error('공개범위를 확인해 주세요.');
       const existing = () => client.from('photo_posts').select('*').eq('id', draft.id).maybeSingle();
-      const same = row => row && row.folder_id === fields.folder_id && row.title === fields.title && row.body.length === fields.body.length
+      const same = row => row && row.folder_id === fields.folder_id && row.title === fields.title && row.visibility === fields.visibility && row.body.length === fields.body.length
         && row.body.every((b, i) => b.type === fields.body[i].type && (b.type === 'text' ? b.text === fields.body[i].text : b.path === fields.body[i].path));
       // A retry after a lost response must not insert a second post.
       if (!draft.revision) {
@@ -66,10 +55,6 @@
       const row = checked(await client.from('photo_posts').delete().eq('id', post.id).eq('revision', post.revision).select('id').maybeSingle()).data;
       if (!row) throw new Error('글이 변경되었거나 삭제 권한이 없습니다. 다시 조회해 주세요.');
     },
-    async cleanup(pathsToRemove) {
-      if (!pathsToRemove.length) return;
-      const client = await writer();
-      checked(await client.storage.from(bucket).remove([...new Set(pathsToRemove)]));
-    },
+    cleanup:pathsToRemove=>window.MinihompyPhotoMedia.cleanup(pathsToRemove),
   });
 })();

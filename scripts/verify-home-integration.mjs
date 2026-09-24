@@ -5,7 +5,7 @@ const {PGlite}=await import(pathToFileURL(resolve(process.argv[3]||'../minihompy
 const root=resolve('.'),out=resolve('docs/verification/home-data-step6');await mkdir(out,{recursive:true});
 const id=n=>`80000000-0000-4000-8000-${String(n).padStart(12,'0')}`,ids={owner:id(1),A:id(2),B:id(3)};
 const browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH,headless:true});
-const retained=new Set(['config.js','content.js','views/index.js','home-repository.js','home-activity.js','visit-counts.js','post-routes.js','post-location-repository.js','board-repository.js','photos-repository.js','diary-repository.js','guestbook-repository.js','comments-repository.js','comments.js','views/home.js','views/board.js','views/photos.js','views/diary.js','views/guestbook.js','app.js']);
+const retained=new Set(['views/home.js','content-access.js','config.js','content.js','views/index.js','home-repository.js','home-activity.js','visit-counts.js','post-routes.js','post-location-repository.js','board-repository.js','photos-repository.js','diary-repository.js','guestbook-repository.js','comments-repository.js','comments.js','views/home.js','views/board.js','views/photos.js','views/diary.js','views/guestbook.js','app.js']);
 try{for(const width of [1280,375]){
  const {pg}=await memberWritingDb(PGlite,{siteId:id(99),centralUrl:'https://central.test/api'});const {run,handle}=sqlTransport(pg,ids);
  await pg.query('insert into auth.users values($1),($2),($3)',Object.values(ids));await pg.query('insert into private.minihompy_admins values($1)',[ids.owner]);
@@ -30,7 +30,8 @@ try{for(const width of [1280,375]){
   let body=await readFile(resolve(root,file));
   if(file==='index.html'){
    body=body.toString().replace(/<script\b[^>]*src="([^"]+)"[^>]*><\/script>/g,(all,src)=>retained.has(src)?all:'');
-   body=body.replace('<head>',`<head><script>window.fixtureIds=${JSON.stringify(ids)};window.MINIHOMPY_SUPABASE={url:'${env.SUPABASE_URL}'};window.MINIHOMPY_HOME_DATA_CONFIG={enabled:true,supabaseUrl:MINIHOMPY_SUPABASE.url,homepage:'https://home.test/'};${browserBackend}</script>`);
+   body=body.replace('<head>',`<head><script>window.fixtureIds=${JSON.stringify(ids)};window.MINIHOMPY_SUPABASE={url:'${env.SUPABASE_URL}'};window.MINIHOMPY_HOME_DATA_CONFIG={enabled:true,supabaseUrl:MINIHOMPY_SUPABASE.url,homepage:'https://home.test/'};${browserBackend}
+window.MinihompyPhotoMedia={scope:()=>({read:async()=>{const r=await fetch('assets/photos/lake.jpg');return URL.createObjectURL(await r.blob());},dispose(){}}),cleanup:async()=>{},upload:async()=>{}};</script>`);
   }
   return route.fulfill({body,contentType:({'.html':'text/html; charset=utf-8','.js':'text/javascript','.css':'text/css','.jpg':'image/jpeg','.png':'image/png','.woff2':'font/woff2'})[extname(file)]||'application/octet-stream'});
  });
