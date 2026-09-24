@@ -131,6 +131,9 @@
           if (data.attempt_id !== guard.attempt_id) throw Error('Unrelated return');
           restore(data.return_path);
           if(data.status==='identified'&&window.MinihompyMemberWriting?.enabled()){
+            // Settle initial personal Auth before the writing exchange captures its identity generation.
+            await window.MinihompyAdmin?.refresh?.();
+            if(current!==generation)return state;
             await window.MinihompyMemberWriting.acceptVisit(writingProof,guard.writing,guard.attempt_id,data.profile.id);
             if(current!==generation)return state;
           }

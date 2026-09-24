@@ -136,7 +136,7 @@ node setup/setup.mjs home-data --config setup/config.json
 
 ## 폴더·공개범위·사진 보호 설치/업그레이드
 
-회원 세션과 홈 데이터 DB 준비 후 다음 명령을 사용한다. 신규 install이 이미 추적 적용한 SQL은 건너뛰며, 기존 사이트는 공개범위 migrations 네 개를 순서대로 적용한다.
+회원 세션과 홈 데이터 DB 준비 후 다음 명령을 사용한다. 신규 install이 이미 추적 적용한 SQL은 건너뛰며, 기존 사이트는 공개범위 migrations 다섯 개를 순서대로 적용한다.
 
 ```sh
 node setup/setup.mjs folder-visibility --config setup/config.json --dry-run
