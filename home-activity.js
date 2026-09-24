@@ -8,7 +8,7 @@
   function render(state,data){
     const list=node('ul','home-recent-list');
     for(const item of data.recent){
-      const row=node('li','home-recent-item'),link=node('a','home-post-link');link.href=window.MinihompyPostRoutes.href(item.kind,item.id);
+      const row=node('li','home-recent-item'),link=node('a','home-post-link');row.dataset.kind=item.kind;link.href=window.MinihompyPostRoutes.href(item.kind,item.id);
       const dateParts=new Intl.DateTimeFormat('ko-KR',{timeZone:'Asia/Seoul',month:'2-digit',day:'2-digit'}).formatToParts(new Date(item.created_at));
       const date=['month','day'].map(type=>dateParts.find(part=>part.type===type).value).join('.');
       const title=item.label||'제목 없는 글';link.title=`${labels[item.kind]} · ${title} · ${date} · 오늘 댓글 ${item.today_comments}`;link.setAttribute('aria-label',link.title);
@@ -17,9 +17,6 @@
       const time=node('time','home-post-date',date);time.dateTime=item.created_at;link.append(time);row.append(link);list.append(row);
     }
     const aside=node('div','home-activity-counts');
-    const caption=node('h3','home-count-caption');caption.title='읽을 수 있는 글의 오늘 / 전체 건수';
-    const legend=node('small','');legend.append(node('span','','오늘'),node('span','','전체'));
-    caption.append(node('span','','게시물 현황'),legend);aside.append(caption);
     const counts=node('dl','board-counts');
     for(const kind of data.menus){const row=node('div','');const term=node('dt','',labels[kind]),value=node('dd','');
       value.append(node('span','home-count-today',String(data.counts[kind].today)),node('span','home-count-divider',' / '),node('span','home-count-total',String(data.counts[kind].total)));
