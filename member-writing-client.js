@@ -82,11 +82,16 @@
         publish({ status: 'anonymous', actor: null });
       }); },
       content(path, { method = 'GET', body, mode = 'member', accessToken } = {}) {
-        if (!/^\/(?:guestbook|comments)(?:[/?]|$)/.test(path) || !['member','owner','public'].includes(mode)) throw Error('Invalid content request');
+        if (!/^\/(?:guestbook|comments|friend-reviews)(?:[/?]|$)/.test(path) || !['member','owner','public'].includes(mode)) throw Error('Invalid content request');
         const token = mode === 'member' ? read() : mode === 'owner' ? accessToken : null;
         if (mode !== 'public' && !token) { const e = Error('회원 확인이 필요합니다.'); e.code = 'AUTH_REQUIRED'; throw e; }
         if (mode === 'public' && method !== 'GET') throw Error('Public writes are unavailable');
         return request(path, method, body, token, mode);
+      },
+      relationship(path, body) {
+        if (!/^\/relationships\/(?:state|requests|actions|operations)$/.test(path)) throw Error('Invalid relationship request');
+        const token=read();if(!token)throw Object.assign(Error('로그인이 필요합니다.'),{code:'AUTH_REQUIRED',status:401});
+        return request(path,'POST',body,token,'member');
       },
       ownerCurrent(accessToken) { return request('/sessions/current', 'GET', undefined, accessToken, 'owner'); },
     });

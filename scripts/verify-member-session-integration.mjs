@@ -116,8 +116,8 @@ addEventListener('minihompy:identity',()=>fixtureActor=MinihompyAdmin.state.role
  console.log(`PASS ${width}: A writes B guestbook and all four comment types; menu discard, no new proofs or cross-site data`);
  await menu('guestbook');const draft=page.locator('.guestbook-body-input');await draft.fill('keep across renewal');await draft.focus();
  const stat=async()=>sites[1].transport.run(async()=>(await sites[1].personal.pg.query('select public.visit_stats() as value')).rows[0].value.total);
- await mkdir(`docs/verification/${visibilityIntegration?'folder-visibility-step9':'member-session-step6'}`,{recursive:true});
- await page.screenshot({path:`docs/verification/${visibilityIntegration?'folder-visibility-step9':'member-session-step6'}/ready-${width}.png`});
+ await mkdir((process.env.MINIHOMPY_SESSION_INTEGRATION_OUTPUT||`docs/verification/${visibilityIntegration?'folder-visibility-step9':'member-session-step6'}`),{recursive:true});
+ await page.screenshot({path:`${process.env.MINIHOMPY_SESSION_INTEGRATION_OUTPUT||('docs/verification/'+(visibilityIntegration?'folder-visibility-step9':'member-session-step6'))}/ready-${width}.png`});
  const total=await stat();const priorRenew=counts.renew,priorVisits=counts.visits;let navigations=0;page.on('framenavigated',()=>navigations++);
  await page.evaluate(()=>Object.defineProperty(document,'visibilityState',{configurable:true,get:()=> 'hidden'}));
  await sites[1].transport.run(()=>sites[1].personal.pg.exec("update private.member_writing_sessions set issued_at=now()-interval '20 minutes',expires_at=now()-interval '5 minutes'"));
@@ -129,12 +129,12 @@ addEventListener('minihompy:identity',()=>fixtureActor=MinihompyAdmin.state.role
   centralOffline=failure==='central';personalOffline=failure==='personal';networkOffline=failure==='network';
   await page.evaluate(()=>dispatchEvent(new Event('focus')));await page.locator('#member-session-retry').waitFor();
   assert.equal(await page.evaluate(()=>MinihompyMemberWriting.state.status),'error');assert.equal(await draft.inputValue(),'keep across renewal');assert.equal(await page.locator('.guestbook-save').isDisabled(),true);
-  if(failure==='central')await page.screenshot({path:`docs/verification/${visibilityIntegration?'folder-visibility-step9':'member-session-step6'}/error-${width}.png`});
+  if(failure==='central')await page.screenshot({path:`${process.env.MINIHOMPY_SESSION_INTEGRATION_OUTPUT||('docs/verification/'+(visibilityIntegration?'folder-visibility-step9':'member-session-step6'))}/error-${width}.png`});
   centralOffline=personalOffline=networkOffline=false;
   await page.locator('#member-session-retry').focus();
   await page.keyboard.press('Tab');await page.keyboard.press('Shift+Tab');assert.equal(await page.evaluate(()=>document.activeElement.id),'member-session-retry');
   const retryBox=await page.locator('#member-session-retry').boundingBox();assert.ok(retryBox.x>=-1&&retryBox.x+retryBox.width<=width+1,'Focused common retry is within viewport');
-  if(failure==='central')await page.screenshot({path:`docs/verification/${visibilityIntegration?'folder-visibility-step9':'member-session-step6'}/retry-focus-${width}.png`});
+  if(failure==='central')await page.screenshot({path:`${process.env.MINIHOMPY_SESSION_INTEGRATION_OUTPUT||('docs/verification/'+(visibilityIntegration?'folder-visibility-step9':'member-session-step6'))}/retry-focus-${width}.png`});
   await page.keyboard.press('Enter');await ready();await draft.waitFor();assert.equal(await draft.inputValue(),'keep across renewal');assert.equal(navigations,0);
  }
  console.log(`PASS ${width}: central/personal outage and transport offline recover via keyboard common retry without anonymous fallback or input loss`);

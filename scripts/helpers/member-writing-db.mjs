@@ -20,7 +20,7 @@ export async function memberWritingDb(PGlite,{siteId,centralUrl,writing=true,ren
  let queue=Promise.resolve();
  const db={rpc(name,args){
   const operation=queue.then(async()=>{
-  if(!['member_writing_session','member_guestbook','member_comments'].includes(name))throw Error('Unexpected RPC');
+  if(!['member_writing_session','member_guestbook','member_comments','member_friend_reviews'].includes(name))throw Error('Unexpected RPC');
   await pg.exec('set role service_role');
   try{const r=await pg.query('select public.'+name+'($1,$2) as value',[args.p_action,JSON.stringify(args.p_args)]);return {data:r.rows[0].value,error:null};}
   catch(e){return {data:null,error:{code:e.code}};}

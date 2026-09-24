@@ -27,8 +27,9 @@
         <div class="minime reference-sprite" role="img" aria-label="주황색 머리의 미니미"></div>
       </div>
       <h2 class="friends-heading">일촌평<span class="help-mark" aria-hidden="true">?</span></h2>
-      <div class="friends-prompt"><span>일촌 기능 준비 중</span></div>
+      <div class="friend-reviews"></div>
     `);
+      window.MinihompyFriendReviews?.attach(result.querySelector('.friend-reviews'));
       window.MinihompyHomeActivity?.attach(result.querySelector('.home-activity'));
       return result;
     },

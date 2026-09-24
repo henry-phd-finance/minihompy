@@ -537,3 +537,28 @@ button.surf-select { display: block; width: 100%; text-align: left; color: inher
 .folder-manager-form input, .folder-manager-form textarea, .folder-manager-form select { display: block; box-sizing: border-box; width: 100%; max-width: 100%; margin-top: 4px; padding: 6px; font: inherit; }
 .folder-manager-form textarea { min-height: 70px; resize: vertical; }
 .folder-manager-form p { overflow-wrap: anywhere; }
+
+/* Relationship actions stay outside notebook zoom in the shared native dialog. */
+.relationship-slot #relationship-open { width: 100%; min-height: 17px; padding: 0; border: 0; background: transparent; color: #26778c; font: inherit; text-align: left; cursor: pointer; }
+.relationship-slot #relationship-open:focus-visible { outline: 1px solid #26778c; }
+.relationship-dialog .relationship-actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
+.relationship-dialog button { min-height: 44px; padding: 6px 12px; }
+.relationship-dialog #relationship-people { overflow-wrap: anywhere; }
+
+.relationship-list-entry, .relationship-list-controls { display: flex; flex-wrap: wrap; gap: 6px; margin-block: 12px; }
+.relationship-list { list-style: none; padding: 0; }
+.relationship-list li { padding: 12px 0; border-bottom: 1px solid #ddd; overflow-wrap: anywhere; }
+.relationship-list li > button { margin: 6px 6px 0 0; }
+.relationship-list .author-handle { display: none; }
+.relationship-list-controls [aria-pressed="true"] { font-weight: bold; border-color: #147c93; }
+
+.friend-reviews { position: relative; margin: 181px 17px 12px; width: 240px; font-size: 7px; line-height: 1.6; overflow-wrap: anywhere; }
+.friend-reviews p { margin: 4px 0; }
+.friend-reviews ul { list-style: none; margin: 6px 0; padding: 0; }
+.friend-reviews li { padding: 6px 0; border-bottom: 1px dotted #ccc; }
+.friend-reviews textarea { display: block; box-sizing: border-box; width: 100%; resize: vertical; font: inherit; }
+.friend-reviews button { font: inherit; min-height: 20px; padding: 3px 6px; margin: 2px; cursor: pointer; }
+.friend-reviews time { display: inline-block; margin: 0 5px; color: #666; }
+.friend-review-body { white-space: pre-wrap; }
+.friend-reviews [hidden] { display: none; }
+.home-panel[data-view="home"] { overflow-y: auto; overflow-x: hidden; scrollbar-width: thin; scrollbar-color: #ccc #fff; }

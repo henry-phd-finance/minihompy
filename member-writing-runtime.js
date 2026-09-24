@@ -84,6 +84,27 @@
     try{const result=await api().content(path,{...options,accessToken});check(ctx.writingStamp);return result;}
     catch(e){check(ctx.writingStamp);if([401,503].includes(e.status)||e.code==='IDENTITY_UNAVAILABLE')failClosed(e);throw e;}
   }
+  async function relationship(path,body,stamp=snapshot()){
+    check(stamp);
+    if(!enabled()||blocked||window.MinihompySharedIdentity?.state.status!=='identified')throw Object.assign(Error('로그인이 필요합니다.'),{code:'AUTH_REQUIRED',status:401});
+    await ensure();check(stamp);
+    try{const result=await api().relationship(path,body);check(stamp);return result;}
+    catch(e){check(stamp);if([401,503].includes(e.status)||e.code==='IDENTITY_UNAVAILABLE')failClosed(e);throw e;}
+  }
+  // Public review reads and local admin deletes do not depend on central availability.
+  async function review(path,{method='GET',body,mode='public'}={},stamp=snapshot()){
+    check(stamp);let accessToken;
+    if(mode==='member'){
+      if(!enabled()||blocked||window.MinihompySharedIdentity?.state.status!=='identified')throw Object.assign(Error('로그인이 필요합니다.'),{code:'AUTH_REQUIRED',status:401});
+      await ensure();check(stamp);
+    }else if(mode==='owner'){
+      const ctx=await window.MinihompyVisitorSession.context();check(stamp);
+      if(ctx.role!=='admin')throw Object.assign(Error('관리자 권한이 필요합니다.'),{status:403});
+      const r=await ctx.client.auth.getSession();check(stamp);accessToken=r.data?.session?.access_token;if(!accessToken)throw changed();
+    }
+    try{const result=await api().content(path,{method,body,mode,accessToken});check(stamp);return result;}
+    catch(e){check(stamp);if(mode==='member'&&([401,503].includes(e.status)||e.code==='IDENTITY_UNAVAILABLE'))failClosed(e);throw e;}
+  }
   async function prepareVisit(){await drain();return api().prepareProof();}
   async function acceptVisit(proof,pkce,attemptId,memberId){
     publish('preparing');const stamp=snapshot();
@@ -111,7 +132,7 @@
     if(shared?.status==='identified'){void recheck();}
   }
   async function recheck(){if(!enabled()||document.visibilityState==='hidden'||window.MinihompySharedIdentity?.state.status!=='identified'||['error','loginRequired'].includes(state.status))return;try{await ensure();}catch{}}
-  window.MinihompyMemberWriting=Object.freeze({enabled,context,content,authorize:retry,logout,retry,snapshot,check,prepareVisit,acceptVisit,get state(){return state;}});
+  window.MinihompyMemberWriting=Object.freeze({enabled,context,content,relationship,review,authorize:retry,logout,retry,snapshot,check,prepareVisit,acceptVisit,get state(){return state;}});
   window.addEventListener('minihompy:visitor-identity',()=>{try{identityChanged();}catch(e){failClosed(e);}});
   window.addEventListener('minihompy:identity',()=>{if(enabled()&&observed!==identity()){reset('관리자 상태가 변경되어 작성 내용을 정리했습니다.');identityChanged();}});
   window.addEventListener('storage',event=>{

@@ -15,11 +15,16 @@
   <script src="member-writing-config.js" defer></script>
   <script src="member-writing-client.js" defer></script>
   <script src="member-writing-runtime.js" defer></script>
+  <script src="member-relationships-repository.js" defer></script>
+  <script src="member-relationships.js" defer></script>
   <script src="visitor-identity.js" defer></script>
   <script src="member-navigation.js" defer></script>
   <script src="author-navigation.js" defer></script>
+  <script src="member-relationship-lists.js" defer></script>
   <script src="surf-navigation.js" defer></script>
   <script src="visitor-session.js" defer></script>
+  <script src="friend-reviews-repository.js" defer></script>
+  <script src="friend-reviews.js" defer></script>
   <script src="comments-repository.js" defer></script>
   <script src="comments.js" defer></script>
   <script src="content.js" defer></script>
@@ -52,6 +57,23 @@
   <script src="admin-auth.js" defer></script>
 </head>
 <body>
+  <dialog id="relationship-dialog" class="surf-dialog relationship-dialog" aria-labelledby="relationship-title">
+    <h2 id="relationship-title">이 홈과의 일촌 관계</h2>
+    <p id="relationship-people"></p>
+    <p id="navigation-status" role="status">사용자 확인 중</p>
+    <p id="relationship-message" role="status" aria-live="polite">관계 확인 중</p>
+    <div id="relationship-actions" class="relationship-actions"></div>
+    <div class="relationship-list-entry"><button type="button" data-relationship-list="incoming">내 일촌 관리</button><button type="button" data-relationship-list="friends">이 홈의 일촌</button></div>
+    <button id="relationship-close" type="button">닫기</button>
+  </dialog>
+  <dialog id="relationship-lists-dialog" class="surf-dialog relationship-dialog" aria-labelledby="relationship-list-title">
+    <h2 id="relationship-list-title">내 일촌 관리</h2>
+    <p id="relationship-list-scope"></p>
+    <p role="status" aria-live="polite"></p>
+    <div class="relationship-list-controls"></div>
+    <ul class="relationship-list"></ul>
+    <button type="button" data-list-close>닫기</button>
+  </dialog>
   <main class="minihompy" aria-label="미니홈피">
     <header class="site-bar" data-region="A01">
       <div class="search">
@@ -67,7 +89,7 @@
         <span class="history-links">◀ 주　 › 정　 › 정</span>
         <span>내모아보기<span class="tiny-orange">▴</span></span>
         <span>바로가기 ▴</span><span><button id="random-visit" type="button" aria-haspopup="dialog" aria-controls="surf-dialog">랜덤</button></span>
-        <span><span id="member-session-status" role="status" aria-live="polite"></span><button type="button" id="member-session-retry" hidden>인증 재시도</button><button type="button" id="visitor-identity-retry" hidden title="방문자 확인에 실패했습니다. 다시 시도합니다.">방문자 확인 재시도</button>
+        <span><span id="member-session-status" role="status" aria-live="polite"></span><button type="button" id="member-session-retry" hidden>인증 재시도</button><button id="navigation-retry" type="button" hidden>사용자 상태 다시 확인</button><button type="button" id="visitor-identity-retry" hidden title="방문자 확인에 실패했습니다. 다시 시도합니다.">방문자 확인 재시도</button>
           <button id="login-auth-toggle" type="button" title="로그인">로그인</button></span>
       </div>
     </header>
@@ -82,7 +104,6 @@
 
     <div class="visit-count" aria-label="방문 통계" aria-live="polite"><span>TODAY <b data-visit="today">—</b></span><span>TOTAL <span data-visit="total">—</span></span><small data-visit="status">준비 중</small><button type="button" aria-label="방문 통계 다시 시도" hidden>↻</button></div>
     <h1 class="homepage-title" data-config="page.title">님의 미니홈피</h1>
-    <!-- Relationship actions are added with the verified relationship feature (backlog 5). -->
     <section class="profile-panel" data-region="A06" data-view-slot="left" aria-label="홈 왼쪽 영역"></section>
     <section class="home-panel" id="home" data-region="A07" data-view-slot="main" aria-label="홈"></section>
 
@@ -100,8 +121,8 @@
     <div class="binder-ring ring-four" data-region="B19" aria-hidden="true"></div>
 
     <aside class="utility-panel" data-region="A09" aria-label="미니홈피 부가 메뉴">
-      <div class="utility-heading"><span>친구추천</span><span class="fan-label">팬</span></div>
-      <div class="relationship-slot"><span id="navigation-status" role="status">사용자 확인 중</span> <button id="navigation-retry" type="button" hidden>다시 확인</button></div>
+      <div class="utility-heading"><span>일촌 관계</span></div>
+      <div class="relationship-slot"><button id="relationship-open" type="button" aria-haspopup="dialog" aria-controls="relationship-dialog"><span id="relationship-summary">관계 확인 중</span> · 보기</button></div>
       <div class="utility-statistics"><span>댓글</span><span>스크랩<small>0</small></span><span>앱스<small>0</small></span><span>소망상자</span></div>
       <div class="activity"><span>액티브</span><i></i></div>
       <div class="music-player" aria-label="배경음악">

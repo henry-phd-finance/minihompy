@@ -144,3 +144,14 @@ node setup/setup.mjs folder-visibility --config setup/config.json
 ```
 
 개인 관리자 확인 후 SQL 해시를 추적하고 member-writing/photo-media 함수를 배포한다. `MINIHOMPY_OWNER_EMAIL`, `MINIHOMPY_OWNER_PASSWORD`, `SUPABASE_ACCESS_TOKEN`을 비공개 환경변수로 전달한다. 준비 도구는 Storage 파일 전환, ready 활성화, Pages 게시를 하지 않는다. 사진이 없는 새 사이트도 보호 준비와 원본 폐쇄 검사를 마쳐야 한다. [운영 적용 순서·활성화 조건·복구 절차](../docs/folder-visibility-deployment.md)를 반드시 함께 따른다. 중간 상태에서 사진 비공개를 활성화하지 않는다.
+
+## 일촌·일촌평 설치/업그레이드
+
+중앙 관계 protocol 1과 중앙에서 검증된 siteId가 필요하다. 신규 `install`은 일촌평 SQL도 추적 적용한다. `verify` 후, 기존 사이트도 같은 명령으로 서버를 준비한다.
+
+```sh
+node setup/setup.mjs relationships --config setup/config.json --dry-run
+node setup/setup.mjs relationships --config setup/config.json
+```
+
+소유자/중앙 연결 검증, 회원 세션·일촌평 migration, member-writing 배포와 기능 준비 상태 검사를 수행한다. Pages는 별도로 게시한다. 중단 뒤 같은 명령을 재실행하고 기존 데이터와 이력을 삭제하지 않는다. [중앙→A→B 적용·복구·테스트 정리](../docs/member-relationship-deployment.md)를 따른다.

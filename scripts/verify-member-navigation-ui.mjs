@@ -4,6 +4,7 @@ import {resolve} from 'node:path';
 import {pathToFileURL} from 'node:url';
 const {chromium}=await import(pathToFileURL(resolve(process.argv[2])));
 const root=new URL('../',import.meta.url);
+const output=resolve(process.env.MINIHOMPY_NAVIGATION_UI_OUTPUT||'docs/verification/member-navigation-step2');
 const id=n=>`20000000-0000-4000-8000-${String(n).padStart(12,'0')}`;
 const a={id:id(1),site_id:id(11),handle:'alice',display_name:'같은 이름',homepage_url:'https://a.example/home/'};
 const b={...a,id:id(2),site_id:id(12),handle:'bob',homepage_url:'https://b.example/home/'};
@@ -49,8 +50,8 @@ try {
   offline=false;await page.evaluate(a=>window.changeIdentity({status:'identified',visitor:a}),a);await page.waitForFunction(()=>window.MinihompyNavigation.state.status==='other');
   await page.evaluate(()=>dispatchEvent(new Event('minihompy:navigation-invalidate')));assert.equal(await page.locator('#my-home-link').getAttribute('href'),null);
   await page.evaluate(a=>window.changeIdentity({status:'identified',visitor:a}),a);await page.waitForFunction(()=>window.MinihompyNavigation.state.status==='other');
-  await mkdir(new URL('docs/verification/member-navigation-step2/',root),{recursive:true});
-  await page.screenshot({path:new URL(`docs/verification/member-navigation-step2/${width}.png`,root).pathname});
+  await mkdir(output,{recursive:true});
+  await page.screenshot({path:resolve(output,`${width}.png`)});
   await page.locator('#my-home-link').focus();await page.keyboard.press('Enter');await page.waitForURL('https://a.example/home/');assert.deepEqual(errors,[]);await page.close();
  }
  console.log('PASS navigation UI desktop/mobile: same-name identities, admin separation, self/other/anonymous, login, retry, logout invalidation, native draft cancellation and keyboard link.');

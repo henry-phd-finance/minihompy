@@ -1,3 +1,5 @@
+import {friendReviews} from './friend-reviews.js';
+import {relationships} from './relationships.js';
 const UUID=/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const OPAQUE=/^[A-Za-z0-9_-]{43}$/;
 const statuses={RATE_LIMITED:429,REVISION_CONFLICT:409,BAD_REQUEST:400,AUTH_REQUIRED:401,SESSION_EXPIRED:401,SESSION_REVOKED:401,FORBIDDEN:403,TARGET_MISMATCH:403,NOT_FOUND:404,REQUEST_CONFLICT:409,IDENTITY_UNAVAILABLE:503,NOT_CONFIGURED:503};
@@ -60,7 +62,7 @@ export async function authenticateOwner(req,{fetcher,projectUrl,publicKey}){
 export async function handleMemberWriting(req,options={}){
  const config=k=>options.config?.[k]??env(k),origin=req.headers.get('Origin');
  const headers={'Content-Type':'application/json','Cache-Control':'no-store',Vary:'Origin','Access-Control-Expose-Headers':'Retry-After','Access-Control-Allow-Methods':'GET, POST, PATCH, DELETE, OPTIONS','Access-Control-Allow-Headers':'Content-Type, Authorization, apikey, X-Minihompy-Auth-Mode'};
- const reply=(status,body)=>new Response(JSON.stringify(body),{status,headers});
+ const reply=(status,body,extra={})=>new Response(JSON.stringify(body),{status,headers:{...headers,...extra}});
  if(origin&&origin===config('MINIHOMPY_SITE_ORIGIN'))headers['Access-Control-Allow-Origin']=origin;
  if(!config('MINIHOMPY_SITE_ORIGIN'))return reply(503,{error:{code:'NOT_CONFIGURED'}});
  if(origin&&origin!==config('MINIHOMPY_SITE_ORIGIN'))return reply(403,{error:{code:'FORBIDDEN'}});
@@ -74,10 +76,12 @@ export async function handleMemberWriting(req,options={}){
   let db=options.db;
   if(!db){const key=config('SUPABASE_SERVICE_ROLE_KEY');if(!key)fail('NOT_CONFIGURED');const {createClient}=await import('npm:@supabase/supabase-js@2.39.8');db=createClient(projectUrl,key,{auth:{persistSession:false}});}
   const cfg=await callRpc(db,'site');if(cfg.site_id!==siteId||cleanUrl(cfg.central_api_url)!==centralUrl)fail('NOT_CONFIGURED');
-  const context={db,fetcher,siteId,centralUrl,projectUrl,publicKey:config('MINIHOMPY_PUBLIC_KEY')||config('SUPABASE_ANON_KEY')};
+  const context={db,fetcher,siteId,centralUrl,projectUrl,transportPeerIp:options.transportPeerIp,publicKey:config('MINIHOMPY_PUBLIC_KEY')||config('SUPABASE_ANON_KEY')};
   const path=new URL(req.url).pathname.replace(/^\/(?:functions\/v1\/)?member-writing(?=\/|$)/,'');
   const mode=req.headers.get('X-Minihompy-Auth-Mode');
   if(!['member','owner','public'].includes(mode))fail('BAD_REQUEST');
+  if(path==='/friend-reviews'||path.startsWith('/friend-reviews/'))return await friendReviews(req,context,mode,path,reply);
+  if(path.startsWith('/relationships/'))return await relationships(req,context,mode,path,reply);
   if(path==='/comments'||path.startsWith('/comments/'))return await comments(req,context,mode,path,reply);
   if(path==='/guestbook'||path.startsWith('/guestbook/'))return await guestbook(req,context,mode,path,reply);
   if(mode==='public')fail('FORBIDDEN'); // Public mode cannot access session endpoints.
@@ -182,6 +186,7 @@ async function comments(req,context,mode,path,reply){
   if(mode==='public')fail('FORBIDDEN');
   if(!req.headers.get('Content-Type')?.startsWith('application/json'))fail('BAD_REQUEST');
   const body=await limitedJson(req,8192);const match=/^\/comments\/([0-9a-f-]+)$/i.exec(path);
+  if(path.startsWith('/relationships/'))return await relationships(req,context,mode,path,reply);
   if(path==='/comments'&&req.method==='POST')action='create';
   else if(match&&UUID.test(match[1])&&req.method==='PATCH')action='update';
   else if(match&&UUID.test(match[1])&&req.method==='DELETE')action='delete';
