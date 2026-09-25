@@ -21,7 +21,7 @@ async function fresh(owner){
  await page.waitForFunction(()=>document.querySelector('#password')&&!document.querySelector('#password').disabled);
  await page.locator('#password').fill(owner.password);await page.locator('#submit').click();await state(page,b,owner);
  await page.waitForFunction(()=>window.MinihompyMemberWriting?.state.status==='ready');await page.locator('.guestbook-body-input').waitFor();
- await page.waitForFunction(()=>document.querySelector('.guestbook-name')?.readOnly===true);
+ await page.waitForFunction(()=>document.querySelector('.guestbook-name-text')?.tagName==='SPAN');
  return page;
 }
 async function api(page,path,method='GET',body,mode='member'){

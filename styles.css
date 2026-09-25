@@ -573,3 +573,9 @@ button.surf-select { display: block; width: 100%; text-align: left; color: inher
 .friend-review-body { white-space: pre-wrap; }
 .friend-reviews [hidden] { display: none; }
 .home-panel[data-view="home"] { overflow-y: auto; overflow-x: hidden; scrollbar-width: thin; scrollbar-color: #ccc #fff; }
+
+/* Known authors are text, not disabled or readonly form fields. */
+.comments-widget .comment-form:has(.comment-name-text) { height: auto; min-height: 14px; align-items: center; }
+.comments-widget .comment-form .comment-name-text { flex: 0 1 auto; width: auto; max-width: 84px; overflow-wrap: anywhere; color: #44668b; font: 6px/10px var(--ui-font); }
+.comments-widget .comment-form:has(.comment-name-text) .comment-body { min-height: 14px; align-self: stretch; }
+.guestbook-name-text { width: auto; max-width: 100%; height: auto; padding: 0; border: 0; background: transparent; color: #44668b; overflow-wrap: anywhere; }

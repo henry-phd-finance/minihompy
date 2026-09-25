@@ -55,14 +55,17 @@
     draft.scope ||= context?.member ? 'member' : 'local';
     if(context?.member) draft.memberId ||= context.memberId;
     const root = node('form', 'guestbook-composer');
-    const nameRow = node('label', 'guestbook-name-row', '이름');
-    const name = node('input', 'guestbook-name'); name.value = draft.revision ? draft.name : context?.member ? context.member.display_name : admin() ? window.MINIHOMPY_CONFIG.profile.name : draft.name;
-    name.readOnly = Boolean(context?.member || admin() || draft.revision); name.required = true; name.maxLength = 40; name.setAttribute('aria-label', '방명록 이름');
-    name.addEventListener('input', () => { draft.name = name.value; dirty = true; }); nameRow.append(name);
+    const fixedName = Boolean(context?.member || admin() || draft.revision);
+    const authorName = draft.revision ? draft.name : context?.member ? context.member.display_name : admin() ? window.MINIHOMPY_CONFIG.profile.name : draft.name;
+    const nameRow = node(fixedName ? 'div' : 'label', 'guestbook-name-row', fixedName ? undefined : '이름');
+    const name = fixedName ? node('span', 'guestbook-name guestbook-name-text', authorName) : node('input', 'guestbook-name');
+    if (!fixedName) name.setAttribute('aria-label', '방명록 이름');
+    if (!fixedName) { name.value = authorName; name.required = true; name.maxLength = 40; }
+    if (!fixedName) name.addEventListener('input', () => { draft.name = name.value; dirty = true; }); nameRow.append(name);
     const input = node('textarea');
     input.className = 'guestbook-body-input'; input.value = draft.body; input.required = true; input.maxLength = 5000;
     input.setAttribute('aria-label', '방명록 내용');
-    const recallName = () => { if (!name.value && !name.readOnly) { name.value = repository.nickname(); draft.name = name.value; } };
+    const recallName = () => { if (!fixedName && !name.value) { name.value = repository.nickname(); draft.name = name.value; } };
     name.addEventListener('focus', recallName); input.addEventListener('focus', recallName);
     input.addEventListener('input', () => { draft.body = input.value; dirty = true; });
     const options = node('div', 'guestbook-compose-options');

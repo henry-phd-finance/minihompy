@@ -63,12 +63,14 @@
     state.draft.scope ||= state.context.member ? 'member' : 'local';
     if(state.context.member)state.draft.memberId ||= state.context.memberId;
     const form = node('form', 'photo-comment-input comment-form');
-    const name = node('input', 'comment-name'); name.setAttribute('aria-label', '댓글 이름'); name.placeholder = '이름'; name.required = true; name.maxLength = 40;
-    name.value = state.draft.revision ? state.draft.name : state.context.member ? state.context.member.display_name : state.context.role === 'admin' ? window.MINIHOMPY_CONFIG.profile.name : state.draft.name;
-    name.readOnly = Boolean(state.context.member) || state.context.role === 'admin' || Boolean(state.draft.revision);
+    const fixedName = Boolean(state.context.member) || state.context.role === 'admin' || Boolean(state.draft.revision);
+    const authorName = state.draft.revision ? state.draft.name : state.context.member ? state.context.member.display_name : state.context.role === 'admin' ? window.MINIHOMPY_CONFIG.profile.name : state.draft.name;
+    const name = fixedName ? node('span', 'comment-name comment-name-text', authorName) : node('input', 'comment-name');
+    if (!fixedName) name.setAttribute('aria-label', '댓글 이름');
+    if (!fixedName) { name.value = authorName; name.placeholder = '이름'; name.required = true; name.maxLength = 40; }
     const body = node('input', 'comment-body'); body.setAttribute('aria-label', '댓글 내용'); body.required = true; body.maxLength = 1000; body.value = state.draft.body;
-    name.addEventListener('input', () => { state.draft.name = name.value; state.dirty = true; });
-    const recallName = () => { if (!name.value && !state.draft.revision && !name.readOnly) { name.value = session.nickname(); state.draft.name = name.value; } };
+    if (!fixedName) name.addEventListener('input', () => { state.draft.name = name.value; state.dirty = true; });
+    const recallName = () => { if (!fixedName && !name.value) { name.value = session.nickname(); state.draft.name = name.value; } };
     name.addEventListener('focus', recallName); body.addEventListener('focus', recallName);
     body.addEventListener('input', () => { state.draft.body = body.value; state.dirty = true; });
     const save = node('button', 'comment-save', state.draft.revision ? '저장' : '확인'); save.type = 'submit';
