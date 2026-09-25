@@ -491,26 +491,32 @@ button.surf-select { display: block; width: 100%; text-align: left; color: inher
 .surf-actions { display: flex; gap: 8px; justify-content: flex-end; }
 .surf-dialog :focus-visible, button.surf-select:focus-visible, #random-visit:focus-visible { outline: 2px solid #26778c; outline-offset: 2px; }
 
-/* Real public home activity stays within the existing 240 × 44 home region. */
-/* Match the original mini-home: short news at left, two-column counts at right. */
-.home-activity { column-gap: 6px; grid-template-columns: minmax(0,116px) minmax(0,118px); font-size: 6px; line-height: 8px; }
-.home-recent-list { list-style: none; padding: 2px 0 0; margin: 0; min-width: 0; overflow: auto; }
-.home-recent-item { height: 8px; }
-.home-post-link { display: flex; align-items: center; gap: 2px; min-width: 0; height: 8px; color: #666; text-decoration: none; }
+@font-face { font-family: 'Minihompy News'; src: url('assets/fonts/Galmuri11-extended.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+/* KBS Cyworld reference: 332px news width mapped to this home's 240px.
+   Reference widths: list 164px / gutter 8px / counts 160px.
+   Reference rows: news 14px / counts 18px. Keep the surrounding home scale. */
+.home-panel[data-view="home"] .recent-heading { width: 118.55px; height: 9.4px; color: #2e9eb5; font: bold 7.23px/8.67px Arial, sans-serif; border-bottom: .72px solid #dedede; }
+.home-activity { top: 18.57px; height: 41.2px; column-gap: 5.78px; grid-template-columns: minmax(0,118.55px) minmax(0,115.67px); font: 7.23px/10.12px Dotum, '돋움', 'Minihompy News', sans-serif; color: #666; }
+.home-recent-list { list-style: none; padding: 0; margin: 0; min-width: 0; }
+.home-recent-item { height: 10.12px; }
+.home-post-link { display: flex; align-items: center; gap: 2.17px; min-width: 0; height: 10.12px; color: #666; text-decoration: none; }
 .home-post-link:hover, .home-post-link:focus-visible { color: #24748d; text-decoration: underline; }
-.home-post-kind { flex: 0 0 22px; color: white; background: #6ba7c1; text-align: center; font-size: 5.5px; line-height: 7px; }
-.home-recent-item[data-kind="photos"] .home-post-kind { background: #d58c94; }
+.home-post-kind { flex: 0 0 auto; padding: 0 .72px; color: #fff; background: #79a9c3; text-align: center; font: 6.51px/7.95px Dotum, '돋움', 'Minihompy News', sans-serif; white-space: nowrap; }
+.home-recent-item[data-kind="photos"] .home-post-kind { background: #d9858c; }
 .home-recent-item[data-kind="diary"] .home-post-kind { background: #91a77d; }
 .home-recent-item[data-kind="guestbook"] .home-post-kind { background: #b69a7d; }
 .home-post-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; min-width: 0; }
 .home-post-date { display: none; }
-.home-post-comments { flex: none; color: #c45b1a; font-size: 5px; }
-.home-activity-counts { min-width: 0; }
-.home-today-comments { margin: 3px 0 0; font-size: 5.5px; line-height: 8px; color: #888; }
-.home-activity .board-counts { grid-template-columns: repeat(2,minmax(0,1fr)); grid-template-rows: none; grid-auto-rows: 13px; margin: 0; line-height: 12px; font-size: 6.5px; }
-.home-activity .board-counts > div { align-items: baseline; gap: 3px; min-width: 0; }
-.home-activity .board-counts dd { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 5px; line-height: 12px; font-variant-numeric: tabular-nums; }
-.home-activity .board-counts dt { flex-shrink: 0; color: #666; }
+.home-post-comments { flex: none; color: #c45b1a; font: 5.78px/10.12px Arial, sans-serif; }
+.home-activity-counts { min-width: 0; margin-top: -2.17px; }
+.home-activity .board-counts { grid-template-columns: repeat(2,minmax(0,1fr)); grid-template-rows: none; grid-auto-rows: 13.01px; min-height: 39.75px; margin: 0; border-top: .72px dotted #d6d6d6; font: 7.23px/13.01px Dotum, '돋움', 'Minihompy News', sans-serif; align-content: start; }
+.home-activity .board-counts > div { align-items: baseline; gap: 2.17px; min-width: 0; border-bottom: .72px dotted #d6d6d6; }
+.home-activity .board-counts dd { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #416c86; font: bold 5.78px/13.01px Arial, sans-serif; }
+.home-activity .board-counts dt { flex-shrink: 0; color: #777; }
+.home-count-divider { font-size: 0; }
+.home-count-divider::after { content: '/'; font-size: 5.78px; }
+.home-activity .board-counts::after { content: ''; grid-column: 1 / -1; border-bottom: .72px dotted #d6d6d6; }
+.home-activity .board-counts:empty { display: none; }
 .home-activity-message { grid-column: 1 / -1; margin: 3px 0; }
 .home-activity-empty { margin: 4px 3px 0 0; white-space: normal; }
 .home-activity-retry { justify-self: start; align-self: start; font: inherit; padding: 1px 3px; }

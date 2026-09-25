@@ -19,7 +19,7 @@
       </div>
     `),
     createMain() { const result=fragment(`
-      <h2 class="recent-heading">최근게시물</h2>
+      <h2 class="recent-heading" aria-label="최근게시물">Updated news</h2>
       <div class="recent-content home-activity"></div>
       <div class="room-views"><span>미니라이프</span><strong>미니룸</strong><span>스토리룸</span></div>
       <div class="miniroom" aria-label="미니룸">

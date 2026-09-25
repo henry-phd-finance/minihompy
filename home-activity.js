@@ -7,7 +7,7 @@
   function message(state,status,text){state.root.dataset.status=status;state.root.setAttribute('aria-busy',String(status==='loading'));const message=node('p','home-activity-message',text);message.setAttribute('role','status');state.root.replaceChildren(message);}
   function render(state,data){
     const list=node('ul','home-recent-list');
-    for(const item of data.recent){
+    for(const item of data.recent.slice(0,4)){
       const row=node('li','home-recent-item'),link=node('a','home-post-link');row.dataset.kind=item.kind;link.href=window.MinihompyPostRoutes.href(item.kind,item.id);
       const dateParts=new Intl.DateTimeFormat('ko-KR',{timeZone:'Asia/Seoul',month:'2-digit',day:'2-digit'}).formatToParts(new Date(item.created_at));
       const date=['month','day'].map(type=>dateParts.find(part=>part.type===type).value).join('.');
@@ -18,11 +18,11 @@
     }
     const aside=node('div','home-activity-counts');
     const counts=node('dl','board-counts');
-    for(const kind of data.menus){const row=node('div','');const term=node('dt','',labels[kind]),value=node('dd','');
+    const menus=(window.MINIHOMPY_CONFIG?.menus||[]).filter(m=>m.visible===true&&data.menus.includes(m.id)).map(m=>m.id);
+    for(const kind of menus){const row=node('div','');const term=node('dt','',labels[kind]),value=node('dd','');
       value.append(node('span','home-count-today',String(data.counts[kind].today)),node('span','home-count-divider',' / '),node('span','home-count-total',String(data.counts[kind].total)));
       row.dataset.kind=kind;row.title=`${labels[kind]}: 오늘 ${data.counts[kind].today}, 전체 ${data.counts[kind].total}`;value.setAttribute('aria-label',row.title);row.append(term,value);counts.append(row);}
-    const comments=node('p','home-today-comments',`오늘 댓글 ${data.today_comments}`);comments.title=`${data.date} 한국 시간 · 읽을 수 있는 글에 오늘 작성된 댓글 (미읽음 알림 아님)`;
-    aside.append(counts,comments);
+    aside.append(counts);
     state.root.replaceChildren(data.recent.length?list:node('p','home-activity-empty',data.menus.length?'읽을 수 있는 게시물이 없습니다.':'표시할 메뉴가 없습니다.'),aside);
     state.root.dataset.status='ready';state.root.setAttribute('aria-busy','false');
   }

@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';import {readFile,mkdir} from 'node:fs/pr
 import {memberWritingDb} from './helpers/member-writing-db.mjs';import {browserBackend,sqlTransport} from './helpers/home-browser-db.mjs';import {handleVisitCounts} from '../supabase/functions/visit-counts/handler.js';
 const {chromium}=await import(pathToFileURL(resolve(process.argv[2])));
 const {PGlite}=await import(pathToFileURL(resolve(process.argv[3]||'../minihompy-central/node_modules/@electric-sql/pglite/dist/index.js')));
-const root=resolve('.'),out=resolve('docs/verification/home-data-step6');await mkdir(out,{recursive:true});
+const root=resolve('.'),out=resolve(process.env.VERIFICATION_DIR||'docs/verification/home-data-step6');await mkdir(out,{recursive:true});
 const id=n=>`80000000-0000-4000-8000-${String(n).padStart(12,'0')}`,ids={owner:id(1),A:id(2),B:id(3)};
 const browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH,headless:true});
 const retained=new Set(['views/home.js','content-access.js','config.js','content.js','views/index.js','home-repository.js','home-activity.js','visit-counts.js','post-routes.js','post-location-repository.js','board-repository.js','photos-repository.js','diary-repository.js','guestbook-repository.js','comments-repository.js','comments.js','views/home.js','views/board.js','views/photos.js','views/diary.js','views/guestbook.js','app.js']);
@@ -31,6 +31,7 @@ try{for(const width of [1280,375]){
   if(file==='index.html'){
    body=body.toString().replace(/<script\b[^>]*src="([^"]+)"[^>]*><\/script>/g,(all,src)=>retained.has(src)?all:'');
    body=body.replace('<head>',`<head><script>window.fixtureIds=${JSON.stringify(ids)};window.MINIHOMPY_SUPABASE={url:'${env.SUPABASE_URL}'};window.MINIHOMPY_HOME_DATA_CONFIG={enabled:true,supabaseUrl:MINIHOMPY_SUPABASE.url,homepage:'https://home.test/'};${browserBackend}
+window.MinihompyMemberWriting.state={status:'disabled'};
 window.MinihompyPhotoMedia={scope:()=>({read:async()=>{const r=await fetch('assets/photos/lake.jpg');return URL.createObjectURL(await r.blob());},dispose(){}}),cleanup:async()=>{},upload:async()=>{}};</script>`);
   }
   return route.fulfill({body,contentType:({'.html':'text/html; charset=utf-8','.js':'text/javascript','.css':'text/css','.jpg':'image/jpeg','.png':'image/png','.woff2':'font/woff2'})[extname(file)]||'application/octet-stream'});
@@ -42,7 +43,7 @@ window.MinihompyPhotoMedia={scope:()=>({read:async()=>{const r=await fetch('asse
  await page.evaluate(()=>setActor('owner'));
  const privateId=id(50);await page.evaluate(async id=>MinihompyGuestbookRepository.save({id,body:'PRIVATE SENTINEL',visibility:'private',name:'Owner'}),privateId);
  await page.evaluate(async id=>MinihompyCommentsRepository.save('guestbook',id,{id:crypto.randomUUID(),name:'Owner',body:'PRIVATE COMMENT'}),privateId);
- await home();assert.equal(await page.locator('.home-post-link').count(),0);assert.equal(await page.locator('.home-today-comments').textContent(),'오늘 댓글 0');
+ await home();assert.equal(await page.locator('.home-post-link').count(),0);assert.equal((await page.evaluate(()=>MinihompyHomeRepository.summary())).today_comments,0);
  const parents={board:id(10),photos:id(11),diary:id(12),guestbook:id(13)};
  await page.evaluate(async({parents,folders})=>{
   await MinihompyBoardRepository.save({requestId:parents.board,folder_id:folders.board,title:'BOARD PUBLIC',body:'board body'});
@@ -51,7 +52,7 @@ window.MinihompyPhotoMedia={scope:()=>({read:async()=>{const r=await fetch('asse
   await MinihompyGuestbookRepository.save({id:parents.guestbook,name:'Owner',body:'GUEST PUBLIC',visibility:'public'});
   for(const kind of Object.keys(parents))await MinihompyCommentsRepository.save(kind,parents[kind],{id:crypto.randomUUID(),name:'Owner',body:'PUBLIC COMMENT '+kind});
  },{parents,folders});
- await home();assert.equal(await page.locator('.home-post-link').count(),4);assert.equal(await page.locator('.home-today-comments').textContent(),'오늘 댓글 4');
+ await home();assert.equal(await page.locator('.home-post-link').count(),4);assert.equal((await page.evaluate(()=>MinihompyHomeRepository.summary())).today_comments,4);
  for(const actor of ['anon','A','B','owner']){await page.evaluate(actor=>setActor(actor),actor);await page.waitForFunction(()=>document.querySelector('.home-activity')?.dataset.status==='ready');const res=responses.at(-1).data;assert.equal(res.today_comments,4);assert.equal(res.recent.length,4);assert.ok(!JSON.stringify(res).includes(privateId));assert.ok(!(await page.locator('.home-activity').innerHTML()).includes('PRIVATE'));}
  await page.screenshot({path:resolve(out,`integrated-${width}.png`)});
  for(const kind of Object.keys(parents)){
@@ -68,11 +69,11 @@ window.MinihompyPhotoMedia={scope:()=>({read:async()=>{const r=await fetch('asse
  await home();offline=true;await page.evaluate(()=>dispatchEvent(new Event('focus')));await page.locator('.home-activity-retry').waitFor();assert.equal(await page.locator('.home-post-link').count(),0);offline=false;await page.locator('.home-activity-retry').click();await page.waitForFunction(()=>document.querySelector('.home-activity')?.dataset.status==='ready');
  hold=true;await page.evaluate(()=>dispatchEvent(new Event('focus')));await page.waitForTimeout(100);assert.ok(release);await page.locator('[data-menu=board]').click();release();release=null;await page.locator('.board-table tbody tr').first().waitFor();await home();
  await page.evaluate(()=>setActor('owner'));
- await page.evaluate(async id=>{const row=(await MinihompyBackend.getClient().from('guestbook_posts').select('*').eq('id',id).maybeSingle()).data;await MinihompyGuestbookRepository.makePrivate(row);},parents.guestbook);await home();assert.equal(await page.locator('.home-post-link').count(),3);assert.equal(await page.locator('.home-today-comments').textContent(),'오늘 댓글 3');
+ await page.evaluate(async id=>{const row=(await MinihompyBackend.getClient().from('guestbook_posts').select('*').eq('id',id).maybeSingle()).data;await MinihompyGuestbookRepository.makePrivate(row);},parents.guestbook);await home();assert.equal(await page.locator('.home-post-link').count(),3);assert.equal((await page.evaluate(()=>MinihompyHomeRepository.summary())).today_comments,3);
  for(const [kind,table] of [['board','board_posts'],['photos','photo_posts'],['diary','diary_entries'],['guestbook','guestbook_posts']]){
   await page.evaluate(async({kind,table,id})=>{const row=(await MinihompyBackend.getClient().from(table).select('*').eq('id',id).maybeSingle()).data;const repo={board:MinihompyBoardRepository,photos:MinihompyPhotosRepository,diary:MinihompyDiaryRepository,guestbook:MinihompyGuestbookRepository}[kind];await repo.remove(row);},{kind,table,id:parents[kind]});await home();assert.equal(await page.locator(`.home-post-link[href*="${parents[kind]}"]`).count(),0);
  }
- assert.equal(await page.locator('.home-post-link').count(),0);assert.equal(await page.locator('.home-today-comments').textContent(),'오늘 댓글 0');assert.deepEqual(errors,[]);
+ assert.equal(await page.locator('.home-post-link').count(),0);assert.equal((await page.evaluate(()=>MinihompyHomeRepository.summary())).today_comments,0);assert.deepEqual(errors,[]);
  console.log(`PASS ${width}: outage/retry and late response isolation; four real repository deletes cascade comments and clear home`);
  }finally{release?.();await context.close();await pg.close();}
 }}finally{await browser.close();}

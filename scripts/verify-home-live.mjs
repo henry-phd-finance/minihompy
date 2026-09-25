@@ -11,10 +11,10 @@ try{for(const [index,home] of homes.entries()){
   const ready=()=>page.waitForFunction(()=>document.querySelector('.home-activity')?.dataset.status==='ready'&&document.querySelector('.visit-count')?.dataset.status==='ready');await ready();
   const data=await page.evaluate(()=>MinihompyHomeRepository.summary());
   const shown=await page.locator('.home-post-link').evaluateAll(nodes=>nodes.map(n=>n.getAttribute('href')));
-  assert.deepEqual(shown,data.recent.map(r=>`#/${r.kind}?post=${r.id}`));
+  assert.deepEqual(shown,data.recent.slice(0,4).map(r=>`#/${r.kind}?post=${r.id}`));
   for(const kind of data.menus)assert.equal(await page.locator(`.home-activity [data-kind=${kind}] dd`).textContent(),`${data.counts[kind].today} / ${data.counts[kind].total}`);
-  assert.equal(await page.locator('.home-today-comments').textContent(),'오늘 댓글 '+data.today_comments);
-  for(const item of data.recent){
+  assert.equal(await page.locator('.home-today-comments').count(),0);
+  for(const item of data.recent.slice(0,4)){
    await page.locator(`.home-post-link[href="#/${item.kind}?post=${item.id}"]`).click();
    await page.locator(`[data-${item.kind==='diary'?'entry':'post'}="${item.id}"]`).waitFor();
    await page.locator('[data-menu=home]').click();await ready();
