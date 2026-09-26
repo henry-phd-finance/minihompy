@@ -104,7 +104,7 @@
         return request('', 'POST',body,token,mode,signal,true);
       },
       read(action,{body,mode='public',accessToken,signal}={}) {
-        if(!['health','list','detail','summary','calendar','location'].includes(action)||!['public','member','owner'].includes(mode)||action==='health'&&mode!=='public')throw Error('Invalid read request');
+        if(!['health','list','detail','summary','calendar','location','photo-check'].includes(action)||!['public','member','owner'].includes(mode)||action==='health'&&mode!=='public')throw Error('Invalid read request');
         const token=mode==='member'?read():mode==='owner'?accessToken:null;
         if(mode!=='public'&&!token)throw Object.assign(Error('로그인 상태를 확인해 주세요.'),{code:'AUTH_REQUIRED',status:401});
         return request('/content/'+action,action==='health'?'GET':'POST',body,token,mode,signal);

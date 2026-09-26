@@ -16,6 +16,16 @@
     return name;
   }
 
+  // Only the dedicated admin client opts in. Never persist authorization results.
+  const verifiedSessions = new WeakMap();
+  function sessionBinding(session) {
+    if (!session?.user?.id || !session.access_token || !Number.isFinite(session.expires_at) || session.expires_at * 1000 <= Date.now()) return null;
+    let sessionId;
+    try { const part=session.access_token.split('.')[1];sessionId=JSON.parse(atob(part.replace(/-/g,'+').replace(/_/g,'/'))).session_id; } catch {}
+    // Claims identify local changes only. getUser + RPC establish authority.
+    return session.user.id + ':' + (typeof sessionId==='string' && sessionId ? sessionId : session.access_token);
+  }
+
   window.createMinihompyIdentity = (client, storage) => {
     if (!client?.auth || typeof client.rpc !== 'function') throw new TypeError('Supabase client required');
     if (storage === undefined) {
@@ -28,19 +38,50 @@
       if (saved) nickname = normalizeNickname(saved);
     } catch { /* A blocked store must not prevent reading the homepage. */ }
 
+    let shared=verifiedSessions.get(client);
+    if(!shared){shared={enabled:false,epoch:0,binding:null,value:null,job:null,onInvalidate:null};verifiedSessions.set(client,shared);}
+    function invalidate(notify=true){shared.epoch++;shared.binding=null;shared.value=null;shared.job=null;if(notify)shared.onInvalidate?.();}
+    function observeSession(event,session){
+      if(!shared.enabled)return;
+      const binding=sessionBinding(session);
+      if(event==='SIGNED_OUT'||event==='USER_UPDATED'||shared.binding&&binding!==shared.binding)invalidate();
+    }
     async function current() {
-      const { data: sessionData, error: sessionError } = await client.auth.getSession();
-      if (sessionError) throw sessionError;
-      if (!sessionData.session) return { role: 'reader', userId: null };
-      const { data, error } = await client.auth.getUser();
-      if (error) throw error;
-      if (!data.user) throw new Error('사용자 확인에 실패했습니다.');
-      const { data: admin, error: adminError } = await client.rpc('is_minihompy_admin');
-      if (adminError) throw adminError;
-      return { role: admin === true ? 'admin' : 'visitor', userId: data.user.id };
+      const epoch=shared.epoch;
+      let session;
+      try{const r=await client.auth.getSession();if(r.error)throw r.error;session=r.data.session;}
+      catch(e){if(shared.enabled&&epoch===shared.epoch)invalidate();throw e;}
+      if(shared.enabled&&epoch!==shared.epoch)throw Error('로그인 상태가 변경되었습니다.');
+      if(!session){if(shared.enabled&&shared.binding)invalidate();return {role:'reader',userId:null};}
+      const binding=shared.enabled?sessionBinding(session):null;
+      if(shared.enabled&&shared.binding&&binding!==shared.binding){invalidate();throw Error('로그인 상태가 변경되었습니다.');}
+      if(shared.enabled&&session.expires_at!==undefined&&session.expires_at*1000<=Date.now()){invalidate();throw Error('로그인 세션이 만료되었습니다.');}
+      if(binding&&shared.binding===binding&&shared.value)return shared.value;
+      if(binding&&shared.binding===binding&&shared.job)return shared.job;
+      const stamp=shared.epoch;
+      if(binding)shared.binding=binding;
+      const verify=(async()=>{
+        const {data,error}=await client.auth.getUser();if(error)throw error;
+        if(!data.user||data.user.id!==session.user.id)throw Error('사용자 확인에 실패했습니다.');
+        const {data:admin,error:adminError}=await client.rpc('is_minihompy_admin');if(adminError)throw adminError;
+        if(shared.enabled){
+          const now=await client.auth.getSession();if(now.error)throw now.error;
+          if(stamp!==shared.epoch||!now.data.session||now.data.session.user.id!==data.user.id||binding&&sessionBinding(now.data.session)!==binding)throw Error('로그인 상태가 변경되었습니다.');
+        }
+        const value=Object.freeze({role:admin===true?'admin':'visitor',userId:data.user.id});
+        if(binding&&stamp===shared.epoch&&value.role==='admin')shared.value=value;
+        return value;
+      })();
+      if(binding)shared.job=verify;
+      try{return await verify;}
+      catch(e){if(shared.enabled&&stamp===shared.epoch)invalidate();throw e;}
+      finally{if(shared.job===verify)shared.job=null;}
     }
 
     return Object.freeze({
+      enableSessionReuse(onInvalidate) { shared.enabled=true;shared.onInvalidate=onInvalidate; },
+      invalidate,
+      observeSession,
       getNickname() { return nickname; },
       setNickname(value) {
         nickname = normalizeNickname(value);

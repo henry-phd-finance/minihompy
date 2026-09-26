@@ -80,9 +80,9 @@
   async function content(path,options,ctx){
     check(ctx.writingStamp);if(blocked)throw changed();let accessToken;
     if(options.mode==='member'){await ensure();check(ctx.writingStamp);}
-    if(options.mode==='owner'){const r=await ctx.client.auth.getSession();check(ctx.writingStamp);accessToken=r.data?.session?.access_token;if(!accessToken)throw changed();}
+    if(options.mode==='owner'){const r=await ctx.client.auth.getSession();check(ctx.writingStamp);accessToken=r.data?.session?.access_token;if(r.error||!accessToken||r.data.session.user?.id!==ctx.userId){await window.MinihompyAdmin?.handleRejection?.({status:401});throw changed();}}
     try{const result=await api().content(path,{...options,accessToken});check(ctx.writingStamp);return result;}
-    catch(e){check(ctx.writingStamp);if([401,503].includes(e.status)||e.code==='IDENTITY_UNAVAILABLE')failClosed(e);throw e;}
+    catch(e){check(ctx.writingStamp);if(options.mode==='owner')await window.MinihompyAdmin?.handleRejection?.(e);check(ctx.writingStamp);if([401,503].includes(e.status)||e.code==='IDENTITY_UNAVAILABLE')failClosed(e);throw e;}
   }
   async function relationship(path,body,stamp=snapshot()){
     check(stamp);
@@ -100,18 +100,18 @@
     }else if(mode==='owner'){
       const ctx=await window.MinihompyVisitorSession.context();check(stamp);
       if(ctx.role!=='admin')throw Object.assign(Error('관리자 권한이 필요합니다.'),{status:403});
-      const r=await ctx.client.auth.getSession();check(stamp);accessToken=r.data?.session?.access_token;if(!accessToken)throw changed();
+      const r=await ctx.client.auth.getSession();check(stamp);accessToken=r.data?.session?.access_token;if(r.error||!accessToken||r.data.session.user?.id!==ctx.userId){await window.MinihompyAdmin?.handleRejection?.({status:401});throw changed();}
     }
     try{const result=await api().content(path,{method,body,mode,accessToken});check(stamp);return result;}
-    catch(e){check(stamp);if(mode==='member'&&([401,503].includes(e.status)||e.code==='IDENTITY_UNAVAILABLE'))failClosed(e);throw e;}
+    catch(e){check(stamp);if(mode==='owner')await window.MinihompyAdmin?.handleRejection?.(e);check(stamp);if(mode==='member'&&([401,503].includes(e.status)||e.code==='IDENTITY_UNAVAILABLE'))failClosed(e);throw e;}
   }
   async function read(action,{body,mode='public',signal}={},stamp=snapshot(),binary=false){
     check(stamp);let accessToken;
     if(mode==='member'){if(!enabled()||blocked||window.MinihompySharedIdentity?.state.status!=='identified')throw changed();await ensure();check(stamp);}
-    if(mode==='owner'){const ctx=await window.MinihompyVisitorSession.context();check(stamp);if(ctx.role!=='admin')throw changed();const r=await ctx.client.auth.getSession();check(stamp);accessToken=r.data?.session?.access_token;if(!accessToken)throw changed();}
+    if(mode==='owner'){const ctx=await window.MinihompyVisitorSession.context();check(stamp);if(ctx.role!=='admin')throw changed();const r=await ctx.client.auth.getSession();check(stamp);accessToken=r.data?.session?.access_token;if(r.error||!accessToken||r.data.session.user?.id!==ctx.userId){await window.MinihompyAdmin?.handleRejection?.({status:401});throw changed();}}
     for(let attempt=0;;attempt++){
       try{const value=await (binary?api().media(body,{mode,accessToken,signal}):api().read(action,{body,mode,accessToken,signal}));check(stamp);if(signal?.aborted)throw changed();return value;}
-      catch(e){check(stamp);if(signal?.aborted)throw e;
+      catch(e){check(stamp);if(mode==='owner')await window.MinihompyAdmin?.handleRejection?.(e);check(stamp);if(signal?.aborted)throw e;
         if(mode==='member'&&e.status===401&&attempt===0){cached=null;lastCheck=0;await ensure();check(stamp);continue;}
         if(mode==='member'&&([401,403,503].includes(e.status)||e.code==='IDENTITY_UNAVAILABLE'))failClosed(e);throw e;
       }

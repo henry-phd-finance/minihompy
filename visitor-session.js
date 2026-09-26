@@ -4,10 +4,11 @@
   const identity = () => visitor ||= window.createMinihompyIdentity(window.MinihompyBackend.getClient('visitor'));
   const isAdmin = () => window.MinihompyAdmin?.state.role === 'admin';
   async function context() {
+    const started=window.MinihompyAdmin?.state;
     const kind = isAdmin() ? 'admin' : 'visitor';
     const client = window.MinihompyBackend.getClient(kind);
     const who = await (kind === 'admin' ? window.createMinihompyIdentity(client) : identity()).current();
-    if (kind === 'admin' && who.role !== 'admin') throw new Error('관리자 권한을 확인하지 못했습니다.');
+    if (kind === 'admin' && (who.role !== 'admin' || who.userId !== started?.userId || window.MinihompyAdmin?.state !== started)) throw new Error('관리자 권한을 확인하지 못했습니다.');
     return { ...who, client };
   }
   window.MinihompyVisitorSession = Object.freeze({

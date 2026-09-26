@@ -28,6 +28,15 @@
         .order('created_at', { ascending: false }).order('id', { ascending: false }).range((page - 1) * size, page * size - 1));
       return { items: result.data, count: result.count };
     },
+    async revalidate(posts,ctx,{details=false}={}) {
+      const access=window.MinihompyContentAccess;
+      const readiness=await access.read?.('readiness');ctx?.assert?.();
+      if(!readiness||readiness.legacy||readiness.capabilities?.photo_check_protocol!==1)return null;
+      const r=await access.read('photo-check',{posts:posts.map(({id,revision})=>({id,revision}))});ctx?.assert?.();
+      const items=r?.data?.items;
+      if(r?.legacy||!Array.isArray(items)||items.length!==posts.length||items.some((p,i)=>!p||p.id!==posts[i].id||typeof p.valid!=='boolean'))throw Error('사진글 확인 응답이 올바르지 않습니다. 다시 조회해 주세요.');
+      return details?items:items.every(p=>p.valid);
+    },
     upload: (path,file)=>window.MinihompyPhotoMedia.upload(path,file),
     async save(draft) {
       validate(draft);

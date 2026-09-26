@@ -116,7 +116,7 @@
     try{if(await editor.start(post,selected)){if(token!==request)return;if(!post)clearTarget();void renderMain();}}
     catch(error){if(token===request){notice=error.message;void renderMain();}}
   }
-  function postElement(post,scope) {
+  function postElement(post,jobs) {
     const article = node('article', 'photo-post');
     article.dataset.post = post.id;
     const title = node('h3', 'photo-post-title', post.title);
@@ -127,11 +127,9 @@
     meta.append(author, node('time', 'photo-date', date), node('span', 'photo-scraps', '스크랩:0'));
     const body = post.body.map(block => {
       if (block.type === 'text') return node('p', 'photo-caption', block.text);
-      const img = node('img', 'photo-image');
-      img.src = scope.get(post.id+':'+block.path);
-      img.addEventListener('error',()=>{if(article.isConnected)showFailure(new Error('사진을 표시하지 못했습니다.'));},{once:true});
-      img.alt = '';
-      return img;
+      const slot=node('div','photo-image-slot');slot.dataset.state='loading';slot.setAttribute('aria-busy','true');
+      slot.append(node('span','photo-image-status','사진을 불러오고 있습니다.'));
+      jobs.push({post,path:block.path,slot});return slot;
     });
     const privacy = node('p', 'photo-privacy', post.visibility==='private'?'공개설정 : 나만보기':post.visibility==='friends'?'공개설정 : 일촌 공개':'공개설정 : 공개');
     const comments = window.MinihompyComments.create('photos', post.id);
@@ -158,7 +156,7 @@
       const remove = node('button', 'photo-delete', '삭제'); remove.type = 'button';
       remove.addEventListener('click', async () => {
         if (!admin() || deleting || editor.busy || !confirm('이 사진글을 삭제할까요?')) return;
-        const token = request, originalRoot = mainRoot; deleting = true; renderFolders();
+        const token = request, originalRoot = mainRoot; deleting = true; mediaScope?.dispose(); renderFolders();
         for (const button of actions.querySelectorAll('button')) button.disabled = true;
         try {
           await repository.remove(post);
@@ -177,6 +175,76 @@
     return article;
   }
 
+  // A batch only authorizes images decoded BEFORE that batch began. Later arrivals
+  // stay queued for another fresh check, even when they belong to the same post.
+  function progressivePhotos(jobs,posts,ctx,token,folder,currentPage) {
+    let stopped=false,running=false,timer=null;const ready=[];
+    const invalid=new Set();
+    const alive=()=>!stopped&&token===request&&mainRoot?.isConnected;
+    const dispose=()=>{stopped=true;clearTimeout(timer);ready.length=0;for(const j of jobs)j.scope?.dispose();};
+    mediaScope={dispose};
+    const globalError=e=>['AUTH_REQUIRED','SESSION_EXPIRED','SESSION_REVOKED','FORBIDDEN','TARGET_MISMATCH','IDENTITY_UNAVAILABLE','READ_CONTEXT_EXPIRED','NOT_CONFIGURED','READINESS_INVALID','PROTOCOL_MISMATCH','401','403'].includes(e?.code)||e?.status===401||e?.status===403;
+    const removed=post=>{
+      invalid.add(post.id);for(const j of jobs)if(j.post.id===post.id)j.scope?.dispose();
+      window.MinihompyComments?.forget('photos',post.id);
+      const article=[...mainRoot.querySelectorAll('.photo-post')].find(el=>el.dataset.post===post.id);
+      if(article){article.className='photo-post-unavailable';article.removeAttribute('data-post');
+        const retry=node('button','photo-post-retry','다시 조회');retry.type='button';retry.addEventListener('click',()=>void renderMain());
+        article.replaceChildren(node('p','photo-empty','사진글이 변경되었거나 조회할 수 없습니다.'),retry);}
+    };
+    const fileFailure=job=>{
+      job.scope?.dispose();job.slot.dataset.state='error';job.slot.setAttribute('aria-busy','false');
+      const retry=node('button','photo-image-retry','사진 다시 시도');retry.type='button';
+      retry.addEventListener('click',()=>{if(alive()&&!invalid.has(job.post.id))void load(job);});
+      job.slot.replaceChildren(node('span','photo-image-status','사진을 표시하지 못했습니다.'),retry);
+    };
+    const schedule=()=>{if(alive()&&!running&&timer===null)timer=setTimeout(()=>{timer=null;void flush();},16);};
+    async function flush(){
+      if(!alive()||running||!ready.length)return;
+      running=true;const batch=ready.splice(0); // Never add later downloads to this snapshot.
+      try{
+        const checkedPosts=posts.filter(p=>!invalid.has(p.id));
+        if(!checkedPosts.length)return;
+        let checks=await repository.revalidate?.(checkedPosts,ctx,{details:true})??null;
+        if(!alive())return;
+        if(checks===null){
+          const latest=await repository.list(folder,currentPage,pageSize,ctx);if(!alive())return;
+          checks=checkedPosts.map(p=>({id:p.id,valid:JSON.stringify(latest.items.find(x=>x.id===p.id))===JSON.stringify(p)}));
+        }else if(typeof checks==='boolean')checks=checkedPosts.map(p=>({id:p.id,valid:checks}));
+        await ctx.verify();if(!alive())return;
+        if(checks.some(c=>!c.valid&&posts.find(p=>p.id===c.id)?.visibility==='friends'))throw Error('일촌 공개 글의 조회 상태가 변경되었습니다. 다시 조회해 주세요.');
+        for(const c of checks)if(!c.valid)removed(posts.find(p=>p.id===c.id));
+        for(const job of batch){
+          if(!alive()||invalid.has(job.post.id))continue;
+          if(job.error){if(globalError(job.error))throw job.error;fileFailure(job);continue;}
+          job.slot.dataset.state='ready';job.slot.setAttribute('aria-busy','false');job.slot.replaceChildren(job.image);
+        }
+        requestAnimationFrame(updateScroll);
+      }catch(error){if(alive())showFailure(error);}
+      finally{running=false;if(ready.length)schedule();}
+    }
+    async function load(job){
+      if(!alive()||invalid.has(job.post.id))return;
+      job.scope?.dispose();job.scope=window.MinihompyPhotoMedia.scope();job.error=null;
+      job.slot.dataset.state='loading';job.slot.setAttribute('aria-busy','true');job.slot.replaceChildren(node('span','photo-image-status','사진을 불러오고 있습니다.'));
+      try{
+        const src=await job.scope.read(job.post.id,job.path);if(!alive()||invalid.has(job.post.id))return;
+        const img=node('img','photo-image');img.alt='';img.src=src;
+        await img.decode();if(!alive()||invalid.has(job.post.id))return;
+        img.addEventListener('error',()=>{if(alive()&&!invalid.has(job.post.id)){job.error=Error('사진 디코딩 오류');ready.push(job);schedule();}},{once:true});
+        job.image=img;
+      }catch(error){if(!alive()||invalid.has(job.post.id))return;if(globalError(error)){showFailure(error);return;}job.error=error;}
+      ready.push(job);schedule();
+    }
+    // Route focus/scroll happens first. Submit nearest placeholders first; the
+    // shared media client retains its global maximum of four downloads.
+    requestAnimationFrame(()=>{
+      if(!alive())return;const bounds=mainRoot.getBoundingClientRect();
+      const distance=j=>{const r=j.slot.getBoundingClientRect();return Math.max(bounds.top-r.bottom,r.top-bounds.bottom,0);};
+      for(const job of [...jobs].sort((a,b)=>distance(a)-distance(b)))void load(job);
+    });
+  }
+
   function showFailure(error) {
     request++;mediaScope?.dispose();mediaScope=null;
     window.MinihompyComments?.clearKind?.('photos');
@@ -188,6 +256,7 @@
 
   async function renderMain() {
     const token = ++request;mediaScope?.dispose();mediaScope=null;
+    window.MinihompyComments?.clearKind?.('photos');
     if (editor.active && admin()) {
       renderFolders();
       mainRoot.replaceChildren(editor.render(folders, (saved, warning) => {
@@ -201,29 +270,21 @@
     }
     mainRoot.replaceChildren(node('p', 'photo-empty', '사진첩을 불러오고 있습니다.'));
     requestAnimationFrame(updateScroll);
-    let posts, count;const sources=new Map();
+    let posts,count,ctx,result;const jobs=[];
     try {
-      const ctx=await repository.context();if(token!==request)return;
+      ctx=await repository.context();if(token!==request)return;
       friendsReady=admin()&&await window.MinihompyContentAccess.friendsReady?.()===true;if(token!==request)return;
       if (!folders.length) { folders = await repository.folders(); if (token !== request) return; populateFolders(); }
       if(target){const location=await window.MinihompyPostLocation.locate('photos',target,pageSize,ctx.client);if(token!==request)return;selected=location.folder_id;page=location.page;}
       if (!folders.some(f => f.id === selected && f.kind === 'folder')) selected = folders.find(f => f.kind === 'folder')?.id;
       renderFolders();
       if (!selected) { mainRoot.replaceChildren(node('p', 'photo-empty', '등록된 폴더가 없습니다.')); return; }
-      const result = await repository.list(selected, page, pageSize,ctx);
+      result = await repository.list(selected, page, pageSize,ctx);
       if (token !== request) return;
       posts = result.items; count = result.count;
       if(target&&!posts.some(p=>p.id===target))throw Error('글이 삭제되었거나 조회할 수 없습니다.');
       const maximum = Math.max(1, Math.ceil(count / pageSize));
       if (page > maximum) { page = maximum; renderMain(); return; }
-      const scope=window.MinihompyPhotoMedia.scope();mediaScope=scope;
-      await Promise.all(posts.flatMap(post=>post.body.filter(block=>block.type==='image').map(async block=>{
-        const src=await scope.read(post.id,block.path);if(token!==request)return;sources.set(post.id+':'+block.path,src);
-      })));
-      if(token!==request)return;
-      // Recheck the page after all bytes arrive; never attach stale metadata or comments.
-      const final=await repository.list(selected,page,pageSize,ctx);if(token!==request)return;
-      if(JSON.stringify(final)!==JSON.stringify(result))throw Error('사진글이 변경되었습니다. 다시 조회해 주세요.');
       await ctx.verify();if(token!==request)return;
     } catch (error) {
       if (token !== request) return;
@@ -248,7 +309,7 @@
       toolbar.append(write);
     }
     const list = node('div', 'photo-post-list');
-    list.append(...posts.map(post=>postElement(post,sources)));
+    list.append(...posts.map(post=>postElement(post,jobs)));
     if (!posts.length) list.append(node('p', 'photo-empty', '등록된 사진이 없습니다.'));
     const pagination = node('nav', 'photo-pagination');
     pagination.setAttribute('aria-label', '사진첩 페이지');
@@ -273,6 +334,7 @@
     mainRoot.replaceChildren(description, summary, toolbar, status, list, pagination);
     requestAnimationFrame(()=>window.MinihompyPostRoutes?.focus(mainRoot,target));
     mainRoot.scrollTop = 0;
+    progressivePhotos(jobs,posts,ctx,token,selected,page);
     requestAnimationFrame(updateScroll);
   }
 

@@ -14,10 +14,14 @@
   let busy = false;
   let generation = 0;
   function publish(next) {
+    const role=next.role==='admin'?'admin':'reader',userId=role==='admin'?next.userId:null;
+    document.documentElement.dataset.identity=role;
+    if(state.role===role&&state.userId===userId)return;
     state = Object.freeze({ role: next.role === 'admin' ? 'admin' : 'reader', userId: next.role === 'admin' ? next.userId : null });
     document.documentElement.dataset.identity = state.role;
     window.dispatchEvent(new CustomEvent('minihompy:identity', { detail: state }));
   }
+  identity.enableSessionReuse?.(()=>{++generation;publish({role:'reader'});});
   function setBusy(value) {
     busy = value;
     toggle.disabled = submit.disabled = close.disabled = value;
@@ -119,14 +123,25 @@
   dialog.addEventListener('cancel', event => { if (busy) event.preventDefault(); });
   dialog.addEventListener('close', () => { password.value = ''; });
   // Defer SDK calls outside the Auth callback to avoid its session lock.
-  client.auth.onAuthStateChange(event => {
+  client.auth.onAuthStateChange((event,session) => {
+    identity.observeSession?.(event,session);
     if (event === 'SIGNED_OUT') { ++generation; publish({ role: 'reader' }); }
     else if (!busy) setTimeout(() => { if (!busy) void refresh(); }, 0);
   });
   window.addEventListener('online', () => { if (!busy) void refresh(); });
+  let rechecking;
+  async function handleRejection(error){
+    if(!error||!([401,403].includes(error.status)||['42501','PGRST301','PGRST302','JWT_EXPIRED'].includes(error.code)))return;
+    if(!rechecking){
+      identity.invalidate?.(false);
+      rechecking=refresh().finally(()=>{rechecking=null;});
+    }
+    await rechecking;
+  }
   window.MinihompyAdmin = Object.freeze({
     get state() { return state; },
     refresh,
+    handleRejection,
     openLogin,
   });
   void refresh();

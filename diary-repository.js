@@ -16,6 +16,13 @@
     validate,
     async folders() { return checked(await (await reader()).from('diary_folders').select('*').order('sort_order').order('id')).data; },
     async dates(folder, month, ctx) { const r=await window.MinihompyContentAccess.read?.('calendar',{month,folder_id:folder});ctx?.assert?.();if(r&&!r.legacy)return r.data.dates;return checked(await (ctx?.client || await reader()).rpc('diary_written_dates', { selected_folder: folder, month_start: `${month}-01` })).data; },
+    async latest(folder,size,ctx) {
+      const readiness=await window.MinihompyContentAccess.read?.('readiness',{});ctx?.assert?.();
+      if(!readiness||readiness.legacy||readiness.capabilities?.diary_latest_protocol!==1)return null;
+      const result=await window.MinihompyContentAccess.read('list',{kind:'diary',folder_id:folder,latest:true,page:1,size});ctx?.assert?.();
+      if(result.legacy)throw Error('다이어리 서버 준비 상태가 변경되었습니다. 다시 조회해 주세요.');
+      return result.data;
+    },
     async list(folder, date, page, size, ctx) {
       const r=await window.MinihompyContentAccess.read?.('list',{kind:'diary',folder_id:folder,date,page,size});ctx?.assert?.();if(r&&!r.legacy)return r.data;
       const result = checked(await (ctx?.client || await reader()).from('diary_entries').select('*', { count: 'exact' }).eq('folder_id', folder).eq('entry_date', date)

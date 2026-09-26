@@ -31,8 +31,14 @@ async function json(source,max=8192,signal){
 }
 export async function rpc(db,name,args,signal){const r=await db.rpc(name,args,signal);if(r?.error||!r?.data)fail(name==='friend_visibility_status'?'NOT_CONFIGURED':'IDENTITY_UNAVAILABLE');if(r.data.failure)fail(r.data.failure);return r.data;}
 function input(action,b,mode){
+ if(action==='photo-check'){
+  const scope=b.scope??(mode==='public'?'public':'visible');
+  if(Object.keys(b).some(k=>!['posts','scope'].includes(k))||!['public','visible'].includes(scope)||mode==='public'&&scope!=='public'||!Array.isArray(b.posts)||b.posts.length<1||b.posts.length>2)fail('BAD_REQUEST');
+  const posts=b.posts.map(p=>{if(!p||Object.keys(p).length!==2||typeof p.id!=='string'||!UUID.test(p.id)||!Number.isSafeInteger(p.revision)||p.revision<1)fail('BAD_REQUEST');return {id:p.id.toLowerCase(),revision:p.revision};});
+  if(new Set(posts.map(p=>p.id)).size!==posts.length)fail('BAD_REQUEST');return {scope,selectors:{posts}};
+ }
  if(isAggregate(action))return aggregateInput(action,b,mode);
- const allowed=action==='list'?['kind','folder_id','month','page','size','scope','date']:['kind','id','scope'];
+ const allowed=action==='list'?['kind','folder_id','month','page','size','scope','date','latest']:['kind','id','scope'];
  if(Object.keys(b).some(k=>!allowed.includes(k)||b[k]===null)||!['board','photos','diary'].includes(b.kind))fail('BAD_REQUEST');
  const scope=b.scope??(mode==='public'?'public':'visible');if(!['public','visible'].includes(scope)||mode==='public'&&scope!=='public')fail('BAD_REQUEST');
  const selectors={kind:b.kind};
@@ -40,6 +46,7 @@ function input(action,b,mode){
  else{
   selectors.page=b.page??1;selectors.size=b.size??20;
   if(!Number.isInteger(selectors.page)||selectors.page<1||selectors.page>100000||!Number.isInteger(selectors.size)||selectors.size<1||selectors.size>20)fail('BAD_REQUEST');
+  if('latest'in b){if(b.kind!=='diary'||b.latest!==true||'date'in b||'month'in b||selectors.page!==1)fail('BAD_REQUEST');selectors.latest=true;}
   if('folder_id'in b){if(typeof b.folder_id!=='string'||!UUID.test(b.folder_id))fail('BAD_REQUEST');selectors.folder_id=b.folder_id.toLowerCase();}
   if('date'in b){if(b.kind!=='diary'||typeof b.date!=='string'||!/^(?:19\d{2}|[2-9]\d{3})-(0[1-9]|1[0-2])-\d{2}$/.test(b.date)||!Number.isFinite(Date.parse(b.date))||new Date(b.date).toISOString().slice(0,10)!==b.date)fail('BAD_REQUEST');selectors.date=b.date;}
   if('month'in b){if(b.kind!=='diary'||typeof b.month!=='string'||!/^(?:19\d{2}|[2-9]\d{3})-(0[1-9]|1[0-2])$/.test(b.month))fail('BAD_REQUEST');selectors.month=b.month;}
@@ -70,6 +77,11 @@ export async function authorize(req,c,state,scope,selectors,action,prefix='conte
 }
 function output(d,mode,scope,friend,action,s){
  if(d.protocol!==1||d.view?.mode!==mode||d.view?.scope!==scope||d.view?.includes_friends!==(scope==='visible'&&(mode==='owner'||friend)))fail('IDENTITY_UNAVAILABLE');
+ if(action==='photo-check'){
+  const items=d.data?.items;
+  if(!Array.isArray(items)||items.length!==s.posts.length||items.some((p,i)=>!p||p.id!==s.posts[i].id||typeof p.valid!=='boolean'))fail('IDENTITY_UNAVAILABLE');
+  return {protocol:1,view:{mode,scope,includes_friends:d.view.includes_friends},data:{items:items.map(({id,valid})=>({id,valid}))}};
+ }
  if(isAggregate(action))return {protocol:1,view:{mode,scope,includes_friends:d.view.includes_friends},data:aggregateOutput(d.data,action,s)};
  const row=p=>{
   if(!p||!UUID.test(p.id||'')||!UUID.test(p.folder_id||'')||!(p.author_id===null||UUID.test(p.author_id||''))||typeof p.author_name!=='string'||[...p.author_name].length>20)fail('IDENTITY_UNAVAILABLE');
@@ -92,8 +104,13 @@ function output(d,mode,scope,friend,action,s){
  let data;
  if(action==='detail'){data={item:row(d.data?.item)};if(data.item.id!==s.id)fail('IDENTITY_UNAVAILABLE');}
  else{
-  const v=d.data;if(!v||!Number.isSafeInteger(v.count)||v.count<0||v.page!==s.page||v.size!==s.size||!Array.isArray(v.items)||v.items.length!==Math.min(s.size,Math.max(0,v.count-(s.page-1)*s.size)))fail('IDENTITY_UNAVAILABLE');
+  const v=d.data;if(!v||!Number.isSafeInteger(v.count)||v.count<0||v.page!==(s.latest?Math.max(1,Math.ceil(v.count/s.size)):s.page)||v.size!==s.size||!Array.isArray(v.items)||v.items.length!==Math.min(s.size,Math.max(0,v.count-(v.page-1)*s.size)))fail('IDENTITY_UNAVAILABLE');
   const items=v.items.map(row);if(new Set(items.map(p=>p.id)).size!==items.length||items.some(p=>s.folder_id&&p.folder_id!==s.folder_id||s.month&&!p.entry_date.startsWith(s.month)||s.date&&p.entry_date!==s.date))fail('IDENTITY_UNAVAILABLE');data={items,count:v.count,page:v.page,size:v.size};
+  if(s.latest){
+   if(!v.count){if(v.selected_date!==null||v.target_id!==null)fail('IDENTITY_UNAVAILABLE');}
+   else if(typeof v.selected_date!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(v.selected_date)||!Number.isFinite(Date.parse(v.selected_date))||new Date(v.selected_date).toISOString().slice(0,10)!==v.selected_date||items.some(p=>p.entry_date!==v.selected_date)||v.target_id!==items.at(-1)?.id)fail('IDENTITY_UNAVAILABLE');
+   data.selected_date=v.selected_date;data.target_id=v.target_id;
+  }
  }
  return {protocol:1,view:{mode,scope,includes_friends:d.view.includes_friends},data};
 }
@@ -104,18 +121,19 @@ export async function contentRead(req,c,mode,path,reply){
   const action=path.slice('/content/'.length);
   if(action==='health'){
    if(req.method!=='GET')fail('METHOD_NOT_ALLOWED');if(mode!=='public'||new URL(req.url).search)fail('BAD_REQUEST');
-   const s=ready(await rpc(c.db,'friend_visibility_status',{}));const keys=['friend_visibility_protocol','friend_visibility_ready','friend_media_ready','friend_summary_ready','friend_pages_ready'];return reply(200,{...Object.fromEntries(keys.map(k=>[k,s[k]])),friend_visibility_setup_protocol:1},headers);
+   const s=ready(await rpc(c.db,'friend_visibility_status',{}));const keys=['friend_visibility_protocol','friend_visibility_ready','friend_media_ready','friend_summary_ready','friend_pages_ready'];return reply(200,{...Object.fromEntries(keys.map(k=>[k,s[k]])),friend_visibility_setup_protocol:1,...(s.diary_latest_protocol===1?{diary_latest_protocol:1}:{}),...(s.photo_check_protocol===1?{photo_check_protocol:1}:{})},headers);
   }
-  if(!['list','detail'].includes(action)&&!isAggregate(action))fail('NOT_FOUND');if(req.method!=='POST')fail('METHOD_NOT_ALLOWED');
+  if(!['list','detail','photo-check'].includes(action)&&!isAggregate(action))fail('NOT_FOUND');if(req.method!=='POST')fail('METHOD_NOT_ALLOWED');
   if(new URL(req.url).search||req.headers.get('Content-Type')?.split(';')[0].trim().toLowerCase()!=='application/json')fail('BAD_REQUEST');
   const b=await bounded(signal=>json(req,8192,signal),req.signal,5000),{scope,selectors}=input(action,b,mode);
   const state=ready(await rpc(c.db,'friend_visibility_status',{}));
+  if(action==='photo-check'&&state.photo_check_protocol!==1)fail('NOT_CONFIGURED');
   let auth={},verified,check=()=>{if(req.signal.aborted)fail('IDENTITY_UNAVAILABLE');},friend=false;
   if(mode==='member'){
    if(!state.friend_visibility_ready)fail('NOT_CONFIGURED');
    verified=await authorize(req,c,state,scope,selectors,action);auth=verified.args;check=verified.fence;friend=verified.friend;
   }else if(mode==='owner'){if(!c.publicKey)fail('NOT_CONFIGURED');auth.owner_id=(await bounded(()=>authenticateOwner(req,c),req.signal,15000)).local_user_id;}
-  check();const result=await bounded(signal=>rpc(c.db,isAggregate(action)?'member_content_aggregate':'member_content_read',{p_action:action,p_args:{site_id:c.siteId,mode,scope,selectors,...auth}},signal),req.signal,verified?verified.remaining():5000).catch(e=>{check();throw e;});check();
+  check();const result=await bounded(signal=>rpc(c.db,action==='photo-check'?'member_photo_check':isAggregate(action)?'member_content_aggregate':'member_content_read',{p_action:action,p_args:{site_id:c.siteId,mode,scope,selectors,...auth}},signal),req.signal,verified?verified.remaining():5000).catch(e=>{check();throw e;});check();
   const clean=output(result,mode,scope,friend,action,selectors);
   if(mode==='member'){
    const current=await bounded(signal=>rpc(c.db,'member_writing_session',{p_action:'current',p_args:{site_id:c.siteId,token_hash:verified.verified.tokenHash}},signal),req.signal,verified.remaining()).catch(e=>{check();throw e;});

@@ -2,7 +2,7 @@
   'use strict';
   const repository = window.MinihompyDiaryRepository;
   const koreaNow = () => new Intl.DateTimeFormat('sv-SE', { timeZone: 'Asia/Seoul', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(new Date());
-  let target=null, friendsReady=false;
+  let target=null, friendsReady=false, latestPending=true, calendarStatus='idle', calendarSerial=0;
   function clearTarget(){target=null;window.MinihompyApp?.clearPost?.();}
   let folders = [], folderId;
   let selectedDate = koreaNow().slice(0, 10);
@@ -109,7 +109,8 @@
   }
   function renderCalendar() {
     const [year, month, day] = parts();
-    calendar.replaceChildren();
+    const focus=document.activeElement;const focused=calendar.contains(focus)?{date:focus.dataset.date,month:focus.dataset.month}:null;
+    calendar.replaceChildren();calendar.dataset.status=calendarStatus;calendar.setAttribute('aria-busy',String(calendarStatus==='loading'));
     const badge = element('div', 'diary-date-badge');
     badge.append(element('strong', '', `${pad(month)}.${pad(day)}`), element('span', '', weekdays[new Date(Date.UTC(year, month - 1, day)).getUTCDay()]));
     const dates = element('div', 'diary-dates');
@@ -118,7 +119,7 @@
       if (draft || busy) return;
       const next = new Date(Date.UTC(year, month - 1 + delta, 1));
       if (next.getUTCFullYear() < 1900 || next.getUTCFullYear() > 9999) return;
-      clearTarget();selectedDate = dateKey(next.getUTCFullYear(), next.getUTCMonth() + 1, Math.min(day, daysInMonth(next.getUTCFullYear(), next.getUTCMonth() + 1)));
+      clearTarget();latestPending=false;selectedDate = dateKey(next.getUTCFullYear(), next.getUTCMonth() + 1, Math.min(day, daysInMonth(next.getUTCFullYear(), next.getUTCMonth() + 1)));
       page = 1; writtenDates.clear(); notice = '';
       render().then(() => calendar.querySelector(`[data-month="${delta}"]`)?.focus({ preventScroll: true }));
     };
@@ -133,12 +134,18 @@
       const weekday = new Date(Date.UTC(year, month - 1, number)).getUTCDay();
       const el = button(String(number), `${key}${written ? ' 일기 있음' : ''}`, () => {
         if (draft || busy) return;
-        clearTarget();selectedDate = key; page = 1; notice = '';
+        clearTarget();latestPending=false;selectedDate = key; page = 1; notice = '';
         render().then(() => calendar.querySelector(`[data-date="${key}"]`)?.focus({ preventScroll: true }));
       }, `diary-day${written ? ' written' : ''}${weekday === 0 ? ' sunday' : weekday === 6 ? ' saturday' : ''}`);
       el.dataset.date = key; el.setAttribute('aria-pressed', String(number === day)); numbers.append(el);
     }
     dates.append(monthBar, numbers); calendar.append(badge, dates);
+    if(calendarStatus==='error'){
+      const warning=element('span','diary-calendar-error','날짜 표시를 불러오지 못했습니다. ');warning.setAttribute('role','status');
+      warning.append(button('재시도','달력 날짜 다시 조회',async()=>{const token=request;try{await window.MinihompyContentAccess.retry?.();}catch{if(token===request){calendarStatus='error';renderCalendar();}return;}if(token===request)void loadCalendar(token);},'diary-calendar-retry'));dates.append(warning);
+    }
+    if(focused?.date)calendar.querySelector(`[data-date="${focused.date}"]`)?.focus({preventScroll:true});
+    else if(focused?.month)calendar.querySelector(`[data-month="${focused.month}"]`)?.focus({preventScroll:true});
     for (const el of calendar.querySelectorAll('button')) el.disabled = Boolean(draft || busy);
     previous.disabled ||= year === 1900 && month === 1;
     next.disabled ||= year === 9999 && month === 12;
@@ -166,7 +173,7 @@
     if(!entry)clearTarget();
     resetDraft();
     draft = entry ? { ...entry, entry_time: entry.entry_time.slice(0, 5) } : {
-      id: crypto.randomUUID(), folder_id: folderId, entry_date: selectedDate, entry_time: koreaNow().slice(11, 16), weather: '', body: '', visibility:'public',
+      id: crypto.randomUUID(), folder_id: folderId, entry_date: koreaNow().slice(0,10), entry_time: koreaNow().slice(11, 16), weather: '', body: '', visibility:'public',
     };
     notice = ''; render();
   }
@@ -207,7 +214,7 @@
       try {
         const saved = await repository.save({ ...draft });
         if (token !== epoch || !admin()) return;
-        folderId = saved.folder_id; selectedDate = saved.entry_date; page = 1;
+        latestPending=false;folderId = saved.folder_id; selectedDate = saved.entry_date; page = 1;
         window.MinihompyComments.forget('diary',saved.id);window.dispatchEvent(new Event('minihompy:content-changed'));
         resetDraft(); notice = '저장했습니다.'; render();
       } catch (error) {
@@ -223,7 +230,7 @@
   async function refreshManagedFolders(change) {
     if (!content?.isConnected || !admin()) return;
     if (change?.action === 'delete' && folderId === change.args.id) folderId = change.args.destination_id || undefined;
-    folders = []; writtenDates.clear(); page = 1; await render();
+    latestPending=true;folders = []; writtenDates.clear(); page = 1; await render();
   }
   function manageFolders() {
     if (!admin() || draft || busy) return;
@@ -236,16 +243,32 @@
     for (const folder of folders) {
       const el = button('', folder.label, () => {
         if (draft || busy) return;
-        clearTarget();folderId = folder.id; page = 1; writtenDates.clear(); notice = ''; render();
+        clearTarget();latestPending=true;folderId = folder.id; page = 1; writtenDates.clear(); notice = ''; render();
       }, 'photo-folder');
       el.dataset.diaryFolder = folder.id;
       el.append(element('i', 'photo-folder-icon'), element('span', '', folder.label)); nav.append(el);
     }
     nav.append(element('div', 'diary-folder-heading secondary', '함께 쓰는 다이어리'));
   }
+  async function loadCalendar(token,ctx) {
+    const serial=++calendarSerial,folder=folderId,month=selectedDate.slice(0,7);
+    calendarStatus='loading';renderCalendar();
+    try{
+      const dates=await repository.dates(folder,month,ctx);
+      if(serial!==calendarSerial||token!==request||folder!==folderId||month!==selectedDate.slice(0,7))return;
+      writtenDates=new Set(dates);calendarStatus='ready';renderCalendar();
+    }catch(error){
+      if(serial!==calendarSerial||token!==request||folder!==folderId||month!==selectedDate.slice(0,7))return;
+      writtenDates.clear();calendarStatus='error';renderCalendar();
+      if([401,403].includes(error.status)||['AUTH_REQUIRED','SESSION_REVOKED','SESSION_EXPIRED','FORBIDDEN','TARGET_MISMATCH'].includes(error.code)){
+        request++;window.MinihompyComments?.clearKind?.('diary');
+        content.replaceChildren(element('p','diary-status','일기 조회 권한을 확인하지 못했습니다.'),button('다시 시도','다이어리 다시 조회',()=>void render(),'diary-retry'));
+      }
+    }
+  }
   async function render() {
     const token = ++request;
-    writtenDates.clear();renderCalendar();
+    calendarStatus='idle';writtenDates.clear();renderCalendar();
     if (draft && admin()) {
       content.replaceChildren(editorView()); content.scrollTop = 0;
       requestAnimationFrame(updateScroll); return;
@@ -261,22 +284,26 @@
       if(target){const location=await window.MinihompyPostLocation.locate('diary',target,pageSize,ctx.client);if(token!==request)return;folderId=location.folder_id;selectedDate=location.entry_date;page=location.page;}
       if (!folders.some(f => f.id === folderId)) folderId = folders[0]?.id;
       if (!folderId) { content.replaceChildren(element('p', 'diary-empty', '등록된 폴더가 없습니다.')); renderCalendar(); return; }
-      const dates = await repository.dates(folderId, selectedDate.slice(0, 7),ctx);
-      if (token !== request) return;
-      writtenDates = new Set(dates); renderCalendar();
-      const result = await repository.list(folderId, selectedDate, page, pageSize,ctx);
-      if (token !== request) return;
+      let result,focusTarget=target;
+      if(latestPending&&!target){
+        result=await repository.latest?.(folderId,pageSize,ctx);if(token!==request)return;
+        if(result){selectedDate=result.selected_date||koreaNow().slice(0,10);page=result.page;focusTarget=result.target_id;}
+        latestPending=false;
+      }
+      void loadCalendar(token,ctx);
+      if(!result)result=await repository.list(folderId,selectedDate,page,pageSize,ctx);
+      if(token!==request)return;
       if(target&&!result.items.some(p=>p.id===target))throw Error('글이 삭제되었거나 조회할 수 없습니다.');
       const maximum = Math.max(1, Math.ceil(result.count / pageSize));
       if (page > maximum) { page = maximum; return render(); }
       const status = element('p', 'diary-status', notice); status.setAttribute('role', 'status');
       content.replaceChildren(status, ...result.items.map(entryView));
-      requestAnimationFrame(()=>window.MinihompyPostRoutes?.focus(content,target));
+      requestAnimationFrame(()=>{if(token===request)window.MinihompyPostRoutes?.focus(content,focusTarget);});
       if (!result.items.length) content.append(element('p', 'diary-empty', '등록된 일기가 없습니다.'));
       if (maximum > 1) {
         const nav = element('nav', 'diary-actions'); nav.setAttribute('aria-label', '일기 페이지');
-        const prev = button('‹', '이전 일기 페이지', () => { clearTarget();page--; render(); }); prev.disabled = page === 1;
-        const next = button('›', '다음 일기 페이지', () => { clearTarget();page++; render(); }); next.disabled = page === maximum;
+        const prev = button('‹', '이전 일기 페이지', () => { clearTarget();latestPending=false;page--; render(); }); prev.disabled = page === 1;
+        const next = button('›', '다음 일기 페이지', () => { clearTarget();latestPending=false;page++; render(); }); next.disabled = page === maximum;
         nav.append(prev, element('span', '', `${page} / ${maximum}`), next); content.append(nav);
       }
     } catch (error) {
@@ -291,7 +318,7 @@
   window.addEventListener('focus',()=>{if(content?.isConnected&&!draft&&!busy)void render();});
   document.addEventListener('visibilitychange',()=>{if(!content?.isConnected||draft||busy)return;if(document.visibilityState==='hidden'){request++;writtenDates.clear();renderCalendar();content.replaceChildren();window.MinihompyComments?.clearKind?.('diary');}else void render();});
   window.addEventListener('minihompy:content-access-reset', () => {
-    resetDraft();request++;notice='';writtenDates.clear();page=1;selectedDate=koreaNow().slice(0,10);
+    resetDraft();request++;latestPending=true;calendarStatus='idle';notice='';writtenDates.clear();page=1;selectedDate=koreaNow().slice(0,10);
     window.MinihompyComments?.clearKind?.('diary');content?.replaceChildren();
     if(calendar)renderCalendar();if(content?.isConnected)void render();
   });
@@ -310,7 +337,7 @@
       sidebar.append(nav, footer); populateFolders(); return fragment(sidebar);
     },
     createMain(route={}) {
-      target=route.post||null; folders = [];
+      target=route.post||null;latestPending=!target;if(!target){folderId=undefined;selectedDate=koreaNow().slice(0,10);page=1;} folders = [];
       calendar = element('div', 'diary-calendar');
       const summary = element('p', 'diary-summary', '읽기 권한이 있는 일기를 표시합니다.');
       content = element('div', 'diary-scroll'); content.id = 'diary-content'; content.tabIndex = 0; content.setAttribute('aria-label', '일기 본문');
@@ -320,6 +347,6 @@
   };
   window.addEventListener('minihompy:menu-leave', event => {
     if (event.detail.id !== null && event.detail.id !== 'diary') return;
-    resetDraft(); request++; notice = '';writtenDates.clear(); content?.replaceChildren();
+    resetDraft(); request++; calendarStatus='idle';notice = '';writtenDates.clear(); content?.replaceChildren();
   });
 })();

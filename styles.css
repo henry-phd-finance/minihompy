@@ -268,6 +268,8 @@ button:disabled, input:disabled { opacity: 1; -webkit-text-fill-color: currentCo
 .diary-date-badge { display: flex; flex-direction: column; justify-content: center; align-items: center; color: #329fb1; border-right: 1px solid #eee; }
 .diary-date-badge strong { font: bold 13px/16px var(--ui-font); }
 .diary-date-badge span { color: #aaa; font-size: 5px; line-height: 7px; }
+.diary-calendar-error { position: absolute; right: 3px; top: 2px; color: #999; font: 5px/9px var(--ui-font); }
+.diary-calendar-retry { border: 0; background: transparent; padding: 0; color: #365f9a; font: inherit; text-decoration: underline; cursor: pointer; }
 .diary-dates { min-width: 0; padding-left: 4px; }
 .diary-month { display: flex; align-items: center; height: 9px; gap: 3px; color: #999; font: 5px/8px var(--ui-font); }
 .diary-month button { padding: 0; border: 0; width: 8px; height: 9px; background: #fff; color: #999; font: 8px/8px var(--ui-font); cursor: pointer; }
@@ -637,3 +639,9 @@ button.surf-select { display: block; width: 100%; text-align: left; color: inher
 .home-profile-dialog p:empty { display: none; }
 .home-profile-editor-actions { display: flex; gap: 5px; flex-wrap: wrap; }
 .home-profile-dialog :focus-visible, .home-profile-edit:focus-visible { outline: 1px dotted #506d83; outline-offset: 2px; }
+
+/* Reserve a modest photo area until verified bytes are decoded. */
+.photo-image-slot { width: 100%; min-width: 0; }
+.photo-image-slot:not([data-state="ready"]) { min-height: 120px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; background: #f7f7f7; color: #888; font-size: 11px; }
+.photo-image-retry, .photo-post-retry { font: inherit; color: #555; cursor: pointer; }
+.photo-post-unavailable { padding: 12px 0; border-bottom: 1px solid #ddd; }

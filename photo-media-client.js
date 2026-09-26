@@ -35,7 +35,7 @@
    body:multipart?body:JSON.stringify(body),signal:signal||AbortSignal.timeout(30000),cache:'no-store',credentials:'omit',redirect:'error'});
   if(!response.ok){
    let code;try{code=(await response.json()).error?.code;}catch{}
-   if(auth&&(response.status===401||response.status===403))access.expire();
+   if(auth&&(response.status===401||response.status===403)){await access.verify();if(window.MinihompyAdmin?.handleRejection)await window.MinihompyAdmin.handleRejection({status:response.status,code});else access.expire();}
    throw failure(response.status===404?'사진이 삭제되었거나 조회할 수 없습니다.':'사진 요청을 완료하지 못했습니다. 다시 시도해 주세요.',code||String(response.status));
   }
   return {response,access};
