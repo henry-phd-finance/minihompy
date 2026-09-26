@@ -17,14 +17,14 @@
       const time=node('time','home-post-date',date);time.dateTime=item.created_at;link.append(time);row.append(link);list.append(row);
     }
     const aside=node('div','home-activity-counts');
-    const counts=node('dl','board-counts');
+    const counts=node('div','board-counts');
     const menus=(window.MINIHOMPY_CONFIG?.menus||[]).filter(m=>m.visible===true&&data.menus.includes(m.id)).map(m=>m.id);
-    for(const kind of menus){const row=node('div','');const term=node('dt','',labels[kind]),value=node('dd','');
+    for(const kind of menus){const row=node('div',''),link=node('a','home-count-link');link.href=`#/${kind}`;const term=node('span','home-count-label',labels[kind]),value=node('span','home-count-value');
       const numbers=node('span','home-count-numbers');
       numbers.append(node('span','home-count-today',String(data.counts[kind].today)),node('span','home-count-divider',' / '),node('span','home-count-total',String(data.counts[kind].total)));
       value.append(numbers);
       if(data.counts[kind].today>0){const badge=node('span','home-count-new','N');badge.title='오늘 새 글';badge.setAttribute('aria-hidden','true');value.append(badge);}
-      row.dataset.kind=kind;row.title=`${labels[kind]}: 오늘 ${data.counts[kind].today}, 전체 ${data.counts[kind].total}`;value.setAttribute('aria-label',row.title);row.append(term,value);counts.append(row);}
+      row.dataset.kind=kind;row.title=`${labels[kind]}: 오늘 ${data.counts[kind].today}, 전체 ${data.counts[kind].total}`;link.setAttribute('aria-label',`${row.title} · ${labels[kind]} 메뉴로 이동`);link.append(term,value);row.append(link);counts.append(row);}
     aside.append(counts);
     state.root.replaceChildren(data.recent.length?list:node('p','home-activity-empty',data.menus.length?'읽을 수 있는 게시물이 없습니다.':'표시할 메뉴가 없습니다.'),aside);
     state.root.dataset.status='ready';state.root.setAttribute('aria-busy','false');

@@ -21,6 +21,15 @@ await page.goto('https://fixture.test/#/home');const home=page.locator('.home-ac
 assert.equal(await page.locator('.home-count-new').count(),3);
 assert.equal(await page.locator('[data-kind=diary] .home-count-new').count(),0);
 for(const badge of await page.locator('.home-count-new').all()){assert.equal(await badge.textContent(),'N');assert(await badge.evaluate(e=>{const b=e.getBoundingClientRect(),d=e.parentElement.getBoundingClientRect();return b.width>0&&b.right<=d.right+1&&b.left>=d.left;}));}
+const alignment=await page.evaluate(()=>{const x=s=>document.querySelector(s).getBoundingClientRect().left;return {title:x('.homepage-title')-x('.recent-heading'),intro:x('.profile-status')-x('.history-heading')};});
+assert(Math.abs(alignment.title)<1,JSON.stringify(alignment));assert(Math.abs(alignment.intro)<1,JSON.stringify(alignment));
+for(const [kind,target] of [['diary','.home-count-label'],['photos','.home-count-numbers'],['board','.home-count-new'],['guestbook',null]]){
+ const link=page.locator(`.board-counts [data-kind="${kind}"] .home-count-link`);const expected=await page.locator(`[data-menu="${kind}"]`).getAttribute('href');assert.equal(await link.getAttribute('href'),expected);
+ if(target)await link.locator(target).click();else{await link.focus();await page.keyboard.press('Enter');}
+ await page.waitForFunction(hash=>location.hash===hash,expected);assert.equal(await page.locator('[data-target]').getAttribute('data-target'),'');
+ await page.locator('[data-menu="home"]').click();await page.waitForFunction(()=>document.querySelector('.home-activity')?.dataset.status==='ready');
+}
+console.log('PASS '+width+': aligned heading/introduction, menu label/count/N clicks and keyboard link match sidebar routes');
 await page.waitForFunction(()=>document.querySelector('.visit-count')?.dataset.status==='ready');assert.equal(await page.locator('[data-visit=total]').textContent(),'100');
 await page.screenshot({path:new URL(`home-${width}.png`,out).pathname});
 for(const kind of ['board','photos','diary','guestbook']){const link=page.locator(`.home-post-link[href^="#/${kind}?"]`).first();const href=await link.getAttribute('href');await link.focus();await page.keyboard.press('Enter');await page.locator('[data-target]').waitFor();assert.equal(new URL(page.url()).hash,href);assert.equal(await page.locator('[data-target]').getAttribute('data-target'),new URLSearchParams(href.split('?')[1]).get('post'));await page.locator('[data-menu=home]').click();await page.waitForFunction(()=>document.querySelector('.home-activity')?.dataset.status==='ready');}

@@ -67,10 +67,10 @@ button:disabled, input:disabled { opacity: 1; -webkit-text-fill-color: currentCo
 .visit-count { left: 65px; top: 57px; height: 8px; z-index: 20; display: flex; align-items: center; gap: 3px; color: #555; font: 5px/8px var(--ui-font); }
 .visit-count span + span { border-left: 1px solid #aaa; padding-left: 3px; }
 .visit-count b { color: #df542e; font-weight: 400; }
-.homepage-title { left: 181px; top: 56px; margin: 0; color: #285370; font-size: 8px; line-height: 11px; z-index: 20; }
+.homepage-title { left: 168px; top: 56px; margin: 0; color: #285370; font-size: 8px; line-height: 11px; z-index: 20; }
 .header-actions { left: 377px; top: 58px; height: 8px; z-index: 20; color: var(--action); font-size: 5.5px; line-height: 8px; white-space: nowrap; }
 .header-actions span { margin-left: 2px; }
-.profile-status { position: absolute; left: 26px; top: 84px; margin: 0; font-size: 6px; line-height: 9px; color: #777; white-space: nowrap; }
+.profile-status { position: absolute; left: 12px; top: 84px; margin: 0; font-size: 6px; line-height: 9px; color: #777; white-space: nowrap; }
 .profile-history { position: absolute; left: 12px; top: 172px; width: 87px; height: 38px; }
 .history-heading { height: 10px; border-bottom: 1px solid #dedede; display: flex; justify-content: space-between; color: #555; font: bold 4px/8px var(--ui-font); }
 .history-heading i { display: inline-block; border-left: 2px solid #4b9bac; border-top: 2px solid transparent; border-bottom: 2px solid transparent; margin-right: 1px; }
@@ -155,7 +155,7 @@ button:disabled, input:disabled { opacity: 1; -webkit-text-fill-color: currentCo
 /* Keep editable text inside the measured layout; short reference text is unclipped. */
 .text-clipped { overflow: hidden; text-overflow: ellipsis; }
 .homepage-title { max-width: 190px; white-space: nowrap; }
-.profile-status { max-width: 72px; }
+.profile-status { max-width: 87px; }
 .profile-name { white-space: nowrap; }
 .recent-empty { min-width: 0; white-space: nowrap; }
 .room-balloon > span { max-width: 65px; min-width: 0; white-space: nowrap; }
@@ -518,10 +518,13 @@ button.surf-select { display: block; width: 100%; text-align: left; color: inher
 .home-activity-counts { min-width: 0; margin-top: -2.17px; }
 .home-activity .board-counts { grid-template-columns: repeat(2,minmax(0,1fr)); grid-template-rows: none; grid-auto-rows: 13.01px; min-height: 39.75px; margin: 0; border-top: .72px dotted #d6d6d6; font: 7.23px/13.01px Dotum, '돋움', 'Minihompy News', sans-serif; align-content: start; }
 .home-activity .board-counts > div { align-items: center; gap: 2.17px; min-width: 0; border-bottom: .72px dotted #d6d6d6; }
-.home-activity .board-counts dd { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #416c86; font: bold 5.78px/13.01px Arial, sans-serif; }
-.home-activity .board-counts dt { flex-shrink: 0; color: #777; line-height: 1; }
+.home-count-link { display: flex; align-items: center; gap: 2.17px; width: 100%; min-width: 0; height: 100%; color: inherit; text-decoration: none; }
+.home-count-link:hover .home-count-label, .home-count-link:hover .home-count-numbers { text-decoration: underline; }
+.home-count-link:focus-visible { outline: 1px dotted #26778c; outline-offset: -1px; }
+.home-activity .home-count-value { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #416c86; font: bold 5.78px/13.01px Arial, sans-serif; }
+.home-activity .home-count-label { flex-shrink: 0; color: #777; line-height: 1; }
 /* Classic Cyworld new-post marker; counts use the site's Korea-time day. */
-.home-activity .board-counts dd { display: flex; align-items: center; gap: 1.44px; line-height: 1; }
+.home-activity .home-count-value { display: flex; align-items: center; gap: 1.44px; line-height: 1; }
 .home-count-numbers { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .home-count-new { display: inline-flex; align-items: center; justify-content: center; flex: none; box-sizing: border-box; width: 5.78px; height: 5.78px; border: .5px solid #e77c12; border-radius: .72px; background: #ff9a26; color: #fff; text-align: center; font: bold 4.34px/1 Arial, sans-serif; }
 .home-count-divider { font-size: 0; }
@@ -614,3 +617,23 @@ button.surf-select { display: block; width: 100%; text-align: left; color: inher
 .guestbook-composer .guestbook-body-input { width: calc(100% - 8px); height: 58px; margin: 4px; }
 .guestbook-composer .guestbook-compose-options { justify-content: flex-end; padding: 3px 4px; border-top: 1px solid #ddd; background: #fafafa; }
 .guestbook-composer .guestbook-status:not(:empty) { margin: 4px; }
+
+/* Sidebar profile: owner's compact edit link, with a separate accessible editor. */
+.profile-image-slot img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.profile-panel[data-view="home"] .profile-status { width: 87px; max-height: 64px; white-space: pre-wrap; overflow-wrap: anywhere; overflow-x: hidden; overflow-y: auto; }
+.home-profile-edit { position: absolute; left: 12px; top: 153px; padding: 0; border: 0; background: none; color: #777; font: 5.5px/10px var(--ui-font); cursor: pointer; }
+.home-profile-edit:hover { text-decoration: underline; }
+.home-profile-edit[hidden] { display: none; }
+.home-profile-dialog { width: min(340px,calc(100vw - 24px)); max-height: calc(100vh - 24px); overflow-y: auto; padding: 16px; border: 1px solid #aaa; background: #fff; color: #555; font: 12px/1.5 var(--ui-font); }
+.home-profile-dialog::backdrop { background: #0005; }
+.home-profile-dialog h2 { margin: 0 0 12px; color: #319abb; font-size: 14px; }
+.home-profile-dialog label { display: block; margin: 10px 0; }
+.home-profile-dialog input, .home-profile-dialog textarea { display: block; width: 100%; margin-top: 4px; font: inherit; }
+.home-profile-dialog textarea { padding: 5px; border: 1px solid #ccc; resize: vertical; }
+.home-profile-dialog img { display: block; width: 114px; height: 108px; object-fit: cover; }
+.home-profile-dialog [hidden] { display: none; }
+.home-profile-dialog button { padding: 3px 8px; border: 1px solid #ccc; background: #fafafa; color: #555; font: inherit; cursor: pointer; }
+.home-profile-dialog button:disabled { color: #aaa; cursor: default; }
+.home-profile-dialog p:empty { display: none; }
+.home-profile-editor-actions { display: flex; gap: 5px; flex-wrap: wrap; }
+.home-profile-dialog :focus-visible, .home-profile-edit:focus-visible { outline: 1px dotted #506d83; outline-offset: 2px; }
