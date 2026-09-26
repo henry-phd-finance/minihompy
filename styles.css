@@ -513,6 +513,10 @@ button.surf-select { display: block; width: 100%; text-align: left; color: inher
 .home-activity .board-counts > div { align-items: baseline; gap: 2.17px; min-width: 0; border-bottom: .72px dotted #d6d6d6; }
 .home-activity .board-counts dd { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #416c86; font: bold 5.78px/13.01px Arial, sans-serif; }
 .home-activity .board-counts dt { flex-shrink: 0; color: #777; }
+/* Classic Cyworld new-post marker; counts use the site's Korea-time day. */
+.home-activity .board-counts dd { display: flex; align-items: center; gap: 1.44px; }
+.home-count-numbers { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.home-count-new { display: inline-block; flex: none; box-sizing: border-box; width: 5.78px; height: 5.78px; border: .5px solid #e77c12; border-radius: .72px; background: #ff9a26; color: #fff; text-align: center; font: bold 4.34px/4.78px Arial, sans-serif; }
 .home-count-divider { font-size: 0; }
 .home-count-divider::after { content: '/'; font-size: 5.78px; }
 .home-activity .board-counts::after { content: ''; grid-column: 1 / -1; border-bottom: .72px dotted #d6d6d6; }

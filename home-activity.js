@@ -20,7 +20,10 @@
     const counts=node('dl','board-counts');
     const menus=(window.MINIHOMPY_CONFIG?.menus||[]).filter(m=>m.visible===true&&data.menus.includes(m.id)).map(m=>m.id);
     for(const kind of menus){const row=node('div','');const term=node('dt','',labels[kind]),value=node('dd','');
-      value.append(node('span','home-count-today',String(data.counts[kind].today)),node('span','home-count-divider',' / '),node('span','home-count-total',String(data.counts[kind].total)));
+      const numbers=node('span','home-count-numbers');
+      numbers.append(node('span','home-count-today',String(data.counts[kind].today)),node('span','home-count-divider',' / '),node('span','home-count-total',String(data.counts[kind].total)));
+      value.append(numbers);
+      if(data.counts[kind].today>0){const badge=node('span','home-count-new','N');badge.title='오늘 새 글';badge.setAttribute('aria-hidden','true');value.append(badge);}
       row.dataset.kind=kind;row.title=`${labels[kind]}: 오늘 ${data.counts[kind].today}, 전체 ${data.counts[kind].total}`;value.setAttribute('aria-label',row.title);row.append(term,value);counts.append(row);}
     aside.append(counts);
     state.root.replaceChildren(data.recent.length?list:node('p','home-activity-empty',data.menus.length?'읽을 수 있는 게시물이 없습니다.':'표시할 메뉴가 없습니다.'),aside);
