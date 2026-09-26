@@ -20,7 +20,15 @@
       catch { const error = Error('회원 인증 서버에 연결하지 못했습니다.'); error.code = 'IDENTITY_UNAVAILABLE'; throw error; }
       if(binary&&response.ok)return response;
       const data = await response.json().catch(() => ({}));
-      if (!response.ok) { const error = Error(({ RATE_LIMITED: '작성 횟수 제한에 도달했습니다. 잠시 후 다시 시도해 주세요.', REVISION_CONFLICT: '다른 곳에서 변경된 글입니다. 다시 조회해 주세요.', REQUEST_CONFLICT: '이미 처리됐거나 내용이 변경된 요청입니다. 목록을 다시 확인해 주세요.', NOT_FOUND: '글을 찾을 수 없거나 권한이 없습니다.' })[data.error?.code] || '회원 인증을 확인하지 못했습니다.'); error.code = data.error?.code || 'IDENTITY_UNAVAILABLE'; error.status = response.status; error.retryAfter=Number(response.headers.get('Retry-After'))||1; throw error; }
+      if (!response.ok) { const error = Error(({ RATE_LIMITED: '작성 횟수 제한에 도달했습니다. 잠시 후 다시 시도해 주세요.', REVISION_CONFLICT: '다른 곳에서 변경된 글입니다. 다시 조회해 주세요.', REQUEST_CONFLICT: '이미 처리됐거나 내용이 변경된 요청입니다. 목록을 다시 확인해 주세요.', NOT_FOUND: '글을 찾을 수 없거나 권한이 없습니다.' })[data.error?.code] || '회원 인증을 확인하지 못했습니다.'); error.code = data.error?.code || 'IDENTITY_UNAVAILABLE'; error.status = response.status; error.retryAfter=Number(response.headers.get('Retry-After'))||1;
+        const seconds=data.error?.retry_after,reason=data.error?.limit_reason;
+        if(error.code==='RATE_LIMITED'&&Number.isInteger(seconds)&&seconds>=1&&seconds<=86400){
+          if(reason==='guestbook_daily'){
+            const minutes=Math.ceil(seconds/60);
+            error.message=`방명록은 24시간 내에 최대 20개까지 작성할 수 있습니다. ${Math.floor(minutes/60)}시간 ${minutes%60}분 후 다시 작성할 수 있습니다.`;
+          }else if(reason==='guestbook_cooldown')error.message=`방명록은 10초에 1개씩 작성할 수 있습니다. ${seconds}초 후 다시 작성할 수 있습니다.`;
+        }
+        throw error; }
       return data;
     }
     function adopt(data) {

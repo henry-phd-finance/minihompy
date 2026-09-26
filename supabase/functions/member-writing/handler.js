@@ -144,7 +144,7 @@ export async function handleMemberWriting(req,options={}){
    stored=await callRpc(db,v2?'create_v2':'create',{...(v2?{renewal_hash:await tokenHash(renewal),central_delegation:g.delegation,renewal_expires_at:g.delegation_expires_at}:{}),site_id:siteId,member_id:g.member.id,central_session_id:g.central_session_id,proof_id:g.proof_id,token_hash:await tokenHash(token),central_grant:g.grant,display_name:g.member.display_name,homepage_url:g.member.homepage_url,expires_at:g.expires_at});
   }catch(e){if(v2&&OPAQUE.test(raw.delegation||''))await central(fetcher,centralUrl,'writing-delegations/revoke',{},raw.delegation).catch(()=>{});if(OPAQUE.test(raw.grant||''))await central(fetcher,centralUrl,'writing-grants/revoke',{},raw.grant).catch(()=>{});throw e;}
   return reply(200,{session_token:token,...publicSession(stored),...(v2?{renewal_token:renewal,renewal_expires_at:raw.delegation_expires_at}:{})});
- }catch(e){if(e.status===429)headers['Retry-After']=String(e.retryAfter||1);return reply(e instanceof Failure?e.status:503,{error:{code:e instanceof Failure?e.code:'IDENTITY_UNAVAILABLE',message:'회원 인증을 확인하지 못했습니다. 다시 시도해 주세요.'}});}
+ }catch(e){if(e.status===429)headers['Retry-After']=String(e.retryAfter||1);return reply(e instanceof Failure?e.status:503,{error:{code:e instanceof Failure?e.code:'IDENTITY_UNAVAILABLE',message:'회원 인증을 확인하지 못했습니다. 다시 시도해 주세요.',...(e.limitReason?{limit_reason:e.limitReason,retry_after:e.retryAfter}:{})}});}
 }
 
 async function guestbook(req,context,mode,path,reply){
@@ -175,7 +175,14 @@ async function guestbook(req,context,mode,path,reply){
   args={...body,...(match?{id:match[1]}:{})};
  }
  const result=await db.rpc('member_guestbook',{p_action:action,p_args:{...args,...auth}});
- if(result.error||!result.data)fail('IDENTITY_UNAVAILABLE');if(result.data.failure)fail(result.data.failure);
+ if(result.error||!result.data)fail('IDENTITY_UNAVAILABLE');
+ if(result.data.failure){
+  const e=new Failure(result.data.failure);
+  if(e.code==='RATE_LIMITED'&&['guestbook_cooldown','guestbook_daily'].includes(result.data.limit_reason)&&Number.isInteger(result.data.retry_after)&&result.data.retry_after>=1&&result.data.retry_after<=86400){
+   e.limitReason=result.data.limit_reason;e.retryAfter=result.data.retry_after;
+  }
+  throw e;
+ }
  return reply(200,result.data);
 }
 
