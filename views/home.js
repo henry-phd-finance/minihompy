@@ -26,7 +26,6 @@
         <div class="room-balloon"><span data-config="home.roomMessage">미니룸 준비중</span></div>
         <div class="minime reference-sprite" role="img" aria-label="주황색 머리의 미니미"></div>
       </div>
-      <h2 class="friends-heading">일촌평<span class="help-mark" aria-hidden="true">?</span></h2>
       <div class="friend-reviews"></div>
     `);
       window.MinihompyFriendReviews?.attach(result.querySelector('.friend-reviews'));
