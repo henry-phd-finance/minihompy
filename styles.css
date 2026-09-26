@@ -474,6 +474,8 @@ button:disabled, input:disabled { opacity: 1; -webkit-text-fill-color: currentCo
 .author-navigation a[href] { cursor: pointer; }
 .author-navigation a[aria-disabled="true"] { cursor: default; text-decoration: none; }
 .author-home { color: #44668b; margin: 0 2px; text-decoration: none; }
+/* Reuse the classic orange-roof house from the existing guestbook reference. */
+.guestbook-post-header .author-home { display: inline-block; width: 8px; height: 8px; margin: 0 1px; overflow: hidden; vertical-align: middle; font-size: 0; background: url('assets/guestbook-title-reference.png') no-repeat -44px -3.2px / 114px 13.4px; }
 .author-handle, .author-home-status { color: #777; font-size: .9em; }
 .author-home-status { margin-left: 2px; }
 .author-home-retry { border: 0; padding: 0 2px; color: #44668b; background: transparent; font: inherit; cursor: pointer; }
