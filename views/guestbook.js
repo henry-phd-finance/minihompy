@@ -58,7 +58,10 @@
     const fixedName = Boolean(context?.member || admin() || draft.revision);
     const authorName = draft.revision ? draft.name : context?.member ? context.member.display_name : admin() ? window.MINIHOMPY_CONFIG.profile.name : draft.name;
     const nameRow = node(fixedName ? 'div' : 'label', 'guestbook-name-row', fixedName ? undefined : '이름');
-    const name = fixedName ? node('span', 'guestbook-name guestbook-name-text', authorName) : node('input', 'guestbook-name');
+    const visitor = window.MinihompySharedIdentity?.state?.visitor;
+    const handle = context?.memberId && visitor?.id === context.memberId && (!draft.revision || draft.scope === 'member') ? visitor.handle : '';
+    const authorLabel = handle ? `${authorName}(${handle})` : authorName;
+    const name = fixedName ? node('span', 'guestbook-name guestbook-name-text', authorLabel) : node('input', 'guestbook-name');
     if (!fixedName) name.setAttribute('aria-label', '방명록 이름');
     if (!fixedName) { name.value = authorName; name.required = true; name.maxLength = 40; }
     if (!fixedName) name.addEventListener('input', () => { draft.name = name.value; dirty = true; }); nameRow.append(name);
@@ -73,7 +76,7 @@
     privateToggle.className = 'guestbook-visibility'; privateToggle.checked = draft.visibility === 'private'; privateToggle.disabled = Boolean(draft.wasPrivate || (draft.revision && draft.scope === 'member'));
     privateToggle.addEventListener('change', () => { draft.visibility = privateToggle.checked ? 'private' : 'public'; dirty = true; });
     const save = node('button', 'guestbook-save', draft.revision ? '저장' : '확인'); save.type = 'submit';
-    options.append(node('span', 'guestbook-minime-label', '미니미 · 사진'), privateLabel, save);
+    options.append(privateLabel, save);
     if (draft.revision) options.append(action('취소', () => {
       if (busy || (dirty && !confirm('수정 중인 내용을 버릴까요?'))) return;
       draft = freshDraft(); dirty = false; notice = ''; load();
