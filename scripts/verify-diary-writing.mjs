@@ -2,9 +2,9 @@ import assert from 'node:assert/strict';
 import { mkdir } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { initialSettings } from './settings-fixture.mjs';
+import { initialSettings, mockHomeSummary } from './settings-fixture.mjs';
 const { chromium } = await import(pathToFileURL(resolve(process.argv[2])).href);
-const out = new URL('../docs/verification/diary-writing/', import.meta.url);
+const out = new URL(process.env.VERIFICATION_DIR||'../docs/verification/diary-writing/', import.meta.url);
 await mkdir(out, { recursive: true });
 const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH, headless: true });
 try {
@@ -14,6 +14,8 @@ try {
     page.on('dialog', dialog => dialog.accept());
     const owner = '20ce5711-bac1-434b-a67d-86e994066b8f', folder = 'eed35ef2-5832-49a5-9fab-f846cc2b255b', second = '10000000-0000-0000-0000-000000000002';
     let entries = [], rejectWrite = false, failRead = false, loseResponse = false;
+    // This isolated editor test must never visit the production central login.
+    await page.addInitScript(()=>Object.defineProperty(window,'MINIHOMPY_VISITOR_IDENTITY_CONFIG',{get:()=>({enabled:false}),set:()=>{}}));
     await page.addInitScript(owner => {
       let backend; window.testAdmin = true;
       Object.defineProperty(window, 'MinihompyBackend', {
@@ -21,7 +23,7 @@ try {
         get() { return { getClient(kind) {
           const real = backend.getClient(kind);
           if (kind !== 'admin') return real;
-          return { from: real.from.bind(real), rpc: async () => ({ data: window.testAdmin, error: null }),
+          return { from: real.from.bind(real), rpc: async (name,args) => name==='is_minihompy_admin'?({ data: window.testAdmin, error: null }):real.rpc(name,args),
             auth: {
               getSession: async () => ({ data: { session: window.testAdmin ? { user: { id: owner } } : null } }),
               getUser: async () => ({ data: { user: { id: owner } } }), onAuthStateChange: () => ({}),
@@ -46,7 +48,7 @@ try {
       if (rejectWrite && method !== 'GET') return send({ message: 'write denied', code: '42501' }, 403);
       if (method === 'POST') {
         const fields = req.postDataJSON();
-        assert.deepEqual(Object.keys(fields).sort(), ['author_name', 'body', 'entry_date', 'entry_time', 'folder_id', 'id', 'weather']);
+        assert.deepEqual(Object.keys(fields).sort(), ['author_name', 'body', 'entry_date', 'entry_time', 'folder_id', 'id', 'visibility', 'weather']);
         const entry = { ...fields, entry_time: `${fields.entry_time}:00`, revision: 1, author_id: owner, created_at: '2026-09-13T01:00:00Z' };
         entries.push(entry);
         if (loseResponse) return route.abort('failed');
@@ -56,7 +58,7 @@ try {
         const entry = entries.find(e => e.id === id && e.revision === revision);
         if (!entry) return send(null);
         const fields = req.postDataJSON();
-        assert.deepEqual(Object.keys(fields).sort(), ['body', 'entry_date', 'entry_time', 'folder_id', 'weather']);
+        assert.deepEqual(Object.keys(fields).sort(), ['body', 'entry_date', 'entry_time', 'folder_id', 'visibility', 'weather']);
         Object.assign(entry, fields, { revision: revision + 1, entry_time: `${fields.entry_time}:00` }); return send(entry);
       }
       if (method === 'DELETE') {
@@ -70,6 +72,9 @@ try {
       const offset = Number(url.searchParams.get('offset') || 0), limit = Number(url.searchParams.get('limit') || 20);
       return send(filtered.slice(offset, offset + limit), 200, { 'content-range': `${offset}-${Math.max(offset, offset + Math.min(limit, filtered.length) - 1)}/${filtered.length}` });
     });
+    await mockHomeSummary(page);
+    await page.route('**/functions/v1/member-writing/friend-reviews**',route=>route.fulfill({json:{items:[],next_cursor:null},headers:{'access-control-allow-origin':'*','access-control-allow-headers':'*'}}));
+    await page.route('**/functions/v1/member-writing/content/health',route=>route.fulfill({json:{friend_visibility_protocol:1,friend_visibility_ready:false,friend_media_ready:false,friend_summary_ready:false,friend_pages_ready:false},headers:{'access-control-allow-origin':'*'}}));
     await page.goto(`${new URL('../index.html', import.meta.url).href}#/diary`);
     await page.locator('.diary-empty').filter({ hasText: '등록된 일기' }).waitFor();
     await page.locator('.diary-write').click();
@@ -79,8 +84,13 @@ try {
     await page.locator('.diary-field-body').fill(`윤년의 기록\n\n<script>window.bad=true</script>\n${'긴문구LongUnbrokenText'.repeat(150)}`);
     await page.screenshot({ path: new URL(`editor-${width}.png`, out).pathname });
     await page.locator('[data-menu="home"]').click(); await page.locator('[data-menu="diary"]').click();
-    assert.equal(await page.locator('.diary-field-entry_date').inputValue(), '2024-02-29');
-    assert((await page.locator('.diary-field-body').inputValue()).includes('윤년'));
+    assert.equal(await page.locator('.diary-field-body').count(), 0);
+    await page.locator('.diary-write').click();
+    assert.equal(await page.locator('.diary-field-body').inputValue(), '');
+    await page.locator('.diary-field-entry_date').fill('2024-02-29');
+    await page.locator('.diary-field-entry_time').fill('23:15');
+    await page.locator('.diary-field-weather').selectOption('맑음');
+    await page.locator('.diary-field-body').fill(`윤년의 기록\n\n<script>window.bad=true</script>\n${'긴문구LongUnbrokenText'.repeat(150)}`);
     rejectWrite = true; await page.locator('.diary-save').click();
     await page.locator('.diary-status').filter({ hasText: 'write denied' }).waitFor();
     assert.equal(entries.length, 0);

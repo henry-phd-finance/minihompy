@@ -24,3 +24,11 @@ __pycache__/
 
 # Supabase CLI local metadata
 /supabase/.temp/
+
+.minihompy-home-data.lock
+
+.minihompy-folder-visibility.lock
+
+.minihompy-relationships.lock
+
+.minihompy-friend-visibility.lock

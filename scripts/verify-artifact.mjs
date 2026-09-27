@@ -1,10 +1,11 @@
+import {friendPagesRelease} from '../setup/friend-visibility-release.mjs';
 import assert from 'node:assert/strict';
 import { readFile, readdir } from 'node:fs/promises';
 import { resolve, dirname } from 'node:path';
 const root=resolve('_site');
 async function walk(dir) {const paths=[];for(const item of await readdir(dir,{withFileTypes:true})){const p=resolve(dir,item.name); if(item.isDirectory())paths.push(...await walk(p));else paths.push(p);}return paths;}
 const paths=await walk(root);
-for(const required of ['index.html','login/index.html','assets/login-flow.js','assets/login.css','visitor-identity-login.js','visitor-identity.js'])assert.ok(paths.includes(resolve(root,required)),required);
+for(const required of ['index.html','photo-media-client.js','content-access.js','content-folders-repository.js','content-folders.js','member-writing-config.js','member-writing-client.js','member-writing-runtime.js','member-relationships-repository.js','member-relationships.js','member-relationship-lists.js','friend-reviews-repository.js','friend-reviews.js','login/index.html','assets/login-flow.js','assets/login.css','visitor-identity-login.js','visitor-identity.js','member-navigation.js','author-navigation.js','surf-navigation.js','home-data-config.js','visit-counts.js','home-repository.js','home-activity.js','post-routes.js','post-location-repository.js'])assert.ok(paths.includes(resolve(root,required)),required);
 for(const path of paths){
   assert.ok(!/\.(sql|ts|toml|env)$/.test(path) && !/(?:^|\/)(?:setup|scripts|supabase|docs|node_modules|\.env)(?:\/|$)/.test(path.slice(root.length)),path);
   if(!path.endsWith('.html'))continue;
@@ -15,3 +16,6 @@ for(const path of paths){
   }
 }
 console.log('PASS: Pages includes login/runtime assets and excludes backend/setup/secrets.');
+
+assert.deepEqual(JSON.parse(await readFile(resolve(root,'friend-visibility-release.json'),'utf8')),await friendPagesRelease(root));
+console.log('PASS: Pages friend visibility release hashes match all JS/HTML/CSS runtime files.');

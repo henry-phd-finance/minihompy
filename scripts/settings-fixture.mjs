@@ -10,3 +10,13 @@ export async function mockSettings(page, payload = initialSettings) {
     headers: { 'access-control-allow-origin': '*' },
   }));
 }
+
+// Legacy view tests are not home-summary tests. Keep their incidental home visits
+// local and return an explicitly empty public summary instead of reaching production.
+export async function mockHomeSummary(page) {
+  await page.route('**/rest/v1/rpc/home_summary', route => {
+    const menus = route.request().postDataJSON()?.p_menus || [];
+    const now = new Date().toISOString();
+    return route.fulfill({json:{version:1,as_of:now,date:new Date(Date.parse(now)+9*3600000).toISOString().slice(0,10),timezone:'Asia/Seoul',menus,recent:[],counts:Object.fromEntries(menus.map(m=>[m,{today:0,total:0}])),today_comments:0},headers:{'access-control-allow-origin':'*'}});
+  });
+}

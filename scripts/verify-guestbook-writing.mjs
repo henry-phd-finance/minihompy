@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { mkdir } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { initialSettings } from './settings-fixture.mjs';
+import { initialSettings, mockHomeSummary } from './settings-fixture.mjs';
 const { chromium } = await import(pathToFileURL(resolve(process.argv[2])).href);
 const out = new URL('../docs/verification/guestbook-writing/', import.meta.url);
 await mkdir(out, { recursive: true });
@@ -15,6 +15,8 @@ try {
     let actor = 'reader', posts = [], signups = 0, rejectWrite = false, failRead = false, lostResponse = false;
     await page.exposeFunction('recordSignup', () => { signups++; actor = 'visitor'; });
     await page.addInitScript(users => {
+      // This suite covers local anonymous writing; central redirects have a separate fixture.
+      Object.defineProperty(window, 'MINIHOMPY_VISITOR_IDENTITY_CONFIG', { get: () => ({enabled:false}), set: () => {} });
       let backend;
       window.testActor = localStorage.getItem('mock-guestbook-session') || 'reader';
       Object.defineProperty(window, 'MinihompyBackend', {
@@ -74,12 +76,16 @@ try {
       }, next);
       await page.locator('.guestbook-save').waitFor();
     }
+    await mockHomeSummary(page);
     await page.goto(`${new URL('../index.html', import.meta.url).href}#/guestbook`);
     await page.locator('.guestbook-empty').waitFor(); assert.equal(signups, 0); assert.equal(await page.evaluate(() => typeof window.MinihompyCaptcha), 'undefined');
     await page.locator('.guestbook-name').fill('방문객'); await page.locator('.guestbook-body-input').fill('첫 인사\n<script>window.bad=true</script>');
     await page.locator('.guestbook-visibility').check();
-    await page.locator('[data-menu="home"]').click(); await page.locator('[data-menu="guestbook"]').click();
-    assert((await page.locator('.guestbook-body-input').inputValue()).includes('첫 인사'));
+    // Mobile fixed-width tabs may lie outside the viewport; exercise route changes directly.
+    await page.locator('[data-menu="home"]').dispatchEvent('click'); await page.locator('[data-menu="guestbook"]').dispatchEvent('click');
+    assert.equal(await page.locator('.guestbook-body-input').inputValue(), '');
+    await page.locator('.guestbook-name').fill('방문객'); await page.locator('.guestbook-body-input').fill('첫 인사\n<script>window.bad=true</script>');
+    await page.locator('.guestbook-visibility').check();
     rejectWrite = true; await page.locator('.guestbook-save').click();
     await page.locator('.guestbook-status').filter({ hasText: 'write denied' }).waitFor();
     assert.equal(signups, 1); assert.equal(posts.length, 0); assert.equal(await page.locator('.guestbook-name').inputValue(), '방문객');

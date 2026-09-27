@@ -13,6 +13,7 @@ try {
   for (const [width, height, dpr] of [[1000, 700, 1], [375, 812, 1], [375, 812, 2]]) {
     const page = await browser.newPage({ viewport: { width, height }, deviceScaleFactor: dpr });
     const errors = [];
+    await page.addInitScript(()=>Object.defineProperty(window,'MINIHOMPY_VISITOR_IDENTITY_CONFIG',{get:()=>({enabled:false}),set:()=>{}}));
     await mockSettings(page);
     page.on('pageerror', e => errors.push(e.message));
     page.on('requestfailed', r => errors.push(r.url()));

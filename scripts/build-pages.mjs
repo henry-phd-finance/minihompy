@@ -1,3 +1,5 @@
+import {friendPagesRelease} from '../setup/friend-visibility-release.mjs';
+import {fileURLToPath} from 'node:url';
 import { cp, mkdir, readdir, rm, writeFile } from 'node:fs/promises';
 const root = new URL('../', import.meta.url);
 const destination = new URL('_site/', root);
@@ -18,4 +20,5 @@ try {
 } catch (error) { if (error.code !== 'ENOENT') throw error; }
 for (const file of files) await cp(new URL(file, root), new URL(file, destination), { recursive: true });
 await writeFile(new URL('.nojekyll', destination), '');
+await writeFile(new URL('friend-visibility-release.json', destination),JSON.stringify(await friendPagesRelease(fileURLToPath(destination)),null,2)+'\n');
 console.log(`Prepared _site with ${files.length} runtime entries. No references, docs, SQL or test scripts.`);

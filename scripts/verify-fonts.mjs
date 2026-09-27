@@ -10,7 +10,7 @@ const out=new URL('../docs/verification/dotum/',import.meta.url);await mkdir(out
 const browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH,headless:true});
 try{
   for(const width of [1000,375]){
-    const page=await browser.newPage({viewport:{width,height:812}});await mockSettings(page);
+    const page=await browser.newPage({viewport:{width,height:812}});await page.addInitScript(()=>Object.defineProperty(window,'MINIHOMPY_VISITOR_IDENTITY_CONFIG',{get:()=>({enabled:false}),set:()=>{}}));await mockSettings(page);
     const requests=[];page.on('request',r=>requests.push(r.url()));
     await page.goto(new URL('../index.html',import.meta.url).href);await page.waitForFunction(()=>window.MinihompySettings.status==='ready');
     await page.evaluate(()=>document.fonts.ready);
@@ -26,7 +26,7 @@ try{
       const {fonts}=await cdp.send('CSS.getPlatformFontsForNode',{nodeId});assert(fonts.some(font=>font.familyName==='Dotum'));
     }
     await page.evaluate(()=>scrollTo(0,0));await page.screenshot({path:new URL(`home-${width}.png`,out).pathname});
-    await page.locator('#admin-auth-toggle').click();await inspect();await page.keyboard.press('Escape');
+    await page.locator('#login-auth-toggle').click();await inspect();await page.keyboard.press('Escape');
     await page.locator('[data-menu="profile"]').click();await page.locator('.profile-introduction').waitFor();await inspect();
     assert(!requests.some(url=>/\.woff2(?:\?|$)/.test(url)));
     await page.close();

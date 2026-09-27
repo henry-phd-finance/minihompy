@@ -78,8 +78,8 @@ try {
         assert((await page.locator('.recent-empty').getAttribute('title')).length > 1000);
       }
       if (kind === 'invalid') {
-        assert.equal(await page.locator('[data-config="home.today"]').textContent(), '1');
-        assert.equal(await page.locator('[data-config="home.total"]').textContent(), '2');
+        assert.equal(await page.locator('[data-visit="today"]').textContent(), '—');
+        assert.equal(await page.locator('[data-visit="total"]').textContent(), '—');
       }
       await page.screenshot({ path: resolve(output, `${kind}-${width}-dpr${dpr}.png`) });
       if (width < 579) {

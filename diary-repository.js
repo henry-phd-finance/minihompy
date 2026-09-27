@@ -1,12 +1,8 @@
 (() => {
   'use strict';
-  const reader = () => window.MinihompyBackend.getClient('visitor');
+  const reader = async () => (await window.MinihompyContentAccess.open()).client;
   const checked = result => { if (result.error) throw result.error; return result; };
-  async function writer() {
-    const client = window.MinihompyBackend.getClient('admin');
-    if ((await window.createMinihompyIdentity(client).current()).role !== 'admin') throw new Error('관리자 로그인이 필요합니다.');
-    return client;
-  }
+  const writer = async () => (await window.MinihompyContentAccess.open(true)).client;
   function validate(draft) {
     const date = draft.entry_date;
     if (!/^\d{4}-\d{2}-\d{2}$/.test(date) || date < '1900-01-01' || date > '9999-12-31'
@@ -16,18 +12,28 @@
     if (!draft.body.trim() || [...draft.body].length > 50000) throw new Error('본문을 1~50,000자 이내로 작성해 주세요.');
   }
   window.MinihompyDiaryRepository = Object.freeze({
+    context: () => window.MinihompyContentAccess.open(),
     validate,
-    async folders() { return checked(await reader().from('diary_folders').select('*').order('sort_order').order('id')).data; },
-    async dates(folder, month) { return checked(await reader().rpc('diary_written_dates', { selected_folder: folder, month_start: `${month}-01` })).data; },
-    async list(folder, date, page, size) {
-      const result = checked(await reader().from('diary_entries').select('*', { count: 'exact' }).eq('folder_id', folder).eq('entry_date', date)
+    async folders() { return checked(await (await reader()).from('diary_folders').select('*').order('sort_order').order('id')).data; },
+    async dates(folder, month, ctx) { const r=await window.MinihompyContentAccess.read?.('calendar',{month,folder_id:folder});ctx?.assert?.();if(r&&!r.legacy)return r.data.dates;return checked(await (ctx?.client || await reader()).rpc('diary_written_dates', { selected_folder: folder, month_start: `${month}-01` })).data; },
+    async latest(folder,size,ctx) {
+      const readiness=await window.MinihompyContentAccess.read?.('readiness',{});ctx?.assert?.();
+      if(!readiness||readiness.legacy||readiness.capabilities?.diary_latest_protocol!==1)return null;
+      const result=await window.MinihompyContentAccess.read('list',{kind:'diary',folder_id:folder,latest:true,page:1,size});ctx?.assert?.();
+      if(result.legacy)throw Error('다이어리 서버 준비 상태가 변경되었습니다. 다시 조회해 주세요.');
+      return result.data;
+    },
+    async list(folder, date, page, size, ctx) {
+      const r=await window.MinihompyContentAccess.read?.('list',{kind:'diary',folder_id:folder,date,page,size});ctx?.assert?.();if(r&&!r.legacy)return r.data;
+      const result = checked(await (ctx?.client || await reader()).from('diary_entries').select('*', { count: 'exact' }).eq('folder_id', folder).eq('entry_date', date)
         .order('entry_time').order('id').range((page - 1) * size, page * size - 1));
       return { items: result.data, count: result.count };
     },
     async save(draft) {
       validate(draft);
       const client = await writer();
-      const fields = { folder_id: draft.folder_id, entry_date: draft.entry_date, entry_time: draft.entry_time, weather: draft.weather, body: draft.body };
+      const fields = { folder_id: draft.folder_id, entry_date: draft.entry_date, entry_time: draft.entry_time, weather: draft.weather, body: draft.body, visibility: draft.visibility || 'public' };
+      if (!['public','friends','private'].includes(fields.visibility)||fields.visibility==='friends'&&!await window.MinihompyContentAccess.friendsReady()) throw Error('공개범위를 확인해 주세요.');
       const existing = async () => checked(await client.from('diary_entries').select('*').eq('id', draft.id).maybeSingle()).data;
       const same = row => row && Object.entries(fields).every(([key, value]) => (key === 'entry_time' ? row[key].slice(0, 5) : row[key]) === value);
       if (!draft.revision) {

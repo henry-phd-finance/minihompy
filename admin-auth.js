@@ -14,10 +14,14 @@
   let busy = false;
   let generation = 0;
   function publish(next) {
+    const role=next.role==='admin'?'admin':'reader',userId=role==='admin'?next.userId:null;
+    document.documentElement.dataset.identity=role;
+    if(state.role===role&&state.userId===userId)return;
     state = Object.freeze({ role: next.role === 'admin' ? 'admin' : 'reader', userId: next.role === 'admin' ? next.userId : null });
     document.documentElement.dataset.identity = state.role;
     window.dispatchEvent(new CustomEvent('minihompy:identity', { detail: state }));
   }
+  identity.enableSessionReuse?.(()=>{++generation;publish({role:'reader'});});
   function setBusy(value) {
     busy = value;
     toggle.disabled = submit.disabled = close.disabled = value;
@@ -66,7 +70,9 @@
     }
   });
 
-  function openLogin() {
+  async function openLogin() {
+    const preparing = new Event('minihompy:writing-authorize', {cancelable:true});
+    window.dispatchEvent(preparing); if (preparing.defaultPrevented) return;
     const config = window.MINIHOMPY_VISITOR_IDENTITY_CONFIG;
     if (config?.enabled) {
       const clean = new URL(location.href);
@@ -74,7 +80,7 @@
         clean.searchParams.delete('admin');
         history.replaceState(null, '', clean.pathname + clean.search + clean.hash);
       }
-      try { location.assign(window.MinihompySharedIdentity.getLoginUrl()); }
+      try { location.assign(await window.MinihompySharedIdentity.getLoginUrl()); }
       catch { message.textContent = '로그인을 위해 브라우저 저장소 사용을 허용해 주세요.'; dialog.showModal(); form.hidden = true; }
     } else {
       dialog.showModal(); email.focus();
@@ -87,11 +93,14 @@
     const sharedState = window.MinihompySharedIdentity?.state;
     const isVisitor = state.role !== 'admin' && sharedState?.status === 'identified' && sharedState?.visitor;
     
+    if (isVisitor || state.role === 'admin') window.dispatchEvent(new Event('minihompy:navigation-invalidate'));
     if (isVisitor) {
       e.preventDefault();
       e.stopImmediatePropagation();
-      try { location.assign(window.MinihompySharedIdentity.getLogoutUrl()); }
-      catch { message.textContent = '로그아웃을 위해 브라우저 저장소 사용을 허용해 주세요.'; dialog.showModal(); form.hidden = true; }
+      setBusy(true);
+      try { await window.MinihompyMemberWriting?.logout();location.assign(window.MinihompySharedIdentity.getLogoutUrl()); }
+      catch { message.textContent = '로그아웃을 완료하지 못했습니다. 연결 상태를 확인한 뒤 다시 시도해 주세요.'; dialog.showModal(); form.hidden = true; }
+      finally { setBusy(false); }
       return;
     }
 
@@ -100,6 +109,7 @@
     setBusy(true);
     publish({ role: 'reader' });
     try {
+      await window.MinihompyMemberWriting?.logout();
       const { error } = await client.auth.signOut({ scope: 'local' });
       if (error) throw error;
       if (window.MINIHOMPY_VISITOR_IDENTITY_CONFIG?.enabled) location.assign(window.MinihompySharedIdentity.getLogoutUrl());
@@ -113,14 +123,25 @@
   dialog.addEventListener('cancel', event => { if (busy) event.preventDefault(); });
   dialog.addEventListener('close', () => { password.value = ''; });
   // Defer SDK calls outside the Auth callback to avoid its session lock.
-  client.auth.onAuthStateChange(event => {
+  client.auth.onAuthStateChange((event,session) => {
+    identity.observeSession?.(event,session);
     if (event === 'SIGNED_OUT') { ++generation; publish({ role: 'reader' }); }
     else if (!busy) setTimeout(() => { if (!busy) void refresh(); }, 0);
   });
   window.addEventListener('online', () => { if (!busy) void refresh(); });
+  let rechecking;
+  async function handleRejection(error){
+    if(!error||!([401,403].includes(error.status)||['42501','PGRST301','PGRST302','JWT_EXPIRED'].includes(error.code)))return;
+    if(!rechecking){
+      identity.invalidate?.(false);
+      rechecking=refresh().finally(()=>{rechecking=null;});
+    }
+    await rechecking;
+  }
   window.MinihompyAdmin = Object.freeze({
     get state() { return state; },
     refresh,
+    handleRejection,
     openLogin,
   });
   void refresh();

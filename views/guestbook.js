@@ -4,6 +4,8 @@
   let content, context, draft, page = 1, request = 0, epoch = 0, busy = false, dirty = false, notice = '', refreshScroll = () => {};
   let roleKey = 'reader:';
   const pageSize = 5;
+  let target=null;
+  function clearTarget(){target=null;window.MinihompyApp?.clearPost?.();}
   const controlLocks = new WeakMap();
   const admin = () => context?.role === 'admin';
   function freshDraft() { return { id: crypto.randomUUID(), name: repository.nickname(), body: '', visibility: 'public' }; }
@@ -18,7 +20,7 @@
       }
     }
     const privateToggle = content.querySelector('.guestbook-visibility');
-    if (privateToggle && draft?.wasPrivate) privateToggle.disabled = true;
+    if (privateToggle && (draft?.wasPrivate || (draft?.revision && draft?.scope === 'member'))) privateToggle.disabled = true;
   }
   function action(label, fn, cls = '') {
     const button = node('button', cls, label); button.type = 'button'; button.addEventListener('click', fn); return button;
@@ -45,24 +47,36 @@
     return wrapper;
   }
   function composer() {
+    if (context?.requiresAuth) {
+      const box = node('div', 'guestbook-status', '상단에서 로그인 상태를 확인해 주세요.');
+      return box;
+    }
     draft ||= freshDraft();
+    draft.scope ||= context?.member ? 'member' : 'local';
+    if(context?.member) draft.memberId ||= context.memberId;
     const root = node('form', 'guestbook-composer');
-    const nameRow = node('label', 'guestbook-name-row', '이름');
-    const name = node('input', 'guestbook-name'); name.value = draft.revision ? draft.name : admin() ? window.MINIHOMPY_CONFIG.profile.name : draft.name;
-    name.readOnly = Boolean(admin() || draft.revision); name.required = true; name.maxLength = 40; name.setAttribute('aria-label', '방명록 이름');
-    name.addEventListener('input', () => { draft.name = name.value; dirty = true; }); nameRow.append(name);
+    const fixedName = Boolean(context?.member || admin() || draft.revision);
+    const authorName = draft.revision ? draft.name : context?.member ? context.member.display_name : admin() ? window.MINIHOMPY_CONFIG.profile.name : draft.name;
+    const nameRow = node(fixedName ? 'div' : 'label', 'guestbook-name-row', fixedName ? undefined : '이름');
+    const visitor = window.MinihompySharedIdentity?.state?.visitor;
+    const handle = context?.memberId && visitor?.id === context.memberId && (!draft.revision || draft.scope === 'member') ? visitor.handle : '';
+    const authorLabel = handle ? `${authorName}(${handle})` : authorName;
+    const name = fixedName ? node('span', 'guestbook-name guestbook-name-text', authorLabel) : node('input', 'guestbook-name');
+    if (!fixedName) name.setAttribute('aria-label', '방명록 이름');
+    if (!fixedName) { name.value = authorName; name.required = true; name.maxLength = 40; }
+    if (!fixedName) name.addEventListener('input', () => { draft.name = name.value; dirty = true; }); nameRow.append(name);
     const input = node('textarea');
     input.className = 'guestbook-body-input'; input.value = draft.body; input.required = true; input.maxLength = 5000;
     input.setAttribute('aria-label', '방명록 내용');
-    const recallName = () => { if (!name.value && !name.readOnly) { name.value = repository.nickname(); draft.name = name.value; } };
+    const recallName = () => { if (!fixedName && !name.value) { name.value = repository.nickname(); draft.name = name.value; } };
     name.addEventListener('focus', recallName); input.addEventListener('focus', recallName);
     input.addEventListener('input', () => { draft.body = input.value; dirty = true; });
     const options = node('div', 'guestbook-compose-options');
     const privateLabel = checkbox('비밀로 하기'), privateToggle = privateLabel.querySelector('input');
-    privateToggle.className = 'guestbook-visibility'; privateToggle.checked = draft.visibility === 'private'; privateToggle.disabled = Boolean(draft.wasPrivate);
+    privateToggle.className = 'guestbook-visibility'; privateToggle.checked = draft.visibility === 'private'; privateToggle.disabled = Boolean(draft.wasPrivate || (draft.revision && draft.scope === 'member'));
     privateToggle.addEventListener('change', () => { draft.visibility = privateToggle.checked ? 'private' : 'public'; dirty = true; });
     const save = node('button', 'guestbook-save', draft.revision ? '저장' : '확인'); save.type = 'submit';
-    options.append(node('span', 'guestbook-minime-label', '미니미 · 사진'), privateLabel, save);
+    options.append(privateLabel, save);
     if (draft.revision) options.append(action('취소', () => {
       if (busy || (dirty && !confirm('수정 중인 내용을 버릴까요?'))) return;
       draft = freshDraft(); dirty = false; notice = ''; load();
@@ -76,7 +90,7 @@
       try {
         await repository.save({ ...draft });
         if (token !== epoch) return;
-        draft = freshDraft(); dirty = false; page = 1; notice = '저장했습니다.'; busy = false; load();
+        if(!draft.revision)clearTarget();draft = freshDraft(); dirty = false; page = 1; notice = '저장했습니다.'; busy = false; load();
       } catch (error) {
         if (token === epoch) {
           notice = `방명록 저장 실패: ${error.message || '서버와 통신하지 못했습니다.'}\n작성 내용은 유지됩니다.`;
@@ -93,17 +107,15 @@
     article.dataset.post = post.id;
     article.setAttribute('aria-label', `${privatePost ? '비공개' : '공개'} 방명록 ${post.number}`);
     const header = node('header', 'guestbook-post-header');
-    const name = node('span', 'guestbook-author', post.author_name);
-    name.title = post.author_name;
-    const house = node('i', 'guestbook-house');
-    house.setAttribute('aria-hidden', 'true');
+    const author = window.MinihompyAuthorNavigation?.create(post, 'guestbook-author')
+      || node('span', 'guestbook-author', post.author_name);
     const date = new Intl.DateTimeFormat('sv-SE', { timeZone: 'Asia/Seoul', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(new Date(post.created_at)).replaceAll('-', '.');
-    header.append(node('span', 'guestbook-number', `NO.${post.number}`), name, house, node('time', '', `(${date})`));
+    header.append(node('span', 'guestbook-number', `NO.${post.number}`), author, node('time', '', `(${date})`));
     const actions = node('span', 'guestbook-actions');
-    const own = context?.userId && post.author_id === context.userId;
+    const own = post.author_kind === 'member' ? Boolean(context?.memberId && post.author_member_id === context.memberId) : Boolean(context?.userId && post.author_id === context.userId);
     if (own) actions.append(action('수정', () => {
       if (busy || (dirty && !confirm('작성 중인 내용을 버릴까요?'))) return;
-      draft = { id: post.id, revision: post.revision, name: post.author_name, body: post.body, visibility: post.visibility, wasPrivate: privatePost };
+      draft = { memberId: context?.memberId, scope: post.author_kind === 'member' ? 'member' : 'local', id: post.id, revision: post.revision, name: post.author_name, body: post.body, visibility: post.visibility, wasPrivate: privatePost };
       dirty = false; notice = ''; content.querySelector('.guestbook-composer').replaceWith(composer()); content.scrollTop = 0; refreshScroll();
     }, 'guestbook-edit'));
     if (own || admin()) {
@@ -122,8 +134,8 @@
     }
     text.append(node('p', 'guestbook-text', post.body));
     body.append(minime(), text);
-    const comments = window.MinihompyComments.create('guestbook', post.id);
-    article.append(header, body, comments);
+    article.append(header, body);
+    article.append(window.MinihompyComments.create('guestbook', post.id));
     return article;
   }
   async function mutate(post, operation) {
@@ -138,29 +150,36 @@
     } catch (error) { if (token === epoch) notice = error.message; }
     finally { if (token === epoch) { busy = false; load(); } }
   }
+  let savedFocus;
   async function load() {
+    const focused=content?.contains(document.activeElement)?document.activeElement:null;
+    if(focused?.matches('input,textarea'))savedFocus={cls:focused.className,start:focused.selectionStart,end:focused.selectionEnd};
     const token = ++request;
     content.replaceChildren(node('p', 'guestbook-status', '방명록을 불러오고 있습니다.'));
     try {
       const next = await repository.context(); if (token !== request) return;
-      const result = await repository.list(next, page, pageSize); if (token !== request) return;
+      const result = await repository.list(next, page, pageSize,target); if (token !== request) return;
+      if(target&&!result.items.some(p=>p.id===target))throw Error('글이 삭제되었거나 조회할 수 없습니다.');
+      if(target)page=result.page;
       context = next;
       const maximum = Math.max(1, Math.ceil(result.count / pageSize));
       if (page > maximum) { page = maximum; return load(); }
       content.replaceChildren(composer(), ...result.items.map(postElement));
+      requestAnimationFrame(()=>window.MinihompyPostRoutes?.focus(content,target));
       if (!result.items.length) content.append(node('p', 'guestbook-empty', '등록된 방명록이 없습니다.'));
       if (maximum > 1) {
         const nav = node('nav', 'guestbook-pagination'); nav.setAttribute('aria-label', '방명록 페이지');
-        const change = delta => { if (!busy) { page += delta; load(); } };
+        const change = delta => { if (!busy) { clearTarget();page += delta; load(); } };
         const previous = action('‹', () => change(-1)); previous.title = '이전 페이지'; previous.setAttribute('aria-label', previous.title); previous.disabled = page === 1;
         const next = action('›', () => change(1)); next.title = '다음 페이지'; next.setAttribute('aria-label', next.title); next.disabled = page === maximum;
         nav.append(previous, node('span', '', `${page} / ${maximum}`), next); content.append(nav);
       }
       if (busy) setBusy(true);
+      applySessionState();if(savedFocus){const el=[...content.querySelectorAll('input,textarea')].find(e=>e.className===savedFocus.cls);if(el){el.focus();if(el.type!=='checkbox')el.setSelectionRange(savedFocus.start,savedFocus.end);}savedFocus=null;}
     } catch (error) {
       if (token !== request) return;
       context = null;
-      content.replaceChildren(node('p', 'guestbook-status', `방명록을 불러오지 못했습니다. ${error.message || ''}`), action('다시 시도', load, 'guestbook-retry'));
+      content.replaceChildren(node('p', 'guestbook-status', `방명록을 불러오지 못했습니다. ${error.message || ''}`), ...(window.MinihompyMemberWriting?.enabled()?[]:[action('다시 시도', async () => {try{await load();}catch{}},'guestbook-retry')]));
     }
     content.scrollTop = 0; requestAnimationFrame(refreshScroll);
   }
@@ -220,7 +239,8 @@
     label: '방명록',
     showScrollbar: false,
     createLeft: () => window.MINIHOMPY_VIEWS.home.createLeft(),
-    createMain() {
+    createMain(route={}) {
+      target=route.post||null;
       content = node('div', 'guestbook-scroll');
       content.id = 'guestbook-content';
       content.tabIndex = 0;
@@ -231,18 +251,39 @@
       return fragment;
     },
   };
-  window.addEventListener('minihompy:identity', () => {
+  function identityChanged() {
     const state = window.MinihompyAdmin?.state;
-    const next = `${state?.role || 'reader'}:${state?.userId || ''}`;
+    const shared = window.MinihompyMemberWriting?.enabled() ? window.MinihompySharedIdentity?.state : null;
+    const next = `${state?.role || 'reader'}:${state?.userId || ''}` + (shared ? `:${shared.status}:${shared.visitor?.id || ''}` : '');
     if (next === roleKey) return;
     roleKey = next; epoch++; request++; context = null; draft = null; dirty = false; busy = false; notice = ''; page = 1;
     content?.replaceChildren();
     if (content?.isConnected) load();
-  });
+  }
+  window.addEventListener('minihompy:identity', identityChanged);
+  window.addEventListener('minihompy:visitor-identity', () => { if (window.MinihompyMemberWriting?.enabled()) identityChanged(); });
   window.addEventListener('storage', event => {
     if (event.key !== null && !event.key.endsWith('-visitor-v1')) return;
     epoch++; request++; context = null; draft = null; dirty = false; busy = false; notice = ''; content?.replaceChildren();
     if (content?.isConnected) load();
   });
-  window.addEventListener('beforeunload', event => { if (dirty || busy) { event.preventDefault(); event.returnValue = ''; } });
+  window.addEventListener('minihompy:writing-reset', event => {
+    epoch++;request++;context=null;busy=false;notice=event.detail.reason;
+    if(!event.detail.clearDraft){const form=content?.querySelector('.guestbook-composer');if(content){for(const child of [...content.children])if(child!==form)child.remove();content.append(node('p','guestbook-status',notice));}applySessionState();return;}
+    if(event.detail.clearDraft){draft=null;dirty=false;page=1;}
+    if(content)content.replaceChildren(node('p','guestbook-status',notice));
+  });
+  window.addEventListener('focus',()=>{if(!window.MinihompyMemberWriting?.enabled() && content?.isConnected && !busy)load();});
+  function applySessionState(){
+    if(!window.MinihompyMemberWriting?.enabled())return;
+    const status=window.MinihompyMemberWriting.state?.status;
+    for(const b of content?.querySelectorAll('button')||[])b.disabled=busy||!['ready','anonymous'].includes(status);
+  }
+  window.addEventListener('minihompy:member-session',()=>{applySessionState();if(window.MinihompyMemberWriting.state.status==='ready'&&content?.isConnected&&!context)void load();});
+  window.MinihompyPostRoutes?.guard(next=>(content?.isConnected||next?.id==='guestbook'&&next.post)?{busy,dirty,discard:()=>{if(next?.id==='guestbook'&&next.post){draft=null;dirty=false;}}}:null);
+  window.addEventListener('minihompy:menu-leave', event => {
+    if (event.detail.id !== null && event.detail.id !== 'guestbook') return;
+    epoch++; request++; context = null; draft = null; dirty = false;
+    busy = false; notice = ''; savedFocus = null; content?.replaceChildren();
+  });
 })();
