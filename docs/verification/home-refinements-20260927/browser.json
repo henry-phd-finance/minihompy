@@ -1,0 +1,22 @@
+[
+  {
+    "site": "A",
+    "visitMode": "read-only",
+    "publicEditHidden": true,
+    "countersUnclipped": true,
+    "frameRemoved": true,
+    "latestCount": 1,
+    "historyCount": 1,
+    "pageErrors": []
+  },
+  {
+    "site": "B",
+    "visitMode": "read-only",
+    "publicEditHidden": true,
+    "countersUnclipped": true,
+    "frameRemoved": true,
+    "latestCount": 1,
+    "historyCount": 2,
+    "pageErrors": []
+  }
+]

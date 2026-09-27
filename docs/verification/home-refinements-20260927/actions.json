@@ -1,0 +1,26 @@
+[
+  {
+    "site": "A",
+    "sha": "27e62068b26ad670aedb873e6ccab0fcd635c94b",
+    "runs": [
+      {
+        "id": 36295187595,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/henry-phd-finance/minihompy/actions/runs/36295187595"
+      }
+    ]
+  },
+  {
+    "site": "B",
+    "sha": "1b0f76d27f88488471ac5a65a649fe8615994828",
+    "runs": [
+      {
+        "id": 36295203420,
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/henry-hs-jung/minihompy/actions/runs/36295203420"
+      }
+    ]
+  }
+]
