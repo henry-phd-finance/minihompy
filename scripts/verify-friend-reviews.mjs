@@ -57,7 +57,7 @@ try{
   await personal.pg.query("insert into public.post_comments(id,guestbook_post_id,author_kind,author_member_id,author_name,body,author_homepage_url) values($1,$2,'member',$3,'Legacy','Existing comment','https://m1.test/home/')",[member(91),member(90),member(1)]);
   const beforeContent=(await personal.pg.query('select to_jsonb(g) row from public.guestbook_posts g union all select to_jsonb(c) row from public.post_comments c')).rows;
   const before=await personal.pg.query('select id,member_id from private.member_writing_sessions order by id');
-  await personal.pg.exec(migration);
+  await personal.pg.exec(migration);await personal.pg.exec(await readFile(new URL('../supabase/migrations/202609270003_friend_review_history.sql',import.meta.url),'utf8'));
   assert.deepEqual((await personal.pg.query('select id,member_id from private.member_writing_sessions order by id')).rows,before.rows);
   assert.equal((await pcall('/relationships/health',undefined,undefined,200,'public')).d.friend_reviews_ready,true);
   assert.deepEqual((await personal.pg.query('select to_jsonb(g) row from public.guestbook_posts g union all select to_jsonb(c) row from public.post_comments c')).rows,beforeContent);
@@ -74,10 +74,12 @@ try{
  await check('verified author/name, normalized Unicode body, public projection and keyset pages',async()=>{
   body=review('  첫 평\r\n😀  ');saved=(await create(body)).d;
   const second=(await create(review('둘째 평'))).d;
-  const first=(await list('?limit=1')).d;assert.equal(first.items[0].id,second.id);assert.ok(first.next_cursor);
-  const next=(await list('?limit=1&cursor='+first.next_cursor)).d;assert.equal(next.items[0].body,'첫 평\n😀');assert.equal(next.items[0].author_member_id,member(1));assert.equal(next.items[0].display_name,(await auth(A)).session.display_name);assert.equal(next.next_cursor,null);
+  const summary=(await list()).d;assert.equal(summary.items.length,1);assert.equal(summary.items[0].id,second.id);
+  const first=(await list('?limit=1&author='+member(1))).d;assert.equal(first.items[0].id,second.id);assert.ok(first.next_cursor);
+  const next=(await list('?limit=1&author='+member(1)+'&cursor='+first.next_cursor)).d;assert.equal(next.items[0].body,'첫 평\n😀');assert.equal(next.items[0].author_member_id,member(1));assert.equal(next.items[0].display_name,(await auth(A)).session.display_name);assert.equal(next.next_cursor,null);
   assert.deepEqual(Object.keys(next.items[0]).sort(),['author_member_id','body','created_at','display_name','id']);
   await list('?limit=1&limit=2',400);await list('?member_id='+member(2),400);await list('?cursor=bad',400);
+  await list('?author=bad',400);await list('?author='+member(3)+'&cursor='+first.next_cursor,400);
   const c=JSON.parse(Buffer.from(first.next_cursor,'base64url'));c.site=site(1);await list('?cursor='+Buffer.from(JSON.stringify(c)).toString('base64url'),400);
  });
  await check('same operation dedupes, altered body conflicts, third party cannot delete/query receipts',async()=>{

@@ -37,9 +37,12 @@
   finally{if(valid(s,g,stamp)&&seq===s.permissionSeq)controls(s);}
  }
  function paintList(s){
+  s.historyHeading.replaceChildren();
+  if(s.author){s.historyHeading.append(node('span',s.authorName+'님의 일촌평 내역 '));button(s.historyHeading,'전체 일촌평',()=>{if(s.busy||s.pending)return;s.author=null;s.cursor=null;s.history=[];void load(s);},'all');}
   s.list.replaceChildren();
   for(const item of s.items){
-   const li=node('li'),body=node('span',item.body);body.className='friend-review-body';
+   const li=node('li'),body=node(s.author?'span':'button',item.body);body.className='friend-review-body';
+   if(!s.author){body.type='button';body.title=item.display_name+'님의 일촌평 내역 보기';body.onclick=()=>{if(s.busy||s.pending)return;s.author=item.author_member_id;s.authorName=item.display_name;s.cursor=null;s.history=[];void load(s);};}
    li.append(body,document.createTextNode(' ('),window.MinihompyAuthorNavigation.create({author_kind:'member',author_member_id:item.author_member_id,author_name:item.display_name},'friend-review-author'),document.createTextNode(')'));
    const time=node('time',new Intl.DateTimeFormat('sv-SE',{timeZone:'Asia/Seoul',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date(item.created_at)).replaceAll('-','.'));time.dateTime=item.created_at;li.append(time);
    if(admin()||shared()?.status==='identified'&&shared().visitor.id===item.author_member_id)button(li,admin()?'관리자 삭제':'삭제',()=>{
@@ -57,9 +60,9 @@
  async function load(s){
   const focusKey=s.root.contains(document.activeElement)?document.activeElement.dataset.reviewAction:null;
   const seq=++s.listSeq,g=s.generation,stamp=runtime().snapshot();s.confirmation=null;s.confirm.replaceChildren();s.items=[];s.next=null;s.listError=false;s.root.setAttribute('aria-busy','true');paintList(s);s.listStatus.textContent='';
-  try{const r=await repository().list(s.cursor);if(!valid(s,g,stamp)||seq!==s.listSeq)return;
+  try{const r=await repository().list(s.cursor,s.author);if(!valid(s,g,stamp)||seq!==s.listSeq)return;
    if(!r.items.length&&s.history.length){s.cursor=null;s.history=[];return void load(s);}
-   s.items=r.items;s.next=r.next_cursor;s.listStatus.textContent='';s.root.setAttribute('aria-busy','false');paintList(s);if(focusKey)(s.root.querySelector(`[data-review-action="${focusKey}"]`)||s.actions.querySelector('button'))?.focus({preventScroll:true});
+   s.items=r.items;s.next=r.next_cursor;s.listStatus.textContent=s.author&&!r.items.length?'남긴 일촌평이 없습니다.':'';s.root.setAttribute('aria-busy','false');paintList(s);if(focusKey)(s.root.querySelector(`[data-review-action="${focusKey}"]`)||s.actions.querySelector('button'))?.focus({preventScroll:true});
   }catch{if(valid(s,g,stamp)&&seq===s.listSeq){s.listError=true;s.root.setAttribute('aria-busy','false');s.listStatus.textContent='일촌평을 불러오지 못했습니다.';controls(s);}}
  }
  async function mutate(s,action,value,mode='member'){
@@ -74,7 +77,7 @@
   }finally{if(valid(s,g,stamp)){s.busy=false;controls(s);}}
  }
  async function success(s){
-  if(s.pendingAction==='create')s.input.value='';s.pending=null;s.status.classList.add('friend-review-succeeded');s.status.textContent='처리가 완료되었습니다.';s.cursor=null;s.history=[];await load(s);s.status.focus({preventScroll:true});
+  if(s.pendingAction==='create'){s.input.value='';s.author=null;}s.pending=null;s.status.classList.add('friend-review-succeeded');s.status.textContent='처리가 완료되었습니다.';s.cursor=null;s.history=[];await load(s);s.status.focus({preventScroll:true});
  }
  async function recover(s,resend=false){
   if(!s.pending||s.busy)return;const g=s.generation,stamp=runtime().snapshot();s.busy=true;controls(s);
@@ -82,7 +85,7 @@
   catch(e){if(!valid(s,g,stamp))return;if(e.status===404&&!resend){s.missing=true;s.status.textContent='아직 처리 기록이 없습니다. 같은 작업을 다시 시도하거나 결과를 다시 확인해 주세요.';}else if(resend&&[400,403,404,409,429].includes(e.status)){s.pending=null;s.missing=false;s.status.textContent='이 작업을 완료하지 못했습니다. 목록과 관계를 확인한 뒤 새로 제출해 주세요.';await load(s);void permission(s);}else s.status.textContent='아직 처리 결과를 확인하지 못했습니다. 잠시 후 다시 확인해 주세요.';}
   finally{if(valid(s,g,stamp)){s.busy=false;controls(s);}}
  }
- function reset(){if(!active)return;const s=active;++s.generation;++s.listSeq;++s.permissionSeq;s.input.value='';s.items=[];s.pending=null;s.busy=false;s.confirm.replaceChildren();s.cursor=null;s.history=[];s.status.textContent='';paintList(s);if(s.root.isConnected){void load(s);void permission(s);}}
+ function reset(){if(!active)return;const s=active;++s.generation;++s.listSeq;++s.permissionSeq;s.input.value='';s.author=null;s.items=[];s.pending=null;s.busy=false;s.confirm.replaceChildren();s.cursor=null;s.history=[];s.status.textContent='';paintList(s);if(s.root.isConnected){void load(s);void permission(s);}}
  function discard(){if(active){++active.generation;active.input.value='';active.root.replaceChildren();active=null;}}
  for(const name of ['minihompy:visitor-identity','minihompy:identity'])window.addEventListener(name,reset);
  window.addEventListener('minihompy:writing-reset',e=>{if(e.detail?.clearDraft!==false)reset();else if(active){active.permission='error';controls(active);}});
@@ -93,9 +96,9 @@
  new MutationObserver(()=>{if(active&&!active.root.isConnected)discard();}).observe(document.documentElement,{subtree:true,childList:true});
  window.MinihompyFriendReviews=Object.freeze({attach(root){discard();const s=active={root,generation:0,listSeq:0,permissionSeq:0,items:[],cursor:null,next:null,history:[],permission:'pending',busy:false};
   root.setAttribute('role','region');root.setAttribute('aria-label','일촌평');
-  s.hint=node('p');s.hint.setAttribute('role','status');s.label=node('label');s.label.className='friend-review-field';s.input=node('textarea');s.input.rows=1;s.input.maxLength=200;s.input.placeholder='일촌과 나누고 싶은 이야기를 남겨보세요~!';s.input.setAttribute('aria-label','일촌평 내용');s.label.append(s.input);
-  const form=node('form');form.className='friend-review-form';const heading=node('h2','일촌평');heading.className='friends-heading';s.save=node('button','확인');s.save.type='submit';s.save.dataset.reviewAction='save';form.append(heading,s.label,s.save);form.onsubmit=e=>{e.preventDefault();void mutate(s,'create',s.input.value);};
-  s.status=node('p');s.status.setAttribute('role','status');s.status.tabIndex=-1;s.status.className='friend-review-status';s.actions=node('div');s.confirm=node('div');s.listStatus=node('p');s.listStatus.setAttribute('role','status');s.list=node('ul');s.pages=node('div');
-  root.append(form,s.hint,s.status,s.actions,s.confirm,s.listStatus,s.list,s.pages);controls(s);queueMicrotask(()=>{if(root.isConnected){void load(s);void permission(s);}});
+  s.hint=node('p');s.hint.setAttribute('role','status');s.label=node('label');s.label.className='friend-review-field';s.input=node('input');s.input.type='text';s.input.className='friend-review-input';s.input.maxLength=200;s.input.placeholder='일촌과 나누고 싶은 이야기를 남겨보세요~!';s.input.setAttribute('aria-label','일촌평 내용');s.label.append(s.input);
+  const form=node('form');form.className='friend-review-form';const heading=node('h2','일촌평');heading.className='friends-heading';s.save=node('button','확인');s.save.type='submit';s.save.dataset.reviewAction='save';form.append(heading,s.label,s.save);let composing=false;s.input.addEventListener('compositionstart',()=>{composing=true;});s.input.addEventListener('compositionend',()=>{composing=false;});s.input.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();if(!e.isComposing&&!composing&&e.keyCode!==229&&!s.save.disabled)form.requestSubmit();}});form.onsubmit=e=>{e.preventDefault();if(!composing)void mutate(s,'create',s.input.value);};
+  s.status=node('p');s.status.setAttribute('role','status');s.status.tabIndex=-1;s.status.className='friend-review-status';s.actions=node('div');s.confirm=node('div');s.listStatus=node('p');s.listStatus.setAttribute('role','status');s.list=node('ul');s.pages=node('div');s.historyHeading=node('div');s.historyHeading.className='friend-review-history-heading';
+  root.append(form,s.hint,s.status,s.actions,s.confirm,s.historyHeading,s.listStatus,s.list,s.pages);controls(s);queueMicrotask(()=>{if(root.isConnected){void load(s);void permission(s);}});
  }});
 })();

@@ -1,0 +1,12 @@
+{
+  "reviews": {
+    "count": 1,
+    "hash": "1d53b04aa040aaeea8e6b6d1dda73115"
+  },
+  "state": {
+    "owner_member_id": "96f9d25f-e9c5-4a0c-bdb6-7961623ece87",
+    "ready": true,
+    "epoch": "05fe79df-22fc-4916-b88d-64e491f27640",
+    "pages_sha256": "848ea952323e6178009ac027322b5ef40cd8b506b81d909cbd0d8bf2022ec011"
+  }
+}

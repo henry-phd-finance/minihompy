@@ -64,8 +64,8 @@ button:disabled, input:disabled { opacity: 1; -webkit-text-fill-color: currentCo
 .profile-image-slot { position: absolute; left: 19px; top: 11px; width: 76px; height: 72px; }
 .reference-sprite { background-image: url('assets/cyworld-reference-sprite.png'); background-repeat: no-repeat; background-size: 579px 349px; }
 .profile-image-slot { background-position: -56px -80px; }
-.visit-count { left: 65px; top: 57px; height: 8px; z-index: 20; display: flex; align-items: center; gap: 3px; color: #555; font: 5px/8px var(--ui-font); }
-.visit-count span + span { border-left: 1px solid #aaa; padding-left: 3px; }
+.visit-count { left: 36px; bottom: 284px; min-height: 8px; height: auto; width: 112px; flex-wrap: wrap; justify-content: center; z-index: 20; display: flex; align-items: center; gap: 3px; color: #555; font: 5px/8px var(--ui-font); }
+.visit-count > span + span { border-left: 1px solid #aaa; padding-left: 3px; }
 .visit-count b { color: #df542e; font-weight: 400; }
 .homepage-title { left: 168px; top: 56px; margin: 0; color: #285370; font-size: 8px; line-height: 11px; z-index: 20; }
 .header-actions { left: 377px; top: 58px; height: 8px; z-index: 20; color: var(--action); font-size: 5.5px; line-height: 8px; white-space: nowrap; }
@@ -162,8 +162,8 @@ button:disabled, input:disabled { opacity: 1; -webkit-text-fill-color: currentCo
 .friends-prompt > [data-config] { min-width: 0; }
 .friend-request { flex: none; }
 .tab-label { max-width: 27px; }
-.visit-count { max-width: 75px; }
-.visit-count > span { min-width: 0; white-space: nowrap; }
+
+.visit-count > span { flex: none; white-space: nowrap; }
 .relationship-name-clipped { display: inline-block; max-width: 14px; overflow: hidden; text-overflow: ellipsis; vertical-align: bottom; }
 
 /* Album interior follows P05 at approximately 60%, inside the unchanged master shell. */
@@ -540,7 +540,7 @@ button.surf-select { display: block; width: 100%; text-align: left; color: inher
 
 /* Keep visit totals inside the existing header at large count values. */
 .visit-count { max-width: 112px; }
-.visit-count > span { overflow: hidden; text-overflow: ellipsis; }
+.visit-count small:empty { display: none; }
 .visit-count small { white-space: nowrap; font: inherit; }
 .visit-count button { flex: none; font: inherit; line-height: 8px; padding: 0 2px; border: 1px solid #aaa; background: white; cursor: pointer; }
 
@@ -581,11 +581,11 @@ button.surf-select { display: block; width: 100%; text-align: left; color: inher
 
 /* Classic Friends say strip, with the shorter Korean title leaving room for input. */
 .friend-reviews { position: relative; margin: 153px 17px 12px; width: 240px; color: #555; font: 6.5px/10px Dotum, '돋움', 'Minihompy News', sans-serif; overflow-wrap: anywhere; }
-.friend-reviews .friend-review-form { display: flex; align-items: center; gap: 3px; min-height: 20px; margin: 0; padding: 3px 4px; border: 1px solid #e8e8e8; background: #f5f5f5; }
+.friend-reviews .friend-review-form { display: flex; align-items: center; gap: 3px; min-height: 20px; margin: 0; padding: 3px 4px; border: 0; background: none; }
 .friend-reviews .friends-heading { position: static; flex: none; width: auto; height: auto; margin: 0; padding: 0; border: 0; background: none; color: #2e9eb5; font: bold 7px/10px Dotum, '돋움', 'Minihompy News', sans-serif; }
 .friend-review-field { display: block; flex: 1; min-width: 0; }
-.friend-reviews textarea { display: block; box-sizing: border-box; width: 100%; height: 12px; min-height: 12px; margin: 0; padding: 0 2px; resize: none; border: 1px solid #ccc; background: #fff; color: #555; font: inherit; line-height: 10px; }
-.friend-reviews textarea::placeholder { color: #aaa; opacity: 1; }
+.friend-reviews .friend-review-input { display: block; box-sizing: border-box; width: 100%; height: 12px; min-height: 12px; margin: 0; padding: 0 2px; resize: none; border: 1px solid #ccc; background: #fff; color: #555; font: inherit; line-height: 10px; }
+.friend-reviews .friend-review-input::placeholder { color: #aaa; opacity: 1; }
 .friend-reviews button { min-height: 0; margin: 0; padding: 0 3px; border: 1px solid #ccc; background: #fff; color: #777; font: inherit; line-height: 11px; cursor: pointer; }
 .friend-reviews .friend-review-form > button { flex: none; height: 12px; }
 .friend-reviews button:disabled { color: #aaa; cursor: default; }
@@ -623,7 +623,8 @@ button.surf-select { display: block; width: 100%; text-align: left; color: inher
 /* Sidebar profile: owner's compact edit link, with a separate accessible editor. */
 .profile-image-slot img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .profile-panel[data-view="home"] .profile-status { width: 87px; max-height: 64px; white-space: pre-wrap; overflow-wrap: anywhere; overflow-x: hidden; overflow-y: auto; }
-.home-profile-edit { position: absolute; left: 12px; top: 153px; padding: 0; border: 0; background: none; color: #777; font: 5.5px/10px var(--ui-font); cursor: pointer; }
+.history-controls { display: flex; align-items: baseline; gap: 4px; }
+.home-profile-edit { padding: 0; border: 0; background: none; color: inherit; font: inherit; cursor: pointer; }
 .home-profile-edit:hover { text-decoration: underline; }
 .home-profile-edit[hidden] { display: none; }
 .home-profile-dialog { width: min(340px,calc(100vw - 24px)); max-height: calc(100vh - 24px); overflow-y: auto; padding: 16px; border: 1px solid #aaa; background: #fff; color: #555; font: 12px/1.5 var(--ui-font); }
@@ -645,3 +646,7 @@ button.surf-select { display: block; width: 100%; text-align: left; color: inher
 .photo-image-slot:not([data-state="ready"]) { min-height: 120px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; background: #f7f7f7; color: #888; font-size: 11px; }
 .photo-image-retry, .photo-post-retry { font: inherit; color: #555; cursor: pointer; }
 .photo-post-unavailable { padding: 12px 0; border-bottom: 1px solid #ddd; }
+
+.friend-reviews li .friend-review-body { margin: 0; padding: 0; color: inherit; font: inherit; text-align: left; white-space: pre-wrap; overflow-wrap: anywhere; }
+.friend-reviews button.friend-review-body:hover { text-decoration: underline; }
+.friend-review-history-heading { margin: 4px 0; color: #506d83; }

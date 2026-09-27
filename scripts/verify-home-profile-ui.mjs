@@ -46,6 +46,16 @@ try{for(const width of [1280,375]){
   try{return route.fulfill({body:await readFile(file),contentType:({'.js':'text/javascript','.css':'text/css','.png':'image/png','.jpg':'image/jpeg','.woff2':'font/woff2'})[extname(file)]});}catch{return route.fulfill({status:404,body:''});}
  });
  await page.goto('https://home.test/#/home');const edit=page.locator('[data-home-profile-edit]'),dialog=page.locator('.home-profile-dialog'),greeting=dialog.locator('textarea'),file=dialog.locator('input[type=file]');
+ await edit.waitFor();assert.equal(await edit.innerText(),'EDIT');
+ assert(await edit.evaluate(e=>{const h=e.previousElementSibling.getBoundingClientRect(),b=e.getBoundingClientRect();return h.right<b.left&&Math.abs(h.top-b.top)<2;}));
+ for(const value of ['12','123,456,789','9,007,199,254,740,991']){
+  assert(await page.evaluate(value=>{
+   const root=document.querySelector('.visit-count');root.querySelector('[data-visit=today]').textContent=value;root.querySelector('[data-visit=total]').textContent=value;root.querySelector('small').textContent='';
+   const box=root.getBoundingClientRect(),panel=document.querySelector('.profile-panel').getBoundingClientRect();
+   return box.bottom<=panel.top&&[...root.querySelectorAll(':scope > span')].every(e=>{const r=e.getBoundingClientRect();return e.scrollWidth<=e.clientWidth&&r.left>=box.left-1&&r.right<=box.right+1;});
+  },value),'visit digits must remain complete and above the profile panel');
+ }
+ await page.screenshot({path:resolve(out,`home-counters-edit-${width}.png`)});
  const open=async()=>{await edit.click();await dialog.waitFor();};const save=async()=>{await dialog.getByRole('button',{name:'저장',exact:true}).click();};
  await open();await greeting.fill('새 인사말\n<b>안녕하세요</b>');await file.setInputFiles({name:'photo.jpg',mimeType:'image/jpeg',buffer:jpg});await page.waitForFunction(()=>!document.querySelector('.home-profile-dialog button[type=submit]').disabled&&document.querySelector('.home-profile-dialog img').src.startsWith('blob:'));
  await dialog.screenshot({path:resolve(out,`editor-${width}.png`)});assert(await dialog.evaluate(e=>e.scrollWidth<=e.clientWidth));await save();await dialog.waitFor({state:'detached'});
