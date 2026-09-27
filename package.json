@@ -1,25 +1,18 @@
 {
   "name": "minihompy-setup",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "분산 미니홈피 자동 셋업 CLI 도구",
   "type": "module",
-  "bin": {
-    "minihompy-setup": "./setup/setup.mjs"
-  },
-  "files": [
-    "setup/",
-    "supabase/migrations/",
-    "supabase/functions/",
-    "supabase/config.toml"
-  ],
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=22.0.0"
   },
   "scripts": {
     "setup": "node setup/setup.mjs",
     "build": "node scripts/build-pages.mjs",
     "test:setup": "node scripts/verify-setup.mjs",
-    "test:artifact": "node scripts/verify-artifact.mjs"
+    "test:artifact": "node scripts/verify-artifact.mjs",
+    "build:installer": "node scripts/build-installer.mjs",
+    "test:installer": "node scripts/verify-installer.mjs"
   },
   "keywords": [
     "minihompy",
@@ -29,5 +22,6 @@
     "cli"
   ],
   "author": "henry",
-  "license": "MIT"
+  "license": "MIT",
+  "private": true
 }

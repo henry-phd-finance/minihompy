@@ -27,6 +27,6 @@ CHROMIUM_PATH=/path/to/chromium node scripts/verify-pages.mjs /path/to/playwrigh
 
 ## 표시 배율
 
-가로 900px 및 세로 560px 이상에서 미니홈피와 로그인 창에 CSS zoom 1.5를 적용한다. 원본 내부 레이아웃 579×349px는 바꾸지 않고 화면상 868.5×523.5px로 확대한다. 작은 창에서는 1배를 유지한다. 스크롤바의 포인터 거리는 확대된 화면 좌표로 계산하고, 이름 말줄임은 원본 배율로 정규화한다.
+가로 1125px 및 세로 700px 이상에서 미니홈피와 로그인 창에 CSS zoom 1.875를 적용한다. 원본 내부 레이아웃 579×349px는 바꾸지 않고 화면상 1085.625×654.375px로 확대한다. 작은 창에서는 1배를 유지한다. 스크롤바의 포인터 거리는 확대된 화면 좌표로 계산하고, 이름 말줄임은 원본 배율로 정규화한다.
 
-`scripts/verify-scale.mjs`가 양쪽 배율과 경계 크기/창 크기 변경/로그인 창을 검사한다. `verify-pages.mjs`는 배포된 큰 화면의 1.5배 크기를 검사한다. 참고: [CSS zoom](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/zoom).
+`scripts/verify-scale.mjs`가 양쪽 배율과 경계 크기/창 크기 변경/로그인 창을 검사한다. `verify-pages.mjs`는 배포된 큰 화면의 확대 크기를 검사한다. 참고: [CSS zoom](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/zoom).

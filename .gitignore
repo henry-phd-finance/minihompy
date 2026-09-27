@@ -32,3 +32,6 @@ __pycache__/
 .minihompy-relationships.lock
 
 .minihompy-friend-visibility.lock
+
+# Reproducible installation archives
+/dist/

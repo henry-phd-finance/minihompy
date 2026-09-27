@@ -52,6 +52,8 @@ try{
  oldServer=true;await assert.rejects(upgradeFriendVisibility(opts),/capability/);oldServer=false;badMediaBinding=true;await assert.rejects(upgradeFriendVisibility(opts),/protocol/);badMediaBinding=false;
  for(let i=0;i<2;i++)assert.deepEqual(await upgradeFriendVisibility(opts),{prepared:true,ready:false});
  assert.equal((await query('select * from private.minihompy_setup_migrations')).length,friendVisibilityMigrations.length);assert.deepEqual(await query('select * from public.board_posts'),before);assert.deepEqual(await query('select * from private.member_writing_site'),sessions);await assert.rejects(canFriend(),/NOT_CONFIGURED/);
+ assert.ok((await query("select pg_get_functiondef('public.member_guestbook(text,jsonb)'::regprocedure) as body"))[0].body.includes("interval '10 seconds'"));
+ assert.equal((await query("select count(*)::int as n from storage.buckets where id='minihompy-home-profile'"))[0].n,1);
  console.log('PASS 2: interrupted SQL/deploy/probe retries, tracked hashes and existing content/site preserved; no partial friends writes');
  await writeFile(join(target,'member-writing-config.js'),'window.MINIHOMPY_MEMBER_WRITING_CONFIG=Object.freeze({enabled:false});');await assert.rejects(upgradeFriendVisibility({...opts,phase:'activate'}),/설정/);await writeFile(join(target,'member-writing-config.js'),'window.MINIHOMPY_MEMBER_WRITING_CONFIG=Object.freeze({enabled:true});');
  badPages=true;await assert.rejects(upgradeFriendVisibility({...opts,phase:'activate'}),/해시/);badPages=false;assert.equal((await state()).ready,false);

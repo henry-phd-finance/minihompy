@@ -54,6 +54,11 @@ try {
   assert.ok(!logs.join('\n').includes('private-password'));
   for(const content of Object.values(runtimeFiles(validateConfig({...config,displayName:'"quote'}),site)))runInNewContext(content,{window:{}});
   await cp(new URL('./build-pages.mjs',import.meta.url),join(root,'scripts/build-pages.mjs'));
+  await mkdir(join(root,'setup'),{recursive:true});
+  await cp(new URL('../setup/friend-visibility-release.mjs',import.meta.url),join(root,'setup/friend-visibility-release.mjs'));
+  const requiredRuntime=['content-access.js','member-writing-client.js','member-writing-runtime.js','photos-repository.js','photo-media-client.js','post-location-repository.js'];
+  await writeFile(join(root,'index.html'),requiredRuntime.map(name=>`<script src="${name}"></script>`).join(''));
+  for(const name of requiredRuntime)await cp(new URL('../'+name,import.meta.url),join(root,name));
   for(const dir of ['assets','views'])await mkdir(join(root,dir),{recursive:true});
   await writeFile(join(root,'styles.css'),'');
   execFileSync(process.execPath,[join(root,'scripts/build-pages.mjs')],{cwd:root,stdio:'pipe'});
