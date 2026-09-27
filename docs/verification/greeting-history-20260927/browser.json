@@ -1,0 +1,16 @@
+[
+  {
+    "site": "A",
+    "anonymousHistory": true,
+    "baselineCount": 1,
+    "deleteHidden": true,
+    "errors": []
+  },
+  {
+    "site": "B",
+    "anonymousHistory": true,
+    "baselineCount": 1,
+    "deleteHidden": true,
+    "errors": []
+  }
+]

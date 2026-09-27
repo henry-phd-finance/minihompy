@@ -1,0 +1,18 @@
+{
+  "reviews": {
+    "count": 2,
+    "hash": "91c9e1dc8b886dd6dde07778032dd6ea"
+  },
+  "state": {
+    "owner_member_id": "ab036b01-a1de-4a2a-99ac-e3d5ba53aaed",
+    "ready": true,
+    "epoch": "71b2e841-df57-4e41-be1a-d09a4cebc8e9",
+    "pages_sha256": "fbed05a7360f144f5a0c30ce4dd9ea9e0b7fd994dc26636adb4dce06f118b0cf"
+  },
+  "settings": {
+    "hash": "14f7a5a6120ab83d67f0eb3d1e33dc8e"
+  },
+  "checkedAt": "2026-09-27T05:18:05.976Z",
+  "latestCount": 1,
+  "filesVerified": 62
+}
