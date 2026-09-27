@@ -1,0 +1,1096 @@
+{
+  "capabilities": false,
+  "ownerCache": true,
+  "delaysMs": {
+    "auth": 20,
+    "folder": 40,
+    "health": 100,
+    "calendar": 250,
+    "list": 100,
+    "fastPhoto": 80,
+    "slowPhoto": 600
+  },
+  "transport": "synthetic, real UI and repositories; comments stubbed; not an authorization proof",
+  "samples": [
+    {
+      "scenario": "public",
+      "round": 1,
+      "menu": "diary",
+      "firstBodyMs": 309,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "settledMs": 459,
+      "calendarReadyMs": 459,
+      "empty": false,
+      "error": false,
+      "photoCount": 0,
+      "requests": [
+        {
+          "path": "/rest/v1/diary_folders",
+          "method": "POST",
+          "startMs": 40,
+          "endMs": 83,
+          "durationMs": 43,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "POST",
+          "startMs": 84,
+          "endMs": 187,
+          "durationMs": 103,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/calendar",
+          "method": "POST",
+          "startMs": 189,
+          "endMs": 452,
+          "durationMs": 263,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 199,
+          "endMs": 304,
+          "durationMs": 105,
+          "status": 200
+        }
+      ],
+      "requestCount": 4
+    },
+    {
+      "scenario": "public",
+      "round": 1,
+      "menu": "photos",
+      "firstBodyMs": 193,
+      "firstPhotoMs": 408,
+      "allPhotosMs": 941,
+      "settledMs": 941,
+      "calendarReadyMs": null,
+      "empty": false,
+      "error": false,
+      "photoCount": 2,
+      "requests": [
+        {
+          "path": "/rest/v1/photo_folders",
+          "method": "POST",
+          "startMs": 34,
+          "endMs": 78,
+          "durationMs": 44,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 80,
+          "endMs": 186,
+          "durationMs": 106,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/photo-media/read",
+          "method": "POST",
+          "startMs": 194,
+          "endMs": 277,
+          "durationMs": 83,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/photo-media/read",
+          "method": "POST",
+          "startMs": 194,
+          "endMs": 803,
+          "durationMs": 609,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 296,
+          "endMs": 401,
+          "durationMs": 105,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 823,
+          "endMs": 927,
+          "durationMs": 104,
+          "status": 200
+        }
+      ],
+      "requestCount": 6
+    },
+    {
+      "scenario": "public",
+      "round": 2,
+      "menu": "diary",
+      "firstBodyMs": 192,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "settledMs": 341,
+      "calendarReadyMs": 341,
+      "empty": false,
+      "error": false,
+      "photoCount": 0,
+      "requests": [
+        {
+          "path": "/rest/v1/diary_folders",
+          "method": "POST",
+          "startMs": 31,
+          "endMs": 76,
+          "durationMs": 45,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/calendar",
+          "method": "POST",
+          "startMs": 78,
+          "endMs": 331,
+          "durationMs": 253,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 79,
+          "endMs": 184,
+          "durationMs": 105,
+          "status": 200
+        }
+      ],
+      "requestCount": 3
+    },
+    {
+      "scenario": "public",
+      "round": 2,
+      "menu": "photos",
+      "firstBodyMs": 176,
+      "firstPhotoMs": 393,
+      "allPhotosMs": 909,
+      "settledMs": 909,
+      "calendarReadyMs": null,
+      "empty": false,
+      "error": false,
+      "photoCount": 2,
+      "requests": [
+        {
+          "path": "/rest/v1/photo_folders",
+          "method": "POST",
+          "startMs": 30,
+          "endMs": 71,
+          "durationMs": 41,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 72,
+          "endMs": 175,
+          "durationMs": 103,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/photo-media/read",
+          "method": "POST",
+          "startMs": 178,
+          "endMs": 262,
+          "durationMs": 84,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/photo-media/read",
+          "method": "POST",
+          "startMs": 178,
+          "endMs": 784,
+          "durationMs": 606,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 281,
+          "endMs": 386,
+          "durationMs": 105,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 803,
+          "endMs": 907,
+          "durationMs": 104,
+          "status": 200
+        }
+      ],
+      "requestCount": 6
+    },
+    {
+      "scenario": "owner",
+      "round": 1,
+      "menu": "diary",
+      "firstBodyMs": 309,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "settledMs": 459,
+      "calendarReadyMs": 459,
+      "empty": false,
+      "error": false,
+      "photoCount": 0,
+      "requests": [
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "POST",
+          "startMs": 37,
+          "endMs": 143,
+          "durationMs": 106,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/diary_folders",
+          "method": "POST",
+          "startMs": 144,
+          "endMs": 187,
+          "durationMs": 43,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/calendar",
+          "method": "POST",
+          "startMs": 189,
+          "endMs": 444,
+          "durationMs": 255,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 189,
+          "endMs": 294,
+          "durationMs": 105,
+          "status": 200
+        }
+      ],
+      "requestCount": 4
+    },
+    {
+      "scenario": "owner",
+      "round": 1,
+      "menu": "photos",
+      "firstBodyMs": 194,
+      "firstPhotoMs": 409,
+      "allPhotosMs": 926,
+      "settledMs": 926,
+      "calendarReadyMs": null,
+      "empty": false,
+      "error": false,
+      "photoCount": 4,
+      "requests": [
+        {
+          "path": "/rest/v1/photo_folders",
+          "method": "POST",
+          "startMs": 37,
+          "endMs": 80,
+          "durationMs": 43,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 82,
+          "endMs": 187,
+          "durationMs": 105,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/photo-media/read",
+          "method": "POST",
+          "startMs": 197,
+          "endMs": 286,
+          "durationMs": 89,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/photo-media/read",
+          "method": "POST",
+          "startMs": 197,
+          "endMs": 800,
+          "durationMs": 603,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/photo-media/read",
+          "method": "POST",
+          "startMs": 197,
+          "endMs": 287,
+          "durationMs": 90,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/photo-media/read",
+          "method": "POST",
+          "startMs": 197,
+          "endMs": 801,
+          "durationMs": 604,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 307,
+          "endMs": 410,
+          "durationMs": 103,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 818,
+          "endMs": 923,
+          "durationMs": 105,
+          "status": 200
+        }
+      ],
+      "requestCount": 8
+    },
+    {
+      "scenario": "owner",
+      "round": 2,
+      "menu": "diary",
+      "firstBodyMs": 192,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "settledMs": 342,
+      "calendarReadyMs": 342,
+      "empty": false,
+      "error": false,
+      "photoCount": 0,
+      "requests": [
+        {
+          "path": "/rest/v1/diary_folders",
+          "method": "POST",
+          "startMs": 30,
+          "endMs": 74,
+          "durationMs": 44,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/calendar",
+          "method": "POST",
+          "startMs": 76,
+          "endMs": 328,
+          "durationMs": 252,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 77,
+          "endMs": 180,
+          "durationMs": 103,
+          "status": 200
+        }
+      ],
+      "requestCount": 3
+    },
+    {
+      "scenario": "owner",
+      "round": 2,
+      "menu": "photos",
+      "firstBodyMs": 177,
+      "firstPhotoMs": 394,
+      "allPhotosMs": 911,
+      "settledMs": 911,
+      "calendarReadyMs": null,
+      "empty": false,
+      "error": false,
+      "photoCount": 4,
+      "requests": [
+        {
+          "path": "/rest/v1/photo_folders",
+          "method": "POST",
+          "startMs": 31,
+          "endMs": 72,
+          "durationMs": 41,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 73,
+          "endMs": 175,
+          "durationMs": 102,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/photo-media/read",
+          "method": "POST",
+          "startMs": 180,
+          "endMs": 264,
+          "durationMs": 84,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/photo-media/read",
+          "method": "POST",
+          "startMs": 180,
+          "endMs": 787,
+          "durationMs": 607,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/photo-media/read",
+          "method": "POST",
+          "startMs": 180,
+          "endMs": 265,
+          "durationMs": 85,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/photo-media/read",
+          "method": "POST",
+          "startMs": 180,
+          "endMs": 789,
+          "durationMs": 609,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 283,
+          "endMs": 387,
+          "durationMs": 104,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 807,
+          "endMs": 911,
+          "durationMs": 104,
+          "status": 200
+        }
+      ],
+      "requestCount": 8
+    },
+    {
+      "scenario": "friend",
+      "round": 1,
+      "menu": "diary",
+      "firstBodyMs": 294,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "settledMs": 445,
+      "calendarReadyMs": 445,
+      "empty": false,
+      "error": false,
+      "photoCount": 0,
+      "requests": [
+        {
+          "path": "/rest/v1/diary_folders",
+          "method": "POST",
+          "startMs": 39,
+          "endMs": 81,
+          "durationMs": 42,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "POST",
+          "startMs": 83,
+          "endMs": 186,
+          "durationMs": 103,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/calendar",
+          "method": "POST",
+          "startMs": 188,
+          "endMs": 444,
+          "durationMs": 256,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 189,
+          "endMs": 292,
+          "durationMs": 103,
+          "status": 200
+        }
+      ],
+      "requestCount": 4
+    },
+    {
+      "scenario": "friend",
+      "round": 1,
+      "menu": "photos",
+      "firstBodyMs": 195,
+      "firstPhotoMs": 412,
+      "allPhotosMs": 928,
+      "settledMs": 928,
+      "calendarReadyMs": null,
+      "empty": false,
+      "error": false,
+      "photoCount": 4,
+      "requests": [
+        {
+          "path": "/rest/v1/photo_folders",
+          "method": "POST",
+          "startMs": 38,
+          "endMs": 81,
+          "durationMs": 43,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 83,
+          "endMs": 188,
+          "durationMs": 105,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/photo-media/read",
+          "method": "POST",
+          "startMs": 197,
+          "endMs": 285,
+          "durationMs": 88,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/photo-media/read",
+          "method": "POST",
+          "startMs": 197,
+          "endMs": 803,
+          "durationMs": 606,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/photo-media/read",
+          "method": "POST",
+          "startMs": 198,
+          "endMs": 286,
+          "durationMs": 88,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/photo-media/read",
+          "method": "POST",
+          "startMs": 198,
+          "endMs": 805,
+          "durationMs": 607,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 306,
+          "endMs": 411,
+          "durationMs": 105,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 823,
+          "endMs": 930,
+          "durationMs": 107,
+          "status": 200
+        }
+      ],
+      "requestCount": 8
+    },
+    {
+      "scenario": "friend",
+      "round": 2,
+      "menu": "diary",
+      "firstBodyMs": 193,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "settledMs": 342,
+      "calendarReadyMs": 342,
+      "empty": false,
+      "error": false,
+      "photoCount": 0,
+      "requests": [
+        {
+          "path": "/rest/v1/diary_folders",
+          "method": "POST",
+          "startMs": 31,
+          "endMs": 77,
+          "durationMs": 46,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/calendar",
+          "method": "POST",
+          "startMs": 79,
+          "endMs": 335,
+          "durationMs": 256,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 80,
+          "endMs": 184,
+          "durationMs": 104,
+          "status": 200
+        }
+      ],
+      "requestCount": 3
+    },
+    {
+      "scenario": "friend",
+      "round": 2,
+      "menu": "photos",
+      "firstBodyMs": 192,
+      "firstPhotoMs": 409,
+      "allPhotosMs": 926,
+      "settledMs": 926,
+      "calendarReadyMs": null,
+      "empty": false,
+      "error": false,
+      "photoCount": 4,
+      "requests": [
+        {
+          "path": "/rest/v1/photo_folders",
+          "method": "POST",
+          "startMs": 31,
+          "endMs": 74,
+          "durationMs": 43,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 76,
+          "endMs": 181,
+          "durationMs": 105,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/photo-media/read",
+          "method": "POST",
+          "startMs": 194,
+          "endMs": 281,
+          "durationMs": 87,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/photo-media/read",
+          "method": "POST",
+          "startMs": 194,
+          "endMs": 799,
+          "durationMs": 605,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/photo-media/read",
+          "method": "POST",
+          "startMs": 194,
+          "endMs": 283,
+          "durationMs": 89,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/photo-media/read",
+          "method": "POST",
+          "startMs": 194,
+          "endMs": 800,
+          "durationMs": 606,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 301,
+          "endMs": 406,
+          "durationMs": 105,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 818,
+          "endMs": 923,
+          "durationMs": 105,
+          "status": 200
+        }
+      ],
+      "requestCount": 8
+    },
+    {
+      "scenario": "nonfriend",
+      "round": 1,
+      "menu": "diary",
+      "firstBodyMs": 294,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "settledMs": 444,
+      "calendarReadyMs": 444,
+      "empty": false,
+      "error": false,
+      "photoCount": 0,
+      "requests": [
+        {
+          "path": "/rest/v1/diary_folders",
+          "method": "POST",
+          "startMs": 40,
+          "endMs": 82,
+          "durationMs": 42,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "POST",
+          "startMs": 83,
+          "endMs": 186,
+          "durationMs": 103,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/calendar",
+          "method": "POST",
+          "startMs": 187,
+          "endMs": 442,
+          "durationMs": 255,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 188,
+          "endMs": 291,
+          "durationMs": 103,
+          "status": 200
+        }
+      ],
+      "requestCount": 4
+    },
+    {
+      "scenario": "nonfriend",
+      "round": 1,
+      "menu": "photos",
+      "firstBodyMs": 194,
+      "firstPhotoMs": 411,
+      "allPhotosMs": 928,
+      "settledMs": 928,
+      "calendarReadyMs": null,
+      "empty": false,
+      "error": false,
+      "photoCount": 2,
+      "requests": [
+        {
+          "path": "/rest/v1/photo_folders",
+          "method": "POST",
+          "startMs": 36,
+          "endMs": 80,
+          "durationMs": 44,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 81,
+          "endMs": 187,
+          "durationMs": 106,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/photo-media/read",
+          "method": "POST",
+          "startMs": 196,
+          "endMs": 283,
+          "durationMs": 87,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/photo-media/read",
+          "method": "POST",
+          "startMs": 196,
+          "endMs": 803,
+          "durationMs": 607,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 302,
+          "endMs": 404,
+          "durationMs": 102,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 822,
+          "endMs": 925,
+          "durationMs": 103,
+          "status": 200
+        }
+      ],
+      "requestCount": 6
+    },
+    {
+      "scenario": "nonfriend",
+      "round": 2,
+      "menu": "diary",
+      "firstBodyMs": 195,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "settledMs": 345,
+      "calendarReadyMs": 345,
+      "empty": false,
+      "error": false,
+      "photoCount": 0,
+      "requests": [
+        {
+          "path": "/rest/v1/diary_folders",
+          "method": "POST",
+          "startMs": 32,
+          "endMs": 75,
+          "durationMs": 43,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/calendar",
+          "method": "POST",
+          "startMs": 77,
+          "endMs": 330,
+          "durationMs": 253,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 77,
+          "endMs": 179,
+          "durationMs": 102,
+          "status": 200
+        }
+      ],
+      "requestCount": 3
+    },
+    {
+      "scenario": "nonfriend",
+      "round": 2,
+      "menu": "photos",
+      "firstBodyMs": 196,
+      "firstPhotoMs": 412,
+      "allPhotosMs": 929,
+      "settledMs": 929,
+      "calendarReadyMs": null,
+      "empty": false,
+      "error": false,
+      "photoCount": 2,
+      "requests": [
+        {
+          "path": "/rest/v1/photo_folders",
+          "method": "POST",
+          "startMs": 31,
+          "endMs": 73,
+          "durationMs": 42,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 75,
+          "endMs": 179,
+          "durationMs": 104,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/photo-media/read",
+          "method": "POST",
+          "startMs": 198,
+          "endMs": 281,
+          "durationMs": 83,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/photo-media/read",
+          "method": "POST",
+          "startMs": 198,
+          "endMs": 806,
+          "durationMs": 608,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 298,
+          "endMs": 400,
+          "durationMs": 102,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 823,
+          "endMs": 926,
+          "durationMs": 103,
+          "status": 200
+        }
+      ],
+      "requestCount": 6
+    },
+    {
+      "scenario": "empty",
+      "round": 1,
+      "menu": "diary",
+      "firstBodyMs": 294,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "settledMs": 444,
+      "calendarReadyMs": 444,
+      "empty": true,
+      "error": false,
+      "photoCount": 0,
+      "requests": [
+        {
+          "path": "/rest/v1/diary_folders",
+          "method": "POST",
+          "startMs": 40,
+          "endMs": 81,
+          "durationMs": 41,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "POST",
+          "startMs": 83,
+          "endMs": 186,
+          "durationMs": 103,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/calendar",
+          "method": "POST",
+          "startMs": 188,
+          "endMs": 443,
+          "durationMs": 255,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 188,
+          "endMs": 292,
+          "durationMs": 104,
+          "status": 200
+        }
+      ],
+      "requestCount": 4
+    },
+    {
+      "scenario": "empty",
+      "round": 1,
+      "menu": "photos",
+      "firstBodyMs": 190,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "settledMs": 190,
+      "calendarReadyMs": null,
+      "empty": true,
+      "error": false,
+      "photoCount": 0,
+      "requests": [
+        {
+          "path": "/rest/v1/photo_folders",
+          "method": "POST",
+          "startMs": 35,
+          "endMs": 76,
+          "durationMs": 41,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 77,
+          "endMs": 181,
+          "durationMs": 104,
+          "status": 200
+        }
+      ],
+      "requestCount": 2
+    },
+    {
+      "scenario": "empty",
+      "round": 2,
+      "menu": "diary",
+      "firstBodyMs": 193,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "settledMs": 343,
+      "calendarReadyMs": 343,
+      "empty": true,
+      "error": false,
+      "photoCount": 0,
+      "requests": [
+        {
+          "path": "/rest/v1/diary_folders",
+          "method": "POST",
+          "startMs": 30,
+          "endMs": 74,
+          "durationMs": 44,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/calendar",
+          "method": "POST",
+          "startMs": 76,
+          "endMs": 331,
+          "durationMs": 255,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 76,
+          "endMs": 178,
+          "durationMs": 102,
+          "status": 200
+        }
+      ],
+      "requestCount": 3
+    },
+    {
+      "scenario": "empty",
+      "round": 2,
+      "menu": "photos",
+      "firstBodyMs": 193,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "settledMs": 193,
+      "calendarReadyMs": null,
+      "empty": true,
+      "error": false,
+      "photoCount": 0,
+      "requests": [
+        {
+          "path": "/rest/v1/photo_folders",
+          "method": "POST",
+          "startMs": 31,
+          "endMs": 74,
+          "durationMs": 43,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 74,
+          "endMs": 179,
+          "durationMs": 105,
+          "status": 200
+        }
+      ],
+      "requestCount": 2
+    }
+  ]
+}

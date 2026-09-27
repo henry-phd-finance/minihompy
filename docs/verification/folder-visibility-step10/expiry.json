@@ -1,0 +1,7 @@
+{
+  "jwtLifetimeSeconds": 3600,
+  "naturalExpiryObservedThisStep": false,
+  "invalidJwtRejectedBothSites": true,
+  "revokedJwtRejectedBothSites": true,
+  "authExpiryConfigurationChanged": false
+}

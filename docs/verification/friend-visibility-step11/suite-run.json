@@ -1,0 +1,68 @@
+[
+  {
+    "name": "verify-member-comments",
+    "script": "scripts/verify-member-comments.mjs",
+    "args": [],
+    "env": {
+      "MINIHOMPY_TEST_FRIEND_VISIBILITY": "1",
+      "MINIHOMPY_TEST_PHOTO_MEDIA": "1"
+    },
+    "group": "regression",
+    "exit_code": 0,
+    "signal": null,
+    "elapsed_seconds": 3.79
+  },
+  {
+    "name": "verify-author-navigation",
+    "script": "scripts/verify-author-navigation.mjs",
+    "args": [
+      "/home/henry91-jung/miniconda3/envs/dark/lib/node_modules/playwright/index.mjs"
+    ],
+    "env": {},
+    "group": "regression",
+    "exit_code": 1,
+    "signal": null,
+    "elapsed_seconds": 30.52
+  },
+  {
+    "name": "verify-surf-navigation",
+    "script": "scripts/verify-surf-navigation.mjs",
+    "args": [
+      "/home/henry91-jung/miniconda3/envs/dark/lib/node_modules/playwright/index.mjs"
+    ],
+    "env": {
+      "VERIFICATION_DIR": "/home/henry91-jung/cyworld/docs/verification/friend-visibility-step11/surf"
+    },
+    "group": "regression",
+    "exit_code": 0,
+    "signal": null,
+    "elapsed_seconds": 2.96
+  },
+  {
+    "name": "cross-surface",
+    "script": "scripts/verify-friend-visibility-integration.mjs",
+    "args": [],
+    "env": {},
+    "group": "integration",
+    "exit_code": 0,
+    "signal": null,
+    "elapsed_seconds": 5.89
+  },
+  {
+    "name": "navigation-visits-mobile",
+    "script": "scripts/verify-navigation-integration.mjs",
+    "args": [
+      "/home/henry91-jung/miniconda3/envs/dark/lib/node_modules/playwright/index.mjs",
+      "375"
+    ],
+    "env": {
+      "HOME_VISITS_INTEGRATION": "1",
+      "MINIHOMPY_TEST_FRIEND_VISIBILITY": "1",
+      "MINIHOMPY_TEST_PHOTO_MEDIA": "1"
+    },
+    "group": "integration",
+    "exit_code": 0,
+    "signal": null,
+    "elapsed_seconds": 8.8
+  }
+]

@@ -1,0 +1,14 @@
+{
+  "checkedAt": "2026-09-24T03:02:09.753410+00:00",
+  "prerequisite": "docs/verification/folder-visibility-step3/README.md",
+  "manifest": "docs/verification/folder-visibility-step3/source-hashes.json",
+  "matchedAtStart": 116,
+  "mismatchesAtStart": [],
+  "intentionallyChangedDuringThisStep": [
+    "docs/folder-visibility-contract.md",
+    "scripts/helpers/member-writing-db.mjs",
+    "scripts/verify-folder-visibility-prototype.mjs",
+    "scripts/verify-member-comments.mjs"
+  ],
+  "scope": "Local Step 3 completion and source comparison; no hosted changes"
+}

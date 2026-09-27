@@ -1,0 +1,3 @@
+central: deployed session migration hash verified
+A: deployed session migration hash verified
+B: deployed session migration hash verified

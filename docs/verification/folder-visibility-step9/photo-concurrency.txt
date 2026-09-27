@@ -1,0 +1,5 @@
+PASS 1: save wins: cleanup waits and preserves attached asset
+PASS 2: cleanup wins: late save waits then fails; no partial post
+PASS 3: freeze waits for active save, snapshots committed content and rejects next write
+PASS 4: read after waiting for hide sees current visibility; revoked owner fails
+PASS: 4 independent PostgreSQL media race groups

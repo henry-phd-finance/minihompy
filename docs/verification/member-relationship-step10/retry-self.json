@@ -1,0 +1,9 @@
+{
+  "passed": true,
+  "checks": [
+    "self-request denied with 403",
+    "same committed request ID returns its receipt without reopening the relationship",
+    "new duplicate with stale revision rejected 409",
+    "relationship remains unchanged"
+  ]
+}

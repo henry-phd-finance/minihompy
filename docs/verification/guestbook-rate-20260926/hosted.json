@@ -1,0 +1,26 @@
+[
+  {
+    "site": "A",
+    "client_sha256": "a9967f19bafbcec46400f5e82e9cc32d14bd96f80e6c5f3d43d077124ba88e04",
+    "health": {
+      "friend_visibility_protocol": 1,
+      "friend_visibility_ready": true,
+      "friend_media_ready": true,
+      "friend_summary_ready": true,
+      "friend_pages_ready": true,
+      "friend_visibility_setup_protocol": 1
+    }
+  },
+  {
+    "site": "B",
+    "client_sha256": "a9967f19bafbcec46400f5e82e9cc32d14bd96f80e6c5f3d43d077124ba88e04",
+    "health": {
+      "friend_visibility_protocol": 1,
+      "friend_visibility_ready": true,
+      "friend_media_ready": true,
+      "friend_summary_ready": true,
+      "friend_pages_ready": true,
+      "friend_visibility_setup_protocol": 1
+    }
+  }
+]

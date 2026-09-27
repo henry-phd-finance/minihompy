@@ -1,0 +1,398 @@
+[
+  {
+    "site": "A",
+    "role": "public",
+    "menu": "diary",
+    "before": {
+      "firstBodyMs": 2344,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "requestCount": 5
+    },
+    "after": {
+      "firstBodyMs": 778,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "requestCount": 5
+    },
+    "emptyBefore": [
+      true,
+      true
+    ],
+    "emptyAfter": [
+      false,
+      false
+    ],
+    "photosBefore": [
+      0,
+      0
+    ],
+    "photosAfter": [
+      0,
+      0
+    ]
+  },
+  {
+    "site": "A",
+    "role": "public",
+    "menu": "photos",
+    "before": {
+      "firstBodyMs": 3724,
+      "firstPhotoMs": 3724,
+      "allPhotosMs": 3724,
+      "requestCount": 8
+    },
+    "after": {
+      "firstBodyMs": 681,
+      "firstPhotoMs": 2148,
+      "allPhotosMs": 2148,
+      "requestCount": 6
+    },
+    "emptyBefore": [
+      false,
+      false
+    ],
+    "emptyAfter": [
+      false,
+      false
+    ],
+    "photosBefore": [
+      1,
+      1
+    ],
+    "photosAfter": [
+      1,
+      1
+    ]
+  },
+  {
+    "site": "A",
+    "role": "owner",
+    "menu": "diary",
+    "before": {
+      "firstBodyMs": 3704,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "requestCount": 18
+    },
+    "after": {
+      "firstBodyMs": 823,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "requestCount": 3
+    },
+    "emptyBefore": [
+      true,
+      true
+    ],
+    "emptyAfter": [
+      false,
+      false
+    ],
+    "photosBefore": [
+      0,
+      0
+    ],
+    "photosAfter": [
+      0,
+      0
+    ]
+  },
+  {
+    "site": "A",
+    "role": "owner",
+    "menu": "photos",
+    "before": {
+      "firstBodyMs": 5656,
+      "firstPhotoMs": 5656,
+      "allPhotosMs": 5656,
+      "requestCount": 29
+    },
+    "after": {
+      "firstBodyMs": 848,
+      "firstPhotoMs": 2257,
+      "allPhotosMs": 2257,
+      "requestCount": 4
+    },
+    "emptyBefore": [
+      false,
+      false
+    ],
+    "emptyAfter": [
+      false,
+      false
+    ],
+    "photosBefore": [
+      1,
+      1
+    ],
+    "photosAfter": [
+      1,
+      1
+    ]
+  },
+  {
+    "site": "A",
+    "role": "member",
+    "menu": "diary",
+    "before": {
+      "firstBodyMs": 3405,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "requestCount": 5
+    },
+    "after": {
+      "firstBodyMs": 1254,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "requestCount": 3
+    },
+    "emptyBefore": [
+      true,
+      true
+    ],
+    "emptyAfter": [
+      false,
+      false
+    ],
+    "photosBefore": [
+      0,
+      0
+    ],
+    "photosAfter": [
+      0,
+      0
+    ]
+  },
+  {
+    "site": "A",
+    "role": "member",
+    "menu": "photos",
+    "before": {
+      "firstBodyMs": 6231,
+      "firstPhotoMs": 6231,
+      "allPhotosMs": 6231,
+      "requestCount": 7
+    },
+    "after": {
+      "firstBodyMs": 1232,
+      "firstPhotoMs": 4506,
+      "allPhotosMs": 4506,
+      "requestCount": 4
+    },
+    "emptyBefore": [
+      false,
+      false
+    ],
+    "emptyAfter": [
+      false,
+      false
+    ],
+    "photosBefore": [
+      1,
+      1
+    ],
+    "photosAfter": [
+      1,
+      1
+    ]
+  },
+  {
+    "site": "B",
+    "role": "public",
+    "menu": "diary",
+    "before": {
+      "firstBodyMs": 2012,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "requestCount": 5
+    },
+    "after": {
+      "firstBodyMs": 712,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "requestCount": 3
+    },
+    "emptyBefore": [
+      true,
+      true
+    ],
+    "emptyAfter": [
+      true,
+      true
+    ],
+    "photosBefore": [
+      0,
+      0
+    ],
+    "photosAfter": [
+      0,
+      0
+    ]
+  },
+  {
+    "site": "B",
+    "role": "public",
+    "menu": "photos",
+    "before": {
+      "firstBodyMs": 2024,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "requestCount": 5
+    },
+    "after": {
+      "firstBodyMs": 624,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "requestCount": 2
+    },
+    "emptyBefore": [
+      true,
+      true
+    ],
+    "emptyAfter": [
+      true,
+      true
+    ],
+    "photosBefore": [
+      0,
+      0
+    ],
+    "photosAfter": [
+      0,
+      0
+    ]
+  },
+  {
+    "site": "B",
+    "role": "owner",
+    "menu": "diary",
+    "before": {
+      "firstBodyMs": 3596,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "requestCount": 18
+    },
+    "after": {
+      "firstBodyMs": 681,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "requestCount": 3
+    },
+    "emptyBefore": [
+      true,
+      true
+    ],
+    "emptyAfter": [
+      true,
+      true
+    ],
+    "photosBefore": [
+      0,
+      0
+    ],
+    "photosAfter": [
+      0,
+      0
+    ]
+  },
+  {
+    "site": "B",
+    "role": "owner",
+    "menu": "photos",
+    "before": {
+      "firstBodyMs": 3698,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "requestCount": 20
+    },
+    "after": {
+      "firstBodyMs": 680,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "requestCount": 2
+    },
+    "emptyBefore": [
+      true,
+      true
+    ],
+    "emptyAfter": [
+      true,
+      true
+    ],
+    "photosBefore": [
+      0,
+      0
+    ],
+    "photosAfter": [
+      0,
+      0
+    ]
+  },
+  {
+    "site": "B",
+    "role": "member",
+    "menu": "diary",
+    "before": {
+      "firstBodyMs": 3113,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "requestCount": 5
+    },
+    "after": {
+      "firstBodyMs": 962,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "requestCount": 3
+    },
+    "emptyBefore": [
+      true,
+      true
+    ],
+    "emptyAfter": [
+      true,
+      true
+    ],
+    "photosBefore": [
+      0,
+      0
+    ],
+    "photosAfter": [
+      0,
+      0
+    ]
+  },
+  {
+    "site": "B",
+    "role": "member",
+    "menu": "photos",
+    "before": {
+      "firstBodyMs": 3222,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "requestCount": 5
+    },
+    "after": {
+      "firstBodyMs": 1140,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "requestCount": 2
+    },
+    "emptyBefore": [
+      true,
+      true
+    ],
+    "emptyAfter": [
+      true,
+      true
+    ],
+    "photosBefore": [
+      0,
+      0
+    ],
+    "photosAfter": [
+      0,
+      0
+    ]
+  }
+]

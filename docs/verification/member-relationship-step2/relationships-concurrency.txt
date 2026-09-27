@@ -1,0 +1,18 @@
+PASS: additive migration preserves existing grants
+PASS 1: opposing requests serialize on absent pair: exactly one pending, never automatic accept
+PASS 2: accept first, cancel waits then conflicts
+PASS 3: cancel first, accept cannot revive cancelled request
+PASS 4: reject first, concurrent accept cannot overwrite rejection
+PASS 5: new request generation survives old delayed cancel/accept
+PASS 6: same operation across separate logins is one mutation and one receipt
+PASS 7: same operation with different target conflicts even across separate logins
+PASS 8: permit first, disconnect waits; original permit remains bounded and replayable
+PASS 9: disconnect first, pending permit never gets authorization
+PASS 10: concurrent permit retries issue one authorization and preserve deadline
+PASS 11: central logout first: waiting relationship mutation fails auth
+PASS 12: mutation first: logout waits and blocks subsequent result lookup
+PASS 13: grant expiry while waiting for pair lock is rechecked before commit
+PASS 14: actor quota across separate login sessions is atomic
+PASS 15: rolled-back transaction leaves no partial pair/operation/quota; waiter can succeed
+PASS 16: public quota serializes across connections and rejects the 121st query
+All 16 independent PostgreSQL concurrency groups passed; container cleanup follows.

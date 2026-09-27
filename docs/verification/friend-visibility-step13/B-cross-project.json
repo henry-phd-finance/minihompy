@@ -1,0 +1,15 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "path": "member-writing/content/list",
+      "status": 401,
+      "code": "AUTH_REQUIRED"
+    },
+    {
+      "path": "photo-media/read",
+      "status": 401,
+      "code": "AUTH_REQUIRED"
+    }
+  ]
+}

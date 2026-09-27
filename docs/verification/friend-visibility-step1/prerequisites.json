@@ -1,0 +1,26 @@
+{
+  "passed": true,
+  "folder_visibility_files": 155,
+  "later_changes": [
+    "../minihompy-central/supabase/functions/identity-api/handler.js",
+    ".gitignore",
+    "docs/backlog.md",
+    "index.html",
+    "member-writing-client.js",
+    "member-writing-runtime.js",
+    "scripts/helpers/member-writing-db.mjs",
+    "scripts/verify-artifact.mjs",
+    "scripts/verify-member-navigation-ui.mjs",
+    "scripts/verify-member-session-integration.mjs",
+    "setup/README.md",
+    "setup/setup.mjs",
+    "styles.css",
+    "supabase/functions/member-writing/handler.js",
+    "views/home.js"
+  ],
+  "relationship_files": 352,
+  "relationship_difference": [
+    "docs/backlog.md"
+  ],
+  "reconciliation": "All older implementation changes match completed relationship evidence; backlog wording was updated with this new plan. Relationship Step 8 includes visibility, media and summary regressions."
+}

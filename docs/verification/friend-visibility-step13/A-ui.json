@@ -1,0 +1,18 @@
+{
+  "passed": true,
+  "checks": [
+    "Owner creates three visibility modes in all menus with real protected photo uploads",
+    "Pending request grants no friend read",
+    "Actual menu direct URLs and member comment form work without extra verification",
+    "Member comment edit and identical request retry succeed without duplicates",
+    "Owner privacy change blocks subsequent member requests and direct view, restoring friends retains comment",
+    "Mobile protected photo view and menu departure verified",
+    "Test relationship disconnect blocks new protected reads and removes photo/comment view",
+    "Real logout clears protected view",
+    "Same browser switches from visiting member to verified local owner after logout",
+    "Only journaled test posts/comments/files/relationship cleaned"
+  ],
+  "cleaned": true,
+  "failedPhase": null,
+  "actualHostedServices": true
+}

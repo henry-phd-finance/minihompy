@@ -1,0 +1,21 @@
+{
+  "step": 7,
+  "status": "complete",
+  "date": "2026-09-24",
+  "prerequisite": {
+    "step": 6,
+    "matched_files": 431
+  },
+  "checks": {
+    "aggregate_api": 7,
+    "aggregate_sql": 4,
+    "home_summary": 8,
+    "visibility_summary": 8,
+    "post_location": "passed",
+    "visits": 10,
+    "read_api": 13,
+    "http_boundaries": 7
+  },
+  "production_changed": false,
+  "next_step": 8
+}

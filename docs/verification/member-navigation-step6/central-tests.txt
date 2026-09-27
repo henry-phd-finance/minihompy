@@ -1,0 +1,149 @@
+=============================================================
+🚀 RUNNING ALL MINIHOMPY CENTRAL VERIFICATION TEST SUITES
+=============================================================
+
+▶ Running Runtime source consistency (verify-runtime-source.mjs)...
+PASS: deployed TS adapters and Node tests use the same JS implementations.
+▶ Running Deployment prerequisites (verify-deployment.mjs)...
+PASS: central deploy dry-run, schema prerequisite, secret validation, both function targets, credentials excluded from argv/logs.
+▶ Running Protocol & Token Security (verify-shared-identity-protocol.mjs)...
+=== Starting Minihompy Central Protocol Verification ===
+
+1. Testing token issuance and verification for all 4 types...
+   ✓ All 4 token types issued and verified successfully.
+2. Testing tampering detection and security boundaries...
+   ✓ Tampering, key mismatch, kind confusion, and alg:none correctly rejected.
+3. Testing expiration and 30-second clock tolerance...
+   ✓ Clock tolerance (±30s) and expiration boundaries verified.
+4. Testing token size limit (4 KiB)...
+   ✓ 4 KiB size limit strictly enforced.
+5. Testing origin, path, handle, and display name validation...
+   ✓ Origin, relative path, traversal prevention, handle, and display name verified.
+6. Testing dynamic CORS origin validation...
+   ✓ Dynamic CORS with Vary: Origin and preflight response verified.
+7. Verifying Central SQL migration schema integrity...
+   ✓ Central SQL migration schema, RLS, and security revocations verified.
+
+=============================================================
+ALL PROTOCOL & CORE SECURITY TESTS PASSED (100% SUCCESS)
+=============================================================
+
+▶ Running Member navigation (SQL) (verify-member-navigation.mjs)...
+PASS 1: repeatable read-only migration preserves existing registry rows
+PASS 2: site owner, stable member identity and explicit public fields
+PASS 3: deduplicated batch, latest URL and unknown member
+PASS 4: filter before pagination: inactive, unverified, unsafe and unbound destinations
+PASS 5: random samples entire eligible population and excludes current site
+PASS 6: bounded inputs, CORS, methods and database failure distinct from empty
+PASS 7: RPC not executable by anonymous or authenticated roles
+PASS: 7 navigation groups (actual PostgreSQL, no deployment).
+▶ Running Step C2: Directory & CORS (verify-identity-directory.mjs)...
+=== Starting Minihompy Central API Step C2 Verification ===
+
+1. Testing GET /health endpoint...
+   ✓ Health check returned 200 OK with Access-Control-Allow-Origin: *
+
+2. Testing CORS preflight and origin security...
+   ✓ Allowed origins accept CORS; disallowed origins strictly receive 403 Forbidden.
+
+3. Testing path normalization for Supabase Functions...
+   ✓ Direct, /identity-api, and /functions/v1/identity-api prefixes properly routed.
+
+4. Testing input validation for GET /directory...
+   ✓ Legacy search validation enforces valid handle/query formats.
+
+5. Testing exact handle query and public profile schema...
+   ✓ Public visitor profile strictly restricted to (id, handle, display_name, homepage_url).
+
+6. Testing active status filtering (suspended users and sites)...
+   ✓ Suspended members, suspended sites, and non-existent handles safely return empty items.
+
+7. Testing search query (q=...)...
+   ✓ Search query filters active members correctly.
+
+=============================================================
+ALL STEP C2 DIRECTORY API TESTS PASSED (100% SUCCESS)
+=============================================================
+
+▶ Running Verified registration, Auth proof & single-use login (SQL) (verify-identity-security.mjs)...
+PASS 1: missing dedicated key fails closed; production and tests share handler
+PASS 2: registration validates hosting boundaries, paths, project refs and public-only keys
+PASS 3: both Pages control and a permanent local admin are required; registration is single-use
+PASS 4: registration and binding creation roll back atomically on a duplicate project
+PASS 5: UUID-only, wrong-project, forged/expired token, anonymous and wrong-owner requests are rejected
+PASS 6: intent and activation replay are rejected; browser verifier required; A is identified on B
+PASS 7: revocation and ownership changes between exchanges invalidate login
+PASS 8: legacy sites require re-verification; IDs and existing owner bindings are preserved
+PASS 9: private tables/RPCs deny browser roles; credentials/verifiers are not persisted; CORS allows bearer header
+PASS 10: database deadlines, token kind/tampering and required return site are enforced
+PASS 11: database and remote Auth failure do not issue credentials
+All 11 central security groups passed (real SQL via PGlite, mocked external Auth/Pages HTTP).
+▶ Running Member writing proof, grants and logout (SQL) (verify-member-writing.mjs)...
+PASS 1: real login completion persists separate SID; issue and redeem verified profile
+PASS 2: proof consumed once; target, PKCE and kind cannot be substituted
+PASS 3: expired signed proof and database deadline fail independently
+PASS 4: legacy sessions still identify visitors but cannot authorize writing
+PASS 5: member, site, verification and binding revocation invalidate outstanding proofs/grants
+PASS 6: grant revoke is idempotent and expiry enforced
+PASS 7: logout invalidates grants, unconsumed proofs and visits, but not another login
+PASS 8: session version changes and server session expiry invalidate writing
+PASS 9: browser roles cannot read private grants or invoke service RPC
+PASS 10: profile comes from verified directory, bounded writer label, and invalid home URL fails closed
+PASS 11: secrets are not persisted and database failures fail closed
+All 11 member writing groups passed (PGlite SQL + actual API handler).
+▶ Running Writing logout UI failure recovery (verify-writing-logout-ui.mjs)...
+PASS: logout revokes before clearing, fails closed on server/storage errors, retries, and supports expired/legacy credentials.
+▶ Running Existing identity migration (verify-identity-upgrade.mjs)...
+PASS: upgrading populated legacy tables preserves IDs/bindings and invalidates old sessions.
+▶ Running Step C5: Visits Issue (verify-identity-visit-issue.mjs)...
+=== Starting Minihompy Central API Step C5 Verification ===
+
+1. Testing input validation for POST /visits/issue...
+   ✓ Missing site, inactive site, and invalid return paths rejected with 400.
+
+2. Testing anonymous visit ticket issuance...
+   ✓ Anonymous visit ticket safely issued with sub: null and 60-second TTL.
+
+3. Testing identified visit ticket issuance with valid central_session...
+   ✓ Identified visit ticket safely issued with Alice sub ID and return path.
+
+4. Testing invalidation fallbacks (version mismatch, expired token, suspended user)...
+   ✓ Invalid/expired/revoked sessions seamlessly fall back to anonymous ticket with session_invalid: true.
+
+=============================================================
+ALL STEP C5 VISITS ISSUE TESTS PASSED (100% SUCCESS)
+=============================================================
+
+▶ Running Step C6: Visits Resolve (verify-identity-visit-resolve.mjs)...
+=== Starting Minihompy Central API Step C6 Verification ===
+
+1. Testing input validation for POST /visits/resolve...
+   ✓ Missing token, missing site_id, and inactive site rejected with 400.
+
+2. Testing token security & cross-site audience check...
+   ✓ Tampered tokens, expired tokens, and cross-site audience spoofing strictly rejected.
+
+3. Testing anonymous visit ticket resolution...
+   ✓ Anonymous tickets properly resolve with status: anonymous and null profile.
+
+4. Testing identified visit ticket resolution & public profile security...
+   ✓ Identified ticket successfully resolved with clean public profile.
+
+5. Testing suspended member fallback to anonymous...
+   ✓ Suspended member visit ticket safely downgraded to anonymous.
+
+6. Testing End-to-End visit flow (POST /visits/issue -> POST /visits/resolve)...
+   ✓ End-to-end Issue -> Resolve pipeline completely verified!
+
+=============================================================
+ALL STEP C6 VISITS RESOLVE TESTS PASSED (100% SUCCESS)
+=============================================================
+
+▶ Running Step C7: Identity Page (/visit) (verify-identity-page-visit.mjs)...
+PASS: legacy Edge visit routes forward to canonical static Pages with query preserved.
+▶ Running Step C8: UI Pages (/login, /complete, /logout) (verify-identity-page-ui.mjs)...
+PASS: one static login UI; legacy login/complete/logout redirect without embedding credentials.
+=============================================================
+🎉 ALL 13 TEST SUITES PASSED PERFECTLY (100% SUCCESS)
+=============================================================
+

@@ -1,0 +1,34 @@
+{
+  "checkedAt": "2026-09-24T03:52:15.111Z",
+  "result": {
+    "prepared": true,
+    "mediaMode": "legacy",
+    "mediaReady": false
+  },
+  "functions": [
+    {
+      "name": "owner-login",
+      "version": 11,
+      "verify_jwt": false,
+      "status": "ACTIVE"
+    },
+    {
+      "name": "member-writing",
+      "version": 12,
+      "verify_jwt": false,
+      "status": "ACTIVE"
+    },
+    {
+      "name": "visit-counts",
+      "version": 6,
+      "verify_jwt": false,
+      "status": "ACTIVE"
+    },
+    {
+      "name": "photo-media",
+      "version": 3,
+      "verify_jwt": false,
+      "status": "ACTIVE"
+    }
+  ]
+}

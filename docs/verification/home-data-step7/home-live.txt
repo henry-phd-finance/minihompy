@@ -1,0 +1,2 @@
+PASS: A real home counts/recent links/direct content addresses, reload and new-tab visit deduplication
+PASS: B real home counts/recent links/direct content addresses, reload and new-tab visit deduplication

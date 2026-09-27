@@ -1,0 +1,25 @@
+{
+  "step": 11,
+  "status": "complete",
+  "date": "2026-09-24",
+  "prerequisite": {
+    "step": 10,
+    "verified_source_files": 515
+  },
+  "suites_passed": 37,
+  "cross_surface_lifecycle_groups": 7,
+  "independent_postgres_postgrest_groups": 38,
+  "friend_content_browser_scenarios": 24,
+  "existing_automatic_session_browser_scenarios": 9,
+  "roles": [
+    "public",
+    "member accepted",
+    "member pending/nonfriend C",
+    "central self without local admin",
+    "local owner"
+  ],
+  "production_changed": false,
+  "product_source_changed": false,
+  "known_authorization_or_data_exposure_defects": [],
+  "next_step": 12
+}

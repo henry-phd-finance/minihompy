@@ -1,0 +1,12 @@
+{
+  "home-activity.js": "46471c20e7d83ca0371e420b081349a95c7979dd2c3296d637d329590eabab0d",
+  "styles.css": "d36e7e3ae19ec2795f6207e2f926136e22fc688ac250b1fdde3fd5638bdc1ab9",
+  "index.html": "9372422a26925f73bb6e42bd999cc3e11490fbc4dbbb937f40ad9a5acf60f470",
+  "views/home.js": "54bcd7811a9117f10fbaf183a288329fda734c4992149918062c3361c5afa25c",
+  "home-profile-data.js": "245a96ec954bf1c2311a9b4b0ef98f261a97377907c4ee8f9a1a093cbeee87cb",
+  "home-profile.js": "15f3aa76ff0d40ebfaa9b8a54707ccbd8906460720c16aef14a91bdc2abc4340",
+  "supabase/migrations/202609260002_home_profile.sql": "532f2060c9ee55dd35852115ded5bb7f3bd9c7e5f9b82f21cd81046c0d4dde91",
+  "scripts/verify-home-profile-db.mjs": "d2a91d68351732ce30213ad78225ff7ae2ae6179286869d5ca2960784149ebf0",
+  "scripts/verify-home-profile-ui.mjs": "4549a1a7e6f0abf7dbbf4319ee0c034ed8d8abab64d5a5e16da058b340f31c44",
+  "scripts/verify-home-activity.mjs": "38e99da9473b7589ee946c1de893198fdf9a5e65be1ceda2d718e77124a81fac"
+}

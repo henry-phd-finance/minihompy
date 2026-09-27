@@ -1,0 +1,16 @@
+PASS: board: concurrent last-folder deletion serializes and retains one real folder
+PASS: board: a new post invalidates pending folder-delete confirmation
+PASS: board: delete first, late direct post save fails without an orphan
+PASS: photos: concurrent last-folder deletion serializes and retains one real folder
+PASS: photos: a new post invalidates pending folder-delete confirmation
+PASS: photos: delete first, late direct post save fails without an orphan
+PASS: diary: concurrent last-folder deletion serializes and retains one real folder
+PASS: diary: a new post invalidates pending folder-delete confirmation
+PASS: diary: delete first, late direct post save fails without an orphan
+PASS: Concurrent identical requests return one receipt and one created folder
+PASS: Concurrent reorder/create rejects stale order without losing new folder
+PASS: Move/delete waits before rows; concurrent body edit survives with no deadlock
+PASS: Bulk move invalidates an editor optimistic revision before its blocked UPDATE resumes
+PASS: Administrator revoked during menu lock wait cannot execute queued mutation
+PASS: Different menus do not block each other
+PASS: 15 PostgreSQL concurrency groups; container removed on exit.

@@ -1,0 +1,17 @@
+{
+  "passed": false,
+  "checks": [
+    "Owner creates three visibility modes in all menus with real protected photo uploads",
+    "Anonymous matrix passed",
+    "Nonfriend matrix passed",
+    "Owner matrix passed",
+    "All list/detail/comments/photo/summary/calendar/location surfaces separate anonymous, nonfriend, local owner and central self",
+    "Direct REST/RPC/private Storage and UUID-only credentials denied",
+    "Pending request grants no friend read",
+    "Actual acceptance unlocks friends across all read surfaces and real photo bytes",
+    "Only journaled test posts/comments/files/relationship cleaned"
+  ],
+  "cleaned": true,
+  "failedPhase": "browser and comment",
+  "actualHostedServices": true
+}

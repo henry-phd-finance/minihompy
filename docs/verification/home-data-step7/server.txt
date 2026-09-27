@@ -1,0 +1,20 @@
+A: [DRY RUN] home-data: 소유자/스키마 확인 → 홈 SQL → 기존 secret 유지 또는 최초 생성 → 함수 배포 → 읽기 검사 → 활성화. 네트워크/파일 변경 없음.
+A: 홈 마이그레이션 적용: 202609230005_home_summary.sql
+A: 홈 마이그레이션 적용: 202609230006_post_location.sql
+A: 홈 마이그레이션 적용: 202609230007_guestbook_post_location.sql
+A: 홈 마이그레이션 적용: 202609230008_visit_counts.sql
+A: 홈 데이터 준비 완료. home-data-config.js와 런타임을 Pages에 배포하세요. 준비 검사는 방문 수를 늘리지 않습니다.
+A: 홈 데이터 준비 완료. home-data-config.js와 런타임을 Pages에 배포하세요. 준비 검사는 방문 수를 늘리지 않습니다.
+Prepared _site with 39 runtime entries. No references, docs, SQL or test scripts.
+PASS: Pages includes login/runtime assets and excludes backend/setup/secrets.
+A: server and repeat upgrade verified; Pages not pushed
+B: [DRY RUN] home-data: 소유자/스키마 확인 → 홈 SQL → 기존 secret 유지 또는 최초 생성 → 함수 배포 → 읽기 검사 → 활성화. 네트워크/파일 변경 없음.
+B: 홈 마이그레이션 적용: 202609230005_home_summary.sql
+B: 홈 마이그레이션 적용: 202609230006_post_location.sql
+B: 홈 마이그레이션 적용: 202609230007_guestbook_post_location.sql
+B: 홈 마이그레이션 적용: 202609230008_visit_counts.sql
+B: 홈 데이터 준비 완료. home-data-config.js와 런타임을 Pages에 배포하세요. 준비 검사는 방문 수를 늘리지 않습니다.
+B: 홈 데이터 준비 완료. home-data-config.js와 런타임을 Pages에 배포하세요. 준비 검사는 방문 수를 늘리지 않습니다.
+Prepared _site with 39 runtime entries. No references, docs, SQL or test scripts.
+PASS: Pages includes login/runtime assets and excludes backend/setup/secrets.
+B: server and repeat upgrade verified; Pages not pushed

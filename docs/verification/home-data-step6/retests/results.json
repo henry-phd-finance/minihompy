@@ -1,0 +1,47 @@
+{
+  "checkedAt": "2026-09-23T12:17:02.583Z",
+  "results": [
+    {
+      "name": "home-integration",
+      "passed": true,
+      "seconds": 5.65,
+      "stdout": "PASS 1280: real SQL/browser create four posts/comments → public home → real destination/comments; empty/private-only and anonymous/A/B/owner parity\nPASS 1280: draft cancellation, history/reload, same-browser tabs, blocked storage, server day and dedup cleanup preserve TOTAL\nPASS 1280: outage/retry and late response isolation; four real repository deletes cascade comments and clear home\nPASS 375: real SQL/browser create four posts/comments → public home → real destination/comments; empty/private-only and anonymous/A/B/owner parity\nPASS 375: draft cancellation, history/reload, same-browser tabs, blocked storage, server day and dedup cleanup preserve TOTAL\nPASS 375: outage/retry and late response isolation; four real repository deletes cascade comments and clear home\n",
+      "stderr": ""
+    },
+    {
+      "name": "home-navigation",
+      "passed": true,
+      "seconds": 9.312,
+      "stdout": "PASS real central login/PKCE and A → B → own home, author link, reload/history and separate administrator\nPASS cross-origin logout, stale-tab invalidation, same-browser A → B\nPASS late profile, cancelled recheck, display lease and restored-page revalidation\nPASS central outage/retry, SQL session expiration and no credential-bearing final URLs\nPASS actual A/B personal visit SQL + Edge + browser during central login/return, cross-site navigation, extra tabs, logout/account switch and central outage: exactly one per site\n",
+      "stderr": ""
+    },
+    {
+      "name": "backend",
+      "passed": true,
+      "seconds": 0.644,
+      "stdout": "PASS: actual vendored SDK, isolated sessions, client reuse, reader identity, settings/profile reads only, no user creation.\n",
+      "stderr": ""
+    },
+    {
+      "name": "profile",
+      "passed": true,
+      "seconds": 2.95,
+      "stdout": "PASS: profile introduction, empty sections/groups, keyboard, navigation, image, long text, desktop/mobile.\n",
+      "stderr": ""
+    },
+    {
+      "name": "navigation",
+      "passed": true,
+      "seconds": 7.546,
+      "stdout": "PASS: 15 DB-backed menu scenarios, contiguous fixed geometry, hidden menus, settings access denied, keyboard/history/reload, HOME frame/binder reference pixels (text excluded).\n",
+      "stderr": ""
+    },
+    {
+      "name": "scale",
+      "passed": true,
+      "seconds": 1.048,
+      "stdout": "PASS: uniform 1.875x desktop geometry, 1x small viewport, resize breakpoints, independent login dialog, unchanged internal width.\n",
+      "stderr": ""
+    }
+  ]
+}

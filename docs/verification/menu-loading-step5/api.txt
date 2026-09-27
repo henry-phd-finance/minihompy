@@ -1,0 +1,16 @@
+PASS 1: health exposes only capabilities; unprepared server blocks member reads
+PASS 2: UUID, foreign-site token, absent mode, forged input and public credential fallback denied
+PASS 3: nonfriend and pending see public only; own central member is not local admin
+PASS 4: actual central grant + per-request context + personal SQL filters all three menus
+PASS 5: central binding, relationship and clock tampering fail before response
+PASS 6: central outage preserves explicit public and local owner; no automatic retry on 429
+PASS 7: old DB/old central and malformed DB output fail closed; internal fields are stripped
+PASS 8: disconnect after central authorization allows only bounded in-flight read, next read excludes friends
+PASS 9: latest personal privacy beats prior central authorization
+PASS 10: latest diary uses central context binding and excludes newer restricted dates
+PASS 11: photo-check binds the bounded batch to a real central context and fences final session
+PASS 12: logout after SQL result blocks final response; independent login continues
+PASS 13: owner revocation after query denies final owner response
+PASS 14: central redirect/malformed body fail closed and stalled body is cancelled
+PASS 15: late result is discarded and central logout blocks next request
+All 15 friend visibility central/A/B/C API integration groups passed; owner Auth HTTP and readiness are fixtures, all authorization/content SQL and handlers are real.

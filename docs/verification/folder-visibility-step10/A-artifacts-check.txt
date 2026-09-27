@@ -1,0 +1,2 @@
+A: 50 hosted runtime files match release
+A: published photo view confirmed before legacy closure

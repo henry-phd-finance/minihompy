@@ -1,0 +1,5 @@
+PASS: upgrade preserves existing v1 grant fields and authorization
+PASS: independent PostgreSQL connections consume proof exactly once
+PASS: independent renewals serialized and rate limited
+PASS: renewal waits on in-flight logout and cannot escape revocation
+PASS: logout after renewal invalidates the newly issued grant

@@ -1,0 +1,36 @@
+[
+  {
+    "label": "A",
+    "repository": "henry-phd-finance/minihompy",
+    "base": "521d4bea90cdbbd64d718f944fd42fe0388d476c",
+    "commit": "e4c454a4d17de372100093be1ceb6817228a2d3a",
+    "featureCommit": "53b34cb4fb5ae7898830909549ee77a29568ab6a",
+    "featurePages": {
+      "id": 35860264923,
+      "url": "https://github.com/henry-phd-finance/minihompy/actions/runs/35860264923",
+      "conclusion": "success"
+    },
+    "pages": {
+      "id": 35860784295,
+      "url": "https://github.com/henry-phd-finance/minihompy/actions/runs/35860784295",
+      "conclusion": "success"
+    }
+  },
+  {
+    "label": "B",
+    "repository": "henry-hs-jung/minihompy",
+    "base": "49c305af1ca43d861a3700ea4d52d900628bbc04",
+    "commit": "1d93b52fc406d802efc4b6fb1bea8edd4471803a",
+    "featureCommit": "138f72c61a6e1f493ffef4d5117d3151c0d84fad",
+    "featurePages": {
+      "id": 35860268615,
+      "url": "https://github.com/henry-hs-jung/minihompy/actions/runs/35860268615",
+      "conclusion": "success"
+    },
+    "pages": {
+      "id": 35860787194,
+      "url": "https://github.com/henry-hs-jung/minihompy/actions/runs/35860787194",
+      "conclusion": "success"
+    }
+  }
+]

@@ -1,0 +1,1 @@
+PASS: real SDK with intercepted API; create/edit/move/delete, conflicts, denied writes, draft retention, auth change, pagination, error recovery, desktop/mobile. No hosted writes.

@@ -1,0 +1,43 @@
+{
+  "date": "2026-09-24",
+  "status": "passed",
+  "source_manifest": "docs/verification/folder-visibility-step10/source-hashes.json",
+  "checked": 155,
+  "matching": 154,
+  "documentation_only_changes": [
+    "docs/backlog.md"
+  ],
+  "runtime_or_existing_contract_changes": [],
+  "prerequisites": [
+    {
+      "plan": "docs/member-writing-plan.md",
+      "final_step": 7,
+      "evidence": "docs/verification/member-writing-step7/README.md",
+      "status": "complete per recorded deployment evidence"
+    },
+    {
+      "plan": "docs/member-navigation-plan.md",
+      "final_step": 6,
+      "evidence": "docs/verification/member-navigation-step6/README.md",
+      "status": "complete per recorded deployment evidence"
+    },
+    {
+      "plan": "docs/home-data-plan.md",
+      "final_step": 7,
+      "evidence": "docs/verification/home-data-step7/README.md",
+      "status": "complete per recorded deployment evidence"
+    },
+    {
+      "plan": "docs/member-session-plan.md",
+      "final_step": 7,
+      "evidence": "docs/verification/member-session-step7/README.md",
+      "status": "complete per recorded deployment evidence"
+    },
+    {
+      "plan": "docs/folder-visibility-plan.md",
+      "final_step": 10,
+      "evidence": "docs/verification/folder-visibility-step10/README.md",
+      "status": "complete per recorded deployment evidence"
+    }
+  ]
+}

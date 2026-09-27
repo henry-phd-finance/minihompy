@@ -1,0 +1,13 @@
+{
+  "supabase/migrations/202609270002_photo_check.sql": "76080bffba63fa338b36df7d3c8657e9363ee68ce6afcac691c6f8d32d8ad35e",
+  "supabase/functions/member-writing/content-read.js": "e3b2518fbb9d78fb9d2a2da8d35fee3f421e1b43af17f2a00a8e2d670fc1a59c",
+  "member-writing-client.js": "6195ce9ee4943c7d28308e6f70935002f44d4257a32bea2c331f75d0118bc0be",
+  "photos-repository.js": "eac0517ab45142eccbb09844c2700df94457b24b1d8a5ff5212b2eba7f937a5c",
+  "views/photos.js": "990e690b2bc06fc013ec9c3130dfdb948424dc4051d675ed81602f0586544bbe",
+  "setup/friend-visibility-setup.mjs": "fd015784fae4a8b7103604a9331b4f559591aebc9454a8e00ebd4e684c73477e",
+  "scripts/helpers/member-writing-db.mjs": "85d704ee364f12178da498ec161f62663afd7face72bc3444271ae1504d2b819",
+  "scripts/verify-photo-check.mjs": "4f250f7c4e4f836c60bee964cf5ffc53bc699dec9fb96ab5df6fce08b847728e",
+  "scripts/verify-friend-visibility-api.mjs": "a02b5c8aae2440367e14eeb46b3d24afd82782d7d374e9b2230a35300632e07f",
+  "scripts/verify-friend-photos-browser.mjs": "2c17f55a7d11e660dea271fe851558f30b05ad9923ce173389e7a3e1d3c7d3ed",
+  "scripts/verify-friend-photo-concurrency.mjs": "ac4b25c55d8b81318f21ad23cfa8e1445264b5697e2f9bba52dc06742b9b6269"
+}

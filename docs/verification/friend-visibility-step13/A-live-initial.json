@@ -1,0 +1,9 @@
+{
+  "passed": false,
+  "checks": [
+    "Only journaled test posts/comments/files/relationship cleaned"
+  ],
+  "cleaned": true,
+  "failedPhase": "fixture upload and create",
+  "actualHostedServices": true
+}

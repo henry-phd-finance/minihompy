@@ -1,0 +1,11 @@
+PASS 1: read-only initial zero and separated write endpoint
+PASS 2: overlapping callers and lost-response retry do not duplicate
+PASS 3: Korean midnight, stale/future dates and rollover between signing and recording
+PASS 4: HMAC isolates days/sites and database stores no raw browser key or credentials
+PASS 5: per-key, new-visitor and site request limits keep counters correct
+PASS 6: retention removes only expired dedup keys and keeps daily/cumulative totals
+PASS 7: overflow rolls back dedup/counters and failures can retry safely
+PASS 8: browser roles cannot write/read dedup or execute clock helpers; service RPC only
+PASS 9: API rejects forged fields, invalid keys, oversized streamed bytes, wrong origin/method; sanitized failures
+PASS 10: slow request bodies time out without a database call
+PASS: 10 visit count groups; actual SQL and edge handler, no deployment

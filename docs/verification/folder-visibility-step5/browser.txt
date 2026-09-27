@@ -1,0 +1,7 @@
+PASS 1280 board: actual SQL direct address, hide/back/reload, move/reload, delete/reload
+PASS 1280 photos: actual SQL direct address, hide/back/reload, move/reload, delete/reload
+PASS 1280 diary: actual SQL direct address, hide/back/reload, move/reload, delete/reload
+PASS 375 board: actual SQL direct address, hide/back/reload, move/reload, delete/reload
+PASS 375 photos: actual SQL direct address, hide/back/reload, move/reload, delete/reload
+PASS 375 diary: actual SQL direct address, hide/back/reload, move/reload, delete/reload
+PASS: 6 browser/SQL groups

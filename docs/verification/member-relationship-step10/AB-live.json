@@ -1,0 +1,23 @@
+{
+  "passed": true,
+  "checks": [
+    "A request → cancel through real UI",
+    "Reverse request → recipient rejection updates both sides",
+    "Real cooldown then re-request and B inbox acceptance",
+    "Accepted friend remains reader; private board/diary direct rows and comments are denied",
+    "Both owner friend lists resolve the current registered homepage",
+    "Both real UI writes store reviews in the target personal projects",
+    "Menu exit discards the draft",
+    "375px review content and relationship dialog fit their containers",
+    "Disconnect retains both historical reviews and blocks new writes",
+    "Author deletes own historical review through UI",
+    "Homepage owner deletes another member review through UI",
+    "Anonymous public home hides member write controls"
+  ],
+  "cleanup": true,
+  "combinedRuns": [
+    "AB-live-mobile-check.json",
+    "AB-rest.json"
+  ],
+  "note": "Earlier successful groups retained; remaining groups rerun after correcting overly broad viewport assertion. No application code changes."
+}

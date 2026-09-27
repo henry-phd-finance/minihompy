@@ -1,0 +1,77 @@
+[
+  {
+    "name": "verify-friend-home-browser",
+    "script": "scripts/verify-friend-home-browser.mjs",
+    "args": [
+      "/home/henry91-jung/miniconda3/envs/dark/lib/node_modules/playwright/index.mjs"
+    ],
+    "env": {
+      "VERIFICATION_DIR": "docs/verification/friend-visibility-step11/home"
+    },
+    "exit_code": 0,
+    "elapsed_seconds": 4.47
+  },
+  {
+    "name": "verify-friend-menus-browser",
+    "script": "scripts/verify-friend-menus-browser.mjs",
+    "args": [
+      "/home/henry91-jung/miniconda3/envs/dark/lib/node_modules/playwright/index.mjs"
+    ],
+    "env": {
+      "VERIFICATION_DIR": "docs/verification/friend-visibility-step11/menus"
+    },
+    "exit_code": 0,
+    "elapsed_seconds": 8.23
+  },
+  {
+    "name": "verify-friend-photos-browser",
+    "script": "scripts/verify-friend-photos-browser.mjs",
+    "args": [
+      "/home/henry91-jung/miniconda3/envs/dark/lib/node_modules/playwright/index.mjs"
+    ],
+    "env": {
+      "VERIFICATION_DIR": "docs/verification/friend-visibility-step11/photos"
+    },
+    "exit_code": 0,
+    "elapsed_seconds": 10.43
+  },
+  {
+    "name": "verify-member-relationship-integration",
+    "script": "scripts/verify-member-relationship-integration.mjs",
+    "args": [
+      "/home/henry91-jung/miniconda3/envs/dark/lib/node_modules/playwright/index.mjs"
+    ],
+    "env": {
+      "VERIFICATION_DIR": "docs/verification/friend-visibility-step11/relationships",
+      "MINIHOMPY_TEST_FRIEND_VISIBILITY": "1",
+      "MINIHOMPY_TEST_PHOTO_MEDIA": "1"
+    },
+    "exit_code": 0,
+    "elapsed_seconds": 5.52
+  },
+  {
+    "name": "verify-member-session-integration",
+    "script": "scripts/verify-member-session-integration.mjs",
+    "args": [
+      "/home/henry91-jung/miniconda3/envs/dark/lib/node_modules/playwright/index.mjs",
+      "1280"
+    ],
+    "env": {
+      "MINIHOMPY_TEST_FRIEND_VISIBILITY": "1",
+      "MINIHOMPY_SESSION_INTEGRATION_OUTPUT": "docs/verification/friend-visibility-step11/sessions"
+    },
+    "exit_code": 0,
+    "elapsed_seconds": 8.28
+  },
+  {
+    "name": "verify-navigation-integration",
+    "script": "scripts/verify-navigation-integration.mjs",
+    "args": [
+      "/home/henry91-jung/miniconda3/envs/dark/lib/node_modules/playwright/index.mjs",
+      "1280"
+    ],
+    "env": {},
+    "exit_code": 0,
+    "elapsed_seconds": 7.38
+  }
+]

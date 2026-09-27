@@ -1,0 +1,25 @@
+{
+  "status": "passed",
+  "prerequisite": {
+    "step": 8,
+    "matched_at_start": 301
+  },
+  "operational_changes": false,
+  "next_step": 10,
+  "checks": {
+    "fresh_install_and_retry": "passed",
+    "upgrade_and_preservation": "passed",
+    "writing_setup_regression": "passed",
+    "central_sessions": 12,
+    "relationship_api": 12,
+    "relationship_client": 5,
+    "friend_review_api": 13,
+    "relationship_ui": 12,
+    "pages_artifact": "passed",
+    "documentation_links": "passed"
+  },
+  "limits": [
+    "Auth/Management/deploy transports are fixtures",
+    "hosted peer, shared rate key, PostgREST timeout and actual A/B verification remain Step 10"
+  ]
+}

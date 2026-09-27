@@ -1,0 +1,9 @@
+PASS 375: real central PKCE login → A owner → B member, separate origins/DBs and no B admin
+PASS 375: A writes B guestbook and all four comment types; menu discard, no new proofs or cross-site data
+PASS 375: 20-minute inactive fixture defers renewal until visible, then preserves input/focus and visit total
+PASS 375: central/personal outage and transport offline recover via keyboard common retry without anonymous fallback or input loss
+PASS 375: new tab and reload get independent sessions without clearing original draft
+PASS 375: top-level login/renewal path works with third-party frame storage denied and no iframe dependency
+PASS 375: first-party session storage denial stops before redirect with common error, never anonymous or looping
+PASS 375: central storage denial remains a visible retryable storage error, no anonymous downgrade or redirect loop
+PASS 375: central absolute expiry blocks writing with common login state; no automatic navigation/popups or page errors

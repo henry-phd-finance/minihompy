@@ -1,0 +1,7 @@
+Central session migration/functions deployed; existing signing key preserved
+Central v2 health confirmed
+A: 회원 마이그레이션 적용: 202609230009_member_session_renewal.sql
+A: 회원 작성 준비 완료. 런타임과 member-writing-config.js를 Pages에 배포하세요.
+B: 회원 마이그레이션 적용: 202609230009_member_session_renewal.sql
+B: 회원 작성 준비 완료. 런타임과 member-writing-config.js를 Pages에 배포하세요.
+Central and both personal servers upgraded; Pages unchanged

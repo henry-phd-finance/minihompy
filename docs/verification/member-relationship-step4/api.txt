@@ -1,0 +1,13 @@
+PASS 1: health probes DB capability; private relay reports ready but reviews remain unavailable
+PASS 2: personal verified session forwards server grant, never caller actor/site/owner JWT
+PASS 3: central rejects guessed UUID, site mismatch, identity injection, method/body/query violations
+PASS 4: request, accept and result recovery execute against actual central/personal SQL
+PASS 5: public profiles need trusted transport address, not user forwarding headers
+PASS 6: wire cursors round-trip and cannot cross list owner/direction
+PASS 7: new permits remain server-only; validate owner/site/member/session/hash/deadline and clock
+PASS 8: unexpected response fields are stripped; wrong target response is refused
+PASS 9: lost successful action response is recovered by ID, never silently resubmitted
+PASS 10: 503, 404, 409 and 429 stay distinct and Retry-After survives relay CORS
+PASS 11: public rate limit cannot be reset by forged forwarding headers; CORS and backend failure are bounded
+PASS 12: local logout during HTTP wait rejects stale response; central logout blocks future requests
+All 12 relationship API/relay groups passed; actual handlers + PGlite SQL, no hosted changes.

@@ -1,0 +1,13 @@
+{
+  "passed": false,
+  "checks": [
+    "A request → cancel through real UI",
+    "Reverse request → recipient rejection updates both sides",
+    "Real cooldown then re-request and B inbox acceptance",
+    "Accepted friend remains reader; private board/diary direct rows and comments are denied",
+    "Both owner friend lists resolve the current registered homepage",
+    "Both real UI writes store reviews in the target personal projects",
+    "Menu exit discards the draft"
+  ],
+  "error": "Private diagnostic saved"
+}

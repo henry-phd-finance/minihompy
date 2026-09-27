@@ -1,0 +1,26 @@
+{
+  "checkedAt": "2026-09-24T02:48:22.809Z",
+  "results": [
+    {
+      "name": "board-writing",
+      "passed": true,
+      "seconds": 18.203,
+      "stdout": "PASS: real SDK with intercepted API; create/edit/move/delete, conflicts, denied writes, draft retention, auth change, pagination, error recovery, desktop/mobile. No hosted writes.\n",
+      "stderr": ""
+    },
+    {
+      "name": "photos-writing",
+      "passed": true,
+      "seconds": 20.184,
+      "stdout": "PASS: inline local images, text/image order, no early upload, save/edit/delete, retained drafts, failed upload/write, conflict, logout, invalid file, recovery, desktop/mobile. Mock API; real SDK and Quill.\n",
+      "stderr": ""
+    },
+    {
+      "name": "diary-writing",
+      "passed": true,
+      "seconds": 20.095,
+      "stdout": "PASS: diary create/edit/date+folder move/delete, calendar/leap year/months, drafts, denied/lost response retry, conflict, pagination, logout, errors; desktop/mobile, actual SDK with mock API.\n",
+      "stderr": ""
+    }
+  ]
+}

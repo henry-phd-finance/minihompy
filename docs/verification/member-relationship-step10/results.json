@@ -1,0 +1,33 @@
+{
+  "status": "passed",
+  "completedAt": "2026-09-24",
+  "prerequisite": {
+    "step": 9,
+    "matched": 320
+  },
+  "operational_changes": true,
+  "checks": {
+    "old_client_compatibility": true,
+    "A_live_groups": 4,
+    "AB_live_groups": 12,
+    "self_and_retry_checks": 4,
+    "isolated_postgrest_groups": 3,
+    "served_files": {
+      "central": 12,
+      "A": 55,
+      "B": 55
+    },
+    "preservation": true,
+    "test_cleanup": true,
+    "migration_hashes_and_health": true,
+    "rpc_timeouts_and_privileges": true
+  },
+  "limitations": [
+    "Public rate bucket may be shared by gateway peers",
+    "Fixed-width homepage retained; 375px checks cover new review content and relationship dialog",
+    "Third-account and fault injection checks retain earlier isolated evidence; production tests used A/B",
+    "PostgREST timeout cancellation verified in isolated 14.5 environment with hosted role timeout defaults"
+  ],
+  "application_source_changes": false,
+  "friends_visibility_complete": false
+}

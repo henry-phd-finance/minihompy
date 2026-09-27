@@ -1,0 +1,25 @@
+{
+  "step": 2,
+  "status": "complete",
+  "prerequisites": {
+    "step": 1,
+    "files": 360,
+    "differences": []
+  },
+  "checks": {
+    "sql_http_groups": 8,
+    "postgres_postgrest_groups": 10,
+    "central_suites": 17,
+    "personal_relay_groups": 12,
+    "relationship_integration_groups": 10,
+    "syntax": "passed",
+    "diff_checks": "passed"
+  },
+  "postgrest_timeout_ms": {
+    "lock": 3006,
+    "statement": 3004
+  },
+  "fixture_fix": "Expired local session fixture now sets issued_at too; no production session change.",
+  "production_deployed": false,
+  "next_step": 3
+}

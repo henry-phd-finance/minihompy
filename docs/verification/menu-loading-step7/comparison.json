@@ -1,0 +1,382 @@
+[
+  {
+    "scenario": "public",
+    "menu": "diary",
+    "round": 1,
+    "baseline": "step1",
+    "before": {
+      "firstBodyMs": 675,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "requestCount": 5
+    },
+    "after": {
+      "firstBodyMs": 309,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "calendarReadyMs": 560,
+      "requestCount": 4
+    }
+  },
+  {
+    "scenario": "public",
+    "menu": "photos",
+    "round": 1,
+    "baseline": "step1",
+    "before": {
+      "firstBodyMs": 1226,
+      "firstPhotoMs": 1226,
+      "allPhotosMs": 1226,
+      "requestCount": 9
+    },
+    "after": {
+      "firstBodyMs": 194,
+      "firstPhotoMs": 410,
+      "allPhotosMs": 927,
+      "calendarReadyMs": null,
+      "requestCount": 6
+    }
+  },
+  {
+    "scenario": "public",
+    "menu": "diary",
+    "round": 2,
+    "baseline": "step1",
+    "before": {
+      "firstBodyMs": 646,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "requestCount": 5
+    },
+    "after": {
+      "firstBodyMs": 196,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "calendarReadyMs": 462,
+      "requestCount": 3
+    }
+  },
+  {
+    "scenario": "public",
+    "menu": "photos",
+    "round": 2,
+    "baseline": "step1",
+    "before": {
+      "firstBodyMs": 1214,
+      "firstPhotoMs": 1229,
+      "allPhotosMs": 1229,
+      "requestCount": 9
+    },
+    "after": {
+      "firstBodyMs": 196,
+      "firstPhotoMs": 412,
+      "allPhotosMs": 946,
+      "calendarReadyMs": null,
+      "requestCount": 6
+    }
+  },
+  {
+    "scenario": "owner",
+    "menu": "diary",
+    "round": 1,
+    "baseline": "step3-cache-off",
+    "before": {
+      "firstBodyMs": 729,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "requestCount": 12
+    },
+    "after": {
+      "firstBodyMs": 293,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "calendarReadyMs": 560,
+      "requestCount": 4
+    }
+  },
+  {
+    "scenario": "owner",
+    "menu": "photos",
+    "round": 1,
+    "baseline": "step3-cache-off",
+    "before": {
+      "firstBodyMs": 1226,
+      "firstPhotoMs": 1226,
+      "allPhotosMs": 1226,
+      "requestCount": 33
+    },
+    "after": {
+      "firstBodyMs": 195,
+      "firstPhotoMs": 412,
+      "allPhotosMs": 929,
+      "calendarReadyMs": null,
+      "requestCount": 8
+    }
+  },
+  {
+    "scenario": "owner",
+    "menu": "diary",
+    "round": 2,
+    "baseline": "step3-cache-off",
+    "before": {
+      "firstBodyMs": 629,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "requestCount": 11
+    },
+    "after": {
+      "firstBodyMs": 196,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "calendarReadyMs": 445,
+      "requestCount": 3
+    }
+  },
+  {
+    "scenario": "owner",
+    "menu": "photos",
+    "round": 2,
+    "baseline": "step3-cache-off",
+    "before": {
+      "firstBodyMs": 1228,
+      "firstPhotoMs": 1243,
+      "allPhotosMs": 1243,
+      "requestCount": 33
+    },
+    "after": {
+      "firstBodyMs": 193,
+      "firstPhotoMs": 409,
+      "allPhotosMs": 943,
+      "calendarReadyMs": null,
+      "requestCount": 8
+    }
+  },
+  {
+    "scenario": "friend",
+    "menu": "diary",
+    "round": 1,
+    "baseline": "step1",
+    "before": {
+      "firstBodyMs": 661,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "requestCount": 5
+    },
+    "after": {
+      "firstBodyMs": 301,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "calendarReadyMs": 561,
+      "requestCount": 4
+    }
+  },
+  {
+    "scenario": "friend",
+    "menu": "photos",
+    "round": 1,
+    "baseline": "step1",
+    "before": {
+      "firstBodyMs": 1232,
+      "firstPhotoMs": 1244,
+      "allPhotosMs": 1244,
+      "requestCount": 13
+    },
+    "after": {
+      "firstBodyMs": 191,
+      "firstPhotoMs": 407,
+      "allPhotosMs": 924,
+      "calendarReadyMs": null,
+      "requestCount": 8
+    }
+  },
+  {
+    "scenario": "friend",
+    "menu": "diary",
+    "round": 2,
+    "baseline": "step1",
+    "before": {
+      "firstBodyMs": 658,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "requestCount": 5
+    },
+    "after": {
+      "firstBodyMs": 192,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "calendarReadyMs": 442,
+      "requestCount": 3
+    }
+  },
+  {
+    "scenario": "friend",
+    "menu": "photos",
+    "round": 2,
+    "baseline": "step1",
+    "before": {
+      "firstBodyMs": 1212,
+      "firstPhotoMs": 1212,
+      "allPhotosMs": 1212,
+      "requestCount": 13
+    },
+    "after": {
+      "firstBodyMs": 180,
+      "firstPhotoMs": 396,
+      "allPhotosMs": 913,
+      "calendarReadyMs": null,
+      "requestCount": 8
+    }
+  },
+  {
+    "scenario": "nonfriend",
+    "menu": "diary",
+    "round": 1,
+    "baseline": "step1",
+    "before": {
+      "firstBodyMs": 661,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "requestCount": 5
+    },
+    "after": {
+      "firstBodyMs": 296,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "calendarReadyMs": 561,
+      "requestCount": 4
+    }
+  },
+  {
+    "scenario": "nonfriend",
+    "menu": "photos",
+    "round": 1,
+    "baseline": "step1",
+    "before": {
+      "firstBodyMs": 1225,
+      "firstPhotoMs": 1225,
+      "allPhotosMs": 1225,
+      "requestCount": 9
+    },
+    "after": {
+      "firstBodyMs": 195,
+      "firstPhotoMs": 412,
+      "allPhotosMs": 945,
+      "calendarReadyMs": null,
+      "requestCount": 6
+    }
+  },
+  {
+    "scenario": "nonfriend",
+    "menu": "diary",
+    "round": 2,
+    "baseline": "step1",
+    "before": {
+      "firstBodyMs": 660,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "requestCount": 5
+    },
+    "after": {
+      "firstBodyMs": 195,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "calendarReadyMs": 461,
+      "requestCount": 3
+    }
+  },
+  {
+    "scenario": "nonfriend",
+    "menu": "photos",
+    "round": 2,
+    "baseline": "step1",
+    "before": {
+      "firstBodyMs": 1209,
+      "firstPhotoMs": 1209,
+      "allPhotosMs": 1209,
+      "requestCount": 9
+    },
+    "after": {
+      "firstBodyMs": 193,
+      "firstPhotoMs": 408,
+      "allPhotosMs": 942,
+      "calendarReadyMs": null,
+      "requestCount": 6
+    }
+  },
+  {
+    "scenario": "empty",
+    "menu": "diary",
+    "round": 1,
+    "baseline": "step1",
+    "before": {
+      "firstBodyMs": 661,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "requestCount": 5
+    },
+    "after": {
+      "firstBodyMs": 295,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "calendarReadyMs": 560,
+      "requestCount": 4
+    }
+  },
+  {
+    "scenario": "empty",
+    "menu": "photos",
+    "round": 1,
+    "baseline": "step1",
+    "before": {
+      "firstBodyMs": 511,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "requestCount": 5
+    },
+    "after": {
+      "firstBodyMs": 192,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "calendarReadyMs": null,
+      "requestCount": 2
+    }
+  },
+  {
+    "scenario": "empty",
+    "menu": "diary",
+    "round": 2,
+    "baseline": "step1",
+    "before": {
+      "firstBodyMs": 645,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "requestCount": 5
+    },
+    "after": {
+      "firstBodyMs": 196,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "calendarReadyMs": 446,
+      "requestCount": 3
+    }
+  },
+  {
+    "scenario": "empty",
+    "menu": "photos",
+    "round": 2,
+    "baseline": "step1",
+    "before": {
+      "firstBodyMs": 496,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "requestCount": 5
+    },
+    "after": {
+      "firstBodyMs": 197,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "calendarReadyMs": null,
+      "requestCount": 2
+    }
+  }
+]

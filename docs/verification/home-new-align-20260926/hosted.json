@@ -1,0 +1,113 @@
+[
+  {
+    "site": "A",
+    "hashes": {
+      "home-activity.js": "de2424ba05936166f94f148eec2c8cd6ecef0f4bcb19d4585ed33cdaff296da0",
+      "styles.css": "b20627aebc62ebb3a0efaf935451de414ac2ce6e1b6b56a34e2bd83dd877313b"
+    },
+    "counters": [
+      {
+        "kind": "diary",
+        "today": 0,
+        "badge": null
+      },
+      {
+        "kind": "photos",
+        "today": 0,
+        "badge": null
+      },
+      {
+        "kind": "board",
+        "today": 0,
+        "badge": null
+      },
+      {
+        "kind": "guestbook",
+        "today": 1,
+        "badge": "N"
+      }
+    ],
+    "centers": [
+      [
+        171.9375,
+        171.9375
+      ],
+      [
+        171.9375,
+        171.9375
+      ],
+      [
+        196.328125,
+        196.328125
+      ],
+      [
+        196.328125,
+        196.328125,
+        196.3203125
+      ]
+    ],
+    "health": {
+      "friend_visibility_protocol": 1,
+      "friend_visibility_ready": true,
+      "friend_media_ready": true,
+      "friend_summary_ready": true,
+      "friend_pages_ready": true,
+      "friend_visibility_setup_protocol": 1
+    }
+  },
+  {
+    "site": "B",
+    "hashes": {
+      "home-activity.js": "de2424ba05936166f94f148eec2c8cd6ecef0f4bcb19d4585ed33cdaff296da0",
+      "styles.css": "b20627aebc62ebb3a0efaf935451de414ac2ce6e1b6b56a34e2bd83dd877313b"
+    },
+    "counters": [
+      {
+        "kind": "diary",
+        "today": 0,
+        "badge": null
+      },
+      {
+        "kind": "photos",
+        "today": 0,
+        "badge": null
+      },
+      {
+        "kind": "board",
+        "today": 0,
+        "badge": null
+      },
+      {
+        "kind": "guestbook",
+        "today": 0,
+        "badge": null
+      }
+    ],
+    "centers": [
+      [
+        171.9375,
+        171.9375
+      ],
+      [
+        171.9375,
+        171.9375
+      ],
+      [
+        196.328125,
+        196.328125
+      ],
+      [
+        196.328125,
+        196.328125
+      ]
+    ],
+    "health": {
+      "friend_visibility_protocol": 1,
+      "friend_visibility_ready": true,
+      "friend_media_ready": true,
+      "friend_summary_ready": true,
+      "friend_pages_ready": true,
+      "friend_visibility_setup_protocol": 1
+    }
+  }
+]

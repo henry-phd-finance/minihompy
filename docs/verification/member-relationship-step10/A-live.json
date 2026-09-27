@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "checks": [
+    "A self/owner and B visitor separation; non-friend review rejected",
+    "B request and A real inbox acceptance",
+    "B UI review create and A authenticated owner delete",
+    "Disconnect retains historical reviews"
+  ],
+  "cleanup": true
+}

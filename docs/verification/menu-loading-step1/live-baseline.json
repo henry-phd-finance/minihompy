@@ -1,0 +1,2474 @@
+{
+  "measuredAt": "2026-09-26T14:53:07.303Z",
+  "viewport": {
+    "width": 1280,
+    "height": 900
+  },
+  "contentWrites": 0,
+  "relationshipWrites": 0,
+  "samples": [
+    {
+      "site": "A",
+      "role": "public",
+      "round": 1,
+      "menu": "diary",
+      "firstBodyMs": 2356,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "settledMs": 2356,
+      "empty": true,
+      "error": false,
+      "photoCount": 0,
+      "requests": [
+        {
+          "path": "/rest/v1/diary_folders",
+          "method": "GET",
+          "startMs": 32,
+          "endMs": 182,
+          "durationMs": 150,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 184,
+          "endMs": 716,
+          "durationMs": 532,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/calendar",
+          "method": "POST",
+          "startMs": 717,
+          "endMs": 1303,
+          "durationMs": 586,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 1304,
+          "endMs": 1798,
+          "durationMs": 494,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 1799,
+          "endMs": 2346,
+          "durationMs": 547,
+          "status": 200
+        }
+      ],
+      "requestCount": 5
+    },
+    {
+      "site": "A",
+      "role": "public",
+      "round": 1,
+      "menu": "photos",
+      "firstBodyMs": 4016,
+      "firstPhotoMs": 4016,
+      "allPhotosMs": 4016,
+      "settledMs": 4016,
+      "empty": false,
+      "error": false,
+      "photoCount": 1,
+      "requests": [
+        {
+          "path": "/rest/v1/photo_folders",
+          "method": "GET",
+          "startMs": 39,
+          "endMs": 162,
+          "durationMs": 123,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 163,
+          "endMs": 655,
+          "durationMs": 492,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 655,
+          "endMs": 1336,
+          "durationMs": 681,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 1339,
+          "endMs": 1812,
+          "durationMs": 473,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/photo-media/read",
+          "method": "POST",
+          "startMs": 1814,
+          "endMs": 2991,
+          "durationMs": 1177,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 2991,
+          "endMs": 3469,
+          "durationMs": 478,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 3471,
+          "endMs": 3999,
+          "durationMs": 528,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/photo_posts",
+          "method": "GET",
+          "startMs": 4005,
+          "endMs": 4120,
+          "durationMs": 115,
+          "status": 200
+        }
+      ],
+      "requestCount": 8
+    },
+    {
+      "site": "A",
+      "role": "public",
+      "round": 2,
+      "menu": "diary",
+      "firstBodyMs": 2332,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "settledMs": 2332,
+      "empty": true,
+      "error": false,
+      "photoCount": 0,
+      "requests": [
+        {
+          "path": "/rest/v1/diary_folders",
+          "method": "GET",
+          "startMs": 42,
+          "endMs": 129,
+          "durationMs": 87,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 130,
+          "endMs": 719,
+          "durationMs": 589,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/calendar",
+          "method": "POST",
+          "startMs": 720,
+          "endMs": 1280,
+          "durationMs": 560,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 1281,
+          "endMs": 1756,
+          "durationMs": 475,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 1757,
+          "endMs": 2324,
+          "durationMs": 567,
+          "status": 200
+        }
+      ],
+      "requestCount": 5
+    },
+    {
+      "site": "A",
+      "role": "public",
+      "round": 2,
+      "menu": "photos",
+      "firstBodyMs": 3431,
+      "firstPhotoMs": 3431,
+      "allPhotosMs": 3431,
+      "settledMs": 3431,
+      "empty": false,
+      "error": false,
+      "photoCount": 1,
+      "requests": [
+        {
+          "path": "/rest/v1/photo_folders",
+          "method": "GET",
+          "startMs": 41,
+          "endMs": 144,
+          "durationMs": 103,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 145,
+          "endMs": 629,
+          "durationMs": 484,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 630,
+          "endMs": 1223,
+          "durationMs": 593,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 1224,
+          "endMs": 1677,
+          "durationMs": 453,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/photo-media/read",
+          "method": "POST",
+          "startMs": 1678,
+          "endMs": 2282,
+          "failed": true
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 2282,
+          "endMs": 2823,
+          "durationMs": 541,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 2824,
+          "endMs": 3423,
+          "durationMs": 599,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/photo_posts",
+          "method": "GET",
+          "startMs": 3426,
+          "endMs": 3503,
+          "durationMs": 77,
+          "status": 200
+        }
+      ],
+      "requestCount": 8
+    },
+    {
+      "site": "B",
+      "role": "public",
+      "round": 1,
+      "menu": "diary",
+      "firstBodyMs": 1976,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "settledMs": 1976,
+      "empty": true,
+      "error": false,
+      "photoCount": 0,
+      "requests": [
+        {
+          "path": "/rest/v1/diary_folders",
+          "method": "GET",
+          "startMs": 38,
+          "endMs": 173,
+          "durationMs": 135,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 174,
+          "endMs": 644,
+          "durationMs": 470,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/calendar",
+          "method": "POST",
+          "startMs": 644,
+          "endMs": 1098,
+          "durationMs": 454,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 1099,
+          "endMs": 1468,
+          "durationMs": 369,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 1468,
+          "endMs": 1972,
+          "durationMs": 504,
+          "status": 200
+        }
+      ],
+      "requestCount": 5
+    },
+    {
+      "site": "B",
+      "role": "public",
+      "round": 1,
+      "menu": "photos",
+      "firstBodyMs": 2098,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "settledMs": 2098,
+      "empty": true,
+      "error": false,
+      "photoCount": 0,
+      "requests": [
+        {
+          "path": "/rest/v1/photo_folders",
+          "method": "GET",
+          "startMs": 43,
+          "endMs": 197,
+          "durationMs": 154,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 198,
+          "endMs": 651,
+          "durationMs": 453,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 652,
+          "endMs": 1129,
+          "durationMs": 477,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 1129,
+          "endMs": 1631,
+          "durationMs": 502,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 1632,
+          "endMs": 2096,
+          "durationMs": 464,
+          "status": 200
+        }
+      ],
+      "requestCount": 5
+    },
+    {
+      "site": "B",
+      "role": "public",
+      "round": 2,
+      "menu": "diary",
+      "firstBodyMs": 2048,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "settledMs": 2048,
+      "empty": true,
+      "error": false,
+      "photoCount": 0,
+      "requests": [
+        {
+          "path": "/rest/v1/diary_folders",
+          "method": "GET",
+          "startMs": 41,
+          "endMs": 109,
+          "durationMs": 68,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 110,
+          "endMs": 555,
+          "durationMs": 445,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/calendar",
+          "method": "POST",
+          "startMs": 555,
+          "endMs": 1034,
+          "durationMs": 479,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 1035,
+          "endMs": 1557,
+          "durationMs": 522,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 1558,
+          "endMs": 2037,
+          "durationMs": 479,
+          "status": 200
+        }
+      ],
+      "requestCount": 5
+    },
+    {
+      "site": "B",
+      "role": "public",
+      "round": 2,
+      "menu": "photos",
+      "firstBodyMs": 1949,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "settledMs": 1949,
+      "empty": true,
+      "error": false,
+      "photoCount": 0,
+      "requests": [
+        {
+          "path": "/rest/v1/photo_folders",
+          "method": "GET",
+          "startMs": 41,
+          "endMs": 92,
+          "durationMs": 51,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 93,
+          "endMs": 556,
+          "durationMs": 463,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 558,
+          "endMs": 1030,
+          "durationMs": 472,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 1031,
+          "endMs": 1478,
+          "durationMs": 447,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 1479,
+          "endMs": 1933,
+          "durationMs": 454,
+          "status": 200
+        }
+      ],
+      "requestCount": 5
+    },
+    {
+      "site": "A",
+      "role": "owner",
+      "round": 1,
+      "menu": "diary",
+      "firstBodyMs": 3811,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "settledMs": 3811,
+      "empty": true,
+      "error": false,
+      "photoCount": 0,
+      "requests": [
+        {
+          "path": "/auth/v1/user",
+          "method": "GET",
+          "startMs": 38,
+          "endMs": 108,
+          "durationMs": 70,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 110,
+          "endMs": 180,
+          "durationMs": 70,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 180,
+          "endMs": 714,
+          "durationMs": 534,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "GET",
+          "startMs": 715,
+          "endMs": 788,
+          "durationMs": 73,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 789,
+          "endMs": 864,
+          "durationMs": 75,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "GET",
+          "startMs": 866,
+          "endMs": 945,
+          "durationMs": 79,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 947,
+          "endMs": 1025,
+          "durationMs": 78,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/diary_folders",
+          "method": "GET",
+          "startMs": 1025,
+          "endMs": 1162,
+          "durationMs": 137,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "GET",
+          "startMs": 1162,
+          "endMs": 1233,
+          "durationMs": 71,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 1234,
+          "endMs": 1309,
+          "durationMs": 75,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 1311,
+          "endMs": 1744,
+          "durationMs": 433,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "GET",
+          "startMs": 1745,
+          "endMs": 1823,
+          "durationMs": 78,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 1824,
+          "endMs": 1881,
+          "durationMs": 57,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/calendar",
+          "method": "POST",
+          "startMs": 1882,
+          "endMs": 2506,
+          "durationMs": 624,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 2507,
+          "endMs": 2996,
+          "durationMs": 489,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "GET",
+          "startMs": 2997,
+          "endMs": 3072,
+          "durationMs": 75,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 3073,
+          "endMs": 3148,
+          "durationMs": 75,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 3149,
+          "endMs": 3808,
+          "durationMs": 659,
+          "status": 200
+        }
+      ],
+      "requestCount": 18
+    },
+    {
+      "site": "A",
+      "role": "owner",
+      "round": 1,
+      "menu": "photos",
+      "firstBodyMs": 5866,
+      "firstPhotoMs": 5866,
+      "allPhotosMs": 5866,
+      "settledMs": 5866,
+      "empty": false,
+      "error": false,
+      "photoCount": 1,
+      "requests": [
+        {
+          "path": "/auth/v1/user",
+          "method": "GET",
+          "startMs": 41,
+          "endMs": 99,
+          "durationMs": 58,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 100,
+          "endMs": 176,
+          "durationMs": 76,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 177,
+          "endMs": 784,
+          "durationMs": 607,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "GET",
+          "startMs": 785,
+          "endMs": 862,
+          "durationMs": 77,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 863,
+          "endMs": 932,
+          "durationMs": 69,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "GET",
+          "startMs": 933,
+          "endMs": 1016,
+          "durationMs": 83,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 1017,
+          "endMs": 1095,
+          "durationMs": 78,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/photo_folders",
+          "method": "GET",
+          "startMs": 1095,
+          "endMs": 1230,
+          "durationMs": 135,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "GET",
+          "startMs": 1230,
+          "endMs": 1277,
+          "durationMs": 47,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 1278,
+          "endMs": 1347,
+          "durationMs": 69,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 1348,
+          "endMs": 1867,
+          "durationMs": 519,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "GET",
+          "startMs": 1868,
+          "endMs": 1911,
+          "durationMs": 43,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 1912,
+          "endMs": 1984,
+          "durationMs": 72,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 1985,
+          "endMs": 2636,
+          "durationMs": 651,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "GET",
+          "startMs": 2638,
+          "endMs": 2704,
+          "durationMs": 66,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 2705,
+          "endMs": 2779,
+          "durationMs": 74,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 2781,
+          "endMs": 3281,
+          "durationMs": 500,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "GET",
+          "startMs": 3282,
+          "endMs": 3352,
+          "durationMs": 70,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 3353,
+          "endMs": 3414,
+          "durationMs": 61,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/photo-media/read",
+          "method": "POST",
+          "startMs": 3415,
+          "endMs": 4384,
+          "durationMs": 969,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "GET",
+          "startMs": 4384,
+          "endMs": 4466,
+          "durationMs": 82,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 4468,
+          "endMs": 4541,
+          "durationMs": 73,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 4543,
+          "endMs": 5016,
+          "durationMs": 473,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "GET",
+          "startMs": 5016,
+          "endMs": 5095,
+          "durationMs": 79,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 5096,
+          "endMs": 5177,
+          "durationMs": 81,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 5178,
+          "endMs": 5701,
+          "durationMs": 523,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "GET",
+          "startMs": 5702,
+          "endMs": 5775,
+          "durationMs": 73,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 5775,
+          "endMs": 5855,
+          "durationMs": 80,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "GET",
+          "startMs": 5859,
+          "endMs": 5935,
+          "durationMs": 76,
+          "status": 200
+        }
+      ],
+      "requestCount": 29
+    },
+    {
+      "site": "A",
+      "role": "owner",
+      "round": 2,
+      "menu": "diary",
+      "firstBodyMs": 3598,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "settledMs": 3598,
+      "empty": true,
+      "error": false,
+      "photoCount": 0,
+      "requests": [
+        {
+          "path": "/auth/v1/user",
+          "method": "GET",
+          "startMs": 41,
+          "endMs": 119,
+          "durationMs": 78,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 120,
+          "endMs": 184,
+          "durationMs": 64,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 186,
+          "endMs": 679,
+          "durationMs": 493,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "GET",
+          "startMs": 680,
+          "endMs": 744,
+          "durationMs": 64,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 745,
+          "endMs": 800,
+          "durationMs": 55,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "GET",
+          "startMs": 802,
+          "endMs": 863,
+          "durationMs": 61,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 863,
+          "endMs": 942,
+          "durationMs": 79,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/diary_folders",
+          "method": "GET",
+          "startMs": 943,
+          "endMs": 1022,
+          "durationMs": 79,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "GET",
+          "startMs": 1022,
+          "endMs": 1101,
+          "durationMs": 79,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 1102,
+          "endMs": 1159,
+          "durationMs": 57,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 1160,
+          "endMs": 1599,
+          "durationMs": 439,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "GET",
+          "startMs": 1600,
+          "endMs": 1665,
+          "durationMs": 65,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 1665,
+          "endMs": 1742,
+          "durationMs": 77,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/calendar",
+          "method": "POST",
+          "startMs": 1743,
+          "endMs": 2383,
+          "durationMs": 640,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 2384,
+          "endMs": 2873,
+          "durationMs": 489,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "GET",
+          "startMs": 2874,
+          "endMs": 2941,
+          "durationMs": 67,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 2944,
+          "endMs": 3022,
+          "durationMs": 78,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 3023,
+          "endMs": 3587,
+          "durationMs": 564,
+          "status": 200
+        }
+      ],
+      "requestCount": 18
+    },
+    {
+      "site": "A",
+      "role": "owner",
+      "round": 2,
+      "menu": "photos",
+      "firstBodyMs": 5447,
+      "firstPhotoMs": 5447,
+      "allPhotosMs": 5447,
+      "settledMs": 5447,
+      "empty": false,
+      "error": false,
+      "photoCount": 1,
+      "requests": [
+        {
+          "path": "/auth/v1/user",
+          "method": "GET",
+          "startMs": 39,
+          "endMs": 122,
+          "durationMs": 83,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 123,
+          "endMs": 180,
+          "durationMs": 57,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 181,
+          "endMs": 687,
+          "durationMs": 506,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "GET",
+          "startMs": 688,
+          "endMs": 760,
+          "durationMs": 72,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 760,
+          "endMs": 813,
+          "durationMs": 53,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "GET",
+          "startMs": 814,
+          "endMs": 888,
+          "durationMs": 74,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 889,
+          "endMs": 964,
+          "durationMs": 75,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/photo_folders",
+          "method": "GET",
+          "startMs": 964,
+          "endMs": 1042,
+          "durationMs": 78,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "GET",
+          "startMs": 1043,
+          "endMs": 1121,
+          "durationMs": 78,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 1121,
+          "endMs": 1202,
+          "durationMs": 81,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 1203,
+          "endMs": 1619,
+          "durationMs": 416,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "GET",
+          "startMs": 1619,
+          "endMs": 1689,
+          "durationMs": 70,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 1690,
+          "endMs": 1759,
+          "durationMs": 69,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 1760,
+          "endMs": 2401,
+          "durationMs": 641,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "GET",
+          "startMs": 2402,
+          "endMs": 2464,
+          "durationMs": 62,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 2464,
+          "endMs": 2525,
+          "durationMs": 61,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 2526,
+          "endMs": 3001,
+          "durationMs": 475,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "GET",
+          "startMs": 3001,
+          "endMs": 3082,
+          "durationMs": 81,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 3082,
+          "endMs": 3159,
+          "durationMs": 77,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/photo-media/read",
+          "method": "POST",
+          "startMs": 3160,
+          "endMs": 3964,
+          "durationMs": 804,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "GET",
+          "startMs": 3964,
+          "endMs": 4044,
+          "durationMs": 80,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 4045,
+          "endMs": 4122,
+          "durationMs": 77,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 4124,
+          "endMs": 4559,
+          "durationMs": 435,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "GET",
+          "startMs": 4560,
+          "endMs": 4620,
+          "durationMs": 60,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 4620,
+          "endMs": 4681,
+          "durationMs": 61,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 4682,
+          "endMs": 5282,
+          "durationMs": 600,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "GET",
+          "startMs": 5283,
+          "endMs": 5362,
+          "durationMs": 79,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 5363,
+          "endMs": 5442,
+          "durationMs": 79,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "GET",
+          "startMs": 5446,
+          "endMs": 5503,
+          "durationMs": 57,
+          "status": 200
+        }
+      ],
+      "requestCount": 29
+    },
+    {
+      "site": "B",
+      "role": "member",
+      "round": 1,
+      "menu": "diary",
+      "firstBodyMs": 3111,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "settledMs": 3111,
+      "empty": true,
+      "error": false,
+      "photoCount": 0,
+      "requests": [
+        {
+          "path": "/rest/v1/diary_folders",
+          "method": "GET",
+          "startMs": 40,
+          "endMs": 188,
+          "durationMs": 148,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 190,
+          "endMs": 544,
+          "durationMs": 354,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/calendar",
+          "method": "POST",
+          "startMs": 546,
+          "endMs": 1672,
+          "durationMs": 1126,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 1673,
+          "endMs": 2083,
+          "durationMs": 410,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 2084,
+          "endMs": 3098,
+          "durationMs": 1014,
+          "status": 200
+        }
+      ],
+      "requestCount": 5
+    },
+    {
+      "site": "B",
+      "role": "member",
+      "round": 1,
+      "menu": "photos",
+      "firstBodyMs": 3448,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "settledMs": 3448,
+      "empty": true,
+      "error": false,
+      "photoCount": 0,
+      "requests": [
+        {
+          "path": "/rest/v1/photo_folders",
+          "method": "GET",
+          "startMs": 44,
+          "endMs": 195,
+          "durationMs": 151,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 197,
+          "endMs": 636,
+          "durationMs": 439,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 637,
+          "endMs": 1813,
+          "durationMs": 1176,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 1814,
+          "endMs": 2287,
+          "durationMs": 473,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 2289,
+          "endMs": 3439,
+          "durationMs": 1150,
+          "status": 200
+        }
+      ],
+      "requestCount": 5
+    },
+    {
+      "site": "B",
+      "role": "member",
+      "round": 2,
+      "menu": "diary",
+      "firstBodyMs": 3115,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "settledMs": 3115,
+      "empty": true,
+      "error": false,
+      "photoCount": 0,
+      "requests": [
+        {
+          "path": "/rest/v1/diary_folders",
+          "method": "GET",
+          "startMs": 38,
+          "endMs": 115,
+          "durationMs": 77,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 115,
+          "endMs": 592,
+          "durationMs": 477,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/calendar",
+          "method": "POST",
+          "startMs": 592,
+          "endMs": 1579,
+          "durationMs": 987,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 1580,
+          "endMs": 2031,
+          "durationMs": 451,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 2033,
+          "endMs": 3108,
+          "durationMs": 1075,
+          "status": 200
+        }
+      ],
+      "requestCount": 5
+    },
+    {
+      "site": "B",
+      "role": "member",
+      "round": 2,
+      "menu": "photos",
+      "firstBodyMs": 2997,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "settledMs": 2997,
+      "empty": true,
+      "error": false,
+      "photoCount": 0,
+      "requests": [
+        {
+          "path": "/rest/v1/photo_folders",
+          "method": "GET",
+          "startMs": 39,
+          "endMs": 109,
+          "durationMs": 70,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 109,
+          "endMs": 364,
+          "durationMs": 255,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 365,
+          "endMs": 1463,
+          "durationMs": 1098,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 1464,
+          "endMs": 1795,
+          "durationMs": 331,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 1796,
+          "endMs": 2990,
+          "durationMs": 1194,
+          "status": 200
+        }
+      ],
+      "requestCount": 5
+    },
+    {
+      "site": "B",
+      "role": "owner",
+      "round": 1,
+      "menu": "diary",
+      "firstBodyMs": 3693,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "settledMs": 3693,
+      "empty": true,
+      "error": false,
+      "photoCount": 0,
+      "requests": [
+        {
+          "path": "/auth/v1/user",
+          "method": "GET",
+          "startMs": 36,
+          "endMs": 104,
+          "durationMs": 68,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 105,
+          "endMs": 171,
+          "durationMs": 66,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 172,
+          "endMs": 585,
+          "durationMs": 413,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "GET",
+          "startMs": 585,
+          "endMs": 651,
+          "durationMs": 66,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 652,
+          "endMs": 705,
+          "durationMs": 53,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "GET",
+          "startMs": 706,
+          "endMs": 772,
+          "durationMs": 66,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 773,
+          "endMs": 847,
+          "durationMs": 74,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/diary_folders",
+          "method": "GET",
+          "startMs": 847,
+          "endMs": 981,
+          "durationMs": 134,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "GET",
+          "startMs": 981,
+          "endMs": 1055,
+          "durationMs": 74,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 1055,
+          "endMs": 1142,
+          "durationMs": 87,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 1142,
+          "endMs": 1615,
+          "durationMs": 473,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "GET",
+          "startMs": 1616,
+          "endMs": 1692,
+          "durationMs": 76,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 1692,
+          "endMs": 1745,
+          "durationMs": 53,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/calendar",
+          "method": "POST",
+          "startMs": 1746,
+          "endMs": 2261,
+          "durationMs": 515,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 2262,
+          "endMs": 2810,
+          "durationMs": 548,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "GET",
+          "startMs": 2811,
+          "endMs": 2893,
+          "durationMs": 82,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 2894,
+          "endMs": 2967,
+          "durationMs": 73,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 2968,
+          "endMs": 3687,
+          "durationMs": 719,
+          "status": 200
+        }
+      ],
+      "requestCount": 18
+    },
+    {
+      "site": "B",
+      "role": "owner",
+      "round": 1,
+      "menu": "photos",
+      "firstBodyMs": 3749,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "settledMs": 3749,
+      "empty": true,
+      "error": false,
+      "photoCount": 0,
+      "requests": [
+        {
+          "path": "/auth/v1/user",
+          "method": "GET",
+          "startMs": 41,
+          "endMs": 110,
+          "durationMs": 69,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 111,
+          "endMs": 176,
+          "durationMs": 65,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 177,
+          "endMs": 631,
+          "durationMs": 454,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "GET",
+          "startMs": 631,
+          "endMs": 698,
+          "durationMs": 67,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 699,
+          "endMs": 754,
+          "durationMs": 55,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "GET",
+          "startMs": 755,
+          "endMs": 832,
+          "durationMs": 77,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 832,
+          "endMs": 896,
+          "durationMs": 64,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/photo_folders",
+          "method": "GET",
+          "startMs": 896,
+          "endMs": 1012,
+          "durationMs": 116,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "GET",
+          "startMs": 1012,
+          "endMs": 1071,
+          "durationMs": 59,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 1072,
+          "endMs": 1148,
+          "durationMs": 76,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 1149,
+          "endMs": 1633,
+          "durationMs": 484,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "GET",
+          "startMs": 1633,
+          "endMs": 1699,
+          "durationMs": 66,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 1699,
+          "endMs": 1774,
+          "durationMs": 75,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 1776,
+          "endMs": 2360,
+          "durationMs": 584,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 2360,
+          "endMs": 2833,
+          "durationMs": 473,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "GET",
+          "startMs": 2833,
+          "endMs": 2908,
+          "durationMs": 75,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 2908,
+          "endMs": 2998,
+          "durationMs": 90,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 2999,
+          "endMs": 3582,
+          "durationMs": 583,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "GET",
+          "startMs": 3583,
+          "endMs": 3658,
+          "durationMs": 75,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 3659,
+          "endMs": 3735,
+          "durationMs": 76,
+          "status": 200
+        }
+      ],
+      "requestCount": 20
+    },
+    {
+      "site": "B",
+      "role": "owner",
+      "round": 2,
+      "menu": "diary",
+      "firstBodyMs": 3499,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "settledMs": 3499,
+      "empty": true,
+      "error": false,
+      "photoCount": 0,
+      "requests": [
+        {
+          "path": "/auth/v1/user",
+          "method": "GET",
+          "startMs": 39,
+          "endMs": 105,
+          "durationMs": 66,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 105,
+          "endMs": 181,
+          "durationMs": 76,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 182,
+          "endMs": 575,
+          "durationMs": 393,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "GET",
+          "startMs": 576,
+          "endMs": 657,
+          "durationMs": 81,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 658,
+          "endMs": 737,
+          "durationMs": 79,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "GET",
+          "startMs": 738,
+          "endMs": 800,
+          "durationMs": 62,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 801,
+          "endMs": 984,
+          "durationMs": 183,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/diary_folders",
+          "method": "GET",
+          "startMs": 984,
+          "endMs": 1055,
+          "durationMs": 71,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "GET",
+          "startMs": 1056,
+          "endMs": 1137,
+          "durationMs": 81,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 1138,
+          "endMs": 1197,
+          "durationMs": 59,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 1199,
+          "endMs": 1618,
+          "durationMs": 419,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "GET",
+          "startMs": 1619,
+          "endMs": 1697,
+          "durationMs": 78,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 1698,
+          "endMs": 1749,
+          "durationMs": 51,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/calendar",
+          "method": "POST",
+          "startMs": 1750,
+          "endMs": 2325,
+          "durationMs": 575,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 2326,
+          "endMs": 2746,
+          "durationMs": 420,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "GET",
+          "startMs": 2747,
+          "endMs": 2819,
+          "durationMs": 72,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 2820,
+          "endMs": 2899,
+          "durationMs": 79,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 2900,
+          "endMs": 3496,
+          "durationMs": 596,
+          "status": 200
+        }
+      ],
+      "requestCount": 18
+    },
+    {
+      "site": "B",
+      "role": "owner",
+      "round": 2,
+      "menu": "photos",
+      "firstBodyMs": 3646,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "settledMs": 3646,
+      "empty": true,
+      "error": false,
+      "photoCount": 0,
+      "requests": [
+        {
+          "path": "/auth/v1/user",
+          "method": "GET",
+          "startMs": 38,
+          "endMs": 113,
+          "durationMs": 75,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 114,
+          "endMs": 195,
+          "durationMs": 81,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 197,
+          "endMs": 646,
+          "durationMs": 449,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "GET",
+          "startMs": 647,
+          "endMs": 719,
+          "durationMs": 72,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 720,
+          "endMs": 794,
+          "durationMs": 74,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "GET",
+          "startMs": 795,
+          "endMs": 869,
+          "durationMs": 74,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 871,
+          "endMs": 925,
+          "durationMs": 54,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/photo_folders",
+          "method": "GET",
+          "startMs": 925,
+          "endMs": 992,
+          "durationMs": 67,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "GET",
+          "startMs": 992,
+          "endMs": 1045,
+          "durationMs": 53,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 1047,
+          "endMs": 1115,
+          "durationMs": 68,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 1117,
+          "endMs": 1483,
+          "durationMs": 366,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "GET",
+          "startMs": 1484,
+          "endMs": 1559,
+          "durationMs": 75,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 1561,
+          "endMs": 1635,
+          "durationMs": 74,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 1636,
+          "endMs": 2240,
+          "durationMs": 604,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 2241,
+          "endMs": 2718,
+          "durationMs": 477,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "GET",
+          "startMs": 2719,
+          "endMs": 2793,
+          "durationMs": 74,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 2794,
+          "endMs": 2872,
+          "durationMs": 78,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 2874,
+          "endMs": 3489,
+          "durationMs": 615,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "GET",
+          "startMs": 3490,
+          "endMs": 3575,
+          "durationMs": 85,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 3576,
+          "endMs": 3640,
+          "durationMs": 64,
+          "status": 200
+        }
+      ],
+      "requestCount": 20
+    },
+    {
+      "site": "A",
+      "role": "member",
+      "round": 1,
+      "menu": "diary",
+      "firstBodyMs": 3477,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "settledMs": 3477,
+      "empty": true,
+      "error": false,
+      "photoCount": 0,
+      "requests": [
+        {
+          "path": "/rest/v1/diary_folders",
+          "method": "GET",
+          "startMs": 38,
+          "endMs": 170,
+          "durationMs": 132,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 170,
+          "endMs": 649,
+          "durationMs": 479,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/calendar",
+          "method": "POST",
+          "startMs": 650,
+          "endMs": 1851,
+          "durationMs": 1201,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 1853,
+          "endMs": 2358,
+          "durationMs": 505,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 2358,
+          "endMs": 3475,
+          "durationMs": 1117,
+          "status": 200
+        }
+      ],
+      "requestCount": 5
+    },
+    {
+      "site": "A",
+      "role": "member",
+      "round": 1,
+      "menu": "photos",
+      "firstBodyMs": 6497,
+      "firstPhotoMs": 6497,
+      "allPhotosMs": 6497,
+      "settledMs": 6497,
+      "empty": false,
+      "error": false,
+      "photoCount": 1,
+      "requests": [
+        {
+          "path": "/rest/v1/photo_folders",
+          "method": "GET",
+          "startMs": 43,
+          "endMs": 175,
+          "durationMs": 132,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 176,
+          "endMs": 686,
+          "durationMs": 510,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 687,
+          "endMs": 1930,
+          "durationMs": 1243,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 1932,
+          "endMs": 2431,
+          "durationMs": 499,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/photo-media/read",
+          "method": "POST",
+          "startMs": 2432,
+          "endMs": 4792,
+          "durationMs": 2360,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 4792,
+          "endMs": 5259,
+          "durationMs": 467,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 5260,
+          "endMs": 6490,
+          "durationMs": 1230,
+          "status": 200
+        }
+      ],
+      "requestCount": 7
+    },
+    {
+      "site": "A",
+      "role": "member",
+      "round": 2,
+      "menu": "diary",
+      "firstBodyMs": 3333,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "settledMs": 3333,
+      "empty": true,
+      "error": false,
+      "photoCount": 0,
+      "requests": [
+        {
+          "path": "/rest/v1/diary_folders",
+          "method": "GET",
+          "startMs": 43,
+          "endMs": 100,
+          "durationMs": 57,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 100,
+          "endMs": 621,
+          "durationMs": 521,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/calendar",
+          "method": "POST",
+          "startMs": 622,
+          "endMs": 1662,
+          "durationMs": 1040,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 1662,
+          "endMs": 2206,
+          "durationMs": 544,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 2207,
+          "endMs": 3326,
+          "durationMs": 1119,
+          "status": 200
+        }
+      ],
+      "requestCount": 5
+    },
+    {
+      "site": "A",
+      "role": "member",
+      "round": 2,
+      "menu": "photos",
+      "firstBodyMs": 5965,
+      "firstPhotoMs": 5965,
+      "allPhotosMs": 5965,
+      "settledMs": 5965,
+      "empty": false,
+      "error": false,
+      "photoCount": 1,
+      "requests": [
+        {
+          "path": "/rest/v1/photo_folders",
+          "method": "GET",
+          "startMs": 38,
+          "endMs": 113,
+          "durationMs": 75,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 114,
+          "endMs": 640,
+          "durationMs": 526,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 641,
+          "endMs": 1871,
+          "durationMs": 1230,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 1872,
+          "endMs": 2352,
+          "durationMs": 480,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/photo-media/read",
+          "method": "POST",
+          "startMs": 2354,
+          "endMs": 4261,
+          "failed": true
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "GET",
+          "startMs": 4261,
+          "endMs": 4779,
+          "durationMs": 518,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 4780,
+          "endMs": 5948,
+          "durationMs": 1168,
+          "status": 200
+        }
+      ],
+      "requestCount": 7
+    }
+  ],
+  "failures": []
+}

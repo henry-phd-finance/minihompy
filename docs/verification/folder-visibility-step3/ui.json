@@ -1,0 +1,86 @@
+{
+  "checkedAt": "2026-09-24T03:43:26.310Z",
+  "checks": [
+    {
+      "width": 1280,
+      "name": "No folder management controls or private snapshot requests for visitors"
+    },
+    {
+      "width": 1280,
+      "name": "board: actual UI CRUD/order/move-delete, location refresh and editor choices"
+    },
+    {
+      "width": 1280,
+      "name": "photos: actual UI CRUD/order/move-delete, location refresh and editor choices"
+    },
+    {
+      "width": 1280,
+      "name": "diary: actual UI CRUD/order/move-delete, location refresh and editor choices"
+    },
+    {
+      "width": 1280,
+      "name": "Conflict refreshes snapshot and requires a new deletion confirmation"
+    },
+    {
+      "width": 1280,
+      "name": "Lost response retries identical request once; rapid double submit cannot duplicate folders"
+    },
+    {
+      "width": 1280,
+      "name": "Snapshot outage has explicit retry; account reset discards unsaved form"
+    },
+    {
+      "width": 1280,
+      "name": "Authentication refresh keeps form; logout closes manager and ignores a late mutation response"
+    },
+    {
+      "width": 1280,
+      "name": "Menu departure discards manager input and late response; next visit reloads folders"
+    },
+    {
+      "width": 1280,
+      "name": "Legacy empty diary can create its first folder; keyboard focus remains inside dialog"
+    },
+    {
+      "width": 375,
+      "name": "No folder management controls or private snapshot requests for visitors"
+    },
+    {
+      "width": 375,
+      "name": "board: actual UI CRUD/order/move-delete, location refresh and editor choices"
+    },
+    {
+      "width": 375,
+      "name": "photos: actual UI CRUD/order/move-delete, location refresh and editor choices"
+    },
+    {
+      "width": 375,
+      "name": "diary: actual UI CRUD/order/move-delete, location refresh and editor choices"
+    },
+    {
+      "width": 375,
+      "name": "Conflict refreshes snapshot and requires a new deletion confirmation"
+    },
+    {
+      "width": 375,
+      "name": "Lost response retries identical request once; rapid double submit cannot duplicate folders"
+    },
+    {
+      "width": 375,
+      "name": "Snapshot outage has explicit retry; account reset discards unsaved form"
+    },
+    {
+      "width": 375,
+      "name": "Authentication refresh keeps form; logout closes manager and ignores a late mutation response"
+    },
+    {
+      "width": 375,
+      "name": "Menu departure discards manager input and late response; next visit reloads folders"
+    },
+    {
+      "width": 375,
+      "name": "Legacy empty diary can create its first folder; keyboard focus remains inside dialog"
+    }
+  ],
+  "scope": "Real UI/repositories/router and SQL/RLS; local Auth/HTTP fixtures, Chromium 1280px and 375px touch viewport (not a physical phone). No deployment."
+}

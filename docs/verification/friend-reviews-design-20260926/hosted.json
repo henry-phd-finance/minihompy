@@ -1,0 +1,22 @@
+{
+  "passed": true,
+  "contentWrites": 0,
+  "records": [
+    {
+      "site": "A",
+      "heading": "일촌평",
+      "normalRefreshButton": false,
+      "anonymousComposer": false,
+      "persistentHelp": false,
+      "emptyListHelp": false
+    },
+    {
+      "site": "B",
+      "heading": "일촌평",
+      "normalRefreshButton": false,
+      "anonymousComposer": false,
+      "persistentHelp": false,
+      "emptyListHelp": false
+    }
+  ]
+}

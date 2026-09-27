@@ -1,0 +1,7 @@
+PASS home-integration (5.65s)
+PASS home-navigation (9.312s)
+PASS backend (0.644s)
+PASS profile (2.95s)
+PASS navigation (7.546s)
+PASS scale (1.048s)
+6/6 passed. Local DB and mock API tests; hosted live reads are separate.

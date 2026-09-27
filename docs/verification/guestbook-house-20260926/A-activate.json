@@ -1,0 +1,36 @@
+{
+  "functions": [
+    {
+      "slug": "owner-login",
+      "version": 12,
+      "status": "ACTIVE",
+      "verify_jwt": false
+    },
+    {
+      "slug": "member-writing",
+      "version": 16,
+      "status": "ACTIVE",
+      "verify_jwt": false
+    },
+    {
+      "slug": "visit-counts",
+      "version": 7,
+      "status": "ACTIVE",
+      "verify_jwt": false
+    },
+    {
+      "slug": "photo-media",
+      "version": 5,
+      "status": "ACTIVE",
+      "verify_jwt": false
+    }
+  ],
+  "health": {
+    "friend_visibility_protocol": 1,
+    "friend_visibility_ready": true,
+    "friend_media_ready": true,
+    "friend_summary_ready": true,
+    "friend_pages_ready": true,
+    "friend_visibility_setup_protocol": 1
+  }
+}

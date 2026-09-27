@@ -1,0 +1,28 @@
+[
+  {
+    "label": "A",
+    "filesBackedUp": 1,
+    "bytes": 20038,
+    "probe": {
+      "public": 400,
+      "authenticated": 400,
+      "sign": 400,
+      "transform": 400,
+      "list": 200
+    },
+    "probeCleaned": true
+  },
+  {
+    "label": "B",
+    "filesBackedUp": 0,
+    "bytes": 0,
+    "probe": {
+      "public": 400,
+      "authenticated": 400,
+      "sign": 400,
+      "transform": 400,
+      "list": 400
+    },
+    "probeCleaned": true
+  }
+]

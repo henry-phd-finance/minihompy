@@ -1,0 +1,53 @@
+{
+  "checkedAt": "2026-09-23T13:59:06.180Z",
+  "run": "a5fa486a-fc33-4f33-8ae8-d799203ec8b2",
+  "checks": [
+    "Real-time expiry observation started without changing clocks, tokens or database timestamps",
+    "A authenticated on B without local administrator rights",
+    "A own homepage and B homepage automatically prepare distinct sessions with correct owner separation",
+    "A public guestbook and UI comment use verified member identity",
+    "Fresh A browser edits original guestbook and comment",
+    "A UI board comment creation plus member edit/delete on dedicated B fixture parent",
+    "A UI photos comment creation plus member edit/delete on dedicated B fixture parent",
+    "A UI diary comment creation plus member edit/delete on dedicated B fixture parent",
+    "B owner hides A post; anonymous parent/comment reads denied; no body edit controls",
+    "A creates private post/comment; anonymous list and count filter private content",
+    "B owner deletes A private comment",
+    "Actual logout revokes old token and clears private DOM",
+    "A logout → B login on the same browser retains no A draft",
+    "Existing local/anonymous read path remains available",
+    "Actual original 15-minute expiry crossed: automatic renewal, unchanged input/focus, no navigation/popup/new visit",
+    "A can write after actual expiry through the renewed session"
+  ],
+  "passed": true,
+  "testContentCleaned": true,
+  "createdGuestbookIds": [
+    "72deae80-01e9-479c-b312-82ed7cf50388",
+    "ad048d50-2ab1-45eb-a00d-7d33307f8cbf",
+    "5bc73949-e88d-401e-af49-c6bb2d26a23d"
+  ],
+  "createdParentIds": [
+    {
+      "kind": "board",
+      "id": "68f0ba37-3d74-4688-9f5a-75186cc6f4a1"
+    },
+    {
+      "kind": "photos",
+      "id": "0c9cb12e-32b3-482b-8c61-91c1e62ba970"
+    },
+    {
+      "kind": "diary",
+      "id": "9c3908fc-0b96-47c0-a7fd-531df1defd5a"
+    }
+  ],
+  "realTimeRenewal": {
+    "originalExpiresAt": "2026-09-23T13:58:14.980561+00:00",
+    "startedAt": "2026-09-23T13:43:16.481Z",
+    "renewals": 1,
+    "navigations": 8,
+    "popups": 0,
+    "recounted": 0,
+    "finishedAt": "2026-09-23T13:58:50.551Z",
+    "renewedExpiresAt": "2026-09-23T14:12:17.110775+00:00"
+  }
+}

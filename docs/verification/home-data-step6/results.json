@@ -1,0 +1,233 @@
+{
+  "checkedAt": "2026-09-23T12:17:02.583Z",
+  "note": "Initial 43-suite run plus targeted corrections and two new integration suites. Not a second full-suite run.",
+  "passed": 45,
+  "total": 45,
+  "results": [
+    {
+      "name": "identity",
+      "passed": true,
+      "source": "regression-initial.json"
+    },
+    {
+      "name": "post-location",
+      "passed": true,
+      "source": "regression-initial.json"
+    },
+    {
+      "name": "post-routes",
+      "passed": true,
+      "source": "regression-initial.json"
+    },
+    {
+      "name": "post-routes-ui",
+      "passed": true,
+      "source": "regression-initial.json"
+    },
+    {
+      "name": "home-summary",
+      "passed": true,
+      "source": "regression-initial.json"
+    },
+    {
+      "name": "visit-counts",
+      "passed": true,
+      "source": "regression-initial.json"
+    },
+    {
+      "name": "visit-counts-ui",
+      "passed": true,
+      "source": "regression-initial.json"
+    },
+    {
+      "name": "home-data-setup",
+      "passed": true,
+      "source": "regression-initial.json"
+    },
+    {
+      "name": "home-repository",
+      "passed": true,
+      "source": "regression-initial.json"
+    },
+    {
+      "name": "home-activity",
+      "passed": true,
+      "source": "regression-initial.json"
+    },
+    {
+      "name": "navigation-setup",
+      "passed": true,
+      "source": "regression-initial.json"
+    },
+    {
+      "name": "member-navigation-state",
+      "passed": true,
+      "source": "regression-initial.json"
+    },
+    {
+      "name": "member-navigation-ui",
+      "passed": true,
+      "source": "regression-initial.json"
+    },
+    {
+      "name": "author-navigation",
+      "passed": true,
+      "source": "regression-initial.json"
+    },
+    {
+      "name": "surf-navigation",
+      "passed": true,
+      "source": "regression-initial.json"
+    },
+    {
+      "name": "navigation-integration",
+      "passed": true,
+      "source": "regression-initial.json"
+    },
+    {
+      "name": "board-db",
+      "passed": true,
+      "source": "regression-initial.json"
+    },
+    {
+      "name": "settings-db",
+      "passed": true,
+      "source": "regression-initial.json"
+    },
+    {
+      "name": "photos-db",
+      "passed": true,
+      "source": "regression-initial.json"
+    },
+    {
+      "name": "diary-db",
+      "passed": true,
+      "source": "regression-initial.json"
+    },
+    {
+      "name": "guestbook-db",
+      "passed": true,
+      "source": "regression-initial.json"
+    },
+    {
+      "name": "comments-db",
+      "passed": true,
+      "source": "regression-initial.json"
+    },
+    {
+      "name": "profile-db",
+      "passed": true,
+      "source": "regression-initial.json"
+    },
+    {
+      "name": "member-writing-foundation",
+      "passed": true,
+      "source": "regression-initial.json"
+    },
+    {
+      "name": "member-writing-setup",
+      "passed": true,
+      "source": "regression-initial.json"
+    },
+    {
+      "name": "member-writing-session",
+      "passed": true,
+      "source": "regression-initial.json"
+    },
+    {
+      "name": "member-writing-client",
+      "passed": true,
+      "source": "regression-initial.json"
+    },
+    {
+      "name": "member-guestbook",
+      "passed": true,
+      "source": "regression-initial.json"
+    },
+    {
+      "name": "member-comments",
+      "passed": true,
+      "source": "regression-initial.json"
+    },
+    {
+      "name": "member-writing-lifecycle",
+      "passed": true,
+      "source": "regression-initial.json"
+    },
+    {
+      "name": "backend",
+      "passed": true,
+      "source": "retests/results.json"
+    },
+    {
+      "name": "admin",
+      "passed": true,
+      "source": "regression-initial.json"
+    },
+    {
+      "name": "settings",
+      "passed": true,
+      "source": "regression-initial.json"
+    },
+    {
+      "name": "board-writing",
+      "passed": true,
+      "source": "regression-initial.json"
+    },
+    {
+      "name": "photos-writing",
+      "passed": true,
+      "source": "regression-initial.json"
+    },
+    {
+      "name": "diary-writing",
+      "passed": true,
+      "source": "regression-initial.json"
+    },
+    {
+      "name": "guestbook-writing",
+      "passed": true,
+      "source": "regression-initial.json"
+    },
+    {
+      "name": "comments-writing",
+      "passed": true,
+      "source": "regression-initial.json"
+    },
+    {
+      "name": "profile-writing",
+      "passed": true,
+      "source": "regression-initial.json"
+    },
+    {
+      "name": "profile",
+      "passed": true,
+      "source": "retests/results.json"
+    },
+    {
+      "name": "navigation",
+      "passed": true,
+      "source": "retests/results.json"
+    },
+    {
+      "name": "scale",
+      "passed": true,
+      "source": "retests/results.json"
+    },
+    {
+      "name": "fonts",
+      "passed": true,
+      "source": "regression-initial.json"
+    },
+    {
+      "name": "home-integration",
+      "passed": true,
+      "source": "retests/results.json"
+    },
+    {
+      "name": "home-navigation",
+      "passed": true,
+      "source": "retests/results.json"
+    }
+  ]
+}

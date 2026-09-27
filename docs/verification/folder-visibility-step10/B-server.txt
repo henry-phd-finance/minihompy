@@ -1,0 +1,6 @@
+B: 공개범위 마이그레이션 적용: 202609240001_content_folders.sql
+B: 공개범위 마이그레이션 적용: 202609240002_content_visibility.sql
+B: 공개범위 마이그레이션 적용: 202609240003_visibility_summary.sql
+B: 공개범위 마이그레이션 적용: 202609240004_photo_media.sql
+B: 공개범위 마이그레이션 적용: 202609240005_photo_media_safeupdate.sql
+B: 공개범위 서버 준비 완료. 파일 전환·공개 원본 폐쇄·실제 권한 검증 후 Pages와 ready를 전환하세요. 자동 활성화하지 않습니다.

@@ -1,0 +1,3 @@
+A: all original public rows and owner/site bindings preserved; legacy reads pass
+B: all original public rows and owner/site bindings preserved; legacy reads pass
+Central identity preserved

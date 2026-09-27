@@ -1,0 +1,359 @@
+{
+  "at": "2026-09-24T13:36:08.099Z",
+  "files": [
+    {
+      "file": "admin-auth.js",
+      "status": 200,
+      "expected": "8d4c570dbd952a1cfd6b710942b0103567e67eae056057a3da837c7db9972b9a",
+      "served": "8d4c570dbd952a1cfd6b710942b0103567e67eae056057a3da837c7db9972b9a"
+    },
+    {
+      "file": "app.js",
+      "status": 200,
+      "expected": "7d2e2e22d5a076acb9edde820447dd98d06352181fdfa61b3858a13cb277c27b",
+      "served": "7d2e2e22d5a076acb9edde820447dd98d06352181fdfa61b3858a13cb277c27b"
+    },
+    {
+      "file": "assets/login-flow.js",
+      "status": 200,
+      "expected": "f7b6d2249a0e590f067c11f454d1359da0933aa99f99a5bb4f5c0af0a9af9b58",
+      "served": "f7b6d2249a0e590f067c11f454d1359da0933aa99f99a5bb4f5c0af0a9af9b58"
+    },
+    {
+      "file": "assets/login.css",
+      "status": 200,
+      "expected": "eb8dcc8d14b83700e6f1b7879a9787be3d6f64c0896341f71c258c203cda835f",
+      "served": "eb8dcc8d14b83700e6f1b7879a9787be3d6f64c0896341f71c258c203cda835f"
+    },
+    {
+      "file": "assets/vendor/quill-2.0.3.js",
+      "status": 200,
+      "expected": "f6157c72ac9b3f51cdead426335688a027b12405d9d6a4daadd38a676b2d7ff2",
+      "served": "f6157c72ac9b3f51cdead426335688a027b12405d9d6a4daadd38a676b2d7ff2"
+    },
+    {
+      "file": "assets/vendor/supabase-2.116.0.js",
+      "status": 200,
+      "expected": "84ee9bf45695c1dd3ba1595b6bcfb0f09672434631351ffc8ebe9140545d5ff6",
+      "served": "84ee9bf45695c1dd3ba1595b6bcfb0f09672434631351ffc8ebe9140545d5ff6"
+    },
+    {
+      "file": "author-navigation.js",
+      "status": 200,
+      "expected": "5b75d4e3924e7bf51e9d4bb03971471bcaa0832c8ce2c337397261d18a3b6d2f",
+      "served": "5b75d4e3924e7bf51e9d4bb03971471bcaa0832c8ce2c337397261d18a3b6d2f"
+    },
+    {
+      "file": "board-data.js",
+      "status": 200,
+      "expected": "dc483900dd94a4552df680ca46b8788dcaaa69b47aa9ff381dbe3f47028048ae",
+      "served": "dc483900dd94a4552df680ca46b8788dcaaa69b47aa9ff381dbe3f47028048ae"
+    },
+    {
+      "file": "board-repository.js",
+      "status": 200,
+      "expected": "356adaa10b3126408896dc0b6698bb2f0eb7842a29ccda12f82d02236256e5bf",
+      "served": "356adaa10b3126408896dc0b6698bb2f0eb7842a29ccda12f82d02236256e5bf"
+    },
+    {
+      "file": "comments-repository.js",
+      "status": 200,
+      "expected": "48a9c123ab5474c9fd834547382f5997017da7b986976a4cbcbc293653b987f0",
+      "served": "48a9c123ab5474c9fd834547382f5997017da7b986976a4cbcbc293653b987f0"
+    },
+    {
+      "file": "comments.js",
+      "status": 200,
+      "expected": "ed54444e14ff81c317949f437be645a60c459687ead888893f4e722bef01b449",
+      "served": "ed54444e14ff81c317949f437be645a60c459687ead888893f4e722bef01b449"
+    },
+    {
+      "file": "config.js",
+      "status": 200,
+      "expected": "a76d4946127f058b886dd4ae730c4c57f8ed8c93d346fddf475bb23c4a8dbc36",
+      "served": "a76d4946127f058b886dd4ae730c4c57f8ed8c93d346fddf475bb23c4a8dbc36"
+    },
+    {
+      "file": "content-access.js",
+      "status": 200,
+      "expected": "59606c14dc3213bdad12aa67c6103aa066b7fb3117630a08fdde0c22873784a9",
+      "served": "59606c14dc3213bdad12aa67c6103aa066b7fb3117630a08fdde0c22873784a9"
+    },
+    {
+      "file": "content-folders-repository.js",
+      "status": 200,
+      "expected": "4fbeec41aec2ece2dba5ba4b2427e2fbac0ffe2ba068005023b9700446d00770",
+      "served": "4fbeec41aec2ece2dba5ba4b2427e2fbac0ffe2ba068005023b9700446d00770"
+    },
+    {
+      "file": "content-folders.js",
+      "status": 200,
+      "expected": "49f6cd112cc8fbc51cc81819784eede7f988b0a286fe432955fbcfa1bebecdd3",
+      "served": "49f6cd112cc8fbc51cc81819784eede7f988b0a286fe432955fbcfa1bebecdd3"
+    },
+    {
+      "file": "content.js",
+      "status": 200,
+      "expected": "a145d7a7a5631e969132aee71beabae2d46a787d92f9da8d83e8d552bc334048",
+      "served": "a145d7a7a5631e969132aee71beabae2d46a787d92f9da8d83e8d552bc334048"
+    },
+    {
+      "file": "diary-data.js",
+      "status": 200,
+      "expected": "fb9e809d478a81e8b76d53792f636d576ff810c1d0178dd99941df3f3695352a",
+      "served": "fb9e809d478a81e8b76d53792f636d576ff810c1d0178dd99941df3f3695352a"
+    },
+    {
+      "file": "diary-repository.js",
+      "status": 200,
+      "expected": "541ec8a65358ed9e98c3ca511d971f01c5db28864c07e0f938139aec36302ef5",
+      "served": "541ec8a65358ed9e98c3ca511d971f01c5db28864c07e0f938139aec36302ef5"
+    },
+    {
+      "file": "friend-reviews-repository.js",
+      "status": 200,
+      "expected": "47b19beaecf737a81b102ae8abb72531150ad84b5baabb54414c7348ee44c002",
+      "served": "47b19beaecf737a81b102ae8abb72531150ad84b5baabb54414c7348ee44c002"
+    },
+    {
+      "file": "friend-reviews.js",
+      "status": 200,
+      "expected": "0ddb292d90ec2debf23a50fc5ac109fee8194c1e9df5d31c12767b991e6cd62b",
+      "served": "0ddb292d90ec2debf23a50fc5ac109fee8194c1e9df5d31c12767b991e6cd62b"
+    },
+    {
+      "file": "guestbook-data.js",
+      "status": 200,
+      "expected": "14a369955dc05013255f0c0ccc3f4d7b0b7e997c161335d4aa820381385348da",
+      "served": "14a369955dc05013255f0c0ccc3f4d7b0b7e997c161335d4aa820381385348da"
+    },
+    {
+      "file": "guestbook-repository.js",
+      "status": 200,
+      "expected": "bc02609b53f57659abc5a90f00189f8ea494fa00215b2d5eff00d9d96a4ec475",
+      "served": "bc02609b53f57659abc5a90f00189f8ea494fa00215b2d5eff00d9d96a4ec475"
+    },
+    {
+      "file": "home-activity.js",
+      "status": 200,
+      "expected": "22896777479feea21d29618f59ad9c8a665c24c28e9ed1e54dc008622ecde5a0",
+      "served": "22896777479feea21d29618f59ad9c8a665c24c28e9ed1e54dc008622ecde5a0"
+    },
+    {
+      "file": "home-data-config.js",
+      "status": 200,
+      "expected": "d529f8d9d4743c7b7d40f0a3a02def035fabc845a46499f733dc0aa4168858f9",
+      "served": "d529f8d9d4743c7b7d40f0a3a02def035fabc845a46499f733dc0aa4168858f9"
+    },
+    {
+      "file": "home-repository.js",
+      "status": 200,
+      "expected": "59f5864c951126b604eb50e3e80f5134d5d3cf968a7d00d32ec65c68c9027124",
+      "served": "59f5864c951126b604eb50e3e80f5134d5d3cf968a7d00d32ec65c68c9027124"
+    },
+    {
+      "file": "index.html",
+      "status": 200,
+      "expected": "ceed0bed8e06393c82b4f815021749f36dfc2ddb97ad62227f3c297315bfb8f1",
+      "served": "ceed0bed8e06393c82b4f815021749f36dfc2ddb97ad62227f3c297315bfb8f1"
+    },
+    {
+      "file": "login/index.html",
+      "status": 200,
+      "expected": "2c1a55894d8d3255c9096252c052a0b7b9b7dd9c112e10d342be6520de816bcf",
+      "served": "2c1a55894d8d3255c9096252c052a0b7b9b7dd9c112e10d342be6520de816bcf"
+    },
+    {
+      "file": "login/writing.html",
+      "status": 200,
+      "expected": "ad237b0f818d5039480684a9a64f95608a7c8c3422bc3a93b5e6cf4fb38cafe0",
+      "served": "ad237b0f818d5039480684a9a64f95608a7c8c3422bc3a93b5e6cf4fb38cafe0"
+    },
+    {
+      "file": "member-navigation.js",
+      "status": 200,
+      "expected": "60def89b2e773ceedadec09800a5d9333a6857938a8991064f93fcc3df5a83cd",
+      "served": "60def89b2e773ceedadec09800a5d9333a6857938a8991064f93fcc3df5a83cd"
+    },
+    {
+      "file": "member-relationship-lists.js",
+      "status": 200,
+      "expected": "703aed03b4cc5aab1f901bc7c6e0226a7501dacbd200b4c95895969f2890a0c7",
+      "served": "703aed03b4cc5aab1f901bc7c6e0226a7501dacbd200b4c95895969f2890a0c7"
+    },
+    {
+      "file": "member-relationships-repository.js",
+      "status": 200,
+      "expected": "f18d3c6cfa700f1cbceb860f97aa9b33627cfb9df381dd8151ce543137cc01ae",
+      "served": "f18d3c6cfa700f1cbceb860f97aa9b33627cfb9df381dd8151ce543137cc01ae"
+    },
+    {
+      "file": "member-relationships.js",
+      "status": 200,
+      "expected": "aa3534f5ec3d035d326f0757b01b871471331621298d77c829cfa37fb6fe4e58",
+      "served": "aa3534f5ec3d035d326f0757b01b871471331621298d77c829cfa37fb6fe4e58"
+    },
+    {
+      "file": "member-writing-client.js",
+      "status": 200,
+      "expected": "f7434d51e5972bba2a8f4debda290cdf26559d1f333a4c6267576b073485cb9f",
+      "served": "f7434d51e5972bba2a8f4debda290cdf26559d1f333a4c6267576b073485cb9f"
+    },
+    {
+      "file": "member-writing-config.js",
+      "status": 200,
+      "expected": "3989b7348765e79ad93d7d71c66e1bcdc8985a9f2d02bc7c7f2041032be23a20",
+      "served": "3989b7348765e79ad93d7d71c66e1bcdc8985a9f2d02bc7c7f2041032be23a20"
+    },
+    {
+      "file": "member-writing-runtime.js",
+      "status": 200,
+      "expected": "1d5c48c8127d19d16523202475e35f75123037b5206c31aef6dcede38156a211",
+      "served": "1d5c48c8127d19d16523202475e35f75123037b5206c31aef6dcede38156a211"
+    },
+    {
+      "file": "photo-editor.js",
+      "status": 200,
+      "expected": "5f964d60ffc90506a37d9d085c54a4437796b085c26cb97089a5adc7cd0e1fad",
+      "served": "5f964d60ffc90506a37d9d085c54a4437796b085c26cb97089a5adc7cd0e1fad"
+    },
+    {
+      "file": "photo-media-client.js",
+      "status": 200,
+      "expected": "0241eb20d78e5663c44fff7791ea0ce0583980a70a468ccb75e59d86813ec438",
+      "served": "0241eb20d78e5663c44fff7791ea0ce0583980a70a468ccb75e59d86813ec438"
+    },
+    {
+      "file": "photos-data.js",
+      "status": 200,
+      "expected": "6801e7e17e118f74b5250fe2ed829b10a10c527dd0cbf29b0a789eff1176b0ec",
+      "served": "6801e7e17e118f74b5250fe2ed829b10a10c527dd0cbf29b0a789eff1176b0ec"
+    },
+    {
+      "file": "photos-repository.js",
+      "status": 200,
+      "expected": "6b0341dc7e44b7911d1618c43cf614d4de32e7b249a79a414c7e0f7db1158529",
+      "served": "6b0341dc7e44b7911d1618c43cf614d4de32e7b249a79a414c7e0f7db1158529"
+    },
+    {
+      "file": "post-location-repository.js",
+      "status": 200,
+      "expected": "4268e596afc2a5d3abad6d33579bd57272634d227743df7701131a9261961d56",
+      "served": "4268e596afc2a5d3abad6d33579bd57272634d227743df7701131a9261961d56"
+    },
+    {
+      "file": "post-routes.js",
+      "status": 200,
+      "expected": "b58084e48a1dadd8c3359ce22caa0df87ced27f560a116e6d6042b4b10cd80aa",
+      "served": "b58084e48a1dadd8c3359ce22caa0df87ced27f560a116e6d6042b4b10cd80aa"
+    },
+    {
+      "file": "profile-data.js",
+      "status": 200,
+      "expected": "15dd2b7849cd44a378decf92e7d52e7685b528e51862d8f87dc0379a60e27a73",
+      "served": "15dd2b7849cd44a378decf92e7d52e7685b528e51862d8f87dc0379a60e27a73"
+    },
+    {
+      "file": "styles.css",
+      "status": 200,
+      "expected": "f71f8802c922538d10f4c46d6f27332118ad1e06a80f73130b10d1898d666861",
+      "served": "f71f8802c922538d10f4c46d6f27332118ad1e06a80f73130b10d1898d666861"
+    },
+    {
+      "file": "supabase-client.js",
+      "status": 200,
+      "expected": "e45d715d7e04120d48b63c5d2b16a3c35c7700951373a30d6aa8fcb72e34e611",
+      "served": "e45d715d7e04120d48b63c5d2b16a3c35c7700951373a30d6aa8fcb72e34e611"
+    },
+    {
+      "file": "supabase-config.js",
+      "status": 200,
+      "expected": "1aa9586a19acaa2d5e94cb8cb3aa046dcc6d8a2418dfc707ab39fce99276f15b",
+      "served": "1aa9586a19acaa2d5e94cb8cb3aa046dcc6d8a2418dfc707ab39fce99276f15b"
+    },
+    {
+      "file": "surf-navigation.js",
+      "status": 200,
+      "expected": "2e23aaad641a0b1de1cff15c07046ac559623ddee0da0a683efc68597f2573f9",
+      "served": "2e23aaad641a0b1de1cff15c07046ac559623ddee0da0a683efc68597f2573f9"
+    },
+    {
+      "file": "views/board.js",
+      "status": 200,
+      "expected": "8730687c6fd831a8427d2964746750f90e22cdef6337690fecb27c91fd45af9e",
+      "served": "8730687c6fd831a8427d2964746750f90e22cdef6337690fecb27c91fd45af9e"
+    },
+    {
+      "file": "views/diary.js",
+      "status": 200,
+      "expected": "2feca476a78e98f8656a49fcb8852e0936173d9d292c0cbfcb0341e93d428455",
+      "served": "2feca476a78e98f8656a49fcb8852e0936173d9d292c0cbfcb0341e93d428455"
+    },
+    {
+      "file": "views/guestbook.js",
+      "status": 200,
+      "expected": "3d0fcef747488e77ba7c643f22ccc1859e709311ff3a7e7ccef7b421968eeea6",
+      "served": "3d0fcef747488e77ba7c643f22ccc1859e709311ff3a7e7ccef7b421968eeea6"
+    },
+    {
+      "file": "views/home.js",
+      "status": 200,
+      "expected": "bcec0cfdf306c83ce5866e27158d89146a03322d45518ee5afc337fb4ce43e25",
+      "served": "bcec0cfdf306c83ce5866e27158d89146a03322d45518ee5afc337fb4ce43e25"
+    },
+    {
+      "file": "views/index.js",
+      "status": 200,
+      "expected": "f3b336ff4e4a76c6dc4b4b3e07bf644f04dbe7a6127e243d9784c425ef578b28",
+      "served": "f3b336ff4e4a76c6dc4b4b3e07bf644f04dbe7a6127e243d9784c425ef578b28"
+    },
+    {
+      "file": "views/photos.js",
+      "status": 200,
+      "expected": "d32469b06e4ebe3109072d426a24acd689816fb324d36fbd49ab96e2e2103864",
+      "served": "d32469b06e4ebe3109072d426a24acd689816fb324d36fbd49ab96e2e2103864"
+    },
+    {
+      "file": "views/profile.js",
+      "status": 200,
+      "expected": "e4048c0b11b001f07e99f9b7be9d36f54fd9c21c0d3d7702840fccb91676c02d",
+      "served": "e4048c0b11b001f07e99f9b7be9d36f54fd9c21c0d3d7702840fccb91676c02d"
+    },
+    {
+      "file": "views/settings.js",
+      "status": 200,
+      "expected": "55afbc18be2de0d19e0ad8e259d8f9240687b6e5be1dfd9245e46011e3fe686f",
+      "served": "55afbc18be2de0d19e0ad8e259d8f9240687b6e5be1dfd9245e46011e3fe686f"
+    },
+    {
+      "file": "visit-counts.js",
+      "status": 200,
+      "expected": "b4e5778fb4cbe322b34df64bfbafda72a69fbd011150ef88693703b91d3fb861",
+      "served": "b4e5778fb4cbe322b34df64bfbafda72a69fbd011150ef88693703b91d3fb861"
+    },
+    {
+      "file": "visitor-identity-config.js",
+      "status": 200,
+      "expected": "dedb08b5313829b27316c716cd49b3de1c3447ee39c6dfc32c75c00aac7010aa",
+      "served": "dedb08b5313829b27316c716cd49b3de1c3447ee39c6dfc32c75c00aac7010aa"
+    },
+    {
+      "file": "visitor-identity-login.js",
+      "status": 200,
+      "expected": "9a955f73f9b98e75d4244ba0dfda5718e451bee23cc9bbb4a63ef614b888f908",
+      "served": "9a955f73f9b98e75d4244ba0dfda5718e451bee23cc9bbb4a63ef614b888f908"
+    },
+    {
+      "file": "visitor-identity.js",
+      "status": 200,
+      "expected": "2f65422da4712ae97fb5a0757aa2f5edf71a764a701cfd792a5d967b83b72876",
+      "served": "2f65422da4712ae97fb5a0757aa2f5edf71a764a701cfd792a5d967b83b72876"
+    },
+    {
+      "file": "visitor-session.js",
+      "status": 200,
+      "expected": "840efe1ff08451987439324ccc2fdabbe66443c86c77ae829c97f42ab6f2f2ac",
+      "served": "840efe1ff08451987439324ccc2fdabbe66443c86c77ae829c97f42ab6f2f2ac"
+    }
+  ]
+}

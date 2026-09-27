@@ -1,0 +1,62 @@
+[
+  {
+    "label": "A",
+    "postgrestVersion": "14.5",
+    "httpStatus": 200,
+    "settings": [
+      {
+        "rolname": "anon",
+        "settings": [
+          "statement_timeout=3s"
+        ]
+      },
+      {
+        "rolname": "authenticated",
+        "settings": [
+          "statement_timeout=8s"
+        ]
+      },
+      {
+        "rolname": "authenticator",
+        "settings": [
+          "statement_timeout=8s",
+          "lock_timeout=8s"
+        ]
+      },
+      {
+        "rolname": "service_role",
+        "settings": []
+      }
+    ]
+  },
+  {
+    "label": "B",
+    "postgrestVersion": "14.5",
+    "httpStatus": 200,
+    "settings": [
+      {
+        "rolname": "anon",
+        "settings": [
+          "statement_timeout=3s"
+        ]
+      },
+      {
+        "rolname": "authenticated",
+        "settings": [
+          "statement_timeout=8s"
+        ]
+      },
+      {
+        "rolname": "authenticator",
+        "settings": [
+          "statement_timeout=8s",
+          "lock_timeout=8s"
+        ]
+      },
+      {
+        "rolname": "service_role",
+        "settings": []
+      }
+    ]
+  }
+]

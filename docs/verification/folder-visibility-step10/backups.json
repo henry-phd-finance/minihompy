@@ -1,0 +1,21 @@
+{
+  "privateDirectory": "/home/henry91-jung/.local/state/minihompy-deployment/folder-visibility-20260924",
+  "sites": [
+    {
+      "label": "A",
+      "base": "ceb765f77d42792508175d3e87408c4d93a5f22f",
+      "backedUpTables": 57,
+      "photoPosts": 1,
+      "storageObjects": 1,
+      "ownerVerified": true
+    },
+    {
+      "label": "B",
+      "base": "fe25e0f1bfdaefd53d800c965a82db61bd2d09cc",
+      "backedUpTables": 57,
+      "photoPosts": 0,
+      "storageObjects": 0,
+      "ownerVerified": true
+    }
+  ]
+}

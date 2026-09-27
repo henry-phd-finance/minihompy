@@ -1,0 +1,6 @@
+{
+  "content-access.js": "d4d2d0f5b1b8840935562f21994b3958ba3e6b0ef3845f1f2e23dbc3fef8714c",
+  "scripts/verify-content-readiness-cache.mjs": "82e9f93d828e2a01cc5e9769e1a1a932119181e6495652d36f5dcc380379969a",
+  "scripts/verify-friend-content-access.mjs": "5b2888a28dd9f71b77d835951d2ad0af87b58c5f9bbb76e2df3cea6b92a478f8",
+  "scripts/verify-friend-photos-browser.mjs": "a8cd7b340db9d6a7bdd8b277a39114de62d69e15d325b3838f2f2c5c8cb11104"
+}

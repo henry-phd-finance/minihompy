@@ -1,0 +1,17 @@
+[
+  {
+    "kind": "board",
+    "visibility": "public",
+    "count": 1
+  },
+  {
+    "kind": "photos",
+    "visibility": "public",
+    "count": 1
+  },
+  {
+    "kind": "diary",
+    "visibility": "public",
+    "count": 3
+  }
+]

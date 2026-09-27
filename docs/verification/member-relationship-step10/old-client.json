@@ -1,0 +1,9 @@
+{
+  "passed": true,
+  "checks": [
+    "real central ID and personal password login",
+    "A recognized on old B Pages",
+    "old personal session and guestbook API",
+    "A recognized as owner on old A Pages"
+  ]
+}

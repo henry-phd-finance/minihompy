@@ -1,0 +1,463 @@
+[
+  {
+    "name": "central-verify-friend-visibility-concurrency",
+    "script": "../minihompy-central/scripts/verify-friend-visibility-concurrency.mjs",
+    "args": [],
+    "env": {},
+    "exit_code": 0,
+    "elapsed_seconds": 9.68,
+    "group": "db",
+    "record": "db-suites.json",
+    "log": "central-verify-friend-visibility-concurrency.log"
+  },
+  {
+    "name": "verify-friend-visibility-db-concurrency",
+    "script": "scripts/verify-friend-visibility-db-concurrency.mjs",
+    "args": [],
+    "env": {},
+    "exit_code": 0,
+    "elapsed_seconds": 4.12,
+    "group": "db",
+    "record": "db-suites.json",
+    "log": "verify-friend-visibility-db-concurrency.log"
+  },
+  {
+    "name": "verify-friend-comments-concurrency",
+    "script": "scripts/verify-friend-comments-concurrency.mjs",
+    "args": [],
+    "env": {},
+    "exit_code": 0,
+    "elapsed_seconds": 7.43,
+    "group": "db",
+    "record": "db-suites.json",
+    "log": "verify-friend-comments-concurrency.log"
+  },
+  {
+    "name": "verify-friend-photo-concurrency",
+    "script": "scripts/verify-friend-photo-concurrency.mjs",
+    "args": [],
+    "env": {},
+    "exit_code": 0,
+    "elapsed_seconds": 3.22,
+    "group": "db",
+    "record": "db-suites.json",
+    "log": "verify-friend-photo-concurrency.log"
+  },
+  {
+    "name": "central-verify-friend-visibility",
+    "script": "../minihompy-central/scripts/verify-friend-visibility.mjs",
+    "args": [],
+    "env": {},
+    "exit_code": 0,
+    "elapsed_seconds": 6.42,
+    "group": "api",
+    "record": "api-suites.json",
+    "log": "central-verify-friend-visibility.log"
+  },
+  {
+    "name": "verify-friend-visibility-api",
+    "script": "scripts/verify-friend-visibility-api.mjs",
+    "args": [],
+    "env": {},
+    "exit_code": 0,
+    "elapsed_seconds": 12.93,
+    "group": "api",
+    "record": "api-suites.json",
+    "log": "verify-friend-visibility-api.log"
+  },
+  {
+    "name": "verify-friend-visibility-http",
+    "script": "scripts/verify-friend-visibility-http.mjs",
+    "args": [],
+    "env": {},
+    "exit_code": 0,
+    "elapsed_seconds": 10.13,
+    "group": "api",
+    "record": "api-suites.json",
+    "log": "verify-friend-visibility-http.log"
+  },
+  {
+    "name": "verify-friend-comments-api",
+    "script": "scripts/verify-friend-comments-api.mjs",
+    "args": [],
+    "env": {},
+    "exit_code": 0,
+    "elapsed_seconds": 3.92,
+    "group": "api",
+    "record": "api-suites.json",
+    "log": "verify-friend-comments-api.log"
+  },
+  {
+    "name": "verify-friend-photo-api",
+    "script": "scripts/verify-friend-photo-api.mjs",
+    "args": [],
+    "env": {},
+    "exit_code": 0,
+    "elapsed_seconds": 8.03,
+    "group": "api",
+    "record": "api-suites.json",
+    "log": "verify-friend-photo-api.log"
+  },
+  {
+    "name": "verify-friend-photo-http",
+    "script": "scripts/verify-friend-photo-http.mjs",
+    "args": [],
+    "env": {},
+    "exit_code": 0,
+    "elapsed_seconds": 0.21,
+    "group": "api",
+    "record": "api-suites.json",
+    "log": "verify-friend-photo-http.log"
+  },
+  {
+    "name": "verify-friend-aggregates-api",
+    "script": "scripts/verify-friend-aggregates-api.mjs",
+    "args": [],
+    "env": {},
+    "exit_code": 0,
+    "elapsed_seconds": 4.02,
+    "group": "api",
+    "record": "api-suites.json",
+    "log": "verify-friend-aggregates-api.log"
+  },
+  {
+    "name": "verify-friend-aggregates-db",
+    "script": "scripts/verify-friend-aggregates-db.mjs",
+    "args": [],
+    "env": {},
+    "exit_code": 0,
+    "elapsed_seconds": 1.32,
+    "group": "api",
+    "record": "api-suites.json",
+    "log": "verify-friend-aggregates-db.log"
+  },
+  {
+    "name": "verify-friend-diary-filters",
+    "script": "scripts/verify-friend-diary-filters.mjs",
+    "args": [],
+    "env": {},
+    "exit_code": 0,
+    "elapsed_seconds": 1.32,
+    "group": "api",
+    "record": "api-suites.json",
+    "log": "verify-friend-diary-filters.log"
+  },
+  {
+    "name": "verify-friend-read-renewal",
+    "script": "scripts/verify-friend-read-renewal.mjs",
+    "args": [],
+    "env": {},
+    "exit_code": 0,
+    "elapsed_seconds": 0.03,
+    "group": "api",
+    "record": "api-suites.json",
+    "log": "verify-friend-read-renewal.log"
+  },
+  {
+    "name": "verify-friend-photo-client",
+    "script": "scripts/verify-friend-photo-client.mjs",
+    "args": [],
+    "env": {},
+    "exit_code": 0,
+    "elapsed_seconds": 0.06,
+    "group": "api",
+    "record": "api-suites.json",
+    "log": "verify-friend-photo-client.log"
+  },
+  {
+    "name": "verify-friend-home-browser",
+    "script": "scripts/verify-friend-home-browser.mjs",
+    "args": [
+      "/home/henry91-jung/miniconda3/envs/dark/lib/node_modules/playwright/index.mjs"
+    ],
+    "env": {
+      "VERIFICATION_DIR": "docs/verification/friend-visibility-step11/home"
+    },
+    "exit_code": 0,
+    "elapsed_seconds": 4.47,
+    "group": "browser",
+    "record": "browser-suites.json",
+    "log": "verify-friend-home-browser.log"
+  },
+  {
+    "name": "verify-friend-menus-browser",
+    "script": "scripts/verify-friend-menus-browser.mjs",
+    "args": [
+      "/home/henry91-jung/miniconda3/envs/dark/lib/node_modules/playwright/index.mjs"
+    ],
+    "env": {
+      "VERIFICATION_DIR": "docs/verification/friend-visibility-step11/menus"
+    },
+    "exit_code": 0,
+    "elapsed_seconds": 8.23,
+    "group": "browser",
+    "record": "browser-suites.json",
+    "log": "verify-friend-menus-browser.log"
+  },
+  {
+    "name": "verify-friend-photos-browser",
+    "script": "scripts/verify-friend-photos-browser.mjs",
+    "args": [
+      "/home/henry91-jung/miniconda3/envs/dark/lib/node_modules/playwright/index.mjs"
+    ],
+    "env": {
+      "VERIFICATION_DIR": "docs/verification/friend-visibility-step11/photos"
+    },
+    "exit_code": 0,
+    "elapsed_seconds": 10.43,
+    "group": "browser",
+    "record": "browser-suites.json",
+    "log": "verify-friend-photos-browser.log"
+  },
+  {
+    "name": "verify-member-relationship-integration",
+    "script": "scripts/verify-member-relationship-integration.mjs",
+    "args": [
+      "/home/henry91-jung/miniconda3/envs/dark/lib/node_modules/playwright/index.mjs"
+    ],
+    "env": {
+      "VERIFICATION_DIR": "docs/verification/friend-visibility-step11/relationships",
+      "MINIHOMPY_TEST_FRIEND_VISIBILITY": "1",
+      "MINIHOMPY_TEST_PHOTO_MEDIA": "1"
+    },
+    "exit_code": 0,
+    "elapsed_seconds": 5.52,
+    "group": "browser",
+    "record": "browser-suites.json",
+    "log": "verify-member-relationship-integration.log"
+  },
+  {
+    "name": "verify-member-session-integration",
+    "script": "scripts/verify-member-session-integration.mjs",
+    "args": [
+      "/home/henry91-jung/miniconda3/envs/dark/lib/node_modules/playwright/index.mjs",
+      "1280"
+    ],
+    "env": {
+      "MINIHOMPY_TEST_FRIEND_VISIBILITY": "1",
+      "MINIHOMPY_SESSION_INTEGRATION_OUTPUT": "docs/verification/friend-visibility-step11/sessions"
+    },
+    "exit_code": 0,
+    "elapsed_seconds": 8.28,
+    "group": "browser",
+    "record": "browser-suites.json",
+    "log": "verify-member-session-integration.log"
+  },
+  {
+    "name": "verify-navigation-integration",
+    "script": "scripts/verify-navigation-integration.mjs",
+    "args": [
+      "/home/henry91-jung/miniconda3/envs/dark/lib/node_modules/playwright/index.mjs",
+      "1280"
+    ],
+    "env": {},
+    "exit_code": 0,
+    "elapsed_seconds": 7.38,
+    "group": "browser",
+    "record": "browser-suites.json",
+    "log": "verify-navigation-integration.log"
+  },
+  {
+    "name": "verify-member-comments",
+    "script": "scripts/verify-member-comments.mjs",
+    "args": [],
+    "env": {
+      "MINIHOMPY_TEST_FRIEND_VISIBILITY": "1",
+      "MINIHOMPY_TEST_PHOTO_MEDIA": "1"
+    },
+    "group": "regression",
+    "exit_code": 0,
+    "signal": null,
+    "elapsed_seconds": 3.79,
+    "record": "suite-run.json",
+    "log": "verify-member-comments.log"
+  },
+  {
+    "name": "verify-member-guestbook",
+    "script": "scripts/verify-member-guestbook.mjs",
+    "args": [],
+    "env": {
+      "MINIHOMPY_TEST_FRIEND_VISIBILITY": "1",
+      "MINIHOMPY_TEST_PHOTO_MEDIA": "1"
+    },
+    "exit_code": 0,
+    "elapsed_seconds": 2.42,
+    "group": "regression",
+    "record": "regression-suites.json",
+    "log": "verify-member-guestbook.log"
+  },
+  {
+    "name": "verify-friend-reviews",
+    "script": "scripts/verify-friend-reviews.mjs",
+    "args": [],
+    "env": {
+      "MINIHOMPY_TEST_FRIEND_VISIBILITY": "1",
+      "MINIHOMPY_TEST_PHOTO_MEDIA": "1"
+    },
+    "exit_code": 0,
+    "elapsed_seconds": 2.47,
+    "group": "regression",
+    "record": "regression-suites.json",
+    "log": "verify-friend-reviews.log"
+  },
+  {
+    "name": "verify-photo-media",
+    "script": "scripts/verify-photo-media.mjs",
+    "args": [],
+    "env": {},
+    "exit_code": 0,
+    "elapsed_seconds": 2.32,
+    "group": "regression",
+    "record": "regression-suites.json",
+    "log": "verify-photo-media.log"
+  },
+  {
+    "name": "verify-home-summary",
+    "script": "scripts/verify-home-summary.mjs",
+    "args": [],
+    "env": {},
+    "exit_code": 0,
+    "elapsed_seconds": 1.22,
+    "group": "regression",
+    "record": "regression-suites.json",
+    "log": "verify-home-summary.log"
+  },
+  {
+    "name": "verify-visit-counts",
+    "script": "scripts/verify-visit-counts.mjs",
+    "args": [],
+    "env": {},
+    "exit_code": 0,
+    "elapsed_seconds": 4.37,
+    "group": "regression",
+    "record": "regression-suites.json",
+    "log": "verify-visit-counts.log"
+  },
+  {
+    "name": "verify-post-location",
+    "script": "scripts/verify-post-location.mjs",
+    "args": [],
+    "env": {},
+    "exit_code": 0,
+    "elapsed_seconds": 1.27,
+    "group": "regression",
+    "record": "regression-suites.json",
+    "log": "verify-post-location.log"
+  },
+  {
+    "name": "verify-member-session-runtime",
+    "script": "scripts/verify-member-session-runtime.mjs",
+    "args": [],
+    "env": {},
+    "exit_code": 0,
+    "elapsed_seconds": 0.03,
+    "group": "regression",
+    "record": "regression-suites.json",
+    "log": "verify-member-session-runtime.log"
+  },
+  {
+    "name": "verify-member-session-client",
+    "script": "scripts/verify-member-session-client.mjs",
+    "args": [],
+    "env": {},
+    "exit_code": 0,
+    "elapsed_seconds": 0.06,
+    "group": "regression",
+    "record": "regression-suites.json",
+    "log": "verify-member-session-client.log"
+  },
+  {
+    "name": "verify-content-access",
+    "script": "scripts/verify-content-access.mjs",
+    "args": [],
+    "env": {},
+    "exit_code": 0,
+    "elapsed_seconds": 0.03,
+    "group": "regression",
+    "record": "regression-suites.json",
+    "log": "verify-content-access.log"
+  },
+  {
+    "name": "verify-friend-content-access",
+    "script": "scripts/verify-friend-content-access.mjs",
+    "args": [],
+    "env": {},
+    "exit_code": 0,
+    "elapsed_seconds": 0.03,
+    "group": "regression",
+    "record": "regression-suites.json",
+    "log": "verify-friend-content-access.log"
+  },
+  {
+    "name": "verify-member-navigation-state",
+    "script": "scripts/verify-member-navigation-state.mjs",
+    "args": [],
+    "env": {},
+    "exit_code": 0,
+    "elapsed_seconds": 0.06,
+    "group": "regression",
+    "record": "regression-suites.json",
+    "log": "verify-member-navigation-state.log"
+  },
+  {
+    "name": "verify-author-navigation",
+    "script": "scripts/verify-author-navigation.mjs",
+    "args": [
+      "/home/henry91-jung/miniconda3/envs/dark/lib/node_modules/playwright/index.mjs"
+    ],
+    "env": {},
+    "group": "regression",
+    "exit_code": 0,
+    "signal": null,
+    "record": "author-rerun.log",
+    "note": "Final rerun passed after aligning fixture with current page-departure behavior.",
+    "log": "verify-author-navigation.log"
+  },
+  {
+    "name": "verify-surf-navigation",
+    "script": "scripts/verify-surf-navigation.mjs",
+    "args": [
+      "/home/henry91-jung/miniconda3/envs/dark/lib/node_modules/playwright/index.mjs"
+    ],
+    "env": {
+      "VERIFICATION_DIR": "/home/henry91-jung/cyworld/docs/verification/friend-visibility-step11/surf"
+    },
+    "group": "regression",
+    "exit_code": 0,
+    "signal": null,
+    "elapsed_seconds": 2.96,
+    "record": "suite-run.json",
+    "log": "verify-surf-navigation.log"
+  },
+  {
+    "name": "cross-surface",
+    "script": "scripts/verify-friend-visibility-integration.mjs",
+    "args": [],
+    "env": {},
+    "group": "integration",
+    "exit_code": 0,
+    "signal": null,
+    "elapsed_seconds": 5.89,
+    "record": "suite-run.json",
+    "log": "cross-surface.log"
+  },
+  {
+    "name": "navigation-visits-mobile",
+    "script": "scripts/verify-navigation-integration.mjs",
+    "args": [
+      "/home/henry91-jung/miniconda3/envs/dark/lib/node_modules/playwright/index.mjs",
+      "375"
+    ],
+    "env": {
+      "HOME_VISITS_INTEGRATION": "1",
+      "MINIHOMPY_TEST_FRIEND_VISIBILITY": "1",
+      "MINIHOMPY_TEST_PHOTO_MEDIA": "1"
+    },
+    "group": "integration",
+    "exit_code": 0,
+    "signal": null,
+    "elapsed_seconds": 8.8,
+    "record": "suite-run.json",
+    "log": "navigation-visits-mobile.log"
+  }
+]

@@ -1,0 +1,9 @@
+PASS 1: upgrade and repeat preserve content; definer summary explicitly excludes private parents
+PASS 2: board: caller counts and page boundaries; hidden and nonexistent locations identical
+PASS 3: photos: caller counts and page boundaries; hidden and nonexistent locations identical
+PASS 4: diary: caller counts and page boundaries; hidden and nonexistent locations identical
+PASS 5: calendar excludes private-only dates; same-day list count follows caller
+PASS 6: board: hide/move/delete changes location and summary without stale metadata
+PASS 7: photos: hide/move/delete changes location and summary without stale metadata
+PASS 8: diary: hide/move/delete changes location and summary without stale metadata
+PASS: 8 visibility summary/location/calendar groups

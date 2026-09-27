@@ -1,0 +1,19 @@
+{
+  "checkedAt": "2026-09-24T02:33:12.194Z",
+  "passed": 11,
+  "checks": [
+    "Real SQL: anonymous and non-admin see public only; local admin sees both",
+    "Anonymous public image returns exact bytes with no-store, no redirect or signed URL",
+    "Private image: owner only; central ID, visitor and other-project owner rejected",
+    "Private, absent, path substitution and traversal have identical external error",
+    "Expired and revoked administrator credentials cannot read private image",
+    "Unattached upload: owner preview only; direct Storage paths and listing unavailable",
+    "Visibility changes stop new anonymous reads; owner retains access",
+    "Visibility change during Storage download prevents response bytes",
+    "Auth-provider rejection during Storage download prevents private response bytes (mock revocation)",
+    "Deleted or detached file cannot be fetched, even when its bytes remain stored",
+    "Rejected signed-URL alternative: valid bearer outlives policy change; expiry cannot recall cached bytes"
+  ],
+  "scope": "Existing personal migrations + authenticateOwner, disposable candidate photo RLS and real loopback HTTP bytes. Auth/Storage/clock are doubles. No production implementation or hosted Storage/CDN/browser validation.",
+  "decision": "Private bucket; per-request authenticated binary proxy, no signed/public Storage URLs to browsers."
+}

@@ -1,0 +1,1 @@
+PASS: diary create/edit/date+folder move/delete, calendar/leap year/months, drafts, denied/lost response retry, conflict, pagination, logout, errors; desktop/mobile, actual SDK with mock API.

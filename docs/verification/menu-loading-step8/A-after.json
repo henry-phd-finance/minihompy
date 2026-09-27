@@ -1,0 +1,108 @@
+{
+  "site": "A",
+  "project": "itkymmxnbjylyzbmdxdb",
+  "at": "2026-09-26T15:42:23.966Z",
+  "content": [
+    {
+      "name": "private.photo_assets",
+      "rows": 17,
+      "fingerprint": "d0a874b8d9f26fb1648379b8c6a620a8"
+    },
+    {
+      "name": "public.board_folders",
+      "rows": 1,
+      "fingerprint": "f8e825660b30b9dd2e466a9738981291"
+    },
+    {
+      "name": "public.board_posts",
+      "rows": 1,
+      "fingerprint": "8cf79a10bf40ce554f70b1d4f8e46d0f"
+    },
+    {
+      "name": "public.diary_entries",
+      "rows": 3,
+      "fingerprint": "81cd7496c55ce01475cfdac9421eacbb"
+    },
+    {
+      "name": "public.diary_folders",
+      "rows": 1,
+      "fingerprint": "5887cdada7822026c6a200a7e300864b"
+    },
+    {
+      "name": "public.guestbook_posts",
+      "rows": 9,
+      "fingerprint": "8a87258af8b7bf00d8eaa50b442f9b9a"
+    },
+    {
+      "name": "public.minihompy_profile",
+      "rows": 1,
+      "fingerprint": "109c4b90e93026a981d6a461a71afec9"
+    },
+    {
+      "name": "public.minihompy_settings",
+      "rows": 1,
+      "fingerprint": "9b50e5ee9660b6f57a544425d24ef279"
+    },
+    {
+      "name": "public.photo_folders",
+      "rows": 1,
+      "fingerprint": "22a8836b08e69389df0f1cefaede2249"
+    },
+    {
+      "name": "public.photo_posts",
+      "rows": 1,
+      "fingerprint": "5781db030befc0b78fbaded7796f607e"
+    },
+    {
+      "name": "public.post_comments",
+      "rows": 7,
+      "fingerprint": "b251fbcbcaa77a5f800bf78b2ff7739d"
+    },
+    {
+      "name": "storage.objects",
+      "rows": 1,
+      "fingerprint": "9e70e85c21307c37b2ad108332cbf1a9"
+    }
+  ],
+  "state": [
+    {
+      "owner_member_id": "96f9d25f-e9c5-4a0c-bdb6-7961623ece87",
+      "ready": true,
+      "media_ready": true,
+      "summary_ready": true,
+      "pages_ready": true,
+      "epoch": "05fe79df-22fc-4916-b88d-64e491f27640",
+      "pages_sha256": "848ea952323e6178009ac027322b5ef40cd8b506b81d909cbd0d8bf2022ec011"
+    }
+  ],
+  "functions": [
+    {
+      "slug": "owner-login",
+      "version": 12
+    },
+    {
+      "slug": "member-writing",
+      "version": 17
+    },
+    {
+      "slug": "visit-counts",
+      "version": 7
+    },
+    {
+      "slug": "photo-media",
+      "version": 5
+    }
+  ],
+  "migrations": [
+    {
+      "name": "202609270001_diary_latest.sql",
+      "sha256": "f609d9972ee08e29ebeeb42daf07bd9a97531522958105b809a25e8455ffec10"
+    },
+    {
+      "name": "202609270002_photo_check.sql",
+      "sha256": "76080bffba63fa338b36df7d3c8657e9363ee68ce6afcac691c6f8d32d8ad35e"
+    }
+  ],
+  "contentPreserved": true,
+  "unrelatedFunctionsPreserved": true
+}

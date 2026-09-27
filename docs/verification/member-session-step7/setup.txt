@@ -1,0 +1,2 @@
+PASS: actual legacy DB upgrade preserves rows, tracked migrations retry without replay, failed probe never enables UI, owner binding proof, no central secret, hash/untracked fail-stop, dry-run.
+PASS: dry-run isolation, public-key/input validation, migration fail-stop, no untracked DB replay, Auth owner proof, pending/verify/reverify, same site ID, retry after consumption, private data confinement.

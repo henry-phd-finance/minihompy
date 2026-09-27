@@ -1,0 +1,142 @@
+[
+  {
+    "name": "verify-content-readiness-cache",
+    "exitCode": 0,
+    "elapsedMs": 30
+  },
+  {
+    "name": "verify-owner-session-cache",
+    "exitCode": 0,
+    "elapsedMs": 25
+  },
+  {
+    "name": "verify-owner-session-integration",
+    "exitCode": 0,
+    "elapsedMs": 89
+  },
+  {
+    "name": "verify-member-session-runtime",
+    "exitCode": 0,
+    "elapsedMs": 27
+  },
+  {
+    "name": "verify-member-session-renewal",
+    "exitCode": 0,
+    "elapsedMs": 2393
+  },
+  {
+    "name": "verify-friend-content-access",
+    "exitCode": 0,
+    "elapsedMs": 24
+  },
+  {
+    "name": "verify-friend-read-renewal",
+    "exitCode": 0,
+    "elapsedMs": 24
+  },
+  {
+    "name": "verify-diary-latest",
+    "exitCode": 0,
+    "elapsedMs": 1311
+  },
+  {
+    "name": "verify-photo-check",
+    "exitCode": 0,
+    "elapsedMs": 1331
+  },
+  {
+    "name": "verify-friend-visibility-api",
+    "exitCode": 0,
+    "elapsedMs": 12705
+  },
+  {
+    "name": "verify-friend-comments-api",
+    "exitCode": 0,
+    "elapsedMs": 3704
+  },
+  {
+    "name": "verify-friend-aggregates-api",
+    "exitCode": 0,
+    "elapsedMs": 3564
+  },
+  {
+    "name": "verify-friend-diary-filters",
+    "exitCode": 0,
+    "elapsedMs": 1343
+  },
+  {
+    "name": "verify-friend-photo-client",
+    "exitCode": 0,
+    "elapsedMs": 52
+  },
+  {
+    "name": "verify-friend-photo-concurrency",
+    "exitCode": 0,
+    "elapsedMs": 3103
+  },
+  {
+    "name": "verify-photo-media-concurrency",
+    "exitCode": 0,
+    "elapsedMs": 2669
+  },
+  {
+    "name": "verify-member-comments",
+    "exitCode": 0,
+    "elapsedMs": 3947
+  },
+  {
+    "name": "verify-member-guestbook",
+    "exitCode": 1,
+    "elapsedMs": 7738
+  },
+  {
+    "name": "verify-post-location",
+    "exitCode": 0,
+    "elapsedMs": 1261
+  },
+  {
+    "name": "verify-friend-visibility-setup",
+    "exitCode": 0,
+    "elapsedMs": 1841
+  },
+  {
+    "name": "verify-artifact",
+    "exitCode": 0,
+    "elapsedMs": 43
+  },
+  {
+    "name": "verify-diary-latest-ui",
+    "exitCode": 0,
+    "elapsedMs": 2078
+  },
+  {
+    "name": "verify-photo-progressive",
+    "exitCode": 0,
+    "elapsedMs": 2529
+  },
+  {
+    "name": "verify-friend-photos-browser",
+    "exitCode": 0,
+    "elapsedMs": 11746
+  },
+  {
+    "name": "verify-friend-home-browser",
+    "exitCode": 1,
+    "elapsedMs": 33695
+  },
+  {
+    "name": "verify-post-routes-ui",
+    "exitCode": 1,
+    "elapsedMs": 30444
+  },
+  {
+    "name": "verify-diary-writing",
+    "exitCode": 0,
+    "elapsedMs": 18328
+  },
+  {
+    "name": "verify-menu-leave-uploads",
+    "exitCode": 0,
+    "elapsedMs": 741
+  }
+]

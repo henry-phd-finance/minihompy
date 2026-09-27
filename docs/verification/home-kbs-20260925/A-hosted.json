@@ -1,0 +1,156 @@
+{
+  "passed": true,
+  "actualPages": true,
+  "typography": [
+    {
+      "selector": "recent-heading",
+      "font": "700 7.23px / 8.67px Arial, sans-serif",
+      "color": "rgb(46, 158, 181)",
+      "lineHeight": "8.67px"
+    },
+    {
+      "selector": "home-post-link",
+      "font": "7.23px / 10.12px Dotum, 돋움, \"Minihompy News\", sans-serif",
+      "color": "rgb(102, 102, 102)",
+      "lineHeight": "10.12px"
+    },
+    {
+      "selector": "home-post-kind",
+      "font": "6.51px / 7.95px Dotum, 돋움, \"Minihompy News\", sans-serif",
+      "color": "rgb(255, 255, 255)",
+      "lineHeight": "7.95px"
+    },
+    {
+      "selector": "home-post-link",
+      "font": "7.23px / 10.12px Dotum, 돋움, \"Minihompy News\", sans-serif",
+      "color": "rgb(102, 102, 102)",
+      "lineHeight": "10.12px"
+    },
+    {
+      "selector": "home-post-kind",
+      "font": "6.51px / 7.95px Dotum, 돋움, \"Minihompy News\", sans-serif",
+      "color": "rgb(255, 255, 255)",
+      "lineHeight": "7.95px"
+    },
+    {
+      "selector": "home-post-link",
+      "font": "7.23px / 10.12px Dotum, 돋움, \"Minihompy News\", sans-serif",
+      "color": "rgb(102, 102, 102)",
+      "lineHeight": "10.12px"
+    },
+    {
+      "selector": "home-post-kind",
+      "font": "6.51px / 7.95px Dotum, 돋움, \"Minihompy News\", sans-serif",
+      "color": "rgb(255, 255, 255)",
+      "lineHeight": "7.95px"
+    },
+    {
+      "selector": "home-post-link",
+      "font": "7.23px / 10.12px Dotum, 돋움, \"Minihompy News\", sans-serif",
+      "color": "rgb(102, 102, 102)",
+      "lineHeight": "10.12px"
+    },
+    {
+      "selector": "home-post-kind",
+      "font": "6.51px / 7.95px Dotum, 돋움, \"Minihompy News\", sans-serif",
+      "color": "rgb(255, 255, 255)",
+      "lineHeight": "7.95px"
+    },
+    {
+      "selector": "DT",
+      "font": "7.23px / 13.01px Dotum, 돋움, \"Minihompy News\", sans-serif",
+      "color": "rgb(119, 119, 119)",
+      "lineHeight": "13.01px"
+    },
+    {
+      "selector": "DD",
+      "font": "700 5.78px / 13.01px Arial, sans-serif",
+      "color": "rgb(65, 108, 134)",
+      "lineHeight": "13.01px"
+    },
+    {
+      "selector": "DT",
+      "font": "7.23px / 13.01px Dotum, 돋움, \"Minihompy News\", sans-serif",
+      "color": "rgb(119, 119, 119)",
+      "lineHeight": "13.01px"
+    },
+    {
+      "selector": "DD",
+      "font": "700 5.78px / 13.01px Arial, sans-serif",
+      "color": "rgb(65, 108, 134)",
+      "lineHeight": "13.01px"
+    },
+    {
+      "selector": "DT",
+      "font": "7.23px / 13.01px Dotum, 돋움, \"Minihompy News\", sans-serif",
+      "color": "rgb(119, 119, 119)",
+      "lineHeight": "13.01px"
+    },
+    {
+      "selector": "DD",
+      "font": "700 5.78px / 13.01px Arial, sans-serif",
+      "color": "rgb(65, 108, 134)",
+      "lineHeight": "13.01px"
+    },
+    {
+      "selector": "DT",
+      "font": "7.23px / 13.01px Dotum, 돋움, \"Minihompy News\", sans-serif",
+      "color": "rgb(119, 119, 119)",
+      "lineHeight": "13.01px"
+    },
+    {
+      "selector": "DD",
+      "font": "700 5.78px / 13.01px Arial, sans-serif",
+      "color": "rgb(65, 108, 134)",
+      "lineHeight": "13.01px"
+    }
+  ],
+  "matchedSourceFiles": [
+    "styles.css",
+    "home-activity.js",
+    "views/home.js"
+  ],
+  "layout": {
+    "heading": {
+      "x": 314.125,
+      "y": 141.625,
+      "w": 222.28125,
+      "h": 17.625,
+      "right": 536.40625,
+      "bottom": 159.25
+    },
+    "list": {
+      "x": 314.125,
+      "y": 163.3125,
+      "w": 222.28125,
+      "h": 77.25,
+      "right": 536.40625,
+      "bottom": 240.5625
+    },
+    "counts": {
+      "x": 547.234375,
+      "y": 159.25,
+      "w": 216.875,
+      "h": 81.3125,
+      "right": 764.109375,
+      "bottom": 240.5625
+    },
+    "region": {
+      "x": 314.125,
+      "y": 163.3125,
+      "w": 450,
+      "h": 77.25,
+      "right": 764.125,
+      "bottom": 240.5625
+    },
+    "room": {
+      "x": 314.125,
+      "y": 250.375,
+      "w": 170.5625,
+      "h": 15,
+      "right": 484.6875,
+      "bottom": 265.375
+    },
+    "rows": 4
+  }
+}

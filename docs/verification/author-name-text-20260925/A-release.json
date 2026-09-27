@@ -1,0 +1,11 @@
+{
+  "label": "A",
+  "repository": "henry-phd-finance/minihompy",
+  "base": "9a6526564704f3842101f96eeb0854bf4c0c22e0",
+  "commit": "ac6fcd452a791edd1f75224dfaa868bc435690fb",
+  "pages": {
+    "id": 36129861886,
+    "url": "https://github.com/henry-phd-finance/minihompy/actions/runs/36129861886",
+    "conclusion": "success"
+  }
+}

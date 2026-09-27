@@ -1,0 +1,23 @@
+{
+  "passed": true,
+  "changedProductFiles": [
+    "comments.js",
+    "views/guestbook.js",
+    "styles.css"
+  ],
+  "productionSites": [
+    {
+      "label": "A",
+      "commit": "ac6fcd452a791edd1f75224dfaa868bc435690fb",
+      "pages": "https://github.com/henry-phd-finance/minihompy/actions/runs/36129861886",
+      "backendVersionsUnchanged": true
+    },
+    {
+      "label": "B",
+      "commit": "ebcc299ad1568d056b6724334b57a8b778a40662",
+      "pages": "https://github.com/henry-hs-jung/minihompy/actions/runs/36129910763",
+      "backendVersionsUnchanged": true
+    }
+  ],
+  "contentWrites": 0
+}

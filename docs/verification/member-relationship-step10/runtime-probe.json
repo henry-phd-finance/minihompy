@@ -1,0 +1,41 @@
+{
+  "sites": [
+    {
+      "label": "C",
+      "peerAvailable": true,
+      "nestedPeerAvailable": true,
+      "samePeerAcrossNetworks": true,
+      "runtime": {
+        "deno": "supabase-edge-runtime-1.76.0 (compatible with Deno v2.1.4)",
+        "v8": "11.6.189.12",
+        "typescript": "5.1.6"
+      },
+      "edgeRuntime": "object"
+    },
+    {
+      "label": "A",
+      "peerAvailable": true,
+      "nestedPeerAvailable": true,
+      "samePeerAcrossNetworks": true,
+      "runtime": {
+        "deno": "supabase-edge-runtime-1.76.0 (compatible with Deno v2.1.4)",
+        "v8": "11.6.189.12",
+        "typescript": "5.1.6"
+      },
+      "edgeRuntime": "object"
+    },
+    {
+      "label": "B",
+      "peerAvailable": true,
+      "nestedPeerAvailable": true,
+      "samePeerAcrossNetworks": true,
+      "runtime": {
+        "deno": "supabase-edge-runtime-1.76.0 (compatible with Deno v2.1.4)",
+        "v8": "11.6.189.12",
+        "typescript": "5.1.6"
+      },
+      "edgeRuntime": "object"
+    }
+  ],
+  "diagnosticFunctionsRemoved": true
+}

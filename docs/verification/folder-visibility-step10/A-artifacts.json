@@ -1,0 +1,305 @@
+{
+  "at": "2026-09-24T04:03:38.790Z",
+  "files": [
+    {
+      "file": "admin-auth.js",
+      "status": 200,
+      "expected": "8d4c570dbd952a1cfd6b710942b0103567e67eae056057a3da837c7db9972b9a",
+      "served": "8d4c570dbd952a1cfd6b710942b0103567e67eae056057a3da837c7db9972b9a"
+    },
+    {
+      "file": "app.js",
+      "status": 200,
+      "expected": "7d2e2e22d5a076acb9edde820447dd98d06352181fdfa61b3858a13cb277c27b",
+      "served": "7d2e2e22d5a076acb9edde820447dd98d06352181fdfa61b3858a13cb277c27b"
+    },
+    {
+      "file": "author-navigation.js",
+      "status": 200,
+      "expected": "5b75d4e3924e7bf51e9d4bb03971471bcaa0832c8ce2c337397261d18a3b6d2f",
+      "served": "5b75d4e3924e7bf51e9d4bb03971471bcaa0832c8ce2c337397261d18a3b6d2f"
+    },
+    {
+      "file": "board-data.js",
+      "status": 200,
+      "expected": "dc483900dd94a4552df680ca46b8788dcaaa69b47aa9ff381dbe3f47028048ae",
+      "served": "dc483900dd94a4552df680ca46b8788dcaaa69b47aa9ff381dbe3f47028048ae"
+    },
+    {
+      "file": "board-repository.js",
+      "status": 200,
+      "expected": "2930aa193f58b2d5e38cd26645d220d2e2b5cf7473bb1c6bc65db29402e55333",
+      "served": "2930aa193f58b2d5e38cd26645d220d2e2b5cf7473bb1c6bc65db29402e55333"
+    },
+    {
+      "file": "comments-repository.js",
+      "status": 200,
+      "expected": "48a9c123ab5474c9fd834547382f5997017da7b986976a4cbcbc293653b987f0",
+      "served": "48a9c123ab5474c9fd834547382f5997017da7b986976a4cbcbc293653b987f0"
+    },
+    {
+      "file": "comments.js",
+      "status": 200,
+      "expected": "24cecba4693b758df60eb3d38391e6b35c37a3704b53b3351594799d19d47364",
+      "served": "24cecba4693b758df60eb3d38391e6b35c37a3704b53b3351594799d19d47364"
+    },
+    {
+      "file": "config.js",
+      "status": 200,
+      "expected": "a76d4946127f058b886dd4ae730c4c57f8ed8c93d346fddf475bb23c4a8dbc36",
+      "served": "a76d4946127f058b886dd4ae730c4c57f8ed8c93d346fddf475bb23c4a8dbc36"
+    },
+    {
+      "file": "content-access.js",
+      "status": 200,
+      "expected": "a4fa03b1aa6915ae6a6c7882b745864c528ea2bca187b93c262f2c47c8243ebd",
+      "served": "a4fa03b1aa6915ae6a6c7882b745864c528ea2bca187b93c262f2c47c8243ebd"
+    },
+    {
+      "file": "content-folders-repository.js",
+      "status": 200,
+      "expected": "4fbeec41aec2ece2dba5ba4b2427e2fbac0ffe2ba068005023b9700446d00770",
+      "served": "4fbeec41aec2ece2dba5ba4b2427e2fbac0ffe2ba068005023b9700446d00770"
+    },
+    {
+      "file": "content-folders.js",
+      "status": 200,
+      "expected": "49f6cd112cc8fbc51cc81819784eede7f988b0a286fe432955fbcfa1bebecdd3",
+      "served": "49f6cd112cc8fbc51cc81819784eede7f988b0a286fe432955fbcfa1bebecdd3"
+    },
+    {
+      "file": "content.js",
+      "status": 200,
+      "expected": "a145d7a7a5631e969132aee71beabae2d46a787d92f9da8d83e8d552bc334048",
+      "served": "a145d7a7a5631e969132aee71beabae2d46a787d92f9da8d83e8d552bc334048"
+    },
+    {
+      "file": "diary-data.js",
+      "status": 200,
+      "expected": "fb9e809d478a81e8b76d53792f636d576ff810c1d0178dd99941df3f3695352a",
+      "served": "fb9e809d478a81e8b76d53792f636d576ff810c1d0178dd99941df3f3695352a"
+    },
+    {
+      "file": "diary-repository.js",
+      "status": 200,
+      "expected": "c0d112dff9f8462d5e50214d548d56f4b5f551af71aa21e6486bb7f74e940fca",
+      "served": "c0d112dff9f8462d5e50214d548d56f4b5f551af71aa21e6486bb7f74e940fca"
+    },
+    {
+      "file": "guestbook-data.js",
+      "status": 200,
+      "expected": "14a369955dc05013255f0c0ccc3f4d7b0b7e997c161335d4aa820381385348da",
+      "served": "14a369955dc05013255f0c0ccc3f4d7b0b7e997c161335d4aa820381385348da"
+    },
+    {
+      "file": "guestbook-repository.js",
+      "status": 200,
+      "expected": "bc02609b53f57659abc5a90f00189f8ea494fa00215b2d5eff00d9d96a4ec475",
+      "served": "bc02609b53f57659abc5a90f00189f8ea494fa00215b2d5eff00d9d96a4ec475"
+    },
+    {
+      "file": "home-activity.js",
+      "status": 200,
+      "expected": "1f0d54871b2fbff45ff7db12f25eaf25d4d37abf71cfd4727b40ed2e48a97e57",
+      "served": "1f0d54871b2fbff45ff7db12f25eaf25d4d37abf71cfd4727b40ed2e48a97e57"
+    },
+    {
+      "file": "home-data-config.js",
+      "status": 200,
+      "expected": "72701b094367b369ff3ad08f60092101815935a5c7c6dd7f08ce1782df30487a",
+      "served": "72701b094367b369ff3ad08f60092101815935a5c7c6dd7f08ce1782df30487a"
+    },
+    {
+      "file": "home-repository.js",
+      "status": 200,
+      "expected": "df24964f3128db1b09fdd29b89b6df4a6cae970f2eb4852dcf93907b54806cb3",
+      "served": "df24964f3128db1b09fdd29b89b6df4a6cae970f2eb4852dcf93907b54806cb3"
+    },
+    {
+      "file": "index.html",
+      "status": 200,
+      "expected": "2d7adc62490d340459a8cb6be15528fc22cdfee6f728578a7e1371f0a71230b3",
+      "served": "2d7adc62490d340459a8cb6be15528fc22cdfee6f728578a7e1371f0a71230b3"
+    },
+    {
+      "file": "login/index.html",
+      "status": 200,
+      "expected": "2c1a55894d8d3255c9096252c052a0b7b9b7dd9c112e10d342be6520de816bcf",
+      "served": "2c1a55894d8d3255c9096252c052a0b7b9b7dd9c112e10d342be6520de816bcf"
+    },
+    {
+      "file": "login/writing.html",
+      "status": 200,
+      "expected": "ad237b0f818d5039480684a9a64f95608a7c8c3422bc3a93b5e6cf4fb38cafe0",
+      "served": "ad237b0f818d5039480684a9a64f95608a7c8c3422bc3a93b5e6cf4fb38cafe0"
+    },
+    {
+      "file": "member-navigation.js",
+      "status": 200,
+      "expected": "60def89b2e773ceedadec09800a5d9333a6857938a8991064f93fcc3df5a83cd",
+      "served": "60def89b2e773ceedadec09800a5d9333a6857938a8991064f93fcc3df5a83cd"
+    },
+    {
+      "file": "member-writing-client.js",
+      "status": 200,
+      "expected": "5b50831f5649f4fb9b54fd53ef53cb7d85407f38abd1b99e8e39179292eb7c0a",
+      "served": "5b50831f5649f4fb9b54fd53ef53cb7d85407f38abd1b99e8e39179292eb7c0a"
+    },
+    {
+      "file": "member-writing-config.js",
+      "status": 200,
+      "expected": "3989b7348765e79ad93d7d71c66e1bcdc8985a9f2d02bc7c7f2041032be23a20",
+      "served": "3989b7348765e79ad93d7d71c66e1bcdc8985a9f2d02bc7c7f2041032be23a20"
+    },
+    {
+      "file": "member-writing-runtime.js",
+      "status": 200,
+      "expected": "ce8221a90290364abebb45b6144e85ce30ce1a2ed6f315f23c6cd56f9bd9855e",
+      "served": "ce8221a90290364abebb45b6144e85ce30ce1a2ed6f315f23c6cd56f9bd9855e"
+    },
+    {
+      "file": "photo-editor.js",
+      "status": 200,
+      "expected": "f343dabf9d0db69feeb5e2dcc687045cfa88c319af5c5e7f22cff3227a28a69a",
+      "served": "f343dabf9d0db69feeb5e2dcc687045cfa88c319af5c5e7f22cff3227a28a69a"
+    },
+    {
+      "file": "photo-media-client.js",
+      "status": 200,
+      "expected": "6962da6e1c63146420f1332bd7dd96014e937bc7c5ebb88cbbc1b9601e17dd9f",
+      "served": "6962da6e1c63146420f1332bd7dd96014e937bc7c5ebb88cbbc1b9601e17dd9f"
+    },
+    {
+      "file": "photos-data.js",
+      "status": 200,
+      "expected": "6801e7e17e118f74b5250fe2ed829b10a10c527dd0cbf29b0a789eff1176b0ec",
+      "served": "6801e7e17e118f74b5250fe2ed829b10a10c527dd0cbf29b0a789eff1176b0ec"
+    },
+    {
+      "file": "photos-repository.js",
+      "status": 200,
+      "expected": "e6b35282944a7709b54b6420a9576eea7d3b8bcd7d384fbff13578b6e4c28ea5",
+      "served": "e6b35282944a7709b54b6420a9576eea7d3b8bcd7d384fbff13578b6e4c28ea5"
+    },
+    {
+      "file": "post-location-repository.js",
+      "status": 200,
+      "expected": "3ebad4d60aeb10c79752083d264faf6c97f2f4622f92943a03e143be10734635",
+      "served": "3ebad4d60aeb10c79752083d264faf6c97f2f4622f92943a03e143be10734635"
+    },
+    {
+      "file": "post-routes.js",
+      "status": 200,
+      "expected": "b58084e48a1dadd8c3359ce22caa0df87ced27f560a116e6d6042b4b10cd80aa",
+      "served": "b58084e48a1dadd8c3359ce22caa0df87ced27f560a116e6d6042b4b10cd80aa"
+    },
+    {
+      "file": "profile-data.js",
+      "status": 200,
+      "expected": "15dd2b7849cd44a378decf92e7d52e7685b528e51862d8f87dc0379a60e27a73",
+      "served": "15dd2b7849cd44a378decf92e7d52e7685b528e51862d8f87dc0379a60e27a73"
+    },
+    {
+      "file": "styles.css",
+      "status": 200,
+      "expected": "137ec74fe12d004a897817ffcd04b779f451bfb47be2388e9c9e491626750471",
+      "served": "137ec74fe12d004a897817ffcd04b779f451bfb47be2388e9c9e491626750471"
+    },
+    {
+      "file": "supabase-client.js",
+      "status": 200,
+      "expected": "e45d715d7e04120d48b63c5d2b16a3c35c7700951373a30d6aa8fcb72e34e611",
+      "served": "e45d715d7e04120d48b63c5d2b16a3c35c7700951373a30d6aa8fcb72e34e611"
+    },
+    {
+      "file": "supabase-config.js",
+      "status": 200,
+      "expected": "f301277b83898b1482ff43b813d94e95b6bb0e25b28290571fbb43929d8e3e69",
+      "served": "f301277b83898b1482ff43b813d94e95b6bb0e25b28290571fbb43929d8e3e69"
+    },
+    {
+      "file": "surf-navigation.js",
+      "status": 200,
+      "expected": "2e23aaad641a0b1de1cff15c07046ac559623ddee0da0a683efc68597f2573f9",
+      "served": "2e23aaad641a0b1de1cff15c07046ac559623ddee0da0a683efc68597f2573f9"
+    },
+    {
+      "file": "views/board.js",
+      "status": 200,
+      "expected": "936572cc489badde378214266d9e2271616eaf6c51b1f19b7b64e09bb2fc42e5",
+      "served": "936572cc489badde378214266d9e2271616eaf6c51b1f19b7b64e09bb2fc42e5"
+    },
+    {
+      "file": "views/diary.js",
+      "status": 200,
+      "expected": "8cbddb0a2dfc5a40169825cfd390f08560a718473aa8d1a951471baf299f68cf",
+      "served": "8cbddb0a2dfc5a40169825cfd390f08560a718473aa8d1a951471baf299f68cf"
+    },
+    {
+      "file": "views/guestbook.js",
+      "status": 200,
+      "expected": "3d0fcef747488e77ba7c643f22ccc1859e709311ff3a7e7ccef7b421968eeea6",
+      "served": "3d0fcef747488e77ba7c643f22ccc1859e709311ff3a7e7ccef7b421968eeea6"
+    },
+    {
+      "file": "views/home.js",
+      "status": 200,
+      "expected": "f60ba5edf15231501efd9167ed7ce9479612e45415d159e6c83bd1b1a010a979",
+      "served": "f60ba5edf15231501efd9167ed7ce9479612e45415d159e6c83bd1b1a010a979"
+    },
+    {
+      "file": "views/index.js",
+      "status": 200,
+      "expected": "f3b336ff4e4a76c6dc4b4b3e07bf644f04dbe7a6127e243d9784c425ef578b28",
+      "served": "f3b336ff4e4a76c6dc4b4b3e07bf644f04dbe7a6127e243d9784c425ef578b28"
+    },
+    {
+      "file": "views/photos.js",
+      "status": 200,
+      "expected": "4e8253d8f5f8f9b30421cdc6566bea43734e270ee9da0241c0f32ba01fccd022",
+      "served": "4e8253d8f5f8f9b30421cdc6566bea43734e270ee9da0241c0f32ba01fccd022"
+    },
+    {
+      "file": "views/profile.js",
+      "status": 200,
+      "expected": "e4048c0b11b001f07e99f9b7be9d36f54fd9c21c0d3d7702840fccb91676c02d",
+      "served": "e4048c0b11b001f07e99f9b7be9d36f54fd9c21c0d3d7702840fccb91676c02d"
+    },
+    {
+      "file": "views/settings.js",
+      "status": 200,
+      "expected": "55afbc18be2de0d19e0ad8e259d8f9240687b6e5be1dfd9245e46011e3fe686f",
+      "served": "55afbc18be2de0d19e0ad8e259d8f9240687b6e5be1dfd9245e46011e3fe686f"
+    },
+    {
+      "file": "visit-counts.js",
+      "status": 200,
+      "expected": "b4e5778fb4cbe322b34df64bfbafda72a69fbd011150ef88693703b91d3fb861",
+      "served": "b4e5778fb4cbe322b34df64bfbafda72a69fbd011150ef88693703b91d3fb861"
+    },
+    {
+      "file": "visitor-identity-config.js",
+      "status": 200,
+      "expected": "ea0450a9b474db546698620e8de2f763c57f2ee11171afa4892d5724a5861a90",
+      "served": "ea0450a9b474db546698620e8de2f763c57f2ee11171afa4892d5724a5861a90"
+    },
+    {
+      "file": "visitor-identity-login.js",
+      "status": 200,
+      "expected": "9a955f73f9b98e75d4244ba0dfda5718e451bee23cc9bbb4a63ef614b888f908",
+      "served": "9a955f73f9b98e75d4244ba0dfda5718e451bee23cc9bbb4a63ef614b888f908"
+    },
+    {
+      "file": "visitor-identity.js",
+      "status": 200,
+      "expected": "2f65422da4712ae97fb5a0757aa2f5edf71a764a701cfd792a5d967b83b72876",
+      "served": "2f65422da4712ae97fb5a0757aa2f5edf71a764a701cfd792a5d967b83b72876"
+    },
+    {
+      "file": "visitor-session.js",
+      "status": 200,
+      "expected": "840efe1ff08451987439324ccc2fdabbe66443c86c77ae829c97f42ab6f2f2ac",
+      "served": "840efe1ff08451987439324ccc2fdabbe66443c86c77ae829c97f42ab6f2f2ac"
+    }
+  ]
+}

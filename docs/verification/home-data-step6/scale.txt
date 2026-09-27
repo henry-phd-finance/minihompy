@@ -1,0 +1,1 @@
+PASS: uniform 1.875x desktop geometry, 1x small viewport, resize breakpoints, independent login dialog, unchanged internal width.

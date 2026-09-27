@@ -1,0 +1,1 @@
+PASS: Pages includes login/runtime assets and excludes backend/setup/secrets.

@@ -1,0 +1,90 @@
+[
+  {
+    "name": "central-verify-friend-visibility",
+    "script": "../minihompy-central/scripts/verify-friend-visibility.mjs",
+    "args": [],
+    "env": {},
+    "exit_code": 0,
+    "elapsed_seconds": 6.42
+  },
+  {
+    "name": "verify-friend-visibility-api",
+    "script": "scripts/verify-friend-visibility-api.mjs",
+    "args": [],
+    "env": {},
+    "exit_code": 0,
+    "elapsed_seconds": 12.93
+  },
+  {
+    "name": "verify-friend-visibility-http",
+    "script": "scripts/verify-friend-visibility-http.mjs",
+    "args": [],
+    "env": {},
+    "exit_code": 0,
+    "elapsed_seconds": 10.13
+  },
+  {
+    "name": "verify-friend-comments-api",
+    "script": "scripts/verify-friend-comments-api.mjs",
+    "args": [],
+    "env": {},
+    "exit_code": 0,
+    "elapsed_seconds": 3.92
+  },
+  {
+    "name": "verify-friend-photo-api",
+    "script": "scripts/verify-friend-photo-api.mjs",
+    "args": [],
+    "env": {},
+    "exit_code": 0,
+    "elapsed_seconds": 8.03
+  },
+  {
+    "name": "verify-friend-photo-http",
+    "script": "scripts/verify-friend-photo-http.mjs",
+    "args": [],
+    "env": {},
+    "exit_code": 0,
+    "elapsed_seconds": 0.21
+  },
+  {
+    "name": "verify-friend-aggregates-api",
+    "script": "scripts/verify-friend-aggregates-api.mjs",
+    "args": [],
+    "env": {},
+    "exit_code": 0,
+    "elapsed_seconds": 4.02
+  },
+  {
+    "name": "verify-friend-aggregates-db",
+    "script": "scripts/verify-friend-aggregates-db.mjs",
+    "args": [],
+    "env": {},
+    "exit_code": 0,
+    "elapsed_seconds": 1.32
+  },
+  {
+    "name": "verify-friend-diary-filters",
+    "script": "scripts/verify-friend-diary-filters.mjs",
+    "args": [],
+    "env": {},
+    "exit_code": 0,
+    "elapsed_seconds": 1.32
+  },
+  {
+    "name": "verify-friend-read-renewal",
+    "script": "scripts/verify-friend-read-renewal.mjs",
+    "args": [],
+    "env": {},
+    "exit_code": 0,
+    "elapsed_seconds": 0.03
+  },
+  {
+    "name": "verify-friend-photo-client",
+    "script": "scripts/verify-friend-photo-client.mjs",
+    "args": [],
+    "env": {},
+    "exit_code": 0,
+    "elapsed_seconds": 0.06
+  }
+]

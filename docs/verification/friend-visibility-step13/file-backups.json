@@ -1,0 +1,22 @@
+{
+  "sites": [
+    {
+      "label": "C",
+      "storageFiles": 0,
+      "storageBytes": 0,
+      "pagesFiles": 12
+    },
+    {
+      "label": "A",
+      "storageFiles": 1,
+      "storageBytes": 20038,
+      "pagesFiles": 59
+    },
+    {
+      "label": "B",
+      "storageFiles": 0,
+      "storageBytes": 0,
+      "pagesFiles": 59
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "functionalChecks": [
+    "Owner creates folders and actual protected upload/posts",
+    "Anonymous mobile reads public content; verified account writes comment",
+    "Private move/delete preserves posts; owner reads, anonymous/member/tabs/direct addresses deny; home counts exclude private fixtures",
+    "Private Edge read denied; real logout removes private image",
+    "Mobile reauthentication, public restoration, protected editor preview/save and original comment preservation"
+  ],
+  "initialBrowserCleanupFailed": true,
+  "cleanupRecovered": true,
+  "preservationVerified": true,
+  "passed": true
+}

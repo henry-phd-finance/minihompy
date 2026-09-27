@@ -1,0 +1,82 @@
+{
+  "functions": [
+    {
+      "slug": "identity-api",
+      "version": 17,
+      "status": "ACTIVE",
+      "verify_jwt": false
+    },
+    {
+      "slug": "identity-page",
+      "version": 15,
+      "status": "ACTIVE",
+      "verify_jwt": false
+    }
+  ],
+  "files": [
+    {
+      "file": "_shared/auth-proof.js",
+      "sha256": "c2c709c62f58eae73b0ee10f3c975a393f0cbd01b431a0e85c77fa788c68cf5c"
+    },
+    {
+      "file": "_shared/cors.js",
+      "sha256": "0e48088a57e43bb891bbc96d239e17f6870ad1bb4d115e32979691702255906b"
+    },
+    {
+      "file": "_shared/relationship-protocol.js",
+      "sha256": "7cdbbd335836ba24b0906c1aff4f33b4cbea1d6de52898c9a623894429f0fe4e"
+    },
+    {
+      "file": "_shared/tokens.js",
+      "sha256": "7656dcbed7f62e07cda7642cd5acda9048dc3c6faa703551539ce3e7cf2a4c62"
+    },
+    {
+      "file": "_shared/validation.js",
+      "sha256": "51318eb954d2cd802f966732e654abf660a27ee3d7310467a3407427f64a4f6f"
+    },
+    {
+      "file": "identity-api/handler.js",
+      "sha256": "7cf4490aede18ed5895b12cf24c62a1cd9dde325ff514c2d308590cb22bd1b2b"
+    },
+    {
+      "file": "identity-api/handler.ts",
+      "sha256": "7ef4e8349186ac43b4683f3005ef23d274bd25b57b554c3677af977849f5d0e4"
+    },
+    {
+      "file": "identity-api/index.ts",
+      "sha256": "9bb96743e71de3d4c571317c3dcd8598d7a2a04c4924031923a5cd61594a83b1"
+    },
+    {
+      "file": "identity-api/navigation.js",
+      "sha256": "b42f31cf2b90a8ca8f0a1bcde12b7b738b2e00e763c5789ab33194fcd0432aca"
+    },
+    {
+      "file": "identity-api/read-context.js",
+      "sha256": "2155379257f2d016445a40ccc6db76462dcc5ab1961b2a266105322acd040f72"
+    },
+    {
+      "file": "identity-api/relationships.js",
+      "sha256": "1b4d3f6ec947d3dc944f9c21b9aede6039c7f4909f623e435c77c524e7b0fa1a"
+    },
+    {
+      "file": "identity-api/secure-auth.js",
+      "sha256": "e0fecf19ae32e9e0c6be87140d8058dd3c0ba4a2db444c80740d8aebe1106b0c"
+    },
+    {
+      "file": "identity-api/writing-auth.js",
+      "sha256": "92830531f49c63cac3504538f5b38a5c1ea8dddee45e1ef6031cf556f7e8e644"
+    },
+    {
+      "file": "identity-page/handler.js",
+      "sha256": "328c86c79d7e0bd358d99c478f02441eb1ce0fb187eb43d2c21a06939bbf2b86"
+    },
+    {
+      "file": "identity-page/handler.ts",
+      "sha256": "1a4170b7df16e681daffe67ace0541677b72431bc42daae4dbff060d3d89ffe0"
+    },
+    {
+      "file": "identity-page/index.ts",
+      "sha256": "08ee88653d58c079f4e585375e5cec1fb5da17f3c747fbbc6a7d89ca784abd2f"
+    }
+  ]
+}

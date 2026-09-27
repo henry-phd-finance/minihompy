@@ -1,0 +1,63 @@
+[
+  {
+    "label": "C",
+    "tracked": 3,
+    "mismatches": [],
+    "buckets": [],
+    "relationships": [
+      {
+        "state": "none"
+      }
+    ]
+  },
+  {
+    "label": "A",
+    "tracked": 15,
+    "mismatches": [],
+    "media": [
+      {
+        "mode": "protected",
+        "ready": true
+      }
+    ],
+    "buckets": [
+      {
+        "id": "minihompy-photos-private",
+        "public": false
+      },
+      {
+        "id": "minihompy-photos",
+        "public": false
+      },
+      {
+        "id": "minihompy-profile",
+        "public": true
+      }
+    ]
+  },
+  {
+    "label": "B",
+    "tracked": 15,
+    "mismatches": [],
+    "media": [
+      {
+        "mode": "protected",
+        "ready": true
+      }
+    ],
+    "buckets": [
+      {
+        "id": "minihompy-photos-private",
+        "public": false
+      },
+      {
+        "id": "minihompy-photos",
+        "public": false
+      },
+      {
+        "id": "minihompy-profile",
+        "public": true
+      }
+    ]
+  }
+]

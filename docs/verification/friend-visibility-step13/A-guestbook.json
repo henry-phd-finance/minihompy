@@ -1,0 +1,9 @@
+{
+  "passed": true,
+  "checks": [
+    "Actual gateway guestbook rate limit returns 429 with Retry-After 1",
+    "Actual member public/secret guestbook retains owner/author/public visibility",
+    "Actual guestbook uses common session and discards draft on menu departure"
+  ],
+  "cleaned": true
+}

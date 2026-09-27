@@ -1,0 +1,1 @@
+PASS: one Dotum family, regular/bold only, zero added spacing, no text scaling, no Galmuri downloads; desktop/mobile/login/profile. System fallback allowed.

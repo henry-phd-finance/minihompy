@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "checks": [
+    "375px review content and relationship dialog fit their containers",
+    "Disconnect retains both historical reviews and blocks new writes",
+    "Author deletes own historical review through UI",
+    "Homepage owner deletes another member review through UI",
+    "Anonymous public home hides member write controls"
+  ],
+  "cleanup": true
+}

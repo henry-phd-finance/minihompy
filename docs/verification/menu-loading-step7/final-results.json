@@ -1,0 +1,204 @@
+[
+  {
+    "name": "verify-content-readiness-cache",
+    "exitCode": 0,
+    "elapsedMs": 30,
+    "originalExitCode": 0,
+    "finalLog": "regression/verify-content-readiness-cache.log"
+  },
+  {
+    "name": "verify-owner-session-cache",
+    "exitCode": 0,
+    "elapsedMs": 25,
+    "originalExitCode": 0,
+    "finalLog": "regression/verify-owner-session-cache.log"
+  },
+  {
+    "name": "verify-owner-session-integration",
+    "exitCode": 0,
+    "elapsedMs": 89,
+    "originalExitCode": 0,
+    "finalLog": "regression/verify-owner-session-integration.log"
+  },
+  {
+    "name": "verify-member-session-runtime",
+    "exitCode": 0,
+    "elapsedMs": 27,
+    "originalExitCode": 0,
+    "finalLog": "regression/verify-member-session-runtime.log"
+  },
+  {
+    "name": "verify-member-session-renewal",
+    "exitCode": 0,
+    "elapsedMs": 2393,
+    "originalExitCode": 0,
+    "finalLog": "regression/verify-member-session-renewal.log"
+  },
+  {
+    "name": "verify-friend-content-access",
+    "exitCode": 0,
+    "elapsedMs": 24,
+    "originalExitCode": 0,
+    "finalLog": "regression/verify-friend-content-access.log"
+  },
+  {
+    "name": "verify-friend-read-renewal",
+    "exitCode": 0,
+    "elapsedMs": 24,
+    "originalExitCode": 0,
+    "finalLog": "regression/verify-friend-read-renewal.log"
+  },
+  {
+    "name": "verify-diary-latest",
+    "exitCode": 0,
+    "elapsedMs": 1311,
+    "originalExitCode": 0,
+    "finalLog": "regression/verify-diary-latest.log"
+  },
+  {
+    "name": "verify-photo-check",
+    "exitCode": 0,
+    "elapsedMs": 1331,
+    "originalExitCode": 0,
+    "finalLog": "regression/verify-photo-check.log"
+  },
+  {
+    "name": "verify-friend-visibility-api",
+    "exitCode": 0,
+    "elapsedMs": 12705,
+    "originalExitCode": 0,
+    "finalLog": "regression/verify-friend-visibility-api.log"
+  },
+  {
+    "name": "verify-friend-comments-api",
+    "exitCode": 0,
+    "elapsedMs": 3704,
+    "originalExitCode": 0,
+    "finalLog": "regression/verify-friend-comments-api.log"
+  },
+  {
+    "name": "verify-friend-aggregates-api",
+    "exitCode": 0,
+    "elapsedMs": 3564,
+    "originalExitCode": 0,
+    "finalLog": "regression/verify-friend-aggregates-api.log"
+  },
+  {
+    "name": "verify-friend-diary-filters",
+    "exitCode": 0,
+    "elapsedMs": 1343,
+    "originalExitCode": 0,
+    "finalLog": "regression/verify-friend-diary-filters.log"
+  },
+  {
+    "name": "verify-friend-photo-client",
+    "exitCode": 0,
+    "elapsedMs": 52,
+    "originalExitCode": 0,
+    "finalLog": "regression/verify-friend-photo-client.log"
+  },
+  {
+    "name": "verify-friend-photo-concurrency",
+    "exitCode": 0,
+    "elapsedMs": 3103,
+    "originalExitCode": 0,
+    "finalLog": "regression/verify-friend-photo-concurrency.log"
+  },
+  {
+    "name": "verify-photo-media-concurrency",
+    "exitCode": 0,
+    "elapsedMs": 2669,
+    "originalExitCode": 0,
+    "finalLog": "regression/verify-photo-media-concurrency.log"
+  },
+  {
+    "name": "verify-member-comments",
+    "exitCode": 0,
+    "elapsedMs": 3947,
+    "originalExitCode": 0,
+    "finalLog": "regression/verify-member-comments.log"
+  },
+  {
+    "name": "verify-member-guestbook",
+    "exitCode": 0,
+    "elapsedMs": 7738,
+    "originalExitCode": 1,
+    "finalLog": "guestbook-db.log",
+    "note": "SQL/API only; obsolete optional browser helper replaced by automatic-session browser in verify-member-comments"
+  },
+  {
+    "name": "verify-post-location",
+    "exitCode": 0,
+    "elapsedMs": 1261,
+    "originalExitCode": 0,
+    "finalLog": "regression/verify-post-location.log"
+  },
+  {
+    "name": "verify-friend-visibility-setup",
+    "exitCode": 0,
+    "elapsedMs": 1841,
+    "originalExitCode": 0,
+    "finalLog": "regression/verify-friend-visibility-setup.log"
+  },
+  {
+    "name": "verify-artifact",
+    "exitCode": 0,
+    "elapsedMs": 43,
+    "originalExitCode": 0,
+    "finalLog": "artifact-final.txt",
+    "note": "Fresh artifact rebuilt from final runtime"
+  },
+  {
+    "name": "verify-diary-latest-ui",
+    "exitCode": 0,
+    "elapsedMs": 2078,
+    "originalExitCode": 0,
+    "finalLog": "regression/verify-diary-latest-ui.log"
+  },
+  {
+    "name": "verify-photo-progressive",
+    "exitCode": 0,
+    "elapsedMs": 2529,
+    "originalExitCode": 0,
+    "finalLog": "progressive-final.log",
+    "note": "Final 16ms coalescing change verified"
+  },
+  {
+    "name": "verify-friend-photos-browser",
+    "exitCode": 0,
+    "elapsedMs": 11746,
+    "originalExitCode": 0,
+    "finalLog": "photos-final.log",
+    "note": "Final 16ms coalescing change verified"
+  },
+  {
+    "name": "verify-friend-home-browser",
+    "exitCode": 0,
+    "elapsedMs": 33695,
+    "originalExitCode": 1,
+    "finalLog": "home-final.log",
+    "note": "Fixture selector and authenticated user binding updated"
+  },
+  {
+    "name": "verify-post-routes-ui",
+    "exitCode": 0,
+    "elapsedMs": 30444,
+    "originalExitCode": 1,
+    "finalLog": "verify-post-routes-ui-rerun.log",
+    "note": "Fixture current context verify/assert/readiness supplied"
+  },
+  {
+    "name": "verify-diary-writing",
+    "exitCode": 0,
+    "elapsedMs": 18328,
+    "originalExitCode": 0,
+    "finalLog": "regression/verify-diary-writing.log"
+  },
+  {
+    "name": "verify-menu-leave-uploads",
+    "exitCode": 0,
+    "elapsedMs": 741,
+    "originalExitCode": 0,
+    "finalLog": "regression/verify-menu-leave-uploads.log"
+  }
+]

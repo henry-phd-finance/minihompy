@@ -1,0 +1,11 @@
+{
+  "label": "B",
+  "repository": "henry-hs-jung/minihompy",
+  "base": "7372f6cbfb71d4e382c1101cb6ff1a1b5133d635",
+  "commit": "c882331a847480c882a31da4a6bb2d6d9a34a871",
+  "pages": {
+    "id": 36219744431,
+    "url": "https://github.com/henry-hs-jung/minihompy/actions/runs/36219744431",
+    "conclusion": "success"
+  }
+}

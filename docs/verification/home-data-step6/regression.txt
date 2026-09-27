@@ -1,0 +1,114 @@
+PASS identity (0.022s)
+PASS post-location (1.265s)
+PASS post-routes (0.022s)
+PASS post-routes-ui (2.956s)
+PASS home-summary (1.237s)
+PASS visit-counts (4.348s)
+PASS visit-counts-ui (7.643s)
+PASS home-data-setup (1.246s)
+PASS home-repository (0.024s)
+PASS home-activity (2.086s)
+PASS navigation-setup (0.049s)
+PASS member-navigation-state (0.059s)
+PASS member-navigation-ui (2.656s)
+PASS author-navigation (1.556s)
+PASS surf-navigation (2.989s)
+PASS navigation-integration (7.261s)
+PASS board-db (1.137s)
+PASS settings-db (1.121s)
+PASS photos-db (1.089s)
+PASS diary-db (1.165s)
+PASS guestbook-db (1.115s)
+PASS comments-db (1.21s)
+PASS profile-db (1.082s)
+PASS member-writing-foundation (1.222s)
+PASS member-writing-setup (1.179s)
+PASS member-writing-session (2.296s)
+PASS member-writing-client (0.041s)
+PASS member-guestbook (2.324s)
+PASS member-comments (2.461s)
+PASS member-writing-lifecycle (8.775s)
+FAIL backend (0.626s)
+ node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Reading must not create a remote user
+    at file:///home/henry91-jung/cyworld/scripts/verify-backend.mjs:28:3 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.15.0
+ 
+PASS admin (1.354s)
+PASS settings (17.227s)
+PASS board-writing (19.279s)
+PASS photos-writing (18.079s)
+PASS diary-writing (19.232s)
+PASS guestbook-writing (18.277s)
+PASS comments-writing (20.385s)
+PASS profile-writing (19.218s)
+FAIL profile (32.356s)
+ node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+locator.click: Timeout 30000ms exceeded.
+Call log:
+[2m  - waiting for locator('[data-menu="profile"]')[22m
+[2m    - locator resolved to <a title="프로필" class="page-tab" href="#/profile" data-menu="profile">…</a>[22m
+[2m  - attempting click action[22m
+[2m    - waiting for element to be visible, enabled and stable[22m
+[2m    - element is visible, enabled and stable[22m
+[2m    - scrolling into view if needed[22m
+
+    at /home/henry91-jung/cyworld/scripts/verify-profile.mjs:49:49 {
+  name: 'TimeoutError'
+}
+
+Node.js v24.15.0
+ 
+FAIL navigation (32.049s)
+ node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+locator.click: Timeout 30000ms exceeded.
+Call log:
+[2m  - waiting for locator('[data-menu="guestbook"]')[22m
+[2m    - locator resolved to <a title="방명록" class="page-tab" href="#/guestbook" data-menu="guestbook">…</a>[22m
+[2m  - attempting click action[22m
+[2m    - waiting for element to be visible, enabled and stable[22m
+[2m    - element is visible, enabled and stable[22m
+[2m    - scrolling into view if needed[22m
+
+    at /home/henry91-jung/cyworld/scripts/verify-navigation.mjs:33:49 {
+  name: 'TimeoutError'
+}
+
+Node.js v24.15.0
+ 
+FAIL scale (30.595s)
+ node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+locator.click: Timeout 30000ms exceeded.
+Call log:
+[2m  - waiting for locator('#admin-auth-toggle')[22m
+[2m    - waiting for" https://henry-phd-finance.github.io/minihompy-central/visit.html?site_id=afd287c3-0f9f-44b4-8811-3cf11774f859&attempt_id=dcb59373-105d-49db-b55d-5aab59aefbf8&return_path=%2Fhome%2Fhenry91-jung%2Fcywo…" navigation to finish...[22m
+[2m    - navigated to "https://henry-phd-finance.github.io/minihompy-central/visit.html?site_id=afd287c3-0f9f-44b4-8811-3cf11774f859&attempt_id=dcb59373-105d-49db-b55d-5aab59aefbf8&return_path=%2Fhome%2Fhenry91-jung%2Fcywo…"[22m
+
+    at /home/henry91-jung/cyworld/scripts/verify-scale.mjs:18:46 {
+  name: 'TimeoutError'
+}
+
+Node.js v24.15.0
+ 
+PASS fonts (2.367s)
+39/43 passed. Local DB and mock API tests; hosted live reads are separate.

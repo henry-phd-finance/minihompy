@@ -1,0 +1,11 @@
+{
+  "at": "2026-09-24T04:06:20.744Z",
+  "passed": false,
+  "checks": [
+    "Owner creates folders and actual protected upload/posts",
+    "Anonymous mobile reads public content; verified account writes comment as A on B without admin rights",
+    "All journaled test posts/comments/files/folders cleaned"
+  ],
+  "cleaned": true,
+  "failedPhase": "private transition"
+}

@@ -1,0 +1,36 @@
+{
+  "date": "2026-09-24",
+  "step": 3,
+  "status": "passed",
+  "prerequisite": {
+    "step": 2,
+    "manifest": "docs/verification/member-relationship-step2/source-hashes.json",
+    "checked_before_changes": 178,
+    "matched_before_changes": 178
+  },
+  "checks": {
+    "api_actual_handlers_and_sql_groups": 12,
+    "browser_source_vm_groups": 5,
+    "central_suites": 16,
+    "personal_session_groups": 10,
+    "member_runtime_regression": "passed",
+    "writing_client_regression": "passed",
+    "pages_artifact": "passed",
+    "protocol_copies": "identical",
+    "diff_check": "passed"
+  },
+  "production_changes": false,
+  "actual_browser_ui_tested": false,
+  "supabase_transport_peer_verified": false,
+  "step4": "not started",
+  "source_repositories": {
+    "personal": {
+      "head": "86919aa40df755766b233a8389046a48a9f57c90",
+      "uses_working_tree": true
+    },
+    "central": {
+      "head": "ba0e1ca4e7f83621fc5309aa307043fc5172e59d",
+      "uses_working_tree": true
+    }
+  }
+}

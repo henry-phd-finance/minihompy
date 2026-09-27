@@ -1,0 +1,1 @@
+PASS: navigation install/upgrade readiness, dry run, old central and missing module rejection

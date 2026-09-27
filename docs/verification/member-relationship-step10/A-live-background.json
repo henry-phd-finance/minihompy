@@ -1,0 +1,8 @@
+{
+  "passed": false,
+  "checks": [
+    "A self/owner and B visitor separation; non-friend review rejected",
+    "B request and A real inbox acceptance"
+  ],
+  "error": "Private diagnostic saved"
+}

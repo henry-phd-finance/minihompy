@@ -1,0 +1,2 @@
+PASS: offline dry run, admin preflight, failed deploy leaves disabled, first secret creation, retry preserves secret, readiness is read-only
+PASS: migration hash mismatch, missing secret with existing counts, concurrent local installer and missing runtime rejection

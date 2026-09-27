@@ -1,0 +1,76 @@
+[
+  {
+    "site": "A",
+    "hashes": {
+      "home-activity.js": "de2424ba05936166f94f148eec2c8cd6ecef0f4bcb19d4585ed33cdaff296da0",
+      "styles.css": "a2ef0036d1ec2bdc81a545714354958aa571074d8597d1cf239db40932d2e455"
+    },
+    "counters": [
+      {
+        "kind": "diary",
+        "today": 0,
+        "badge": null
+      },
+      {
+        "kind": "photos",
+        "today": 0,
+        "badge": null
+      },
+      {
+        "kind": "board",
+        "today": 0,
+        "badge": null
+      },
+      {
+        "kind": "guestbook",
+        "today": 1,
+        "badge": "N"
+      }
+    ],
+    "health": {
+      "friend_visibility_protocol": 1,
+      "friend_visibility_ready": true,
+      "friend_media_ready": true,
+      "friend_summary_ready": true,
+      "friend_pages_ready": true,
+      "friend_visibility_setup_protocol": 1
+    }
+  },
+  {
+    "site": "B",
+    "hashes": {
+      "home-activity.js": "de2424ba05936166f94f148eec2c8cd6ecef0f4bcb19d4585ed33cdaff296da0",
+      "styles.css": "a2ef0036d1ec2bdc81a545714354958aa571074d8597d1cf239db40932d2e455"
+    },
+    "counters": [
+      {
+        "kind": "diary",
+        "today": 0,
+        "badge": null
+      },
+      {
+        "kind": "photos",
+        "today": 0,
+        "badge": null
+      },
+      {
+        "kind": "board",
+        "today": 0,
+        "badge": null
+      },
+      {
+        "kind": "guestbook",
+        "today": 0,
+        "badge": null
+      }
+    ],
+    "health": {
+      "friend_visibility_protocol": 1,
+      "friend_visibility_ready": true,
+      "friend_media_ready": true,
+      "friend_summary_ready": true,
+      "friend_pages_ready": true,
+      "friend_visibility_setup_protocol": 1
+    }
+  }
+]

@@ -1,0 +1,20 @@
+{
+  "passed": true,
+  "media": {
+    "mode": "protected",
+    "ready": true
+  },
+  "buckets": [
+    {
+      "id": "minihompy-photos",
+      "public": false
+    },
+    {
+      "id": "minihompy-photos-private",
+      "public": false
+    }
+  ],
+  "checks": [],
+  "existingPhotoPaths": 0,
+  "priorSignedUrls": "No stored pre-existing signed URL found in deployment records; signing never used by protected flow. Exact original public URLs and transformed/authenticated paths checked."
+}

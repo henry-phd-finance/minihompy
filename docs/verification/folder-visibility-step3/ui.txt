@@ -1,0 +1,21 @@
+PASS 1280: No folder management controls or private snapshot requests for visitors
+PASS 1280: board: actual UI CRUD/order/move-delete, location refresh and editor choices
+PASS 1280: photos: actual UI CRUD/order/move-delete, location refresh and editor choices
+PASS 1280: diary: actual UI CRUD/order/move-delete, location refresh and editor choices
+PASS 1280: Conflict refreshes snapshot and requires a new deletion confirmation
+PASS 1280: Lost response retries identical request once; rapid double submit cannot duplicate folders
+PASS 1280: Snapshot outage has explicit retry; account reset discards unsaved form
+PASS 1280: Authentication refresh keeps form; logout closes manager and ignores a late mutation response
+PASS 1280: Menu departure discards manager input and late response; next visit reloads folders
+PASS 1280: Legacy empty diary can create its first folder; keyboard focus remains inside dialog
+PASS 375: No folder management controls or private snapshot requests for visitors
+PASS 375: board: actual UI CRUD/order/move-delete, location refresh and editor choices
+PASS 375: photos: actual UI CRUD/order/move-delete, location refresh and editor choices
+PASS 375: diary: actual UI CRUD/order/move-delete, location refresh and editor choices
+PASS 375: Conflict refreshes snapshot and requires a new deletion confirmation
+PASS 375: Lost response retries identical request once; rapid double submit cannot duplicate folders
+PASS 375: Snapshot outage has explicit retry; account reset discards unsaved form
+PASS 375: Authentication refresh keeps form; logout closes manager and ignores a late mutation response
+PASS 375: Menu departure discards manager input and late response; next visit reloads folders
+PASS 375: Legacy empty diary can create its first folder; keyboard focus remains inside dialog
+PASS: 20 browser integration groups

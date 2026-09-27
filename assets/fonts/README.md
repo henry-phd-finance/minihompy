@@ -42,3 +42,7 @@ pyftsubset Galmuri11.woff2 --text-file=index.html --output-file=assets/fonts/Gal
 구조 작업 1번에서 `Galmuri11-extended.woff2`를 추가했다. 위에 기록한 동일한 Galmuri11 원본 전체 파일이며 SHA-256은 `8bad9322b3340bfb5cb26cb00f4752bf4c8e7d1b526bb07205f4af458eebed31`, 라이선스는 같은 OFL이다. 기존 HOME 서브셋을 우선 사용하고 없는 문자만 `Minihompy Extended`로 표시한다. 따라서 일반적인 새 한글 문구를 Config에 입력할 때마다 서브셋을 재생성할 필요가 없다. 원본 Galmuri에 없는 문자는 시스템 폰트로 대체될 수 있다.
 
 DOM 속성 변경에 맞춰 다시 생성한 HOME 서브셋 SHA-256은 `17ba9aeb3294c16fa01480897e2573bca9c89b24e0a4e17ece693357275de60d`. 기본 화면 네 캡처는 작업 7과 픽셀 단위로 동일하다. 탭 파일과 폰트 설정은 변경하지 않았다.
+
+## KBS 최근게시물 레퍼런스 보정 (2026-09-25)
+
+최근게시물 목록과 집계 라벨에만 `Dotum, 돋움, Minihompy News, sans-serif`를 적용한다. `Minihompy News`는 기존 `Galmuri11-extended.woff2`를 재사용하는 대체 폰트다. Windows 돋움을 저장소에 포함하지 않는다. 제목과 숫자는 Arial 계열이다. KBS 화면의 332px 폭을 현재 홈의 240px에 비례시킨 크기를 사용하며, 시스템 돋움 유무에 따라 글리프 모양은 달라질 수 있다.

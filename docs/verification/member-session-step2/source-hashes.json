@@ -1,0 +1,14 @@
+{
+  "../minihompy-central/supabase/migrations/202609230004_member_sessions.sql": "1fa5b9ac744bfc4cbf10733c5cad855f8a6ead893ede62018b1f9371e2b69e45",
+  "../minihompy-central/supabase/functions/identity-api/writing-auth.js": "92830531f49c63cac3504538f5b38a5c1ea8dddee45e1ef6031cf556f7e8e644",
+  "../minihompy-central/supabase/functions/identity-api/handler.js": "a3981489a699cca3204db625f3a42cacafccd83cc849a956e037dcdcd1a98589",
+  "../minihompy-central/supabase/functions/identity-api/secure-auth.js": "e0fecf19ae32e9e0c6be87140d8058dd3c0ba4a2db444c80740d8aebe1106b0c",
+  "../minihompy-central/public/login.js": "4f26bcb99720100bb208c34ccc69d4350997133dfdf941c28d58b1c3e6aade1e",
+  "../minihompy-central/public/complete.js": "1f826fc64e4c010016686e5bb7c938668f8df8429c3824a870d542cb9595fbd8",
+  "../minihompy-central/public/visit-flow.js": "c77b6907320c58257631f00f07e518d0d639489b15f575994d106d9f147b0436",
+  "../minihompy-central/scripts/helpers/identity-db.mjs": "2acbd2d453a9399e0e18a4352a51f45960d00ce775984cfc1642b06c99200693",
+  "../minihompy-central/scripts/verify-member-sessions.mjs": "29e38e9b6c125b700d5c9ea9cc6fff12a0749b97a8b618003e306b573d9abc4b",
+  "../minihompy-central/scripts/verify-member-session-pages.mjs": "89a5adf0ae47a5ed1871ab550983c1f19e293d4f85accd9cf80d436933f57817",
+  "../minihompy-central/scripts/verify-member-session-concurrency.mjs": "f02689e97e39845902b7882593899c6390975da723e2debe0c2e12d83567dfb0",
+  "../minihompy-central/scripts/verify-all.mjs": "b0ec4719224e49854ec47b54a014ed0c176c2b68421e5ab584129999c5701b88"
+}

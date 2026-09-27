@@ -1,0 +1,26 @@
+{
+  "passed": true,
+  "changedProductFiles": [
+    "home-activity.js",
+    "styles.css",
+    "views/home.js"
+  ],
+  "homeRegressionGroups": 6,
+  "productionSites": [
+    {
+      "label": "A",
+      "commit": "9a6526564704f3842101f96eeb0854bf4c0c22e0",
+      "pages": "https://github.com/henry-phd-finance/minihompy/actions/runs/36087916814",
+      "releaseHash": "8a5a4e0b72891c8e9df701d5a777db0579af7b8305a5469892dae3a517396151",
+      "backendVersionsUnchanged": true
+    },
+    {
+      "label": "B",
+      "commit": "77c8aeb01801bec82b921707bbace7ea57893816",
+      "pages": "https://github.com/henry-hs-jung/minihompy/actions/runs/36087976375",
+      "releaseHash": "70e98e9c22ab70e19f84073ea2d5978eefe572386cf76108681b9debdfbca10d",
+      "backendVersionsUnchanged": true
+    }
+  ],
+  "homepageScaleChanged": false
+}

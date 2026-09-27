@@ -1,0 +1,1 @@
+PASS: real fresh install executes all migrations in order; subsequent folder preparation accepts tracked hashes, preserves ledger and leaves photo media disabled

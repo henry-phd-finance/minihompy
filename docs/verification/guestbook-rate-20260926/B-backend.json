@@ -1,0 +1,17 @@
+{
+  "migration": "202609260001_guestbook_rate_limits.sql",
+  "sha256": "e805285ac96eeb671beca0dc064fa40d6e9fbc63a3baaa81beeeed6f512ae4a3",
+  "checks": {
+    "daily_reason": true,
+    "ten_seconds": true,
+    "no_minute_limit": true,
+    "legacy_message": true
+  },
+  "functions": [
+    {
+      "slug": "member-writing",
+      "version": 12,
+      "status": "ACTIVE"
+    }
+  ]
+}

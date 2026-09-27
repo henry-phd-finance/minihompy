@@ -1,0 +1,6 @@
+PASS 1280: actual home markup/styles, five escaped titles, four real route links, counters and keyboard
+PASS 1280: empty/error/retry, account invalidation, late responses, reentry after content change, hidden menus
+PASS 1280: bounded display lifetime, hidden tab invalidation and visible retry
+PASS 375: actual home markup/styles, five escaped titles, four real route links, counters and keyboard
+PASS 375: empty/error/retry, account invalidation, late responses, reentry after content change, hidden menus
+PASS 375: bounded display lifetime, hidden tab invalidation and visible retry

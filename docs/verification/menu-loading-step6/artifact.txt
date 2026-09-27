@@ -1,0 +1,2 @@
+PASS: Pages includes login/runtime assets and excludes backend/setup/secrets.
+PASS: Pages friend visibility release hashes match all JS/HTML/CSS runtime files.

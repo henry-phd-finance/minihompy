@@ -1,0 +1,33 @@
+{
+  "checkedAt": "2026-09-24T02:28:59.862953+00:00",
+  "plans": [
+    {
+      "plan": "docs/member-writing-plan.md",
+      "status": "상태: Step 1~7 완료. A/B 운영 배포·검증·테스트 콘텐츠 정리 완료. 2026-09-23.",
+      "evidence": "docs/verification/member-writing-step7/README.md",
+      "evidence_sha256": "9e163f7f97df1ef842f1b4607adc894fbe328cc46870712fa4ee6b1cc6bafdfa"
+    },
+    {
+      "plan": "docs/member-navigation-plan.md",
+      "status": "상태: Step 1~6 완료. 중앙/A/B 운영 배포·실제 계정 검증·데이터 보존 확인 완료. 2026-09-23.",
+      "evidence": "docs/verification/member-navigation-step6/README.md",
+      "evidence_sha256": "08b45b312226c124206461a84e1d9790840e3e778dabd2ca45fc4ba6e12e85fb"
+    },
+    {
+      "plan": "docs/home-data-plan.md",
+      "status": "상태: Step 1~7 완료. A/B 운영 배포·검증 완료. 2026-09-23.",
+      "evidence": "docs/verification/home-data-step7/README.md",
+      "evidence_sha256": "18e59e7f3e84f3f800e6ae661f00fd183e38761d715b824dfb26e676923b5f3f"
+    },
+    {
+      "plan": "docs/member-session-plan.md",
+      "status": "상태: Step 1~7 완료(2026-09-23). 중앙/A/B 운영 적용, 실제 계정 작성·자동 인증 및 실제 15분 만료 경계 갱신, 테스트 콘텐츠 정리·기존 데이터 보존까지 확인했다.",
+      "evidence": "docs/verification/member-session-step7/README.md",
+      "evidence_sha256": "86adff575dc02abe54f50959cf15ddd947de7cdf86595c778b5921dfff6bdc76"
+    }
+  ],
+  "latestDeployedSourceManifest": "docs/verification/member-session-step7/source-hashes.json",
+  "matchedFiles": 84,
+  "mismatches": [],
+  "scope": "Local evidence and source comparison; no remote redeployment or new live verification"
+}

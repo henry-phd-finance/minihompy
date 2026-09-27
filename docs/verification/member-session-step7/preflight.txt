@@ -1,0 +1,3 @@
+A: permissions and private backup ready; base e4c454a4d17de372100093be1ceb6817228a2d3a; 10 public tables
+B: permissions and private backup ready; base 1d93b52fc406d802efc4b6fb1bea8edd4471803a; 10 public tables
+Central identity backup ready; no deployment performed

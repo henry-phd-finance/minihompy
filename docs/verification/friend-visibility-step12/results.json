@@ -1,0 +1,83 @@
+{
+  "step": 12,
+  "status": "complete",
+  "date": "2026-09-24",
+  "prerequisite": {
+    "step": 11,
+    "verified_source_files": 583
+  },
+  "checks": [
+    {
+      "command": "node scripts/verify-friend-visibility-setup.mjs",
+      "status": "passed",
+      "log": "personal-setup.log"
+    },
+    {
+      "command": "node scripts/verify-friend-visibility-central-setup.mjs",
+      "status": "passed",
+      "log": "central-setup.log"
+    },
+    {
+      "command": "node scripts/verify-friend-visibility-capability.mjs",
+      "status": "passed",
+      "log": "capability.log"
+    },
+    {
+      "command": "node scripts/verify-friend-visibility-recovery.mjs",
+      "status": "passed",
+      "log": "recovery.log"
+    },
+    {
+      "command": "node scripts/verify-friend-visibility-install-concurrency.mjs",
+      "status": "passed",
+      "log": "installation-concurrency.log"
+    },
+    {
+      "command": "node scripts/verify-folder-visibility-install.mjs",
+      "status": "passed",
+      "log": "fresh-install.log"
+    },
+    {
+      "command": "node scripts/verify-folder-visibility-setup.mjs",
+      "status": "passed",
+      "log": "folder-setup-regression.log"
+    },
+    {
+      "command": "node scripts/verify-member-relationship-setup.mjs",
+      "status": "passed",
+      "log": "relationship-setup-regression.log"
+    },
+    {
+      "command": "node scripts/verify-friend-visibility-api.mjs",
+      "status": "passed",
+      "log": "content-api.log"
+    },
+    {
+      "command": "node scripts/verify-friend-photo-api.mjs",
+      "status": "passed",
+      "log": "photo-api.log"
+    },
+    {
+      "command": "node scripts/verify-friend-photo-http.mjs",
+      "status": "passed",
+      "log": "photo-http.log"
+    },
+    {
+      "command": "node scripts/verify-friend-photos-browser.mjs",
+      "status": "passed",
+      "log": "photos-regression.log"
+    },
+    {
+      "command": "node scripts/build-pages.mjs && node scripts/verify-artifact.mjs",
+      "status": "passed",
+      "log": "artifact.log"
+    }
+  ],
+  "production_changed": false,
+  "next_step": 13,
+  "limitations": [
+    "Auth/Management/deployment/Pages/Storage HTTP fixtures; no hosted deployment",
+    "Legacy UI fail-closed is not an approved operational rollback",
+    "Actual gateway, function versions and old URL/CDN closure remain Step 13"
+  ]
+}

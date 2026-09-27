@@ -1,0 +1,18 @@
+{
+  "passed": true,
+  "contentWrites": 0,
+  "records": [
+    {
+      "site": "A",
+      "knownAuthorIsText": true,
+      "commentAuthorMatches": true,
+      "mobileNoOverflow": true
+    },
+    {
+      "site": "B",
+      "knownAuthorIsText": true,
+      "commentAuthorMatches": true,
+      "mobileNoOverflow": true
+    }
+  ]
+}

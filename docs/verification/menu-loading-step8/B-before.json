@@ -1,0 +1,96 @@
+{
+  "site": "B",
+  "project": "zcaodcujqbjrogffwalk",
+  "at": "2026-09-26T15:36:50.420Z",
+  "content": [
+    {
+      "name": "private.photo_assets",
+      "rows": 6,
+      "fingerprint": "d0cf123ee531859d821f25049ed61576"
+    },
+    {
+      "name": "public.board_folders",
+      "rows": 1,
+      "fingerprint": "08cb3203765b30c30c901a2d6fb18e43"
+    },
+    {
+      "name": "public.board_posts",
+      "rows": 0,
+      "fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    {
+      "name": "public.diary_entries",
+      "rows": 0,
+      "fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    {
+      "name": "public.diary_folders",
+      "rows": 1,
+      "fingerprint": "53bf5921e07d7b2a19d48dffae712583"
+    },
+    {
+      "name": "public.guestbook_posts",
+      "rows": 3,
+      "fingerprint": "f4f4ac4da20303d2c02a682effdd1fc2"
+    },
+    {
+      "name": "public.minihompy_profile",
+      "rows": 1,
+      "fingerprint": "66cc07e9ba5352cebb9d4eb2b1f35c0e"
+    },
+    {
+      "name": "public.minihompy_settings",
+      "rows": 1,
+      "fingerprint": "14f7a5a6120ab83d67f0eb3d1e33dc8e"
+    },
+    {
+      "name": "public.photo_folders",
+      "rows": 1,
+      "fingerprint": "dd8dc735caf40d84e94e57242167ac5d"
+    },
+    {
+      "name": "public.photo_posts",
+      "rows": 0,
+      "fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    {
+      "name": "public.post_comments",
+      "rows": 0,
+      "fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    {
+      "name": "storage.objects",
+      "rows": 0,
+      "fingerprint": "d41d8cd98f00b204e9800998ecf8427e"
+    }
+  ],
+  "state": [
+    {
+      "owner_member_id": "ab036b01-a1de-4a2a-99ac-e3d5ba53aaed",
+      "ready": true,
+      "media_ready": true,
+      "summary_ready": true,
+      "pages_ready": true,
+      "epoch": "71b2e841-df57-4e41-be1a-d09a4cebc8e9",
+      "pages_sha256": "4134df7d7ef7b166c25a62fc14e6666170f352936855377537b808876679d1d9"
+    }
+  ],
+  "functions": [
+    {
+      "slug": "owner-login",
+      "version": 10
+    },
+    {
+      "slug": "member-writing",
+      "version": 12
+    },
+    {
+      "slug": "visit-counts",
+      "version": 6
+    },
+    {
+      "slug": "photo-media",
+      "version": 3
+    }
+  ]
+}

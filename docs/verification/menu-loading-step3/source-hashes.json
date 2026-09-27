@@ -1,0 +1,11 @@
+{
+  "visitor-identity.js": "de011e69b574ece16e7791e96d55823754d6bc3a42611ff47be119844e39fae2",
+  "admin-auth.js": "49b5fad82a457e4dc3bc17bf38c53868a3d35b618576b7c6099cbd837bdc12dc",
+  "visitor-session.js": "49d767ada62bd934d376ee736019b3c7aa11e9c77ddb6cfdb21d8a3546df1302",
+  "content-access.js": "7a54d27f86f036f3a7d2329720c2d60e03df630c665668a5c11b6fc9c4504f70",
+  "member-writing-runtime.js": "5178ae2fb7cafbe49085e396766714f016640efcc727757abf40014aa73eb94e",
+  "photo-media-client.js": "8a281c1cded62a82eca3d44b670cf15801744799b8761301b5d7e8dda09e420d",
+  "scripts/verify-owner-session-cache.mjs": "e1cb2c5a6d34b5092622ebe61610951a3a500db48d04cc64eb90a1c5a090db57",
+  "scripts/verify-owner-session-integration.mjs": "1581b4c3cf7da4ac5ccfb0348b80ade4e8032821f658936a41bdee4c8e64e92c",
+  "scripts/measure-menu-loading-fixture.mjs": "541bc51a93fcc48ec47afc3c6b4141a672d0a421cf427aa7bf2bce265ac03f3c"
+}

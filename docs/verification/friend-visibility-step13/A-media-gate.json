@@ -1,0 +1,101 @@
+{
+  "passed": true,
+  "media": {
+    "mode": "protected",
+    "ready": true
+  },
+  "buckets": [
+    {
+      "id": "minihompy-photos",
+      "public": false
+    },
+    {
+      "id": "minihompy-photos-private",
+      "public": false
+    }
+  ],
+  "checks": [
+    {
+      "kind": "legacy",
+      "route": "object/public/",
+      "cacheBust": false,
+      "status": 400
+    },
+    {
+      "kind": "legacy",
+      "route": "object/public/",
+      "cacheBust": true,
+      "status": 400
+    },
+    {
+      "kind": "legacy",
+      "route": "render/image/public/",
+      "cacheBust": false,
+      "status": 400
+    },
+    {
+      "kind": "legacy",
+      "route": "render/image/public/",
+      "cacheBust": true,
+      "status": 400
+    },
+    {
+      "kind": "legacy",
+      "route": "object/authenticated/",
+      "cacheBust": false,
+      "status": 400
+    },
+    {
+      "kind": "legacy",
+      "route": "object/authenticated/",
+      "cacheBust": true,
+      "status": 400
+    },
+    {
+      "route": "sign",
+      "status": 400
+    },
+    {
+      "kind": "private",
+      "route": "object/public/",
+      "cacheBust": false,
+      "status": 400
+    },
+    {
+      "kind": "private",
+      "route": "object/public/",
+      "cacheBust": true,
+      "status": 400
+    },
+    {
+      "kind": "private",
+      "route": "render/image/public/",
+      "cacheBust": false,
+      "status": 400
+    },
+    {
+      "kind": "private",
+      "route": "render/image/public/",
+      "cacheBust": true,
+      "status": 400
+    },
+    {
+      "kind": "private",
+      "route": "object/authenticated/",
+      "cacheBust": false,
+      "status": 400
+    },
+    {
+      "kind": "private",
+      "route": "object/authenticated/",
+      "cacheBust": true,
+      "status": 400
+    },
+    {
+      "route": "sign",
+      "status": 400
+    }
+  ],
+  "existingPhotoPaths": 1,
+  "priorSignedUrls": "No stored pre-existing signed URL found in deployment records; signing never used by protected flow. Exact original public URLs and transformed/authenticated paths checked."
+}

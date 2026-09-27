@@ -1,0 +1,10 @@
+{
+  "at": "2026-09-24T03:58:39.391Z",
+  "checks": [
+    "Actual 6 MiB upload/retry and four concurrent owner byte reads preserve SHA-256 and no-store",
+    "Staged bytes inaccessible anonymously; foreign-project and invalid JWT rejected without fallback",
+    "Immediate post-logout old JWT status 401 (recorded separately from browser DOM removal)"
+  ],
+  "cleaned": true,
+  "logoutOldJwtStatus": 401
+}

@@ -1,0 +1,93 @@
+{
+  "at": "2026-09-24T04:09:25.793Z",
+  "sites": [
+    {
+      "label": "A",
+      "project": "itkymmxnbjylyzbmdxdb",
+      "migrations": [
+        {
+          "name": "202609240001_content_folders.sql",
+          "sha256": "0fa3b9a27f88042b43b4cd1ee5d1cc004ecb6d50eb64e61ae52222d8ceda2e59"
+        },
+        {
+          "name": "202609240002_content_visibility.sql",
+          "sha256": "f7e5ac329b3cf5668152a3b2531bb9d3f587a4637e4c2f4260d3fe23c0b1754b"
+        },
+        {
+          "name": "202609240003_visibility_summary.sql",
+          "sha256": "fcee2e406a42cc093df79fb0515b704d550c729e9ec31ce1391c8affb2f0f13e"
+        },
+        {
+          "name": "202609240004_photo_media.sql",
+          "sha256": "e26d18cd26d10ed74613cd5f80cad887da5c8c9fdd8d43258ca153be794d47ba"
+        },
+        {
+          "name": "202609240005_photo_media_safeupdate.sql",
+          "sha256": "3f621054daf66c049c2d61c70ef7f3ea26920040a06d958eaffb13dc5ffa7361"
+        }
+      ],
+      "state": {
+        "mode": "protected",
+        "ready": true
+      },
+      "functions": [
+        {
+          "name": "member-writing",
+          "version": 12,
+          "status": "ACTIVE",
+          "verify_jwt": false
+        },
+        {
+          "name": "photo-media",
+          "version": 3,
+          "status": "ACTIVE",
+          "verify_jwt": false
+        }
+      ]
+    },
+    {
+      "label": "B",
+      "project": "zcaodcujqbjrogffwalk",
+      "migrations": [
+        {
+          "name": "202609240001_content_folders.sql",
+          "sha256": "0fa3b9a27f88042b43b4cd1ee5d1cc004ecb6d50eb64e61ae52222d8ceda2e59"
+        },
+        {
+          "name": "202609240002_content_visibility.sql",
+          "sha256": "f7e5ac329b3cf5668152a3b2531bb9d3f587a4637e4c2f4260d3fe23c0b1754b"
+        },
+        {
+          "name": "202609240003_visibility_summary.sql",
+          "sha256": "fcee2e406a42cc093df79fb0515b704d550c729e9ec31ce1391c8affb2f0f13e"
+        },
+        {
+          "name": "202609240004_photo_media.sql",
+          "sha256": "e26d18cd26d10ed74613cd5f80cad887da5c8c9fdd8d43258ca153be794d47ba"
+        },
+        {
+          "name": "202609240005_photo_media_safeupdate.sql",
+          "sha256": "3f621054daf66c049c2d61c70ef7f3ea26920040a06d958eaffb13dc5ffa7361"
+        }
+      ],
+      "state": {
+        "mode": "protected",
+        "ready": true
+      },
+      "functions": [
+        {
+          "name": "member-writing",
+          "version": 8,
+          "status": "ACTIVE",
+          "verify_jwt": false
+        },
+        {
+          "name": "photo-media",
+          "version": 1,
+          "status": "ACTIVE",
+          "verify_jwt": false
+        }
+      ]
+    }
+  ]
+}

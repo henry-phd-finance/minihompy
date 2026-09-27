@@ -1,0 +1,1 @@
+PASS: DB settings load/save/error/conflict; administrator-only immutable last tab; 10-tab geometry; all hidden; logout/direct URL; no fallback; desktop/mobile. API mocked.

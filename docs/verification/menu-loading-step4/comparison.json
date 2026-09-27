@@ -1,0 +1,62 @@
+[
+  {
+    "scenario": "public",
+    "round": 1,
+    "beforeMs": 559,
+    "afterMs": 308
+  },
+  {
+    "scenario": "public",
+    "round": 2,
+    "beforeMs": 442,
+    "afterMs": 179
+  },
+  {
+    "scenario": "owner",
+    "round": 1,
+    "beforeMs": 547,
+    "afterMs": 295
+  },
+  {
+    "scenario": "owner",
+    "round": 2,
+    "beforeMs": 445,
+    "afterMs": 191
+  },
+  {
+    "scenario": "friend",
+    "round": 1,
+    "beforeMs": 545,
+    "afterMs": 295
+  },
+  {
+    "scenario": "friend",
+    "round": 2,
+    "beforeMs": 441,
+    "afterMs": 193
+  },
+  {
+    "scenario": "nonfriend",
+    "round": 1,
+    "beforeMs": 562,
+    "afterMs": 295
+  },
+  {
+    "scenario": "nonfriend",
+    "round": 2,
+    "beforeMs": 443,
+    "afterMs": 193
+  },
+  {
+    "scenario": "empty",
+    "round": 1,
+    "beforeMs": 562,
+    "afterMs": 295
+  },
+  {
+    "scenario": "empty",
+    "round": 2,
+    "beforeMs": 444,
+    "afterMs": 195
+  }
+]

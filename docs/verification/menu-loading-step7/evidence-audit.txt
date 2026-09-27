@@ -1,0 +1,3 @@
+PASS: 40 final samples; actual decoded first/all photos, bounded checks, no extra owner verification, no pending requests or payloads in traces.
+PASS: built artifact matches all performance-related runtime files.
+PASS: evidence and Pages contain no recognized private credential literals; env/backend files separately excluded by artifact checks.

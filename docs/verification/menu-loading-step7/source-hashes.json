@@ -1,0 +1,9 @@
+{
+  "views/photos.js": "551d7f8e23fa810063e2c1ada3712cc371a8a25d18fbad1c156e4a58792bcfa1",
+  "scripts/helpers/menu-loading-metrics.mjs": "458f6af8f7fe524ec216acb3d726fbca0b539cc7c8bf9cbe04a4c83ac89baeb1",
+  "scripts/measure-menu-loading-fixture.mjs": "dcabf22b58135e12323dc936718459d74ff09faac0ea80622a8b2965a0deb43c",
+  "scripts/verify-menu-loading-regression.mjs": "1dae60d93c1340da794ded818bb5f8ac529c99a1067dc37228bcc959746f5b05",
+  "scripts/verify-menu-loading-evidence.mjs": "62bd9942a2d0960ed8a2735923e1a453c4961a5d41aec3aee787ab9df17229d2",
+  "scripts/verify-friend-home-browser.mjs": "a09b98a5637cac61651552d7da80a65ad42920bc97db74c36f100ac12d7a7a2e",
+  "scripts/verify-post-routes-ui.mjs": "a7be87412031f8a10d8ce68851fec87acfa7fb720e196cb2274490521408f9eb"
+}

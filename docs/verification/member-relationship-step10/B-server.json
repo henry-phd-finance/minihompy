@@ -1,0 +1,29 @@
+{
+  "functions": [
+    {
+      "slug": "owner-login",
+      "version": 10,
+      "status": "ACTIVE"
+    },
+    {
+      "slug": "member-writing",
+      "version": 10,
+      "status": "ACTIVE"
+    },
+    {
+      "slug": "visit-counts",
+      "version": 6,
+      "status": "ACTIVE"
+    },
+    {
+      "slug": "photo-media",
+      "version": 2,
+      "status": "ACTIVE"
+    }
+  ],
+  "health": {
+    "relationship_protocol": 1,
+    "relationship_relay_ready": true,
+    "friend_reviews_ready": true
+  }
+}

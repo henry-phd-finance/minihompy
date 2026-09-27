@@ -1,0 +1,15 @@
+PASS 1: board: hide wins over pending direct INSERT/UPDATE/DELETE
+PASS 2: board: direct update locks parent before comment; hide waits and then removes access
+PASS 3: board: cascade delete and local edit serialize without reversed parent/comment locks
+PASS 4: board: hide and member create/replay use current parent state under real locks
+PASS 5: photos: hide wins over pending direct INSERT/UPDATE/DELETE
+PASS 6: photos: direct update locks parent before comment; hide waits and then removes access
+PASS 7: photos: cascade delete and local edit serialize without reversed parent/comment locks
+PASS 8: photos: hide and member create/replay use current parent state under real locks
+PASS 9: diary: hide wins over pending direct INSERT/UPDATE/DELETE
+PASS 10: diary: direct update locks parent before comment; hide waits and then removes access
+PASS 11: diary: cascade delete and local edit serialize without reversed parent/comment locks
+PASS 12: diary: hide and member create/replay use current parent state under real locks
+PASS 13: Visibility RPC serializes duplicate requests and rejects stale optimistic tokens
+PASS 14: Owner removed while waiting on parent cannot read private comments through service RPC
+PASS: 14 real PostgreSQL visibility concurrency groups; container removed on exit.

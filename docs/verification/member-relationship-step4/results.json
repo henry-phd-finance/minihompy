@@ -1,0 +1,29 @@
+{
+  "date": "2026-09-24",
+  "step": 4,
+  "status": "passed",
+  "prerequisite": {
+    "step": 3,
+    "checked_before_changes": 198,
+    "matched_before_changes": 198
+  },
+  "checks": {
+    "chromium_ui_groups": 12,
+    "viewports": [
+      1280,
+      375
+    ],
+    "navigation_ui_regression": "passed",
+    "actual_api_sql_groups": 12,
+    "client_vm_groups": 5,
+    "artifact": "passed",
+    "diff_check": "passed"
+  },
+  "production_changes": false,
+  "central_source_changed": false,
+  "step5": "not started",
+  "historical_screenshots_regenerated": [
+    "docs/verification/member-navigation-step2/1280.png",
+    "docs/verification/member-navigation-step2/375.png"
+  ]
+}

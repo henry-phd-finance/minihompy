@@ -1,0 +1,21 @@
+{
+  "checkedAt": "2026-09-23T08:19:57.910Z",
+  "run": "beb6220f-e3d3-4adc-acee-2ff42dfc1a4a",
+  "checks": [
+    "A authenticated on B without local administrator rights",
+    "A public guestbook and UI comment use verified member identity",
+    "Fresh A browser edits original guestbook and comment",
+    "B owner hides A post; anonymous parent/comment reads denied; no body edit controls",
+    "A creates private post/comment; anonymous list and count filter private content",
+    "B owner deletes A private comment",
+    "Actual logout revokes old token and clears private DOM",
+    "A logout → B login on the same browser retains no A draft",
+    "Existing local/anonymous read path remains available"
+  ],
+  "passed": true,
+  "testContentCleaned": true,
+  "createdGuestbookIds": [
+    "86069492-ae15-4452-80ab-36331ff87477",
+    "f07df9b3-804c-49a5-98b6-c5e7cdf98989"
+  ]
+}

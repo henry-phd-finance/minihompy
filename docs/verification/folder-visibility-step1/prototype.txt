@@ -1,0 +1,12 @@
+PASS: Real SQL: anonymous and non-admin see public only; local admin sees both
+PASS: Anonymous public image returns exact bytes with no-store, no redirect or signed URL
+PASS: Private image: owner only; central ID, visitor and other-project owner rejected
+PASS: Private, absent, path substitution and traversal have identical external error
+PASS: Expired and revoked administrator credentials cannot read private image
+PASS: Unattached upload: owner preview only; direct Storage paths and listing unavailable
+PASS: Visibility changes stop new anonymous reads; owner retains access
+PASS: Visibility change during Storage download prevents response bytes
+PASS: Auth-provider rejection during Storage download prevents private response bytes (mock revocation)
+PASS: Deleted or detached file cannot be fetched, even when its bytes remain stored
+PASS: Rejected signed-URL alternative: valid bearer outlives policy change; expiry cannot recall cached bytes
+PASS: 11 architecture checks

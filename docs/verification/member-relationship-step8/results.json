@@ -1,0 +1,40 @@
+{
+  "step": 8,
+  "status": "complete",
+  "date": "2026-09-24",
+  "prerequisite": {
+    "step": 7,
+    "matched_source_hashes": 256,
+    "mismatches": 0
+  },
+  "checks": {
+    "cross_origin_browser_groups": 4,
+    "isolated_central_a_b_c_api_groups": 10,
+    "central_postgresql_concurrency_groups": 16,
+    "central_personal_postgresql_concurrency_groups": 10,
+    "relationship_widget_browser_groups": 12,
+    "relationship_lists_browser_groups": 10,
+    "review_browser_api_sql_groups": 14,
+    "navigation_visits_browser_groups": 5,
+    "member_session_browser_groups": 9,
+    "home_browser_groups": 6,
+    "visits_browser_groups": 4,
+    "other_regressions": "all passed; see named logs",
+    "pages_artifact": "passed",
+    "javascript_syntax": "passed",
+    "diff_check": "passed"
+  },
+  "fixes": [
+    "Defer relationship focus/BFCache refresh until navigation invalidation listeners finish; remove stale success notice during refresh errors.",
+    "Refresh global relationship widget when review authorization changes or user refreshes review relation."
+  ],
+  "observations": [
+    "Initial wall-clock timeout assertion failed under concurrent test load. Identical standalone rerun passed without changing timeout or assertion. Original log retained."
+  ],
+  "limitations": [
+    "Separate local PGlite databases and intercepted HTTP connecting real handlers, not hosted deployments.",
+    "Independent PostgreSQL concurrency is separate from browser fixtures.",
+    "Displayed central identity and Auth/Storage adapters are fixtures; no live C account required.",
+    "Step 9/10 installation and deployment remain unstarted."
+  ]
+}

@@ -1,0 +1,46 @@
+PASS: Real-time expiry observation started without changing clocks, tokens or database timestamps
+PASS: A authenticated on B without local administrator rights
+PASS: A own homepage and B homepage automatically prepare distinct sessions with correct owner separation
+PASS: A public guestbook and UI comment use verified member identity
+Live expiry check: 868 seconds remaining; renewals=0
+PASS: Fresh A browser edits original guestbook and comment
+Live expiry check: 838 seconds remaining; renewals=0
+PASS: A UI board comment creation plus member edit/delete on dedicated B fixture parent
+PASS: A UI photos comment creation plus member edit/delete on dedicated B fixture parent
+Live expiry check: 806 seconds remaining; renewals=0
+PASS: A UI diary comment creation plus member edit/delete on dedicated B fixture parent
+PASS: B owner hides A post; anonymous parent/comment reads denied; no body edit controls
+PASS: A creates private post/comment; anonymous list and count filter private content
+PASS: B owner deletes A private comment
+PASS: Actual logout revokes old token and clears private DOM
+PASS: A logout → B login on the same browser retains no A draft
+PASS: Existing local/anonymous read path remains available
+Live expiry check: 775 seconds remaining; renewals=0
+Live expiry check: 743 seconds remaining; renewals=0
+Live expiry check: 712 seconds remaining; renewals=0
+Live expiry check: 681 seconds remaining; renewals=0
+Live expiry check: 649 seconds remaining; renewals=0
+Live expiry check: 618 seconds remaining; renewals=0
+Live expiry check: 586 seconds remaining; renewals=0
+Live expiry check: 555 seconds remaining; renewals=0
+Live expiry check: 524 seconds remaining; renewals=0
+Live expiry check: 492 seconds remaining; renewals=0
+Live expiry check: 461 seconds remaining; renewals=0
+Live expiry check: 431 seconds remaining; renewals=0
+Live expiry check: 400 seconds remaining; renewals=0
+Live expiry check: 368 seconds remaining; renewals=0
+Live expiry check: 337 seconds remaining; renewals=0
+Live expiry check: 306 seconds remaining; renewals=0
+Live expiry check: 274 seconds remaining; renewals=0
+Live expiry check: 243 seconds remaining; renewals=0
+Live expiry check: 212 seconds remaining; renewals=0
+Live expiry check: 180 seconds remaining; renewals=0
+Live expiry check: 149 seconds remaining; renewals=0
+Live expiry check: 118 seconds remaining; renewals=0
+Live expiry check: 86 seconds remaining; renewals=0
+Live expiry check: 55 seconds remaining; renewals=1
+Live expiry check: 25 seconds remaining; renewals=1
+Live expiry check: 0 seconds remaining; renewals=1
+PASS: Actual original 15-minute expiry crossed: automatic renewal, unchanged input/focus, no navigation/popup/new visit
+Live expiry check: 0 seconds remaining; renewals=1
+PASS: A can write after actual expiry through the renewed session

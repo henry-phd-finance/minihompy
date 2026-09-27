@@ -1,0 +1,222 @@
+[
+  {
+    "scenario": "public",
+    "menu": "diary",
+    "round": 1,
+    "beforeMs": 675,
+    "afterMs": 558,
+    "beforeHealth": 2,
+    "afterHealth": 1,
+    "beforeRequests": 5,
+    "afterRequests": 4
+  },
+  {
+    "scenario": "public",
+    "menu": "photos",
+    "round": 1,
+    "beforeMs": 1226,
+    "afterMs": 891,
+    "beforeHealth": 4,
+    "afterHealth": 0,
+    "beforeRequests": 9,
+    "afterRequests": 5
+  },
+  {
+    "scenario": "public",
+    "menu": "diary",
+    "round": 2,
+    "beforeMs": 646,
+    "afterMs": 442,
+    "beforeHealth": 2,
+    "afterHealth": 0,
+    "beforeRequests": 5,
+    "afterRequests": 3
+  },
+  {
+    "scenario": "public",
+    "menu": "photos",
+    "round": 2,
+    "beforeMs": 1214,
+    "afterMs": 894,
+    "beforeHealth": 4,
+    "afterHealth": 0,
+    "beforeRequests": 9,
+    "afterRequests": 5
+  },
+  {
+    "scenario": "owner",
+    "menu": "diary",
+    "round": 1,
+    "beforeMs": 977,
+    "afterMs": 744,
+    "beforeHealth": 3,
+    "afterHealth": 1,
+    "beforeRequests": 14,
+    "afterRequests": 12
+  },
+  {
+    "scenario": "owner",
+    "menu": "photos",
+    "round": 1,
+    "beforeMs": 1663,
+    "afterMs": 1246,
+    "beforeHealth": 7,
+    "afterHealth": 0,
+    "beforeRequests": 40,
+    "afterRequests": 33
+  },
+  {
+    "scenario": "owner",
+    "menu": "diary",
+    "round": 2,
+    "beforeMs": 929,
+    "afterMs": 627,
+    "beforeHealth": 3,
+    "afterHealth": 0,
+    "beforeRequests": 14,
+    "afterRequests": 11
+  },
+  {
+    "scenario": "owner",
+    "menu": "photos",
+    "round": 2,
+    "beforeMs": 1660,
+    "afterMs": 1230,
+    "beforeHealth": 7,
+    "afterHealth": 0,
+    "beforeRequests": 40,
+    "afterRequests": 33
+  },
+  {
+    "scenario": "friend",
+    "menu": "diary",
+    "round": 1,
+    "beforeMs": 661,
+    "afterMs": 561,
+    "beforeHealth": 2,
+    "afterHealth": 1,
+    "beforeRequests": 5,
+    "afterRequests": 4
+  },
+  {
+    "scenario": "friend",
+    "menu": "photos",
+    "round": 1,
+    "beforeMs": 1232,
+    "afterMs": 900,
+    "beforeHealth": 6,
+    "afterHealth": 0,
+    "beforeRequests": 13,
+    "afterRequests": 7
+  },
+  {
+    "scenario": "friend",
+    "menu": "diary",
+    "round": 2,
+    "beforeMs": 658,
+    "afterMs": 444,
+    "beforeHealth": 2,
+    "afterHealth": 0,
+    "beforeRequests": 5,
+    "afterRequests": 3
+  },
+  {
+    "scenario": "friend",
+    "menu": "photos",
+    "round": 2,
+    "beforeMs": 1212,
+    "afterMs": 909,
+    "beforeHealth": 6,
+    "afterHealth": 0,
+    "beforeRequests": 13,
+    "afterRequests": 7
+  },
+  {
+    "scenario": "nonfriend",
+    "menu": "diary",
+    "round": 1,
+    "beforeMs": 661,
+    "afterMs": 561,
+    "beforeHealth": 2,
+    "afterHealth": 1,
+    "beforeRequests": 5,
+    "afterRequests": 4
+  },
+  {
+    "scenario": "nonfriend",
+    "menu": "photos",
+    "round": 1,
+    "beforeMs": 1225,
+    "afterMs": 910,
+    "beforeHealth": 4,
+    "afterHealth": 0,
+    "beforeRequests": 9,
+    "afterRequests": 5
+  },
+  {
+    "scenario": "nonfriend",
+    "menu": "diary",
+    "round": 2,
+    "beforeMs": 660,
+    "afterMs": 439,
+    "beforeHealth": 2,
+    "afterHealth": 0,
+    "beforeRequests": 5,
+    "afterRequests": 3
+  },
+  {
+    "scenario": "nonfriend",
+    "menu": "photos",
+    "round": 2,
+    "beforeMs": 1209,
+    "afterMs": 893,
+    "beforeHealth": 4,
+    "afterHealth": 0,
+    "beforeRequests": 9,
+    "afterRequests": 5
+  },
+  {
+    "scenario": "empty",
+    "menu": "diary",
+    "round": 1,
+    "beforeMs": 661,
+    "afterMs": 562,
+    "beforeHealth": 2,
+    "afterHealth": 1,
+    "beforeRequests": 5,
+    "afterRequests": 4
+  },
+  {
+    "scenario": "empty",
+    "menu": "photos",
+    "round": 1,
+    "beforeMs": 511,
+    "afterMs": 293,
+    "beforeHealth": 2,
+    "afterHealth": 0,
+    "beforeRequests": 5,
+    "afterRequests": 3
+  },
+  {
+    "scenario": "empty",
+    "menu": "diary",
+    "round": 2,
+    "beforeMs": 645,
+    "afterMs": 444,
+    "beforeHealth": 2,
+    "afterHealth": 0,
+    "beforeRequests": 5,
+    "afterRequests": 3
+  },
+  {
+    "scenario": "empty",
+    "menu": "photos",
+    "round": 2,
+    "beforeMs": 496,
+    "afterMs": 296,
+    "beforeHealth": 2,
+    "afterHealth": 0,
+    "beforeRequests": 5,
+    "afterRequests": 3
+  }
+]

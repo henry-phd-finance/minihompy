@@ -1,0 +1,10 @@
+PASS 1: board: verified author, fresh session edit, stranger denied, owner delete only, replay
+PASS 2: photos: verified author, fresh session edit, stranger denied, owner delete only, replay
+PASS 3: diary: verified author, fresh session edit, stranger denied, owner delete only, replay
+PASS 4: guestbook: verified author, fresh session edit, stranger denied, owner delete only, replay
+PASS 5: member quota shared across parents/sessions; rollback, replay and tombstones
+PASS 6: private parent authorization precedes even retries by former comment author
+PASS 7: browser RLS preserves old local ownership, rejects member injection and private parent access
+PASS 8: parent delete cascades; stale requests cannot recreate or read any of four parents
+PASS 9: central outage and revoked sessions never write anonymously
+PASS: 9 member comment integration groups; actual central/personal SQL and handlers.

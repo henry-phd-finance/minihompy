@@ -1,0 +1,10 @@
+{
+  "at": "2026-09-24T03:57:47.973Z",
+  "checks": [
+    "Committed upload with lost response retries same immutable path",
+    "Committed post with lost response retries same ID without duplicate or deleting attached image",
+    "Journaled resilience fixture cleaned"
+  ],
+  "passed": false,
+  "failedPhase": "image network failure"
+}

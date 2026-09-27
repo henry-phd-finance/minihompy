@@ -1,0 +1,20 @@
+PASS 1: service RPC only: no anon/authenticated RPC or table access; no direct service DML
+PASS 2: unknown fields, types, revisions, invalid grants and wrong site are rejected
+PASS 3: request is one central pair, symmetric pending views and private inboxes
+PASS 4: duplicate/opposite requests do not accept, third party and sender cannot accept
+PASS 5: accept updates both perspectives; retry returns old operation plus current state
+PASS 6: public profiles contain neither pending/request metadata nor auth data
+PASS 7: permit owner derives from site and binds body/actor/session/operation with <=30s expiry
+PASS 8: disconnect denies new permits but exact old permit survives with fixed deadline
+PASS 9: directional cooldown survives disconnect; fresh request ID prevents stale accept/cancel
+PASS 10: failed mutations roll back counters/pairs/receipts together
+PASS 11: inactive peers are masked in pending lists; rejection and cancellation remain available
+PASS 12: inactive or unverified homes cannot receive new requests; unsafe destinations stay null
+PASS 13: public keyset pages are stable, hide inactive peers and bind cursor scope
+PASS 14: pending cursor cannot cross member/direction and public requests reveal no pending data
+PASS 15: rate limits are server-side, retries do not consume mutation quota
+PASS 16: daily quotas, authenticated read quotas and unknown cursor/body types are enforced
+PASS 17: pending cancellation with inactive peer and disconnect with suspended peer stay available
+PASS 18: renewed grant on same central session can retrieve permit, new session cannot rebind it
+PASS 19: grant revocation, delegation revocation, expiry and central logout block old operations
+All 19 relationship SQL groups passed (PGlite, actual migration/RPC).

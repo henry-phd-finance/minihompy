@@ -1,0 +1,13 @@
+PASS 1280: one list plus bounded progressive checks, old server fallback, failure no fallback, empty album one list
+PASS 1280: actual friend PNG bytes, comments, direct address and history
+PASS 1280: account and menu changes discard held bytes, metadata, comments and blob URLs
+PASS 1280: private change/disconnect during storage, file failure stays local; central failure clears entire page; fresh retry recovers
+PASS 1280: anonymous public/private separation; owner private/member read, keyboard editor and all visibility modes
+PASS 1280: new friend upload/save/delete/cleanup; menu draft discard and readiness gate
+PASS 375: one list plus bounded progressive checks, old server fallback, failure no fallback, empty album one list
+PASS 375: actual friend PNG bytes, comments, direct address and history
+PASS 375: account and menu changes discard held bytes, metadata, comments and blob URLs
+PASS 375: private change/disconnect during storage, file failure stays local; central failure clears entire page; fresh retry recovers
+PASS 375: anonymous public/private separation; owner private/member read, keyboard editor and all visibility modes
+PASS 375: new friend upload/save/delete/cleanup; menu draft discard and readiness gate
+All 12 photo browser scenarios passed; actual views/runtime/handlers/SQL, fixture Auth/Storage and route shell.

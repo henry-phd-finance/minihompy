@@ -1,0 +1,1571 @@
+{
+  "ownerCache": false,
+  "delaysMs": {
+    "auth": 20,
+    "folder": 40,
+    "health": 100,
+    "calendar": 250,
+    "list": 100,
+    "fastPhoto": 80,
+    "slowPhoto": 600
+  },
+  "transport": "synthetic, real UI and repositories; comments stubbed; not an authorization proof",
+  "samples": [
+    {
+      "scenario": "public",
+      "round": 1,
+      "menu": "diary",
+      "firstBodyMs": 576,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "settledMs": 576,
+      "empty": false,
+      "error": false,
+      "photoCount": 0,
+      "requests": [
+        {
+          "path": "/rest/v1/diary_folders",
+          "method": "POST",
+          "startMs": 43,
+          "endMs": 86,
+          "durationMs": 43,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "POST",
+          "startMs": 87,
+          "endMs": 191,
+          "durationMs": 104,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/calendar",
+          "method": "POST",
+          "startMs": 192,
+          "endMs": 455,
+          "durationMs": 263,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 457,
+          "endMs": 560,
+          "durationMs": 103,
+          "status": 200
+        }
+      ],
+      "requestCount": 4
+    },
+    {
+      "scenario": "public",
+      "round": 1,
+      "menu": "photos",
+      "firstBodyMs": 911,
+      "firstPhotoMs": 911,
+      "allPhotosMs": 911,
+      "settledMs": 911,
+      "empty": false,
+      "error": false,
+      "photoCount": 2,
+      "requests": [
+        {
+          "path": "/rest/v1/photo_folders",
+          "method": "POST",
+          "startMs": 34,
+          "endMs": 78,
+          "durationMs": 44,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 80,
+          "endMs": 183,
+          "durationMs": 103,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/photo-media/read",
+          "method": "POST",
+          "startMs": 184,
+          "endMs": 267,
+          "durationMs": 83,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/photo-media/read",
+          "method": "POST",
+          "startMs": 184,
+          "endMs": 792,
+          "durationMs": 608,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 793,
+          "endMs": 896,
+          "durationMs": 103,
+          "status": 200
+        }
+      ],
+      "requestCount": 5
+    },
+    {
+      "scenario": "public",
+      "round": 2,
+      "menu": "diary",
+      "firstBodyMs": 457,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "settledMs": 457,
+      "empty": false,
+      "error": false,
+      "photoCount": 0,
+      "requests": [
+        {
+          "path": "/rest/v1/diary_folders",
+          "method": "POST",
+          "startMs": 29,
+          "endMs": 72,
+          "durationMs": 43,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/calendar",
+          "method": "POST",
+          "startMs": 73,
+          "endMs": 326,
+          "durationMs": 253,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 326,
+          "endMs": 443,
+          "durationMs": 117,
+          "status": 200
+        }
+      ],
+      "requestCount": 3
+    },
+    {
+      "scenario": "public",
+      "round": 2,
+      "menu": "photos",
+      "firstBodyMs": 896,
+      "firstPhotoMs": 896,
+      "allPhotosMs": 896,
+      "settledMs": 896,
+      "empty": false,
+      "error": false,
+      "photoCount": 2,
+      "requests": [
+        {
+          "path": "/rest/v1/photo_folders",
+          "method": "POST",
+          "startMs": 33,
+          "endMs": 75,
+          "durationMs": 42,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 76,
+          "endMs": 178,
+          "durationMs": 102,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/photo-media/read",
+          "method": "POST",
+          "startMs": 179,
+          "endMs": 261,
+          "durationMs": 82,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/photo-media/read",
+          "method": "POST",
+          "startMs": 179,
+          "endMs": 784,
+          "durationMs": 605,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 784,
+          "endMs": 889,
+          "durationMs": 105,
+          "status": 200
+        }
+      ],
+      "requestCount": 5
+    },
+    {
+      "scenario": "owner",
+      "round": 1,
+      "menu": "diary",
+      "firstBodyMs": 729,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "settledMs": 729,
+      "empty": false,
+      "error": false,
+      "photoCount": 0,
+      "requests": [
+        {
+          "path": "/auth/v1/user",
+          "method": "POST",
+          "startMs": 42,
+          "endMs": 63,
+          "durationMs": 21,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 63,
+          "endMs": 85,
+          "durationMs": 22,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "POST",
+          "startMs": 86,
+          "endMs": 188,
+          "durationMs": 102,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "POST",
+          "startMs": 189,
+          "endMs": 210,
+          "durationMs": 21,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 211,
+          "endMs": 232,
+          "durationMs": 21,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "POST",
+          "startMs": 233,
+          "endMs": 256,
+          "durationMs": 23,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 257,
+          "endMs": 280,
+          "durationMs": 23,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/diary_folders",
+          "method": "POST",
+          "startMs": 281,
+          "endMs": 323,
+          "durationMs": 42,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "POST",
+          "startMs": 325,
+          "endMs": 346,
+          "durationMs": 21,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 346,
+          "endMs": 368,
+          "durationMs": 22,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/calendar",
+          "method": "POST",
+          "startMs": 369,
+          "endMs": 622,
+          "durationMs": 253,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 623,
+          "endMs": 727,
+          "durationMs": 104,
+          "status": 200
+        }
+      ],
+      "requestCount": 12
+    },
+    {
+      "scenario": "owner",
+      "round": 1,
+      "menu": "photos",
+      "firstBodyMs": 1226,
+      "firstPhotoMs": 1226,
+      "allPhotosMs": 1226,
+      "settledMs": 1226,
+      "empty": false,
+      "error": false,
+      "photoCount": 4,
+      "requests": [
+        {
+          "path": "/auth/v1/user",
+          "method": "POST",
+          "startMs": 32,
+          "endMs": 54,
+          "durationMs": 22,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 54,
+          "endMs": 76,
+          "durationMs": 22,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "POST",
+          "startMs": 77,
+          "endMs": 99,
+          "durationMs": 22,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 99,
+          "endMs": 122,
+          "durationMs": 23,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "POST",
+          "startMs": 123,
+          "endMs": 146,
+          "durationMs": 23,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 147,
+          "endMs": 173,
+          "durationMs": 26,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/photo_folders",
+          "method": "POST",
+          "startMs": 174,
+          "endMs": 218,
+          "durationMs": 44,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "POST",
+          "startMs": 219,
+          "endMs": 241,
+          "durationMs": 22,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 242,
+          "endMs": 263,
+          "durationMs": 21,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 264,
+          "endMs": 367,
+          "durationMs": 103,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "POST",
+          "startMs": 369,
+          "endMs": 391,
+          "durationMs": 22,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "POST",
+          "startMs": 369,
+          "endMs": 392,
+          "durationMs": 23,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "POST",
+          "startMs": 369,
+          "endMs": 393,
+          "durationMs": 24,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "POST",
+          "startMs": 370,
+          "endMs": 393,
+          "durationMs": 23,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 392,
+          "endMs": 416,
+          "durationMs": 24,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 393,
+          "endMs": 417,
+          "durationMs": 24,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 394,
+          "endMs": 417,
+          "durationMs": 23,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 394,
+          "endMs": 418,
+          "durationMs": 24,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/photo-media/read",
+          "method": "POST",
+          "startMs": 417,
+          "endMs": 501,
+          "durationMs": 84,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/photo-media/read",
+          "method": "POST",
+          "startMs": 417,
+          "endMs": 1020,
+          "durationMs": 603,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/photo-media/read",
+          "method": "POST",
+          "startMs": 418,
+          "endMs": 502,
+          "durationMs": 84,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/photo-media/read",
+          "method": "POST",
+          "startMs": 418,
+          "endMs": 1021,
+          "durationMs": 603,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "POST",
+          "startMs": 502,
+          "endMs": 524,
+          "durationMs": 22,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "POST",
+          "startMs": 502,
+          "endMs": 525,
+          "durationMs": 23,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 525,
+          "endMs": 547,
+          "durationMs": 22,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 525,
+          "endMs": 548,
+          "durationMs": 23,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "POST",
+          "startMs": 1021,
+          "endMs": 1043,
+          "durationMs": 22,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "POST",
+          "startMs": 1021,
+          "endMs": 1043,
+          "durationMs": 22,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 1044,
+          "endMs": 1066,
+          "durationMs": 22,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 1044,
+          "endMs": 1066,
+          "durationMs": 22,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 1067,
+          "endMs": 1170,
+          "durationMs": 103,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "POST",
+          "startMs": 1171,
+          "endMs": 1194,
+          "durationMs": 23,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 1194,
+          "endMs": 1216,
+          "durationMs": 22,
+          "status": 200
+        }
+      ],
+      "requestCount": 33
+    },
+    {
+      "scenario": "owner",
+      "round": 2,
+      "menu": "diary",
+      "firstBodyMs": 629,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "settledMs": 629,
+      "empty": false,
+      "error": false,
+      "photoCount": 0,
+      "requests": [
+        {
+          "path": "/auth/v1/user",
+          "method": "POST",
+          "startMs": 35,
+          "endMs": 57,
+          "durationMs": 22,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 57,
+          "endMs": 80,
+          "durationMs": 23,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "POST",
+          "startMs": 81,
+          "endMs": 104,
+          "durationMs": 23,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 105,
+          "endMs": 128,
+          "durationMs": 23,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "POST",
+          "startMs": 129,
+          "endMs": 152,
+          "durationMs": 23,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 153,
+          "endMs": 174,
+          "durationMs": 21,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/diary_folders",
+          "method": "POST",
+          "startMs": 175,
+          "endMs": 218,
+          "durationMs": 43,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "POST",
+          "startMs": 219,
+          "endMs": 242,
+          "durationMs": 23,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 242,
+          "endMs": 265,
+          "durationMs": 23,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/calendar",
+          "method": "POST",
+          "startMs": 266,
+          "endMs": 521,
+          "durationMs": 255,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 523,
+          "endMs": 627,
+          "durationMs": 104,
+          "status": 200
+        }
+      ],
+      "requestCount": 11
+    },
+    {
+      "scenario": "owner",
+      "round": 2,
+      "menu": "photos",
+      "firstBodyMs": 1228,
+      "firstPhotoMs": 1243,
+      "allPhotosMs": 1243,
+      "settledMs": 1243,
+      "empty": false,
+      "error": false,
+      "photoCount": 4,
+      "requests": [
+        {
+          "path": "/auth/v1/user",
+          "method": "POST",
+          "startMs": 31,
+          "endMs": 52,
+          "durationMs": 21,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 53,
+          "endMs": 75,
+          "durationMs": 22,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "POST",
+          "startMs": 76,
+          "endMs": 98,
+          "durationMs": 22,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 99,
+          "endMs": 121,
+          "durationMs": 22,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "POST",
+          "startMs": 122,
+          "endMs": 144,
+          "durationMs": 22,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 145,
+          "endMs": 168,
+          "durationMs": 23,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/photo_folders",
+          "method": "POST",
+          "startMs": 169,
+          "endMs": 212,
+          "durationMs": 43,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "POST",
+          "startMs": 214,
+          "endMs": 237,
+          "durationMs": 23,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 238,
+          "endMs": 262,
+          "durationMs": 24,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 264,
+          "endMs": 368,
+          "durationMs": 104,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "POST",
+          "startMs": 370,
+          "endMs": 393,
+          "durationMs": 23,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "POST",
+          "startMs": 370,
+          "endMs": 393,
+          "durationMs": 23,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "POST",
+          "startMs": 370,
+          "endMs": 394,
+          "durationMs": 24,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "POST",
+          "startMs": 370,
+          "endMs": 395,
+          "durationMs": 25,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 394,
+          "endMs": 417,
+          "durationMs": 23,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 394,
+          "endMs": 418,
+          "durationMs": 24,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 395,
+          "endMs": 419,
+          "durationMs": 24,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 395,
+          "endMs": 419,
+          "durationMs": 24,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/photo-media/read",
+          "method": "POST",
+          "startMs": 418,
+          "endMs": 502,
+          "durationMs": 84,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/photo-media/read",
+          "method": "POST",
+          "startMs": 419,
+          "endMs": 1025,
+          "durationMs": 606,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/photo-media/read",
+          "method": "POST",
+          "startMs": 420,
+          "endMs": 502,
+          "durationMs": 82,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/photo-media/read",
+          "method": "POST",
+          "startMs": 420,
+          "endMs": 1025,
+          "durationMs": 605,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "POST",
+          "startMs": 502,
+          "endMs": 525,
+          "durationMs": 23,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "POST",
+          "startMs": 503,
+          "endMs": 526,
+          "durationMs": 23,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 526,
+          "endMs": 549,
+          "durationMs": 23,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 527,
+          "endMs": 551,
+          "durationMs": 24,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "POST",
+          "startMs": 1025,
+          "endMs": 1047,
+          "durationMs": 22,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "POST",
+          "startMs": 1026,
+          "endMs": 1049,
+          "durationMs": 23,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 1049,
+          "endMs": 1073,
+          "durationMs": 24,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 1049,
+          "endMs": 1074,
+          "durationMs": 25,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 1076,
+          "endMs": 1178,
+          "durationMs": 102,
+          "status": 200
+        },
+        {
+          "path": "/auth/v1/user",
+          "method": "POST",
+          "startMs": 1179,
+          "endMs": 1202,
+          "durationMs": 23,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/rpc/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 1203,
+          "endMs": 1226,
+          "durationMs": 23,
+          "status": 200
+        }
+      ],
+      "requestCount": 33
+    },
+    {
+      "scenario": "friend",
+      "round": 1,
+      "menu": "diary",
+      "firstBodyMs": 561,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "settledMs": 561,
+      "empty": false,
+      "error": false,
+      "photoCount": 0,
+      "requests": [
+        {
+          "path": "/rest/v1/diary_folders",
+          "method": "POST",
+          "startMs": 39,
+          "endMs": 81,
+          "durationMs": 42,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "POST",
+          "startMs": 82,
+          "endMs": 186,
+          "durationMs": 104,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/calendar",
+          "method": "POST",
+          "startMs": 188,
+          "endMs": 444,
+          "durationMs": 256,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 446,
+          "endMs": 550,
+          "durationMs": 104,
+          "status": 200
+        }
+      ],
+      "requestCount": 4
+    },
+    {
+      "scenario": "friend",
+      "round": 1,
+      "menu": "photos",
+      "firstBodyMs": 892,
+      "firstPhotoMs": 892,
+      "allPhotosMs": 892,
+      "settledMs": 892,
+      "empty": false,
+      "error": false,
+      "photoCount": 4,
+      "requests": [
+        {
+          "path": "/rest/v1/photo_folders",
+          "method": "POST",
+          "startMs": 31,
+          "endMs": 72,
+          "durationMs": 41,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 73,
+          "endMs": 174,
+          "durationMs": 101,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/photo-media/read",
+          "method": "POST",
+          "startMs": 176,
+          "endMs": 260,
+          "durationMs": 84,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/photo-media/read",
+          "method": "POST",
+          "startMs": 176,
+          "endMs": 779,
+          "durationMs": 603,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/photo-media/read",
+          "method": "POST",
+          "startMs": 176,
+          "endMs": 261,
+          "durationMs": 85,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/photo-media/read",
+          "method": "POST",
+          "startMs": 176,
+          "endMs": 780,
+          "durationMs": 604,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 780,
+          "endMs": 884,
+          "durationMs": 104,
+          "status": 200
+        }
+      ],
+      "requestCount": 7
+    },
+    {
+      "scenario": "friend",
+      "round": 2,
+      "menu": "diary",
+      "firstBodyMs": 445,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "settledMs": 445,
+      "empty": false,
+      "error": false,
+      "photoCount": 0,
+      "requests": [
+        {
+          "path": "/rest/v1/diary_folders",
+          "method": "POST",
+          "startMs": 34,
+          "endMs": 79,
+          "durationMs": 45,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/calendar",
+          "method": "POST",
+          "startMs": 81,
+          "endMs": 336,
+          "durationMs": 255,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 338,
+          "endMs": 444,
+          "durationMs": 106,
+          "status": 200
+        }
+      ],
+      "requestCount": 3
+    },
+    {
+      "scenario": "friend",
+      "round": 2,
+      "menu": "photos",
+      "firstBodyMs": 908,
+      "firstPhotoMs": 908,
+      "allPhotosMs": 908,
+      "settledMs": 908,
+      "empty": false,
+      "error": false,
+      "photoCount": 4,
+      "requests": [
+        {
+          "path": "/rest/v1/photo_folders",
+          "method": "POST",
+          "startMs": 30,
+          "endMs": 75,
+          "durationMs": 45,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 76,
+          "endMs": 180,
+          "durationMs": 104,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/photo-media/read",
+          "method": "POST",
+          "startMs": 182,
+          "endMs": 265,
+          "durationMs": 83,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/photo-media/read",
+          "method": "POST",
+          "startMs": 182,
+          "endMs": 786,
+          "durationMs": 604,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/photo-media/read",
+          "method": "POST",
+          "startMs": 182,
+          "endMs": 266,
+          "durationMs": 84,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/photo-media/read",
+          "method": "POST",
+          "startMs": 182,
+          "endMs": 788,
+          "durationMs": 606,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 788,
+          "endMs": 893,
+          "durationMs": 105,
+          "status": 200
+        }
+      ],
+      "requestCount": 7
+    },
+    {
+      "scenario": "nonfriend",
+      "round": 1,
+      "menu": "diary",
+      "firstBodyMs": 561,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "settledMs": 561,
+      "empty": false,
+      "error": false,
+      "photoCount": 0,
+      "requests": [
+        {
+          "path": "/rest/v1/diary_folders",
+          "method": "POST",
+          "startMs": 39,
+          "endMs": 82,
+          "durationMs": 43,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "POST",
+          "startMs": 83,
+          "endMs": 186,
+          "durationMs": 103,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/calendar",
+          "method": "POST",
+          "startMs": 187,
+          "endMs": 441,
+          "durationMs": 254,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 444,
+          "endMs": 547,
+          "durationMs": 103,
+          "status": 200
+        }
+      ],
+      "requestCount": 4
+    },
+    {
+      "scenario": "nonfriend",
+      "round": 1,
+      "menu": "photos",
+      "firstBodyMs": 896,
+      "firstPhotoMs": 912,
+      "allPhotosMs": 912,
+      "settledMs": 912,
+      "empty": false,
+      "error": false,
+      "photoCount": 2,
+      "requests": [
+        {
+          "path": "/rest/v1/photo_folders",
+          "method": "POST",
+          "startMs": 36,
+          "endMs": 78,
+          "durationMs": 42,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 79,
+          "endMs": 180,
+          "durationMs": 101,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/photo-media/read",
+          "method": "POST",
+          "startMs": 181,
+          "endMs": 265,
+          "durationMs": 84,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/photo-media/read",
+          "method": "POST",
+          "startMs": 182,
+          "endMs": 785,
+          "durationMs": 603,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 786,
+          "endMs": 891,
+          "durationMs": 105,
+          "status": 200
+        }
+      ],
+      "requestCount": 5
+    },
+    {
+      "scenario": "nonfriend",
+      "round": 2,
+      "menu": "diary",
+      "firstBodyMs": 441,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "settledMs": 441,
+      "empty": false,
+      "error": false,
+      "photoCount": 0,
+      "requests": [
+        {
+          "path": "/rest/v1/diary_folders",
+          "method": "POST",
+          "startMs": 29,
+          "endMs": 73,
+          "durationMs": 44,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/calendar",
+          "method": "POST",
+          "startMs": 74,
+          "endMs": 329,
+          "durationMs": 255,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 332,
+          "endMs": 436,
+          "durationMs": 104,
+          "status": 200
+        }
+      ],
+      "requestCount": 3
+    },
+    {
+      "scenario": "nonfriend",
+      "round": 2,
+      "menu": "photos",
+      "firstBodyMs": 894,
+      "firstPhotoMs": 910,
+      "allPhotosMs": 910,
+      "settledMs": 910,
+      "empty": false,
+      "error": false,
+      "photoCount": 2,
+      "requests": [
+        {
+          "path": "/rest/v1/photo_folders",
+          "method": "POST",
+          "startMs": 30,
+          "endMs": 74,
+          "durationMs": 44,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 75,
+          "endMs": 177,
+          "durationMs": 102,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/photo-media/read",
+          "method": "POST",
+          "startMs": 178,
+          "endMs": 260,
+          "durationMs": 82,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/photo-media/read",
+          "method": "POST",
+          "startMs": 178,
+          "endMs": 785,
+          "durationMs": 607,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 786,
+          "endMs": 891,
+          "durationMs": 105,
+          "status": 200
+        }
+      ],
+      "requestCount": 5
+    },
+    {
+      "scenario": "empty",
+      "round": 1,
+      "menu": "diary",
+      "firstBodyMs": 562,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "settledMs": 562,
+      "empty": true,
+      "error": false,
+      "photoCount": 0,
+      "requests": [
+        {
+          "path": "/rest/v1/diary_folders",
+          "method": "POST",
+          "startMs": 41,
+          "endMs": 82,
+          "durationMs": 41,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/health",
+          "method": "POST",
+          "startMs": 84,
+          "endMs": 186,
+          "durationMs": 102,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/calendar",
+          "method": "POST",
+          "startMs": 186,
+          "endMs": 442,
+          "durationMs": 256,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 445,
+          "endMs": 547,
+          "durationMs": 102,
+          "status": 200
+        }
+      ],
+      "requestCount": 4
+    },
+    {
+      "scenario": "empty",
+      "round": 1,
+      "menu": "photos",
+      "firstBodyMs": 296,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "settledMs": 296,
+      "empty": true,
+      "error": false,
+      "photoCount": 0,
+      "requests": [
+        {
+          "path": "/rest/v1/photo_folders",
+          "method": "POST",
+          "startMs": 35,
+          "endMs": 78,
+          "durationMs": 43,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 80,
+          "endMs": 185,
+          "durationMs": 105,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 186,
+          "endMs": 291,
+          "durationMs": 105,
+          "status": 200
+        }
+      ],
+      "requestCount": 3
+    },
+    {
+      "scenario": "empty",
+      "round": 2,
+      "menu": "diary",
+      "firstBodyMs": 446,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "settledMs": 446,
+      "empty": true,
+      "error": false,
+      "photoCount": 0,
+      "requests": [
+        {
+          "path": "/rest/v1/diary_folders",
+          "method": "POST",
+          "startMs": 33,
+          "endMs": 75,
+          "durationMs": 42,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/calendar",
+          "method": "POST",
+          "startMs": 75,
+          "endMs": 327,
+          "durationMs": 252,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 328,
+          "endMs": 433,
+          "durationMs": 105,
+          "status": 200
+        }
+      ],
+      "requestCount": 3
+    },
+    {
+      "scenario": "empty",
+      "round": 2,
+      "menu": "photos",
+      "firstBodyMs": 297,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "settledMs": 297,
+      "empty": true,
+      "error": false,
+      "photoCount": 0,
+      "requests": [
+        {
+          "path": "/rest/v1/photo_folders",
+          "method": "POST",
+          "startMs": 34,
+          "endMs": 78,
+          "durationMs": 44,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 80,
+          "endMs": 181,
+          "durationMs": 101,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 182,
+          "endMs": 286,
+          "durationMs": 104,
+          "status": 200
+        }
+      ],
+      "requestCount": 3
+    }
+  ]
+}

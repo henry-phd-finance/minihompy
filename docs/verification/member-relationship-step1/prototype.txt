@@ -1,0 +1,14 @@
+PASS 1: real v2 proof/PKCE, personal SQL and central SQL derive A/B without caller identity
+PASS 2: UUID, owner JWT, forged actor and wrong-site grant cannot authorize relationships
+PASS 3: self request denied; A request has matching B perspective
+PASS 4: reverse request cannot auto-accept; sender cannot accept; response-loss retry is idempotent
+PASS 5: permit-before-disconnect allows only that in-flight write, not new writes
+PASS 6: disconnect-before-permit denies write; re-request has a new generation
+PASS 7: lost permit response can recover identical authorization after disconnect without extending expiry
+PASS 8: personal commit rejects mismatched permit actor, site, owner, session, operation and body
+PASS 9: expired permit cannot commit or be reissued using old operation ID
+PASS 10: saved response loss retries once; changed payload conflicts; tombstone never resurrects
+PASS 11: central outage denies new authorization; stored public content remains
+PASS 12: local logout during in-flight permit blocks personal commit
+PASS 13: central revocation invalidates a previously issued permit retry
+{"status":"passed","groups":13,"authentication":"existing handlers + actual migrations in PGlite","relationships":"in-memory model; controlled interleavings, not PostgreSQL lock verification","production_changed":false}

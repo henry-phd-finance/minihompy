@@ -1,0 +1,10 @@
+{
+  "at": "2026-09-24T03:57:57.586Z",
+  "checks": [
+    "Existing migrated image bytes match backup; exact and cache-busted old public URLs deny new reads",
+    "Actual protected bucket denies anonymous and owner download/list/sign/transform; unregistered bytes denied by Edge; probe removed",
+    "Legacy bucket private and empty; ready activated only after physical access gate passed"
+  ],
+  "existingFiles": 0,
+  "ready": true
+}

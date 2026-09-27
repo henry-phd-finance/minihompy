@@ -1,0 +1,32 @@
+{
+  "step": 13,
+  "status": "complete",
+  "date": "2026-09-24",
+  "prerequisite": {
+    "step": 12,
+    "verified_source_files": 616
+  },
+  "production_deployed": true,
+  "deployment_order": [
+    "central",
+    "A prepare/Pages/activate",
+    "A live/cleanup/preservation",
+    "B prepare/Pages/activate",
+    "B live/cleanup/final preservation"
+  ],
+  "product_source_changed_during_step": false,
+  "a_checks": 16,
+  "b_checks": 17,
+  "guestbook_regression_sites": 2,
+  "member_comment_delete_and_replay_verified": true,
+  "served_pages_files_per_site": 59,
+  "deployed_source_files": {
+    "central": 16,
+    "A": 12,
+    "B": 12
+  },
+  "all_planned_test_content_cleaned": true,
+  "original_data_and_file_bytes_preserved": true,
+  "active_test_relationships_remaining": 0,
+  "backlog_item_4_complete": true
+}

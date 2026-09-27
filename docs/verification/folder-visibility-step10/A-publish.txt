@@ -1,0 +1,18 @@
+A: pushed 46804c241a29f7769751646614e82e9b7e315ec4
+A: waiting for Pages
+A: Pages success
+A: 50 hosted runtime files match release
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+page.waitForFunction: ReferenceError: MinihompySharedIdentity is not defined
+    at eval (eval at predicate (eval at evaluate (:302:30)), <anonymous>:1:42)
+    at predicate (eval at evaluate (:302:30), <anonymous>:7:23)
+    at next (eval at evaluate (:302:30), <anonymous>:29:29)
+    at eval (eval at evaluate (:302:30), <anonymous>:42:9)
+    at UtilityScript.evaluate (<anonymous>:304:16)
+    at UtilityScript.<anonymous> (<anonymous>:1:44)
+    at /home/henry91-jung/.local/state/minihompy-deployment/folder-visibility-20260924/artifacts.mjs:11:71
+
+Node.js v24.15.0

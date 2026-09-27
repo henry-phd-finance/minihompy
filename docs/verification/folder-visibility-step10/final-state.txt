@@ -1,0 +1,1 @@
+PASS: A/B five migration hashes, protected+ready, current active functions and private backup fingerprints

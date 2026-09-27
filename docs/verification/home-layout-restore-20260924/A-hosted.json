@@ -1,0 +1,51 @@
+{
+  "passed": true,
+  "actualPages": true,
+  "matchedSourceFiles": [
+    "styles.css",
+    "home-activity.js"
+  ],
+  "layout": {
+    "heading": {
+      "x": 314.125,
+      "y": 141.625,
+      "w": 223.125,
+      "h": 16.875,
+      "right": 537.25,
+      "bottom": 158.5
+    },
+    "list": {
+      "x": 314.125,
+      "y": 158.5,
+      "w": 217.5,
+      "h": 82.5,
+      "right": 531.625,
+      "bottom": 241
+    },
+    "counts": {
+      "x": 542.875,
+      "y": 158.5,
+      "w": 221.25,
+      "h": 82.5,
+      "right": 764.125,
+      "bottom": 241
+    },
+    "region": {
+      "x": 314.125,
+      "y": 158.5,
+      "w": 450,
+      "h": 82.5,
+      "right": 764.125,
+      "bottom": 241
+    },
+    "room": {
+      "x": 314.125,
+      "y": 250.375,
+      "w": 170.5625,
+      "h": 15,
+      "right": 484.6875,
+      "bottom": 265.375
+    },
+    "rows": 4
+  }
+}

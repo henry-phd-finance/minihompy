@@ -1,0 +1,1 @@
+PASS: comments on all four real views, shared nickname/one anonymous identity, no CAPTCHA, drafts, failed/lost writes, retry dedup, ownership/edit/delete/conflicts, private parent access loss, admin moderation, pagination, read errors, desktop/mobile. Mock API/Auth, actual SDK.

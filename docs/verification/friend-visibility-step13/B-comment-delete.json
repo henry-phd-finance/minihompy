@@ -1,0 +1,7 @@
+{
+  "passed": true,
+  "cleaned": true,
+  "checks": [
+    "Actual central-member comment creation, deletion and identical deletion retry; final row absent"
+  ]
+}

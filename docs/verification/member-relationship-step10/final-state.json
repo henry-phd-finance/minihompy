@@ -1,0 +1,115 @@
+{
+  "sites": [
+    {
+      "label": "C",
+      "migration": "202609240001_member_relationships.sql",
+      "sha256": "784d4a0f23b322ec604f66effe3012ceaafb531fdc1c5b01cd08e0d3f521053e",
+      "health": {
+        "status": "ok",
+        "identity_protocol": 2,
+        "writing_protocol": 1,
+        "member_session_protocol": 2,
+        "navigation_protocol": 1,
+        "relationship_protocol": 1,
+        "timestamp": "2026-09-24T07:44:32.719Z"
+      },
+      "rpc": null,
+      "functions": [
+        {
+          "slug": "identity-api",
+          "version": 16,
+          "status": "ACTIVE"
+        },
+        {
+          "slug": "identity-page",
+          "version": 14,
+          "status": "ACTIVE"
+        }
+      ]
+    },
+    {
+      "label": "A",
+      "migration": "202609240006_friend_reviews.sql",
+      "sha256": "be2291a9b8bfa88a3b222166214c1095a88af095bd25ef203bb445b819f70728",
+      "health": {
+        "relationship_protocol": 1,
+        "relationship_relay_ready": true,
+        "friend_reviews_ready": true
+      },
+      "rpc": {
+        "proconfig": [
+          "search_path=\"\"",
+          "lock_timeout=5s",
+          "statement_timeout=5s"
+        ],
+        "anon_execute": false,
+        "authenticated_execute": false,
+        "service_execute": true
+      },
+      "functions": [
+        {
+          "slug": "owner-login",
+          "version": 12,
+          "status": "ACTIVE"
+        },
+        {
+          "slug": "member-writing",
+          "version": 14,
+          "status": "ACTIVE"
+        },
+        {
+          "slug": "visit-counts",
+          "version": 7,
+          "status": "ACTIVE"
+        },
+        {
+          "slug": "photo-media",
+          "version": 4,
+          "status": "ACTIVE"
+        }
+      ]
+    },
+    {
+      "label": "B",
+      "migration": "202609240006_friend_reviews.sql",
+      "sha256": "be2291a9b8bfa88a3b222166214c1095a88af095bd25ef203bb445b819f70728",
+      "health": {
+        "relationship_protocol": 1,
+        "relationship_relay_ready": true,
+        "friend_reviews_ready": true
+      },
+      "rpc": {
+        "proconfig": [
+          "search_path=\"\"",
+          "lock_timeout=5s",
+          "statement_timeout=5s"
+        ],
+        "anon_execute": false,
+        "authenticated_execute": false,
+        "service_execute": true
+      },
+      "functions": [
+        {
+          "slug": "owner-login",
+          "version": 10,
+          "status": "ACTIVE"
+        },
+        {
+          "slug": "member-writing",
+          "version": 10,
+          "status": "ACTIVE"
+        },
+        {
+          "slug": "visit-counts",
+          "version": 6,
+          "status": "ACTIVE"
+        },
+        {
+          "slug": "photo-media",
+          "version": 2,
+          "status": "ACTIVE"
+        }
+      ]
+    }
+  ]
+}

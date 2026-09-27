@@ -1,0 +1,33 @@
+{
+  "checkedAt": "2026-09-23T08:20:28.450Z",
+  "results": [
+    {
+      "label": "central",
+      "projectRef": "pcwovvdgggpbghvqraex",
+      "counts": {
+        "sites": 2,
+        "members": 2,
+        "bindings": 2
+      },
+      "originalFieldsPreserved": true
+    },
+    {
+      "label": "A",
+      "projectRef": "itkymmxnbjylyzbmdxdb",
+      "counts": {
+        "comments": 6,
+        "guestbook": 6
+      },
+      "originalFieldsPreserved": true
+    },
+    {
+      "label": "B",
+      "projectRef": "zcaodcujqbjrogffwalk",
+      "counts": {
+        "comments": 0,
+        "guestbook": 1
+      },
+      "originalFieldsPreserved": true
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "passed": true,
+  "rows": [
+    {
+      "path": "member-writing/content/list",
+      "method": "POST",
+      "status": 200,
+      "cors": "https://henry-phd-finance.github.io",
+      "cache": "private, no-store",
+      "expose": "Retry-After",
+      "allow": "Content-Type, Authorization, apikey, X-Minihompy-Auth-Mode"
+    },
+    {
+      "path": "member-writing/content/list",
+      "method": "OPTIONS",
+      "status": 204,
+      "cors": "https://henry-phd-finance.github.io",
+      "cache": "private, no-store",
+      "expose": "Retry-After",
+      "allow": "Content-Type, Authorization, apikey, X-Minihompy-Auth-Mode"
+    },
+    {
+      "path": "photo-media/health",
+      "method": "GET",
+      "status": 200,
+      "cors": "https://henry-phd-finance.github.io",
+      "cache": "private, no-store",
+      "expose": null,
+      "allow": "Content-Type, Authorization, apikey, X-Minihompy-Auth-Mode"
+    },
+    {
+      "path": "photo-media/read",
+      "method": "OPTIONS",
+      "status": 204,
+      "cors": "https://henry-phd-finance.github.io",
+      "cache": "private, no-store",
+      "expose": null,
+      "allow": "Content-Type, Authorization, apikey, X-Minihompy-Auth-Mode"
+    }
+  ],
+  "rateLimit": "No artificial production exhaustion or outage; 429/Retry-After and timeouts retain isolated Step 11 coverage, actual gateway headers/source checked."
+}

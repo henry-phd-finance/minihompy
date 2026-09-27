@@ -1,0 +1,2 @@
+PASS: pending upload departure revokes preview, cleans unused file, never submits old draft or mutates new draft
+PASS: submitted write attachment survives departure and late save response cannot replace new draft

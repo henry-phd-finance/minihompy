@@ -1,0 +1,7 @@
+{
+  "passed": false,
+  "checks": [
+    "A self/owner and B visitor separation; non-friend review rejected"
+  ],
+  "error": "Private diagnostic saved"
+}

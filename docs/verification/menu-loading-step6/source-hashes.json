@@ -1,0 +1,8 @@
+{
+  "views/photos.js": "5d1ff426c2a896c627ce3ffdd34a37c558494a08dbe9092b3ef79705e2f82ced",
+  "photos-repository.js": "1dda2250e2de59bc62820bbc581868f40420a52584f2b73580131a976dde1820",
+  "styles.css": "3457027b5df0e6ff8fc0258708bd7da9c1b859cc11276565f86bf342b57ba870",
+  "scripts/verify-photo-progressive.mjs": "2efa58d09332f576c7974da1ae09c1161043370056c6c560f767c1ff3a813701",
+  "scripts/verify-friend-photos-browser.mjs": "2d4de18174aac6f8ee3f06053412c86c7c0303c3ef2cfce57280ce18edbbb467",
+  "scripts/verify-menu-leave-uploads.mjs": "1b2dcec2cd92c3fdb17e6350690e71f675905dd87df9c6a12378169de1b60915"
+}

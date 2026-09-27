@@ -1,0 +1,198 @@
+{
+  "checkedAt": "2026-09-23T13:37:13.188Z",
+  "report": [
+    {
+      "label": "A",
+      "ref": "itkymmxnbjylyzbmdxdb",
+      "base": "e4c454a4d17de372100093be1ceb6817228a2d3a",
+      "tables": {
+        "public.board_folders": {
+          "originalRows": 1,
+          "currentRows": 1,
+          "additionalRows": 0,
+          "preserved": true
+        },
+        "public.board_posts": {
+          "originalRows": 1,
+          "currentRows": 1,
+          "additionalRows": 0,
+          "preserved": true
+        },
+        "public.diary_entries": {
+          "originalRows": 3,
+          "currentRows": 3,
+          "additionalRows": 0,
+          "preserved": true
+        },
+        "public.diary_folders": {
+          "originalRows": 1,
+          "currentRows": 1,
+          "additionalRows": 0,
+          "preserved": true
+        },
+        "public.guestbook_posts": {
+          "originalRows": 6,
+          "currentRows": 6,
+          "additionalRows": 0,
+          "preserved": true
+        },
+        "public.minihompy_profile": {
+          "originalRows": 1,
+          "currentRows": 1,
+          "additionalRows": 0,
+          "preserved": true
+        },
+        "public.minihompy_settings": {
+          "originalRows": 1,
+          "currentRows": 1,
+          "additionalRows": 0,
+          "preserved": true
+        },
+        "public.photo_folders": {
+          "originalRows": 1,
+          "currentRows": 1,
+          "additionalRows": 0,
+          "preserved": true
+        },
+        "public.photo_posts": {
+          "originalRows": 1,
+          "currentRows": 1,
+          "additionalRows": 0,
+          "preserved": true
+        },
+        "public.post_comments": {
+          "originalRows": 6,
+          "currentRows": 6,
+          "additionalRows": 0,
+          "preserved": true
+        },
+        "private.minihompy_admins": {
+          "originalRows": 1,
+          "currentRows": 1,
+          "additionalRows": 0,
+          "preserved": true
+        },
+        "private.member_writing_site": {
+          "originalRows": 1,
+          "currentRows": 1,
+          "additionalRows": 0,
+          "preserved": true
+        }
+      },
+      "legacyReads": true,
+      "functions": [
+        {
+          "slug": "member-writing",
+          "version": 8,
+          "status": "ACTIVE",
+          "verify_jwt": false
+        },
+        {
+          "slug": "visit-counts",
+          "version": 4,
+          "status": "ACTIVE",
+          "verify_jwt": false
+        }
+      ]
+    },
+    {
+      "label": "B",
+      "ref": "zcaodcujqbjrogffwalk",
+      "base": "1d93b52fc406d802efc4b6fb1bea8edd4471803a",
+      "tables": {
+        "public.board_folders": {
+          "originalRows": 1,
+          "currentRows": 1,
+          "additionalRows": 0,
+          "preserved": true
+        },
+        "public.board_posts": {
+          "originalRows": 0,
+          "currentRows": 0,
+          "additionalRows": 0,
+          "preserved": true
+        },
+        "public.diary_entries": {
+          "originalRows": 0,
+          "currentRows": 0,
+          "additionalRows": 0,
+          "preserved": true
+        },
+        "public.diary_folders": {
+          "originalRows": 1,
+          "currentRows": 1,
+          "additionalRows": 0,
+          "preserved": true
+        },
+        "public.guestbook_posts": {
+          "originalRows": 2,
+          "currentRows": 2,
+          "additionalRows": 0,
+          "preserved": true
+        },
+        "public.minihompy_profile": {
+          "originalRows": 1,
+          "currentRows": 1,
+          "additionalRows": 0,
+          "preserved": true
+        },
+        "public.minihompy_settings": {
+          "originalRows": 1,
+          "currentRows": 1,
+          "additionalRows": 0,
+          "preserved": true
+        },
+        "public.photo_folders": {
+          "originalRows": 1,
+          "currentRows": 1,
+          "additionalRows": 0,
+          "preserved": true
+        },
+        "public.photo_posts": {
+          "originalRows": 0,
+          "currentRows": 0,
+          "additionalRows": 0,
+          "preserved": true
+        },
+        "public.post_comments": {
+          "originalRows": 0,
+          "currentRows": 0,
+          "additionalRows": 0,
+          "preserved": true
+        },
+        "private.minihompy_admins": {
+          "originalRows": 1,
+          "currentRows": 1,
+          "additionalRows": 0,
+          "preserved": true
+        },
+        "private.member_writing_site": {
+          "originalRows": 1,
+          "currentRows": 1,
+          "additionalRows": 0,
+          "preserved": true
+        }
+      },
+      "legacyReads": true,
+      "functions": [
+        {
+          "slug": "member-writing",
+          "version": 6,
+          "status": "ACTIVE",
+          "verify_jwt": false
+        },
+        {
+          "slug": "visit-counts",
+          "version": 4,
+          "status": "ACTIVE",
+          "verify_jwt": false
+        }
+      ]
+    },
+    {
+      "label": "central",
+      "identityPreserved": true,
+      "deployed": true
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+A: PASS Owner creates folders and actual protected upload/posts
+A: PASS Anonymous mobile reads public content; verified account writes comment
+A: PASS Private move/delete preserves posts; owner reads, anonymous/member/tabs/direct addresses deny; home counts exclude private fixtures
+A: PASS Private Edge read denied; real logout removes private image
+A: PASS Mobile reauthentication, public restoration, protected editor preview/save and original comment preservation
+A: cleanup needs recovery; journal retained (Error)

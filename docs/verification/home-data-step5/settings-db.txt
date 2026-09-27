@@ -1,0 +1,1 @@
+PASS: settings migration, seed, public read, admin-only update, immutable revision, CAS conflict, invalid fields/menus, reserved settings tab, empty menu set. Local PGlite.

@@ -1,0 +1,34 @@
+[
+  {
+    "menu": "diary",
+    "round": 1,
+    "cacheOffMs": 729,
+    "cacheOnMs": 547,
+    "authOff": 8,
+    "authOn": 0
+  },
+  {
+    "menu": "photos",
+    "round": 1,
+    "cacheOffMs": 1226,
+    "cacheOnMs": 910,
+    "authOff": 26,
+    "authOn": 0
+  },
+  {
+    "menu": "diary",
+    "round": 2,
+    "cacheOffMs": 629,
+    "cacheOnMs": 445,
+    "authOff": 8,
+    "authOn": 0
+  },
+  {
+    "menu": "photos",
+    "round": 2,
+    "cacheOffMs": 1228,
+    "cacheOnMs": 896,
+    "authOff": 26,
+    "authOn": 0
+  }
+]

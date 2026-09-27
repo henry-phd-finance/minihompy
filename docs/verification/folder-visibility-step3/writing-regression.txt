@@ -1,0 +1,4 @@
+PASS board-writing (18.203s)
+PASS photos-writing (20.184s)
+PASS diary-writing (20.095s)
+3/3 passed. Local DB and mock API tests; hosted live reads are separate.

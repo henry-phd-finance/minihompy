@@ -1,0 +1,32 @@
+{
+  "passed": true,
+  "contentWrites": 0,
+  "records": [
+    {
+      "site": "A",
+      "icon": {
+        "font": "0px",
+        "background": "url(\"https://henry-phd-finance.github.io/minihompy/assets/guestbook-title-reference.png\")",
+        "label": "정현식 (@henry91-jung)의 미니홈피 방문",
+        "href": "https://henry-phd-finance.github.io/minihompy/",
+        "width": 15,
+        "height": 15
+      },
+      "keyboardFocusable": true,
+      "nameAndHouseSameDestination": true
+    },
+    {
+      "site": "B",
+      "icon": {
+        "font": "0px",
+        "background": "url(\"https://henry-hs-jung.github.io/minihompy/assets/guestbook-title-reference.png\")",
+        "label": "정현식 (@henry91-jung)의 미니홈피 방문",
+        "href": "https://henry-phd-finance.github.io/minihompy/",
+        "width": 15,
+        "height": 15
+      },
+      "keyboardFocusable": true,
+      "nameAndHouseSameDestination": true
+    }
+  ]
+}

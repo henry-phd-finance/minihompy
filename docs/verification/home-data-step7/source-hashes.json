@@ -1,0 +1,10 @@
+{
+  "supabase/migrations/202609230005_home_summary.sql": "5511ebf6c6800c69682e922f516977c21e3c24f64746a2c1ab238e9fb6ecc886",
+  "supabase/migrations/202609230006_post_location.sql": "7007972c17c67334b959fa78d2f9d7d5667d426a18094efc4e4105e659a5c7e4",
+  "supabase/migrations/202609230007_guestbook_post_location.sql": "cb32856a783b31677603ebf59eb8f5fa4e39a1afb6ca96081ffa85211c994c71",
+  "supabase/migrations/202609230008_visit_counts.sql": "d966cac82fdba93d994bb8cbe6640709eb1b4263d4e88d1f8d17e48c01dbbfd0",
+  "supabase/functions/visit-counts/index.ts": "22d7b48c18891d44eaec89ea77d278f29477169cf8b4c3bb9d40520f29cc9ef8",
+  "supabase/functions/visit-counts/handler.js": "db118171c34f9d8bd98f89f680b3867732c68122f01f9d0f3d885c8c65d887ce",
+  "scripts/verify-home-live.mjs": "093300e1fb1c316e9a9bc77d834a40c2ff03847ac456f7a351414f57da501f67",
+  "scripts/verify-navigation-live.mjs": "ce23c1eef97861d44e53ae7bb9d065513e1a54beb9342f42679243945c2d9f06"
+}

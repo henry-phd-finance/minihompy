@@ -1,0 +1,5 @@
+PASS 1: max four reads; queue and active cancellation settle even if transport ignores abort; late bodies cancelled; next scope progresses
+PASS 2: scoped deduplication; access/menu reset revokes every URL and prevents cache reuse
+PASS 3: 45-second total read deadline cancels stalled stream and revokes already-created URLs
+PASS 4: MIME/empty/6 MiB limit and final access verification reject before URL creation
+PASS 5: binary route stays on target site, distinct private member/owner credentials, explicit public mode and no-store

@@ -1,0 +1,5 @@
+PASS real central login/PKCE and A → B → own home, author link, reload/history and separate administrator
+PASS cross-origin logout, stale-tab invalidation, same-browser A → B
+PASS late profile, cancelled recheck, display lease and restored-page revalidation
+PASS central outage/retry, SQL session expiration and no credential-bearing final URLs
+PASS actual A/B personal visit SQL + Edge + browser during central login/return, cross-site navigation, extra tabs, logout/account switch and central outage: exactly one per site

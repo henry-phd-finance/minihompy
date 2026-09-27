@@ -1,0 +1,27 @@
+{
+  "passed": true,
+  "sites": [
+    {
+      "label": "C",
+      "preservedTables": 2,
+      "activeTestRelationships": 0,
+      "retainedRelationHistory": 1
+    },
+    {
+      "label": "A",
+      "preservedTables": 15,
+      "reviewsRemaining": 0,
+      "preservedAssets": 5,
+      "verifiedStorageFiles": 1
+    },
+    {
+      "label": "B",
+      "preservedTables": 15,
+      "reviewsRemaining": 0,
+      "preservedAssets": 3,
+      "verifiedStorageFiles": 0
+    }
+  ],
+  "diagnosticsRemoved": true,
+  "note": "Authentication/session/rate counters and operation/permit tombstones are retained normally."
+}

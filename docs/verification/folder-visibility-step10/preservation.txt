@@ -1,0 +1,2 @@
+A: original tables/files preserved and test objects absent
+B: original tables/files preserved and test objects absent

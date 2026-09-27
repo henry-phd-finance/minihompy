@@ -1,0 +1,7 @@
+{
+  "commit": "86919aa40df755766b233a8389046a48a9f57c90",
+  "files": [
+    "views/photos.js",
+    "photos-repository.js"
+  ]
+}

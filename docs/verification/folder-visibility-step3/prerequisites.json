@@ -1,0 +1,18 @@
+{
+  "checkedAt": "2026-09-24T02:50:12.305313+00:00",
+  "prerequisite": "docs/verification/folder-visibility-step2/README.md",
+  "manifest": "docs/verification/folder-visibility-step2/source-hashes.json",
+  "matchedAtStart": 113,
+  "mismatchesAtStart": [],
+  "intentionallyChangedDuringThisStep": [
+    "docs/folder-visibility-contract.md",
+    "index.html",
+    "scripts/helpers/home-browser-db.mjs",
+    "scripts/verify-artifact.mjs",
+    "styles.css",
+    "views/board.js",
+    "views/diary.js",
+    "views/photos.js"
+  ],
+  "scope": "Step 2 local completion/evidence and source check; no hosted change"
+}

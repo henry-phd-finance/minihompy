@@ -1,0 +1,19 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Proof must wait for initial local administrator verification
+
+1 !== 0
+
+    at check (file:///home/henry91-jung/cyworld/scripts/verify-member-session-startup.mjs:16:72)
+    at async file:///home/henry91-jung/cyworld/scripts/verify-member-session-startup.mjs:22:1 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 1,
+  expected: 0,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.15.0

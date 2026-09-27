@@ -1,0 +1,11 @@
+PASS 1: Upgrade preserves all existing columns; visibility defaults public
+PASS 2: Unprepared photo private insert/update/RPC rejected; readiness and receipts cannot be forged
+PASS 3: board: role matrix, counts, local comment ownership and stale/replayed visibility changes
+PASS 4: photos: role matrix, counts, local comment ownership and stale/replayed visibility changes
+PASS 5: diary: role matrix, counts, local comment ownership and stale/replayed visibility changes
+PASS 6: Non-admin cannot change own public board visibility, administrator changes metadata without body ownership
+PASS 7: Malformed versions, invalid scopes and anonymous function access fail closed
+PASS 8: Existing local guestbook privacy, author/admin split and one-way hiding are preserved
+PASS 9: Existing folder RPC moves private posts without changing privacy or historical author
+PASS 10: Visibility-only changes do not change folder structure revision; revoked admin cannot replay
+PASS: 10 visibility SQL groups; no hosted changes.

@@ -1,0 +1,18 @@
+[
+  "admin-auth.js",
+  "visitor-identity.js",
+  "visitor-session.js",
+  "content-access.js",
+  "diary-repository.js",
+  "views/diary.js",
+  "member-writing-client.js",
+  "member-writing-runtime.js",
+  "photo-media-client.js",
+  "photos-repository.js",
+  "views/photos.js",
+  "styles.css",
+  "supabase/functions/member-writing/content-read.js",
+  "supabase/migrations/202609270001_diary_latest.sql",
+  "supabase/migrations/202609270002_photo_check.sql",
+  "setup/friend-visibility-setup.mjs"
+]

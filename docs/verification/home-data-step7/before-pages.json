@@ -1,0 +1,138 @@
+{
+  "checkedAt": "2026-09-23T12:23:22.717Z",
+  "report": [
+    {
+      "label": "A",
+      "ref": "itkymmxnbjylyzbmdxdb",
+      "base": "521d4bea90cdbbd64d718f944fd42fe0388d476c",
+      "tables": {
+        "public.board_folders": {
+          "rows": 1,
+          "preserved": true
+        },
+        "public.board_posts": {
+          "rows": 1,
+          "preserved": true
+        },
+        "public.diary_entries": {
+          "rows": 3,
+          "preserved": true
+        },
+        "public.diary_folders": {
+          "rows": 1,
+          "preserved": true
+        },
+        "public.guestbook_posts": {
+          "rows": 6,
+          "preserved": true
+        },
+        "public.minihompy_profile": {
+          "rows": 1,
+          "preserved": true
+        },
+        "public.minihompy_settings": {
+          "rows": 1,
+          "preserved": true
+        },
+        "public.photo_folders": {
+          "rows": 1,
+          "preserved": true
+        },
+        "public.photo_posts": {
+          "rows": 1,
+          "preserved": true
+        },
+        "public.post_comments": {
+          "rows": 6,
+          "preserved": true
+        },
+        "private.minihompy_admins": {
+          "rows": 1,
+          "preserved": true
+        },
+        "private.member_writing_site": {
+          "rows": 1,
+          "preserved": true
+        }
+      },
+      "legacyReads": true,
+      "visitFunction": [
+        {
+          "slug": "visit-counts",
+          "version": 3,
+          "status": "ACTIVE",
+          "verify_jwt": false
+        }
+      ]
+    },
+    {
+      "label": "B",
+      "ref": "zcaodcujqbjrogffwalk",
+      "base": "49c305af1ca43d861a3700ea4d52d900628bbc04",
+      "tables": {
+        "public.board_folders": {
+          "rows": 1,
+          "preserved": true
+        },
+        "public.board_posts": {
+          "rows": 0,
+          "preserved": true
+        },
+        "public.diary_entries": {
+          "rows": 0,
+          "preserved": true
+        },
+        "public.diary_folders": {
+          "rows": 1,
+          "preserved": true
+        },
+        "public.guestbook_posts": {
+          "rows": 1,
+          "preserved": true
+        },
+        "public.minihompy_profile": {
+          "rows": 1,
+          "preserved": true
+        },
+        "public.minihompy_settings": {
+          "rows": 1,
+          "preserved": true
+        },
+        "public.photo_folders": {
+          "rows": 1,
+          "preserved": true
+        },
+        "public.photo_posts": {
+          "rows": 0,
+          "preserved": true
+        },
+        "public.post_comments": {
+          "rows": 0,
+          "preserved": true
+        },
+        "private.minihompy_admins": {
+          "rows": 1,
+          "preserved": true
+        },
+        "private.member_writing_site": {
+          "rows": 1,
+          "preserved": true
+        }
+      },
+      "legacyReads": true,
+      "visitFunction": [
+        {
+          "slug": "visit-counts",
+          "version": 3,
+          "status": "ACTIVE",
+          "verify_jwt": false
+        }
+      ]
+    },
+    {
+      "label": "central",
+      "identityPreserved": true,
+      "deployed": false
+    }
+  ]
+}

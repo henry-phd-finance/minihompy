@@ -1,0 +1,21 @@
+{
+  "step": 5,
+  "status": "complete",
+  "date": "2026-09-24",
+  "prerequisite": {
+    "step": 4,
+    "matched_files": 398
+  },
+  "checks": {
+    "comments_api": 10,
+    "postgres_postgrest_concurrency": 12,
+    "read_api_regression": 13,
+    "http_regression": 7,
+    "comments_regression": 12,
+    "guestbook_regression": 9,
+    "renewal_regression": 14,
+    "chromium_session_scenarios": 9
+  },
+  "production_changed": false,
+  "next_step": 6
+}

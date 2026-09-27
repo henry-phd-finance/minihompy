@@ -1,0 +1,48 @@
+{
+  "migration": "202609260002_home_profile.sql",
+  "sha256": "532f2060c9ee55dd35852115ded5bb7f3bd9c7e5f9b82f21cd81046c0d4dde91",
+  "settingsPreserved": true,
+  "bucket": {
+    "public": true,
+    "file_size_limit": 6291456,
+    "allowed_mime_types": [
+      "image/jpeg",
+      "image/png",
+      "image/webp",
+      "image/gif"
+    ]
+  },
+  "policies": [
+    {
+      "policyname": "home_profile_objects_delete"
+    },
+    {
+      "policyname": "home_profile_objects_insert"
+    },
+    {
+      "policyname": "home_profile_objects_read"
+    }
+  ],
+  "functions": [
+    {
+      "slug": "owner-login",
+      "version": 10,
+      "status": "ACTIVE"
+    },
+    {
+      "slug": "member-writing",
+      "version": 12,
+      "status": "ACTIVE"
+    },
+    {
+      "slug": "visit-counts",
+      "version": 6,
+      "status": "ACTIVE"
+    },
+    {
+      "slug": "photo-media",
+      "version": 3,
+      "status": "ACTIVE"
+    }
+  ]
+}

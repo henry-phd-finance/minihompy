@@ -1,0 +1,12 @@
+PASS: Upgrade preserves every existing folder and post value
+PASS: Only real local administrator can obtain snapshot or mutate; anonymous EXECUTE denied
+PASS: Column grants cannot bypass folder RPC; private receipts hidden even from service role
+PASS: board: create/rename/reorder/delete, retry, stale revision and all-content preservation
+PASS: photos: create/rename/reorder/delete, retry, stale revision and all-content preservation
+PASS: diary: create/rename/reorder/delete, retry, stale revision and all-content preservation
+PASS: Dividers preserve existing semantics, cannot contain posts or replace last real folder
+PASS: Direct post save moves valid folders, increments structural revision, stale target fails FK
+PASS: Strict API validation and failures leave folders, revisions and receipts unchanged
+PASS: Mid-move failure rolls back every post, folder, revision and retry receipt
+PASS: Zero-folder legacy state is recoverable; removed admin cannot replay successful receipts
+PASS: 11 folder SQL groups; isolated database only.

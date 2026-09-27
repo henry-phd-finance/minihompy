@@ -1,0 +1,9 @@
+PASS 1: empty success, all hidden, invalid arguments, missing settings distinct from zero
+PASS 2: private-only site remains empty with no metadata
+PASS 3: four kinds, deterministic top five, bounded plain text, no full bodies or private IDs
+PASS 4: central-member and local authors share public-only rules without author metadata
+PASS 5: Korean midnight boundary, entry date ignored, new comments on old posts included
+PASS 6: server settings exclude hidden menus from recent, counts and comments even when requested
+PASS 7: delete, make private, edit preserve correct counts; no stale summary; migration repeat preserves rows
+PASS 8: anonymous, member, owner RPC agree; private clock/text helpers and writes not accessible
+PASS: 8 home summary groups (actual PostgreSQL/PGlite, no deployment)

@@ -1,0 +1,24 @@
+{
+  "step": 10,
+  "status": "complete",
+  "date": "2026-09-24",
+  "prerequisite": {
+    "step": 9,
+    "source_hashes_verified_before_changes": 498
+  },
+  "checks": {
+    "photo_browser_scenarios": 10,
+    "photo_client_lifecycle_groups": 5,
+    "existing_photo_editor_groups": 30,
+    "friend_photo_api_groups": 10,
+    "existing_photo_api_groups": 11,
+    "photo_http_boundary_groups": 5,
+    "session_runtime_groups": 6,
+    "session_client_groups": 2,
+    "content_access_groups": 2,
+    "session_browser_scenarios": 9
+  },
+  "production_changed": false,
+  "homepage_scale_changed": false,
+  "next_step": 11
+}

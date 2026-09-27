@@ -1,0 +1,14 @@
+{
+  "site": "B",
+  "health": {
+    "friend_visibility_protocol": 1,
+    "friend_visibility_ready": true,
+    "friend_media_ready": true,
+    "friend_summary_ready": true,
+    "friend_pages_ready": true,
+    "friend_visibility_setup_protocol": 1,
+    "diary_latest_protocol": 1,
+    "photo_check_protocol": 1
+  },
+  "at": "2026-09-26T15:37:37.497Z"
+}

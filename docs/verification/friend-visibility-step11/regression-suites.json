@@ -1,0 +1,123 @@
+[
+  {
+    "name": "verify-member-comments",
+    "script": "scripts/verify-member-comments.mjs",
+    "args": [],
+    "env": {
+      "MINIHOMPY_TEST_FRIEND_VISIBILITY": "1",
+      "MINIHOMPY_TEST_PHOTO_MEDIA": "1"
+    },
+    "exit_code": 1,
+    "elapsed_seconds": 2.57
+  },
+  {
+    "name": "verify-member-guestbook",
+    "script": "scripts/verify-member-guestbook.mjs",
+    "args": [],
+    "env": {
+      "MINIHOMPY_TEST_FRIEND_VISIBILITY": "1",
+      "MINIHOMPY_TEST_PHOTO_MEDIA": "1"
+    },
+    "exit_code": 0,
+    "elapsed_seconds": 2.42
+  },
+  {
+    "name": "verify-friend-reviews",
+    "script": "scripts/verify-friend-reviews.mjs",
+    "args": [],
+    "env": {
+      "MINIHOMPY_TEST_FRIEND_VISIBILITY": "1",
+      "MINIHOMPY_TEST_PHOTO_MEDIA": "1"
+    },
+    "exit_code": 0,
+    "elapsed_seconds": 2.47
+  },
+  {
+    "name": "verify-photo-media",
+    "script": "scripts/verify-photo-media.mjs",
+    "args": [],
+    "env": {},
+    "exit_code": 0,
+    "elapsed_seconds": 2.32
+  },
+  {
+    "name": "verify-home-summary",
+    "script": "scripts/verify-home-summary.mjs",
+    "args": [],
+    "env": {},
+    "exit_code": 0,
+    "elapsed_seconds": 1.22
+  },
+  {
+    "name": "verify-visit-counts",
+    "script": "scripts/verify-visit-counts.mjs",
+    "args": [],
+    "env": {},
+    "exit_code": 0,
+    "elapsed_seconds": 4.37
+  },
+  {
+    "name": "verify-post-location",
+    "script": "scripts/verify-post-location.mjs",
+    "args": [],
+    "env": {},
+    "exit_code": 0,
+    "elapsed_seconds": 1.27
+  },
+  {
+    "name": "verify-member-session-runtime",
+    "script": "scripts/verify-member-session-runtime.mjs",
+    "args": [],
+    "env": {},
+    "exit_code": 0,
+    "elapsed_seconds": 0.03
+  },
+  {
+    "name": "verify-member-session-client",
+    "script": "scripts/verify-member-session-client.mjs",
+    "args": [],
+    "env": {},
+    "exit_code": 0,
+    "elapsed_seconds": 0.06
+  },
+  {
+    "name": "verify-content-access",
+    "script": "scripts/verify-content-access.mjs",
+    "args": [],
+    "env": {},
+    "exit_code": 0,
+    "elapsed_seconds": 0.03
+  },
+  {
+    "name": "verify-friend-content-access",
+    "script": "scripts/verify-friend-content-access.mjs",
+    "args": [],
+    "env": {},
+    "exit_code": 0,
+    "elapsed_seconds": 0.03
+  },
+  {
+    "name": "verify-member-navigation-state",
+    "script": "scripts/verify-member-navigation-state.mjs",
+    "args": [],
+    "env": {},
+    "exit_code": 0,
+    "elapsed_seconds": 0.06
+  },
+  {
+    "name": "verify-author-navigation",
+    "script": "scripts/verify-author-navigation.mjs",
+    "args": [],
+    "env": {},
+    "exit_code": 1,
+    "elapsed_seconds": 0.03
+  },
+  {
+    "name": "verify-surf-navigation",
+    "script": "scripts/verify-surf-navigation.mjs",
+    "args": [],
+    "env": {},
+    "exit_code": 1,
+    "elapsed_seconds": 0.03
+  }
+]

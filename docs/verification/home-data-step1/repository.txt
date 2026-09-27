@@ -1,0 +1,1 @@
+PASS: one visitor RPC, menu validation, abort forwarding, bounded strict response, no error-to-empty fallback or privileged metadata

@@ -1,0 +1,46 @@
+[
+  {
+    "label": "central",
+    "ref": "pcwovvdgggpbghvqraex",
+    "repository": "henry-phd-finance/minihompy-central",
+    "base": "e099478c923e0a2f47b1a14f30b6d90c44acd9e2",
+    "target": "/tmp/navigation-release-central",
+    "tables": 3,
+    "commit": "40f143bcf7f23ae1f81dfd34b4a21b674c546bec",
+    "runs": []
+  },
+  {
+    "label": "A",
+    "ref": "itkymmxnbjylyzbmdxdb",
+    "repository": "henry-phd-finance/minihompy",
+    "base": "680f74b224843e2f84030a061f937b71169a5d66",
+    "target": "/tmp/navigation-release-A",
+    "tables": 10,
+    "commit": "521d4bea90cdbbd64d718f944fd42fe0388d476c",
+    "runs": [
+      {
+        "conclusion": "success",
+        "databaseId": 35846574548,
+        "status": "completed",
+        "url": "https://github.com/henry-phd-finance/minihompy/actions/runs/35846574548"
+      }
+    ]
+  },
+  {
+    "label": "B",
+    "ref": "zcaodcujqbjrogffwalk",
+    "repository": "henry-hs-jung/minihompy",
+    "base": "9f8e494c04dd7f3fc6d691d70a6b9d4168427180",
+    "target": "/tmp/navigation-release-B",
+    "tables": 10,
+    "commit": "49c305af1ca43d861a3700ea4d52d900628bbc04",
+    "runs": [
+      {
+        "conclusion": "success",
+        "databaseId": 35846580888,
+        "status": "completed",
+        "url": "https://github.com/henry-hs-jung/minihompy/actions/runs/35846580888"
+      }
+    ]
+  }
+]

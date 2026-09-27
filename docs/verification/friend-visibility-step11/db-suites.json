@@ -1,0 +1,34 @@
+[
+  {
+    "name": "central-verify-friend-visibility-concurrency",
+    "script": "../minihompy-central/scripts/verify-friend-visibility-concurrency.mjs",
+    "args": [],
+    "env": {},
+    "exit_code": 0,
+    "elapsed_seconds": 9.68
+  },
+  {
+    "name": "verify-friend-visibility-db-concurrency",
+    "script": "scripts/verify-friend-visibility-db-concurrency.mjs",
+    "args": [],
+    "env": {},
+    "exit_code": 0,
+    "elapsed_seconds": 4.12
+  },
+  {
+    "name": "verify-friend-comments-concurrency",
+    "script": "scripts/verify-friend-comments-concurrency.mjs",
+    "args": [],
+    "env": {},
+    "exit_code": 0,
+    "elapsed_seconds": 7.43
+  },
+  {
+    "name": "verify-friend-photo-concurrency",
+    "script": "scripts/verify-friend-photo-concurrency.mjs",
+    "args": [],
+    "env": {},
+    "exit_code": 0,
+    "elapsed_seconds": 3.22
+  }
+]

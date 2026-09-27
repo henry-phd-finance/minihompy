@@ -1,0 +1,25 @@
+{
+  "passed": true,
+  "checks": [
+    "Owner creates three visibility modes in all menus with real protected photo uploads",
+    "Anonymous matrix passed",
+    "Nonfriend matrix passed",
+    "Owner matrix passed",
+    "All list/detail/comments/photo/summary/calendar/location surfaces separate anonymous, nonfriend, local owner and central self",
+    "Direct REST/RPC/private Storage and UUID-only credentials denied",
+    "Actual anonymous public comment remains writable with a local visitor identity",
+    "Pending request grants no friend read",
+    "Actual acceptance unlocks friends across all read surfaces and real photo bytes",
+    "Actual menu direct URLs and member comment form work without extra verification",
+    "Member comment edit and identical request retry succeed without duplicates",
+    "Owner privacy change blocks subsequent member requests and direct view, restoring friends retains comment",
+    "Mobile protected photo view and menu departure verified",
+    "Test relationship disconnect blocks new protected reads and removes photo/comment view",
+    "Real logout clears protected view",
+    "Same browser switches from visiting member to verified local owner after logout",
+    "Only journaled test posts/comments/files/relationship cleaned"
+  ],
+  "cleaned": true,
+  "failedPhase": null,
+  "actualHostedServices": true
+}

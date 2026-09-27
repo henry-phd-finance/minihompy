@@ -1,0 +1,1 @@
+PASS: actual content-access helper selects visitor/admin, drops late responses and rejects silent account change before query

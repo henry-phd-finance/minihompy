@@ -1,0 +1,19 @@
+PASS 1280: board: private/public editor, owner reload, public-only home and visitor direct denial
+PASS 1280: board: stale edit fails without overwriting visibility; same-account refresh preserves draft; menu leave discards
+PASS 1280: diary: private/public editor, owner reload, public-only home and visitor direct denial
+PASS 1280: diary: stale edit fails without overwriting visibility; same-account refresh preserves draft; menu leave discards
+PASS 1280: board: logout while private response is held discards late response and cached title/body
+PASS 1280: diary: private-only calendar marker and body removed on logout; central reset retains no draft
+PASS 1280: verified admin expiry fails closed; login can recover
+PASS 1280: save committed while logout occurs: late response cannot restore draft or private body
+PASS 1280: administrator can change former authors visibility without gaining body-edit rights
+PASS 375: board: private/public editor, owner reload, public-only home and visitor direct denial
+PASS 375: board: stale edit fails without overwriting visibility; same-account refresh preserves draft; menu leave discards
+PASS 375: diary: private/public editor, owner reload, public-only home and visitor direct denial
+PASS 375: diary: stale edit fails without overwriting visibility; same-account refresh preserves draft; menu leave discards
+PASS 375: board: logout while private response is held discards late response and cached title/body
+PASS 375: diary: private-only calendar marker and body removed on logout; central reset retains no draft
+PASS 375: verified admin expiry fails closed; login can recover
+PASS 375: save committed while logout occurs: late response cannot restore draft or private body
+PASS 375: administrator can change former authors visibility without gaining body-edit rights
+PASS: 18 member visibility UI/SQL groups

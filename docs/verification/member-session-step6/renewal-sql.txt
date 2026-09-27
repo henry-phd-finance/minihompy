@@ -1,0 +1,15 @@
+PASS 1: v2 exchange stores private family and only browser token hashes
+PASS 2: renewal handle cannot read content, act as owner or replace an access token
+PASS 3: expired access renews without proof, then creates private guestbook and comment
+PASS 4: concurrent renewals pass through central rate limit and preserve old valid token
+PASS 5: central outage returns 503 and retains the same renewal handle
+PASS 6: altered central identity is rejected and its grant revoked
+PASS 7: local logout during central renewal prevents local persistence
+PASS 8: logout failure disables all tokens locally and cleanup retries with renewal handle
+PASS 9: fresh proof replaces old family and rejects replay
+PASS 10: renewed identity edits and deletes its existing private content
+PASS 11: local persistence failure revokes new central delegation and grant
+PASS 12: renewal persistence failure revokes only the new grant; family can retry
+PASS 13: private tables and old internal RPC cannot be called by browser or service directly
+PASS 14: local family expiry rejects even valid access; central logout rejects all remaining renewal
+PASS: 14 automatic renewal groups; actual central/personal SQL and API handlers. No hosted changes.

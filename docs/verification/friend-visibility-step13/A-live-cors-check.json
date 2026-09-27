@@ -1,0 +1,10 @@
+{
+  "passed": false,
+  "checks": [
+    "Owner creates three visibility modes in all menus with real protected photo uploads",
+    "Only journaled test posts/comments/files/relationship cleaned"
+  ],
+  "cleaned": true,
+  "failedPhase": "anonymous nonfriend owner self matrices",
+  "actualHostedServices": true
+}

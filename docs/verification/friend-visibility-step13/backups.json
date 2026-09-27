@@ -1,0 +1,92 @@
+{
+  "privateDirectory": "/home/henry91-jung/.local/state/minihompy-deployment/friend-visibility-20260924",
+  "sites": [
+    {
+      "label": "C",
+      "base": "66c3fa5dbd0b041fc287a0361ceb3fff39f908a8",
+      "tables": 51,
+      "functions": [
+        {
+          "slug": "identity-api",
+          "version": 16,
+          "sha256": "d82982fd755b4f1211ac56e6ed00438b65ac7f534e4e5955a909938fc8485287",
+          "bytes": 5117604
+        },
+        {
+          "slug": "identity-page",
+          "version": 14,
+          "sha256": "524c20b92265793566011898836e4a582dec951feb76ecf36ba417381adb7d82",
+          "bytes": 2586
+        }
+      ],
+      "existingRelationships": 1,
+      "existingReviews": 0
+    },
+    {
+      "label": "A",
+      "base": "388d1538b28faf678e165ec22f1a2e9f264e8aa8",
+      "tables": 66,
+      "functions": [
+        {
+          "slug": "owner-login",
+          "version": 12,
+          "sha256": "0fbe2e78ea5fdea74986a89b631235230923060c67da4c99fe1f76dcf065c836",
+          "bytes": 4884
+        },
+        {
+          "slug": "member-writing",
+          "version": 14,
+          "sha256": "85228620b1380257c728fb98fc05dd152957c1ebd7b36a2e9b14fdae3d6de907",
+          "bytes": 5079907
+        },
+        {
+          "slug": "visit-counts",
+          "version": 7,
+          "sha256": "e3c9e04de713acf85bd4bf0e0f1ffa99ef4bcced7c6d27793b05d7ca5e2d2340",
+          "bytes": 4769
+        },
+        {
+          "slug": "photo-media",
+          "version": 4,
+          "sha256": "db3803f4788089d1501d0ad178efe964f085300c736e18a419182f5549106bb5",
+          "bytes": 5072029
+        }
+      ],
+      "existingRelationships": 0,
+      "existingReviews": 0
+    },
+    {
+      "label": "B",
+      "base": "20518e3334ba021376a9649c40434684ea779837",
+      "tables": 66,
+      "functions": [
+        {
+          "slug": "owner-login",
+          "version": 10,
+          "sha256": "0fbe2e78ea5fdea74986a89b631235230923060c67da4c99fe1f76dcf065c836",
+          "bytes": 4884
+        },
+        {
+          "slug": "member-writing",
+          "version": 10,
+          "sha256": "85228620b1380257c728fb98fc05dd152957c1ebd7b36a2e9b14fdae3d6de907",
+          "bytes": 5079907
+        },
+        {
+          "slug": "visit-counts",
+          "version": 6,
+          "sha256": "e3c9e04de713acf85bd4bf0e0f1ffa99ef4bcced7c6d27793b05d7ca5e2d2340",
+          "bytes": 4769
+        },
+        {
+          "slug": "photo-media",
+          "version": 2,
+          "sha256": "db3803f4788089d1501d0ad178efe964f085300c736e18a419182f5549106bb5",
+          "bytes": 5072029
+        }
+      ],
+      "existingRelationships": 0,
+      "existingReviews": 0
+    }
+  ]
+}

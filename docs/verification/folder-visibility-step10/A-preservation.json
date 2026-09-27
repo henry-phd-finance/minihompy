@@ -1,0 +1,78 @@
+[
+  {
+    "label": "A",
+    "checks": [
+      {
+        "table": "public.board_posts",
+        "rows": 1,
+        "preserved": true
+      },
+      {
+        "table": "public.photo_posts",
+        "rows": 1,
+        "preserved": true
+      },
+      {
+        "table": "public.board_folders",
+        "rows": 1,
+        "preserved": true
+      },
+      {
+        "table": "public.diary_entries",
+        "rows": 3,
+        "preserved": true
+      },
+      {
+        "table": "public.diary_folders",
+        "rows": 1,
+        "preserved": true
+      },
+      {
+        "table": "public.photo_folders",
+        "rows": 1,
+        "preserved": true
+      },
+      {
+        "table": "public.post_comments",
+        "rows": 6,
+        "preserved": true
+      },
+      {
+        "table": "public.guestbook_posts",
+        "rows": 6,
+        "preserved": true
+      },
+      {
+        "table": "private.minihompy_admins",
+        "rows": 1,
+        "preserved": true
+      },
+      {
+        "table": "public.minihompy_profile",
+        "rows": 1,
+        "preserved": true
+      },
+      {
+        "table": "public.minihompy_settings",
+        "rows": 1,
+        "preserved": true
+      },
+      {
+        "table": "private.member_writing_site",
+        "rows": 1,
+        "preserved": true
+      }
+    ],
+    "originalFiles": 1,
+    "remainingStorageObjects": 1,
+    "mode": "protected",
+    "ready": true,
+    "visitStats": {
+      "date": "2026-09-24",
+      "today": 4,
+      "total": 16,
+      "version": 1,
+      "timezone": "Asia/Seoul"
+    }
+  }
+]

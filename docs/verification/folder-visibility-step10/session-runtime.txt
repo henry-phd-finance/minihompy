@@ -1,0 +1,6 @@
+PASS: concurrent contexts share a single renewal and menu contexts reuse ready session
+PASS: automatic renewal retries 1/3/10 seconds then stops; another menu cannot restart loop
+PASS: other-account notification invalidates an in-flight renewal
+PASS: hidden tab defers renewal until visible
+PASS: controlled 13:59.999 reuses token, 14:00 renews proactively, original 15-minute boundary remains ready
+PASS: controlled 20-minute hidden tab does not renew until visibility returns

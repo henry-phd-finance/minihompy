@@ -1,0 +1,11 @@
+PASS: upgrade preserves every legacy value and local ownership
+PASS: public/private reads and private-parent comments keep existing RLS
+PASS: browser and local administrator cannot inject or reassign member fields
+PASS: legacy edits, conflicts, moderation and one-way privacy still work
+PASS: legacy inserts, rate limits and deletes remain functional after upgrade
+PASS: member rows cannot be adopted by legacy UUIDs or mutated through old admin routes
+PASS: both tables enforce identity shape and immutable member metadata
+PASS: session data stays private even with hosted default grants and BYPASSRLS
+PASS: limits and retry tombstones are independent of sessions and content lifetime
+PASS: central members need no local auth account; old deleted-account rows remain valid
+PASS: 10 foundation groups. Local PGlite; no hosted database or content changed.

@@ -1,0 +1,31 @@
+{
+  "checkedAt": "2026-09-24T03:46:24.091Z",
+  "sites": [
+    {
+      "label": "A",
+      "project": "itkymmxnbjylyzbmdxdb",
+      "repository": "henry-phd-finance/minihompy",
+      "githubWrite": true,
+      "branch": "main",
+      "managementStatus": 201,
+      "database": {
+        "media_schema": false,
+        "photos": 1,
+        "admins": 1
+      }
+    },
+    {
+      "label": "B",
+      "project": "zcaodcujqbjrogffwalk",
+      "repository": "henry-hs-jung/minihompy",
+      "githubWrite": true,
+      "branch": "main",
+      "managementStatus": 201,
+      "database": {
+        "media_schema": false,
+        "photos": 0,
+        "admins": 1
+      }
+    }
+  ]
+}
