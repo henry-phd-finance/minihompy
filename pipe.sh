@@ -1,21 +1,16 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-SESSION_ID="01a0895c-491f-7181-ac0d-29bed7f5ee3f"
+SESSION_ID="01a0cc5b-cecf-7601-a2da-d2b013248daf"
 
 MODEL="gpt-6-astra"
-REASONING="low"
+REASONING="medium"
 
-codex exec -m "$MODEL" -c "model_reasoning_effort=\"$REASONING\"" 'service_tier="fast"' resume "$SESSION_ID" "B010 진행해"
-codex exec -m "$MODEL" -c "model_reasoning_effort=\"$REASONING\"" 'service_tier="fast"' resume "$SESSION_ID" "B011 진행해"
-codex exec -m "$MODEL" -c "model_reasoning_effort=\"$REASONING\"" 'service_tier="fast"' resume "$SESSION_ID" "B012 진행해"
-codex exec -m "$MODEL" -c "model_reasoning_effort=\"$REASONING\"" 'service_tier="fast"' resume "$SESSION_ID" "B013 진행해"
-codex exec -m "$MODEL" -c "model_reasoning_effort=\"$REASONING\"" 'service_tier="fast"' resume "$SESSION_ID" "B014 진행해"
-codex exec -m "$MODEL" -c "model_reasoning_effort=\"$REASONING\"" 'service_tier="fast"' resume "$SESSION_ID" "B015 진행해"
-codex exec -m "$MODEL" -c "model_reasoning_effort=\"$REASONING\"" 'service_tier="fast"' resume "$SESSION_ID" "B016 진행해"
-codex exec -m "$MODEL" -c "model_reasoning_effort=\"$REASONING\"" 'service_tier="fast"' resume "$SESSION_ID" "B017 진행해"
-codex exec -m "$MODEL" -c "model_reasoning_effort=\"$REASONING\"" 'service_tier="fast"' resume "$SESSION_ID" "B018 진행해"
-codex exec -m "$MODEL" -c "model_reasoning_effort=\"$REASONING\"" 'service_tier="fast"' resume "$SESSION_ID" "B019 진행해"
-codex exec -m "$MODEL" -c "model_reasoning_effort=\"$REASONING\"" 'service_tier="fast"' resume "$SESSION_ID" "B020 진행해"
-codex exec -m "$MODEL" -c "model_reasoning_effort=\"$REASONING\"" 'service_tier="fast"' resume "$SESSION_ID" "B021 진행해"
-codex exec -m "$MODEL" -c "model_reasoning_effort=\"$REASONING\"" 'service_tier="fast"' resume "$SESSION_ID" "B022 진행해"
+codex exec -m "$MODEL" -c "model_reasoning_effort=\"$REASONING\"" 'service_tier="fast"' --yolo resume "$SESSION_ID" "docs/menu-loading-performance-plan.md 의 Step 1 실행해줘. 이전 Step이 마무리 되지 않았으면 바로 중단해줘."
+codex exec -m "$MODEL" -c "model_reasoning_effort=\"$REASONING\"" 'service_tier="fast"' --yolo resume "$SESSION_ID" "docs/menu-loading-performance-plan.md 의 Step 2 실행해줘. 이전 Step이 마무리 되지 않았으면 바로 중단해줘."
+codex exec -m "$MODEL" -c "model_reasoning_effort=\"$REASONING\"" 'service_tier="fast"' --yolo resume "$SESSION_ID" "docs/menu-loading-performance-plan.md 의 Step 3 실행해줘. 이전 Step이 마무리 되지 않았으면 바로 중단해줘."
+codex exec -m "$MODEL" -c "model_reasoning_effort=\"$REASONING\"" 'service_tier="fast"' --yolo resume "$SESSION_ID" "docs/menu-loading-performance-plan.md 의 Step 4 실행해줘. 이전 Step이 마무리 되지 않았으면 바로 중단해줘."
+codex exec -m "$MODEL" -c "model_reasoning_effort=\"$REASONING\"" 'service_tier="fast"' --yolo resume "$SESSION_ID" "docs/menu-loading-performance-plan.md 의 Step 5 실행해줘. 이전 Step이 마무리 되지 않았으면 바로 중단해줘."
+codex exec -m "$MODEL" -c "model_reasoning_effort=\"$REASONING\"" 'service_tier="fast"' --yolo resume "$SESSION_ID" "docs/menu-loading-performance-plan.md 의 Step 6 실행해줘. 이전 Step이 마무리 되지 않았으면 바로 중단해줘."
+codex exec -m "$MODEL" -c "model_reasoning_effort=\"$REASONING\"" 'service_tier="fast"' --yolo resume "$SESSION_ID" "docs/menu-loading-performance-plan.md 의 Step 7 실행해줘. 이전 Step이 마무리 되지 않았으면 바로 중단해줘."
+codex exec -m "$MODEL" -c "model_reasoning_effort=\"$REASONING\"" 'service_tier="fast"' --yolo resume "$SESSION_ID" "docs/menu-loading-performance-plan.md 의 Step 8 실행해줘. 이전 Step이 마무리 되지 않았으면 바로 중단해줘."
