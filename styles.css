@@ -624,8 +624,8 @@ button.surf-select { display: block; width: 100%; text-align: left; color: inher
 .profile-image-slot img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .profile-panel[data-view="home"] .profile-status { width: 87px; max-height: 64px; white-space: pre-wrap; overflow-wrap: anywhere; overflow-x: hidden; overflow-y: auto; }
 .history-controls { display: flex; align-items: baseline; gap: 4px; }
-.home-profile-edit { padding: 0; border: 0; background: none; color: inherit; font: inherit; cursor: pointer; }
-.home-profile-edit:hover { text-decoration: underline; }
+.home-profile-edit, .home-profile-history { padding: 0; border: 0; background: none; color: inherit; font: inherit; cursor: pointer; }
+.home-profile-edit:hover, .home-profile-history:hover { text-decoration: underline; }
 .home-profile-edit[hidden] { display: none; }
 .home-profile-dialog { width: min(340px,calc(100vw - 24px)); max-height: calc(100vh - 24px); overflow-y: auto; padding: 16px; border: 1px solid #aaa; background: #fff; color: #555; font: 12px/1.5 var(--ui-font); }
 .home-profile-dialog::backdrop { background: #0005; }
@@ -650,3 +650,13 @@ button.surf-select { display: block; width: 100%; text-align: left; color: inher
 .friend-reviews li .friend-review-body { margin: 0; padding: 0; color: inherit; font: inherit; text-align: left; white-space: pre-wrap; overflow-wrap: anywhere; }
 .friend-reviews button.friend-review-body:hover { text-decoration: underline; }
 .friend-review-history-heading { margin: 4px 0; color: #506d83; }
+
+/* Compact comment lines: glyph height plus approximately 20% leading. */
+.comments-widget .photo-comment { margin: 0; line-height: 1.2; }
+.comments-widget .photo-comment-date, .comments-widget .photo-comment .comment-actions button { line-height: 1.2; }
+.home-profile-history:focus-visible { outline: 1px dotted #506d83; outline-offset: 2px; }
+.greeting-history-list { list-style: none; padding: 0; margin: 8px 0; max-height: min(320px, calc(100vh - 220px)); overflow-y: auto; }
+.greeting-history-list li { padding: 8px 0; border-bottom: 1px solid #eee; }
+.greeting-history-list p { white-space: pre-wrap; overflow-wrap: anywhere; margin: 4px 0; }
+.greeting-history-list time { color: #999; font-size: 11px; }
+.greeting-history-list button { margin-left: 8px; }

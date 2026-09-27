@@ -93,7 +93,7 @@ node setup/setup.mjs friend-visibility --config setup/config.json --phase activa
 ### 이미 최신 기능을 사용하는 사이트
 
 1. 작업 트리를 커밋/백업하고 DB·Storage를 비공개 위치에 백업한다. 패키지는 별도 폴더에 푼다. **기존 저장소에 통째로 덮어쓰지 않는다.** 개인 파일 `supabase-config.js`, `visitor-identity-config.js`, `member-writing-config.js`, `home-data-config.js`, `setup/config.json`, `minihompy-identity/`, `.minihompy-registration.json`, `.env`와 기존 사용자 설정은 유지한다. 나머지 화면 소스·setup·전체 migrations/functions·빌드 스크립트·workflow를 변경 비교 후 반영한다. 개인화한 assets/config도 보존한다.
-2. 중앙 연결, 회원 세션·홈 데이터·관계·사진 보호가 완료된 사이트는 `friend-visibility --phase prepare`로 업데이트한다. 1.1.0부터 방명록 10초 제한/24시간 제한 안내 (`202609260001`), 홈 프로필 수정 (`202609260002`), 최신 일기 조회 (`202609270001`), 사진 확인 묶음 (`202609270002`), 작성자별 최신 일촌평과 내역 (`202609270003`)도 해시 추적 적용한다. 신규 설치에서는 이미 적용한 파일을 건너뛴다.
+2. 중앙 연결, 회원 세션·홈 데이터·관계·사진 보호가 완료된 사이트는 `friend-visibility --phase prepare`로 업데이트한다. 1.1.0부터 방명록 10초 제한/24시간 제한 안내 (`202609260001`), 홈 프로필 수정 (`202609260002`), 최신 일기 조회 (`202609270001`), 사진 확인 묶음 (`202609270002`), 작성자별 최신 일촌평과 내역 (`202609270003`), 인삿말 이력 (`202609270004`)도 해시 추적 적용한다. 신규 설치에서는 이미 적용한 파일을 건너뛴다.
 3. 위와 같이 빌드/검사 → Pages 게시 → `friend-visibility --phase activate`를 마친다. prepare 이후 활성화 전까지 일촌 공개 조회/쓰기가 일시 제한될 수 있다. `upgrade`/`install`을 일상적인 전체 업데이트 명령으로 실행하지 않는다.
 4. 기능 준비가 덜 된 구버전 사이트는 빠진 기능을 앞의 신규 사이트 2~3 순서로 먼저 준비한다. 중앙 v2 소유권 전환이 필요한 경우에만 이 문서의 `upgrade → verify`를 먼저 수행한다.
 

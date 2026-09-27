@@ -13,11 +13,11 @@
       <div class="profile-image-slot reference-sprite" role="img" aria-label="손을 흔드는 줄무늬 셔츠의 프로필 캐릭터"></div>
       <p class="profile-status" data-config="profile.introduction">자기소개가 없습니다.</p>
       <div class="profile-history">
-        <div class="history-heading"><span class="history-controls"><span><i aria-hidden="true"></i>HISTORY</span><button type="button" class="home-profile-edit" data-home-profile-edit aria-label="프로필 수정" hidden><i aria-hidden="true"></i>EDIT</button></span><span class="history-arrows">▾▴</span></div>
+        <div class="history-heading"><span class="history-controls"><button type="button" class="home-profile-history" data-home-profile-history aria-label="인삿말 이력" aria-haspopup="dialog"><i aria-hidden="true"></i>HISTORY</button><button type="button" class="home-profile-edit" data-home-profile-edit aria-label="프로필 수정" hidden><i aria-hidden="true"></i>EDIT</button></span><span class="history-arrows">▾▴</span></div>
         <div class="profile-name"><span data-config="profile.name">정</span> <span class="profile-detail" data-config="profile.detail">(성)</span></div>
         <button type="button" class="surf-select" data-surf-open aria-haspopup="dialog" aria-controls="surf-dialog">파도타기<span aria-hidden="true">▴</span></button>
       </div>
-    `); window.MinihompyHomeProfile?.attach(result); return result; },
+    `); window.MinihompyHomeProfile?.attach(result); window.MinihompyGreetingHistory?.attach(result); return result; },
     createMain() { const result=fragment(`
       <h2 class="recent-heading" aria-label="최근게시물">Updated news</h2>
       <div class="recent-content home-activity"></div>
