@@ -1,2 +1,2 @@
-// Activated by setup home-data only after SQL and function readiness checks.
-window.MINIHOMPY_HOME_DATA_CONFIG = Object.freeze({ enabled: false });
+// Verified personal home data deployment. No credentials.
+window.MINIHOMPY_HOME_DATA_CONFIG = Object.freeze({"enabled":true,"supabaseUrl":"https://itkymmxnbjylyzbmdxdb.supabase.co","homepage":"https://henry-phd-finance.github.io/minihompy/"});
