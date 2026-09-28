@@ -10,8 +10,8 @@ const name=`minihompy-installer-${pkg.version}`, output=join(root,'dist'), stage
 const hash=data=>createHash('sha256').update(data).digest('hex');
 // Only tracked, selected source files. Never copy local setup state or deployed identity proofs.
 const tracked=execFileSync('git',['ls-files','-z'],{cwd:root,encoding:'utf8'}).split('\0').filter(Boolean);
-const scripts=['build-pages.mjs','verify-artifact.mjs','migrate-photo-media.mjs'];
-const docs=['install-and-upgrade','deployment','configuration','login-flow','member-writing-deployment','member-session-deployment','member-navigation-deployment','home-data-deployment','folder-visibility-deployment','member-relationship-deployment','friend-visibility-deployment','photo-media-migration','visit-counts-contract'];
+const scripts=['build-pages.mjs','verify-artifact.mjs','migrate-photo-media.mjs','backfill-photo-variants.mjs'];
+const docs=['install-and-upgrade','deployment','configuration','login-flow','member-writing-deployment','member-session-deployment','member-navigation-deployment','home-data-deployment','folder-visibility-deployment','member-relationship-deployment','friend-visibility-deployment','photo-media-migration','photo-variant-backfill','visit-counts-contract'];
 const selected=tracked.filter(path=>
   ['index.html','author-visit.html','styles.css','.gitignore','.github/workflows/pages.yml'].includes(path) ||
   /^[^/]+\.js$/.test(path) || /^(assets|views|login)\//.test(path) ||

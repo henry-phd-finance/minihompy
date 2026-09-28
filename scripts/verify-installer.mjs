@@ -29,6 +29,8 @@ try{
   assert.deepEqual(await walk(join(site,dir)),await walk(join(root,dir)),dir);
   for(const path of await walk(join(root,dir)))assert.equal(hash(await readFile(join(site,dir,path))),hash(await readFile(join(root,dir,path))));
  }
+ for(const path of ['scripts/backfill-photo-variants.mjs','setup/photo-variant-backfill.mjs','setup/photo-variant-encoder.mjs','docs/photo-variant-backfill.md'])assert.ok(manifest.files[path],path);
+ assert.match(execFileSync(process.execPath,['scripts/backfill-photo-variants.mjs','--help'],{cwd:site,encoding:'utf8'}),/Default: dry run/);
  const window={};
  for(const name of ['supabase-config.js','visitor-identity-config.js','member-writing-config.js','home-data-config.js'])runInNewContext(await readFile(join(site,name),'utf8'),{window});
  assert.equal(window.MINIHOMPY_SUPABASE.url,'');assert.equal(window.MINIHOMPY_SUPABASE.publishableKey,'');

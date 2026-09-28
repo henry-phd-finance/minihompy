@@ -1,0 +1,7 @@
+{"dryRun":true,"variantReady":false,"files":0,"sourceBytes":0,"ready":0,"skipped":0,"generated":0,"additionalBytes":0,"failed":0,"pendingCleanup":0}
+PASS 1: default CLI is dry run, capability absent allowed, no journal/media writes, strict flags/project validation
+PASS 2: apply refuses undeployed variant capability before any mutation
+PASS 3: permissions, exclusive lock and symlink journal rejected; existing lock/external file preserved
+{"dryRun":false,"variantReady":true,"files":0,"sourceBytes":0,"ready":0,"skipped":0,"generated":0,"additionalBytes":0,"failed":0,"pendingCleanup":0}
+{"dryRun":false,"variantReady":true,"files":0,"sourceBytes":0,"ready":0,"skipped":0,"generated":0,"additionalBytes":0,"failed":0,"pendingCleanup":0}
+PASS 4: private atomic journal and orphan staged-file cleanup; source/API mutation allowlist remains empty
