@@ -15,7 +15,7 @@ export async function prepareVisibilityFixture(s,fetcher,fileId){
  const args={owner_id:s.owner,path:s.mediaPath,post_id:s.parents.photos,size:bytes.length,mime:'image/jpeg',sha256:await digest(bytes)};
  await s.mediaRpc('reserve',args);s.mediaFiles.set(s.mediaPath,bytes);await s.mediaRpc('complete',args);
 }
-export function routePhotoMedia(s,req){return handlePhotoMedia(req,{env:{...s.config,SUPABASE_SERVICE_ROLE_KEY:'fixture-service'},fetcher:s.mediaFetch,rpc:s.mediaRpc,storage:{
+export function routePhotoMedia(s,req){return handlePhotoMedia(req,{env:{...s.config,SUPABASE_SERVICE_ROLE_KEY:'fixture-service'},fetcher:s.mediaFetch,rpc:s.mediaRpc,db:s.personal.db,storage:{
  async get(bucket,path){assert.equal(bucket,BUCKET);const b=s.mediaFiles.get(path);if(!b)fail('NOT_FOUND');return b.slice();},
  async put(bucket,path,b){assert.equal(bucket,BUCKET);if(s.mediaFiles.has(path))fail('EXISTS');s.mediaFiles.set(path,b.slice());},
  async remove(bucket,paths){assert.equal(bucket,BUCKET);for(const p of paths)s.mediaFiles.delete(p);}

@@ -1,0 +1,3 @@
+PASS: fresh schema preserves data, tracked retry, deployment/probe failure stays disabled, hash/untracked rejection
+PASS: populated upgrade preserves data, tracked retry, deployment/probe failure stays disabled, hash/untracked rejection
+PASS: offline dry run, missing runtime, local concurrency lock, no secret logging or automatic ready/Pages activation

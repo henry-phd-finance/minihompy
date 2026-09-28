@@ -33,7 +33,8 @@ const send=async(route,res)=>route.fulfill({status:res.status,headers:Object.fro
 const request=req=>new Request(req.url(),{method:req.method(),headers:req.headers(),...(req.postData()?{body:req.postData()}:{})});
 try {
  for(const s of sites){
-  s.personal=await memberWritingDb(PGlite,{siteId:s.site,centralUrl:api,photoMedia:true});
+  s.personal=await memberWritingDb(PGlite,{siteId:s.site,centralUrl:api,photoMedia:true,friendVisibility:true});
+  await s.personal.pg.query('update private.friend_visibility_state set owner_member_id=$1,media_ready=true,summary_ready=true,pages_ready=true,ready=true',[s.member]);
   s.transport=sqlTransport(s.personal.pg,{owner:s.owner});
   s.config={MINIHOMPY_SITE_ORIGIN:s.origin,MINIHOMPY_SITE_ID:s.site,MINIHOMPY_CENTRAL_API_URL:api,SUPABASE_URL:`https://${s.ref}.supabase.co`,MINIHOMPY_PUBLIC_KEY:'fixture-public'};
   s.options={config:s.config,db:s.personal.db,fetcher:async(url,init)=>{if(centralOffline)throw Error('fixture central offline');if(url.startsWith(api))return handleIdentityApiRequest(new Request(url,init),centralOptions);return centralOptions.fetcher(url,init);}};
@@ -45,7 +46,7 @@ try {
   s.parents={};
   s.parents.board=(await s.personal.pg.query("insert into board_posts(folder_id,author_name,title,body) select id,'owner','fixture board','body' from board_folders returning id")).rows[0].id;
   s.parents.photos=id(s.name==='alice'?31:32);
-  await prepareVisibilityFixture(s,centralOptions.fetcher,id(33));
+  await prepareVisibilityFixture(s,s.options.fetcher,id(33));
   await s.personal.pg.query("insert into photo_posts(id,folder_id,author_name,title,body) select $1,id,'owner','fixture photo',$2 from photo_folders",[s.parents.photos,JSON.stringify([{type:'image',path:`${s.parents.photos}/${id(33)}.jpg`}])]);
   s.parents.diary=(await s.personal.pg.query("insert into diary_entries(id,folder_id,author_name,entry_date,entry_time,body) select gen_random_uuid(),id,'owner',current_date,'12:00','fixture diary' from diary_folders returning id")).rows[0].id;
   await s.personal.pg.exec("select set_config('request.jwt.claim.sub','',false)");
@@ -106,7 +107,7 @@ addEventListener('minihompy:identity',()=>fixtureActor=MinihompyAdmin.state.role
  sites[1].parents.guestbook=(await sites[1].personal.pg.query('select id from guestbook_posts limit 1')).rows[0].id;
  for(const kind of ['board','photos','diary','guestbook']){
   await menu(kind);if(kind==='board')await page.locator('.board-post-link').first().click();
-  const input=page.locator('.comment-body').first();await input.waitFor();await input.fill('discard');await menu('home');await menu(kind);if(kind==='board')await page.locator('.board-post-link').first().click();assert.equal(await input.inputValue(),'');
+  const input=page.locator('.comment-body').first();await input.waitFor().catch(async e=>{throw Error(JSON.stringify({kind,errors,body:(await page.locator('[data-view-slot=main]').innerText()).slice(0,1800)})+' '+e.message);});await input.fill('discard');await menu('home');await menu(kind);if(kind==='board')await page.locator('.board-post-link').first().click();assert.equal(await input.inputValue(),'');
   await relax();await input.fill('integration '+kind);await page.locator('.comment-save').first().click();await page.locator('[data-comment]').first().waitFor();
  }
  assert.equal(counts.exchange,before.exchange);assert.equal(counts.visits,before.visits);

@@ -1,6 +1,6 @@
 {
   "name": "minihompy-setup",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "분산 미니홈피 자동 셋업 CLI 도구",
   "type": "module",
   "engines": {

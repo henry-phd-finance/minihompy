@@ -1,0 +1,9 @@
+PASS 1: two widgets share in-flight state only, copied results and fresh next lookup
+PASS 2: different targets and runtime contexts never share
+PASS 3: site/project/central changes fence old response and transport
+PASS 4: one cancelled widget leaves other alive; all cancellation aborts without poisoning next read
+PASS 5: mutation start rejects old read, fences reads during action, never merges/retries POSTs
+PASS 6: renewal settles before sharing; session transition and logout discard earlier response
+PASS 7: denial/outage never cached, timeout cancels, already-aborted caller sends nothing
+PASS 8: refresh requests and relationship-change burst dispatch once
+All 8 in-flight state groups passed; no hosted requests.

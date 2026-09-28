@@ -1,0 +1,8 @@
+PASS 1: one verified identity shared by factories and concurrent reads
+PASS 2: token rotation preserves same session; new same-user login re-verifies
+PASS 3: logout clears cache; late verification cannot restore authority
+PASS 4: silent account or session replacement never reuses previous proof
+PASS 5: expired sessions fail before remote query
+PASS 6: recheck detects revoked owner; network failure is not cached
+PASS 7: new login during old verification cannot replace new proof
+PASS 8: normal identity clients retain fresh verification

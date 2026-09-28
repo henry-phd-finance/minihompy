@@ -1,0 +1,8 @@
+PASS 1: visit before acceptance and pending request expose only public content across every surface
+PASS 2: acceptance unlocks both directions; C and central self-login do not become local administrators
+PASS 3: final schema keeps local anonymous-account public writing and blocks direct RLS/RPC/Storage bypass
+PASS 4: all three friend comment writes stay in B; lost response replays once without duplicate rows
+PASS 5: disconnect after permitted response preserves historical bytes but all new surfaces and receipts deny access
+PASS 6: central outage and quota fail consistently, public and local owner remain independent
+PASS 7: local family revocation after SQL discards successful response; new visit and central revocation affect every route
+All 7 cross-surface central/A/B/C lifecycle groups passed; actual handlers/SQL and PNG bytes, fixture Auth/Storage, no hosted writes.

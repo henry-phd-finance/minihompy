@@ -1,0 +1,5 @@
+PASS staggered in-flight sharing and exact 30-second successful-display TTL
+PASS inactive and error responses are not cached
+PASS partial detach retains shared request, final detach aborts, late result not reused
+PASS batches <=50 and 200-member LRU eviction/touch
+PASS central/project switch and writing invalidation clear cached/in-flight state

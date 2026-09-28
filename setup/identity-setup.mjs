@@ -67,19 +67,7 @@ export async function runSetup({config, command, target, email, password, manage
   const manage=(path,body)=>call(`https://api.supabase.com/v1/projects/${c.projectRef}/${path}`,{method:'POST',token:managementToken,body});
   const query=sql=>manage('database/query',{query:sql});
   if (command==='install') {
-    // Never replay old migration files against an untracked existing database.
-    const [schema]=await query("select to_regclass('private.minihompy_admins') is not null as existing, to_regclass('private.minihompy_setup_migrations') is not null as tracked");
-    if (schema.existing && !schema.tracked) fail('기존 DB입니다. install 대신 upgrade를 사용해 주세요.');
-    await query('create schema if not exists private; create table if not exists private.minihompy_setup_migrations(name text primary key, sha256 text not null); revoke all on private.minihompy_setup_migrations from public, anon, authenticated;');
-    const applied=await query('select name, sha256 from private.minihompy_setup_migrations');
-    for (const name of (await readdir(join(root,'supabase/migrations'))).filter(n=>/^\d+_[a-z0-9_]+\.sql$/.test(n)).sort()) {
-      const sql=await readFile(join(root,'supabase/migrations',name),'utf8'), hash=createHash('sha256').update(sql).digest('hex');
-      const prior=applied.find(row=>row.name===name);
-      if (prior) { if(prior.sha256!==hash)fail('이미 적용된 마이그레이션 내용이 변경되었습니다.'); continue; }
-      const body=sql.replace(/^\s*begin;\s*$/gmi,'').replace(/^\s*commit;\s*$/gmi,'');
-      await query(`begin; select pg_advisory_xact_lock(87241032); ${body}\ninsert into private.minihompy_setup_migrations values ('${name}','${hash}'); commit;`);
-      log(`마이그레이션 적용: ${name}`);
-    }
+    await applyInstallMigrations({root,query,log});
   }
   let session;
   const login=()=>call(`${c.supabaseUrl}/auth/v1/token?grant_type=password`,{method:'POST',key:c.publishableKey,body:{email,password}});
@@ -137,4 +125,20 @@ export async function runSetup({config, command, target, email, password, manage
   for(const [name,content] of Object.entries(runtimeFiles({...c,handle:result.handle || c.handle},result.site_id)))await writeFile(join(root,name),content);
   log(`중앙 검증 완료: ${result.site_id}. 생성된 두 설정 파일을 commit/push하면 연동이 활성화됩니다.`);
   return result;
+}
+
+export async function applyInstallMigrations({root,query,log=console.log}) {
+    // Never replay old migration files against an untracked existing database.
+    const [schema]=await query("select to_regclass('private.minihompy_admins') is not null as existing, to_regclass('private.minihompy_setup_migrations') is not null as tracked");
+    if (schema.existing && !schema.tracked) fail('기존 DB입니다. install 대신 upgrade를 사용해 주세요.');
+    await query('create schema if not exists private; create table if not exists private.minihompy_setup_migrations(name text primary key, sha256 text not null); revoke all on private.minihompy_setup_migrations from public, anon, authenticated;');
+    const applied=await query('select name, sha256 from private.minihompy_setup_migrations');
+    for (const name of (await readdir(join(root,'supabase/migrations'))).filter(n=>/^\d+_[a-z0-9_]+\.sql$/.test(n)).sort()) {
+      const sql=await readFile(join(root,'supabase/migrations',name),'utf8'), hash=createHash('sha256').update(sql).digest('hex');
+      const prior=applied.find(row=>row.name===name);
+      if (prior) { if(prior.sha256!==hash)fail('이미 적용된 마이그레이션 내용이 변경되었습니다.'); continue; }
+      const body=sql.replace(/^\s*begin;\s*$/gmi,'').replace(/^\s*commit;\s*$/gmi,'');
+      await query(`begin; select pg_advisory_xact_lock(87241032); ${body}\ninsert into private.minihompy_setup_migrations values ('${name}','${hash}'); commit;`);
+      log(`마이그레이션 적용: ${name}`);
+    }
 }

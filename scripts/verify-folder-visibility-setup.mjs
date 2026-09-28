@@ -18,7 +18,7 @@ const fetcher=async(url,init={})=>{
  if(url.includes('/logout'))return Response.json({});throw Error('Unexpected request '+url);
 };
 try{
- for(const name of ['supabase','index.html','content-access.js','content-folders-repository.js','content-folders.js','photo-media-client.js','photos-repository.js','photo-editor.js'])await cp(new URL('../'+name,import.meta.url),join(target,name),{recursive:true});
+ for(const name of ['supabase','index.html','content-access.js','content-folders-repository.js','content-folders.js','photo-media-client.js','photos-repository.js','photo-editor.js','photo-editor-loader.js','photo-variant-client.js','photo-variant-worker.js','photo-variant-format.js','assets'])await cp(new URL('../'+name,import.meta.url),join(target,name),{recursive:true});
  await writeFile(join(target,'supabase-config.js'),'window.MINIHOMPY_SUPABASE={url:"https://'+'a'.repeat(20)+'.supabase.co"}');
  const opts={config,target,email:'owner@test',password:'fixture-private',managementToken:'fixture-token',fetcher,deploy:async()=>{deploys++;if(failDeploy)throw Error('deploy unavailable');},log:s=>logs.push(s)};
  await upgradeFolderVisibility({...opts,dryRun:true});assert.equal(requests,0);assert.equal(deploys,0);

@@ -1,0 +1,4 @@
+PASS: Delayed initial admin verification cannot invalidate member proof exchange
+PASS: Logout during initial admin verification invalidates callback before proof exchange
+PASS: Delayed initial admin verification cannot invalidate member proof exchange
+PASS: Logout during initial admin verification invalidates callback before proof exchange

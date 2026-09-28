@@ -1,0 +1,1 @@
+PASS: truthful baseline; automatic greeting-only history; public read; no browser insert/update; owner-only delete; unchanged current greeting; CAS/failed-save isolation and blank greetings.

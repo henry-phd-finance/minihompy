@@ -1,0 +1,5 @@
+PASS 1: all phases dry-run offline; source/runtime checks without file or network mutations
+PASS 2: interrupted SQL/deploy/probe retries, tracked hashes and existing content/site preserved; no partial friends writes
+PASS 3: actual Pages file hash mismatch and incomplete media deny activation; complete probes enable tracked release and friends writes
+PASS 4: wrong binding, failed final probe and stale activation epoch fail closed; offline-central disable preserves friends data
+PASS 5: hash/schema drift, missing ledger, local concurrent run refused; secrets absent from logs/Pages and no secret rotation

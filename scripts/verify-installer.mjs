@@ -18,6 +18,7 @@ const temp=await mkdtemp(join(tmpdir(),'minihompy-installer-check-'));
 try{
  execFileSync('tar',['-xzf',archive,'-C',temp]);
  const site=join(temp,name),manifest=JSON.parse(await readFile(join(site,'installer-manifest.json'),'utf8'));
+ assert.equal(manifest.version,pkg.version);
  async function walk(dir,prefix=''){const out=[];for(const e of await readdir(dir,{withFileTypes:true})){assert.ok(!e.isSymbolicLink());const p=prefix+e.name;if(e.isDirectory())out.push(...await walk(join(dir,e.name),p+'/'));else out.push(p);}return out;}
  assert.deepEqual((await walk(site)).sort(),[...Object.keys(manifest.files),'installer-manifest.json'].sort());
  for(const [path,sha] of Object.entries(manifest.files)){
@@ -29,7 +30,7 @@ try{
   assert.deepEqual(await walk(join(site,dir)),await walk(join(root,dir)),dir);
   for(const path of await walk(join(root,dir)))assert.equal(hash(await readFile(join(site,dir,path))),hash(await readFile(join(root,dir,path))));
  }
- for(const path of ['scripts/backfill-photo-variants.mjs','setup/photo-variant-backfill.mjs','setup/photo-variant-encoder.mjs','docs/photo-variant-backfill.md'])assert.ok(manifest.files[path],path);
+ for(const path of ['scripts/backfill-photo-variants.mjs','setup/photo-variant-backfill.mjs','setup/photo-variant-encoder.mjs','docs/photo-variant-backfill.md','docs/additional-performance-deployment.md'])assert.ok(manifest.files[path],path);
  assert.match(execFileSync(process.execPath,['scripts/backfill-photo-variants.mjs','--help'],{cwd:site,encoding:'utf8'}),/Default: dry run/);
  const window={};
  for(const name of ['supabase-config.js','visitor-identity-config.js','member-writing-config.js','home-data-config.js'])runInNewContext(await readFile(join(site,name),'utf8'),{window});
@@ -41,5 +42,6 @@ try{
  execFileSync(process.execPath,['setup/setup.mjs','install','--config','setup/config.json','--dry-run'],{cwd:site});
  execFileSync(process.execPath,['scripts/build-pages.mjs'],{cwd:site});
  execFileSync(process.execPath,['scripts/verify-artifact.mjs'],{cwd:site});
+ process.stdout.write(execFileSync(process.execPath,[join(root,'scripts/verify-additional-performance-install.mjs')],{cwd:root,env:{...process.env,INSTALL_SOURCE_ROOT:site},encoding:'utf8'}));
  console.log(`PASS: ${Object.keys(manifest.files).length} hashed files, complete SQL/functions, clean identity templates, reproducible archive, extracted offline install dry run and Pages build.`);
 }finally{await rm(temp,{recursive:true,force:true});}

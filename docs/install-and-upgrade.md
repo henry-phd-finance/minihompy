@@ -1,6 +1,6 @@
-# 미니홈피 설치·업데이트 (1.1.0)
+# 미니홈피 설치·업데이트 (1.2.0)
 
-2026-09-27 기준. 새 설치에는 개인 설정이 초기화된 `minihompy-installer-1.1.0.tar.gz`를 사용한다. 개발 저장소에서는 `npm run build:installer`로 생성한다. 다운로드한 압축파일은 함께 제공된 `.sha256`과 대조한다 (`sha256sum -c minihompy-installer-1.1.0.tar.gz.sha256`). 아래 등록 절차와 마지막 **전체 기능 준비 / 기존 사이트 업데이트**를 모두 따른다.
+2026-09-28 기준. 새 설치에는 개인 설정이 초기화된 `minihompy-installer-1.2.0.tar.gz`를 사용한다. 개발 저장소에서는 `npm run build:installer`로 생성한다. 다운로드한 압축파일은 함께 제공된 `.sha256`과 대조한다 (`sha256sum -c minihompy-installer-1.2.0.tar.gz.sha256`). 아래 등록 절차와 마지막 **전체 기능 준비 / 기존 사이트 업데이트**를 모두 따른다.
 
 ## 준비
 
@@ -102,3 +102,5 @@ node setup/setup.mjs friend-visibility --config setup/config.json --phase activa
 ### 최종 확인
 
 본인 계정 로그인, 다른 사이트 회원 방문, 비회원 조회를 각각 확인한다. 홈 프로필/방문 수, 방명록·댓글, 최신 일기/달력, 사진 로딩, 폴더와 세 공개범위, 일촌/일촌평, 메뉴 이동·로그아웃을 검사한다. 설치 검사와 dry run은 실제 Supabase·Pages 운영 검증을 대신하지 않는다.
+
+추가 성능 개선 1.2.0은 사진 파생본 생성/읽기 SQL 3개(`202609280001`~`202609280003`), capability 검사, 기존 사진 변환 도구와 편집기 지연 로딩을 포함한다. 서버 준비 → 기존 사진 변환 → Pages → 활성화 순서와 보존/복구는 [추가 성능 배포 안내](additional-performance-deployment.md)를 따른다.

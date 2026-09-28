@@ -1,0 +1,162 @@
+[
+  {
+    "name": "verify-setup",
+    "status": 0,
+    "elapsedMs": 101
+  },
+  {
+    "name": "verify-friend-visibility-setup",
+    "status": 0,
+    "elapsedMs": 1866
+  },
+  {
+    "name": "verify-additional-performance-install",
+    "status": 0,
+    "elapsedMs": 1225
+  },
+  {
+    "name": "verify-relationship-health",
+    "status": 0,
+    "elapsedMs": 53
+  },
+  {
+    "name": "verify-relationship-state",
+    "status": 0,
+    "elapsedMs": 41
+  },
+  {
+    "name": "verify-home-refresh",
+    "status": 0,
+    "elapsedMs": 626
+  },
+  {
+    "name": "verify-author-cache",
+    "status": 0,
+    "elapsedMs": 630
+  },
+  {
+    "name": "verify-author-visit",
+    "status": 0,
+    "elapsedMs": 1504
+  },
+  {
+    "name": "verify-visitor-identity-client",
+    "status": 0,
+    "elapsedMs": 72
+  },
+  {
+    "name": "verify-member-session-startup",
+    "status": 0,
+    "elapsedMs": 39
+  },
+  {
+    "name": "verify-member-session-runtime",
+    "status": 0,
+    "elapsedMs": 25
+  },
+  {
+    "name": "verify-member-session-client",
+    "status": 0,
+    "elapsedMs": 35
+  },
+  {
+    "name": "verify-owner-session-cache",
+    "status": 0,
+    "elapsedMs": 23
+  },
+  {
+    "name": "verify-owner-session-integration",
+    "status": 0,
+    "elapsedMs": 91
+  },
+  {
+    "name": "verify-member-session-integration",
+    "status": 0,
+    "elapsedMs": 7905
+  },
+  {
+    "name": "verify-friend-review-history",
+    "status": 0,
+    "elapsedMs": 1173
+  },
+  {
+    "name": "verify-home-greeting-history-db",
+    "status": 0,
+    "elapsedMs": 1229
+  },
+  {
+    "name": "verify-photo-variant-reads",
+    "status": 0,
+    "elapsedMs": 1352
+  },
+  {
+    "name": "verify-photo-display-contract",
+    "status": 0,
+    "elapsedMs": 28
+  },
+  {
+    "name": "verify-friend-photo-client",
+    "status": 0,
+    "elapsedMs": 52
+  },
+  {
+    "name": "verify-photo-variant-client",
+    "status": 0,
+    "elapsedMs": 41
+  },
+  {
+    "name": "verify-friend-reviews-ui",
+    "status": 0,
+    "elapsedMs": 6022
+  },
+  {
+    "name": "verify-home-greeting-history-ui",
+    "status": 0,
+    "elapsedMs": 2014
+  },
+  {
+    "name": "verify-photo-visibility-ui",
+    "status": 0,
+    "elapsedMs": 11910
+  },
+  {
+    "name": "verify-friend-photos-browser",
+    "status": 0,
+    "elapsedMs": 12739
+  },
+  {
+    "name": "verify-photo-backfill",
+    "status": 0,
+    "elapsedMs": 2424
+  },
+  {
+    "name": "verify-folder-visibility-setup",
+    "status": 0,
+    "elapsedMs": null,
+    "run": "separate local invocation; see matching log"
+  },
+  {
+    "name": "verify-friend-visibility-install-concurrency",
+    "status": 0,
+    "elapsedMs": null,
+    "run": "separate local invocation; see matching log"
+  },
+  {
+    "name": "verify-friend-visibility-integration",
+    "status": 0,
+    "elapsedMs": null,
+    "run": "separate local invocation; see matching log"
+  },
+  {
+    "name": "verify-friend-photo-concurrency",
+    "status": 0,
+    "elapsedMs": null,
+    "run": "separate local invocation; see matching log"
+  },
+  {
+    "name": "verify-photo-variants",
+    "status": 0,
+    "elapsedMs": null,
+    "run": "separate local invocation; see matching log"
+  }
+]

@@ -8,7 +8,7 @@ import {friendPagesRelease,sha256} from '../setup/friend-visibility-release.mjs'
 import {runtimeFiles,validateConfig} from '../setup/identity-setup.mjs';
 const target=await mkdtemp(join(tmpdir(),'friend-setup-')),id=n=>'80000000-0000-4000-8000-'+String(n).padStart(12,'0');
 const config={githubUser:'alice',githubRepo:'minihompy',projectRef:'a'.repeat(20),publishableKey:'sb_publishable_fixture123456789',handle:'alice',displayName:'Alice',centralApiUrl:'https://central.test/api',centralPageUrl:'https://central.test/hub',siteId:id(99)},c=validateConfig(config);
-let pg,requests=0,deployments=0,failDeploy=false,centralReady=true,oldServer=false,badMediaBinding=false,badPages=false,wrongOwner=false,failFinal=false,admin=true,failSql=null;const logs=[];
+let missingVariant=false;let pg,requests=0,deployments=0,failDeploy=false,centralReady=true,oldServer=false,badMediaBinding=false,badPages=false,wrongOwner=false,failFinal=false,admin=true,failSql=null;const logs=[];
 const query=async sql=>{try{if(failSql&&sql.includes(failSql)){failSql=null;throw Error('interrupted migration');}const rows=await pg.exec(sql);return rows.at(-1)?.rows||[];}catch(e){await pg.exec('rollback');throw e;}};
 const fetcher=async(url,init={})=>{
  requests++;
@@ -28,7 +28,8 @@ const fetcher=async(url,init={})=>{
  if(url.endsWith('/content/list')){assert.equal(init.headers.Authorization,'Bearer owner.fixture.jwt');assert.equal(init.headers['X-Minihompy-Auth-Mode'],'owner');return Response.json({protocol:1,view:{mode:'owner'},data:{items:[]}});}
  if(url.endsWith('/health')){
   const state=(await query('select * from private.friend_visibility_state'))[0];
-  return Response.json(url.endsWith('/photo-media/health')?{friend_media_protocol:1,friend_visibility_setup_protocol:oldServer?0:1,site_id:c.siteId,central_api_url:c.centralApiUrl,project_url:badMediaBinding?'https://wrong.test':c.supabaseUrl}:{friend_visibility_protocol:1,friend_visibility_setup_protocol:oldServer?0:1,friend_visibility_ready:failFinal?false:state.ready,friend_media_ready:state.media_ready,friend_summary_ready:state.summary_ready,friend_pages_ready:state.pages_ready},{headers:{'access-control-allow-origin':c.origin,'cache-control':'private, no-store'}});
+  const variant={photo_variant_protocol:1,photo_variant_read_protocol:missingVariant?undefined:1,photo_variant_recipe:'display-v1'};
+  return Response.json(url.endsWith('/photo-media/health')?{...variant,friend_media_protocol:1,friend_visibility_setup_protocol:oldServer?0:1,site_id:c.siteId,central_api_url:c.centralApiUrl,project_url:badMediaBinding?'https://wrong.test':c.supabaseUrl}:{...variant,friend_visibility_protocol:1,friend_visibility_setup_protocol:oldServer?0:1,friend_visibility_ready:failFinal?false:state.ready,friend_media_ready:state.media_ready,friend_summary_ready:state.summary_ready,friend_pages_ready:state.pages_ready},{headers:{'access-control-allow-origin':c.origin,'cache-control':'private, no-store'}});
  }
  throw Error('Unexpected endpoint (secret writes prohibited): '+url);
 };
@@ -50,6 +51,7 @@ try{
  failSql='create function public.member_photo_read';await assert.rejects(upgradeFriendVisibility(opts),/연결/);assert.equal((await state()).ready,false);await assert.rejects(canFriend(),/NOT_CONFIGURED/);
  failDeploy=true;await assert.rejects(upgradeFriendVisibility(opts),/deploy failed/);failDeploy=false;assert.equal((await state()).ready,false);
  oldServer=true;await assert.rejects(upgradeFriendVisibility(opts),/capability/);oldServer=false;badMediaBinding=true;await assert.rejects(upgradeFriendVisibility(opts),/protocol/);badMediaBinding=false;
+ missingVariant=true;await assert.rejects(upgradeFriendVisibility(opts),/capability/);missingVariant=false;
  for(let i=0;i<2;i++)assert.deepEqual(await upgradeFriendVisibility(opts),{prepared:true,ready:false});
  assert.equal((await query('select * from private.minihompy_setup_migrations')).length,friendVisibilityMigrations.length);assert.deepEqual(await query('select * from public.board_posts'),before);assert.deepEqual(await query('select * from private.member_writing_site'),sessions);await assert.rejects(canFriend(),/NOT_CONFIGURED/);
  assert.ok((await query("select pg_get_functiondef('public.member_guestbook(text,jsonb)'::regprocedure) as body"))[0].body.includes("interval '10 seconds'"));

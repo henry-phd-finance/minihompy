@@ -1,0 +1,4 @@
+PASS 1: legacy/no read capability/upload-only server has no selection request
+PASS 2: ready descriptor and authorized null accepted, variant and cancellation forwarded
+PASS 3: missing/duplicate/mismatched path/post/revision, malformed hashes/representation/dimensions and hidden metadata rejected
+PASS 4: invalid post can return only empty metadata, never a fallback descriptor

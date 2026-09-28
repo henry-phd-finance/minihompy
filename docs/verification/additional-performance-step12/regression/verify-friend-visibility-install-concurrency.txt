@@ -1,0 +1,2 @@
+PASS 1: independent connections block stale activation behind epoch replacement, then refuse it; fresh activation preserves all content
+PASS 2: committed disable beats an already-waiting friends edit; no partial write or public reclassification

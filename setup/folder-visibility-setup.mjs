@@ -34,9 +34,10 @@ export async function deployFolderVisibility(c,token,target){
 export async function upgradeFolderVisibility({config,target,email,password,managementToken,dryRun=false,fetcher=fetch,deploy=deployFolderVisibility,log=console.log}){
  const c=validateConfig(config);target=resolve(target);
  const html=await readFile(join(target,'index.html'),'utf8');
- for(const file of ['content-access.js','content-folders-repository.js','content-folders.js','photo-media-client.js','photos-repository.js','photo-editor.js']){
+ for(const file of ['content-access.js','content-folders-repository.js','content-folders.js','photo-media-client.js','photos-repository.js','photo-editor-loader.js']){
   await readFile(join(target,file));if(!html.includes(`src="${file}"`))throw Error('공개범위 런타임 연결이 필요합니다: '+file);
  }
+ for(const file of ['photo-editor.js','photo-variant-client.js','photo-variant-worker.js','photo-variant-format.js','assets/vendor/quill-2.0.3.js'])await readFile(join(target,file));
  for(const file of ['supabase/functions/photo-media/index.ts','supabase/functions/photo-media/handler.js','supabase/functions/photo-media/io.js','supabase/functions/member-writing/handler.js',...folderVisibilityMigrations.map(n=>'supabase/migrations/'+n)])await readFile(join(target,file));
  if(!(await readFile(join(target,'supabase-config.js'),'utf8')).includes(c.supabaseUrl))throw Error('런타임의 개인 Supabase 프로젝트가 다릅니다.');
  if(dryRun){log('[DRY RUN] folder-visibility: 관리자 확인 → SQL/해시 추적 → 함수 배포 → 읽기 준비 검사. 파일 전환/ready 활성화/Pages 배포 없음. 네트워크·파일 변경 없음.');return;}

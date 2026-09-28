@@ -1,0 +1,6 @@
+PASS 1: service-only ACL and hash binding; forged site/path/mode denied
+PASS 2: privacy first blocks pending metadata; read first holds parent until transaction ends
+PASS 3: photo-check waits for privacy/version changes and holds the same parent lock
+PASS 4: asset unlink first removes path entitlement even when file still exists
+PASS 5: local logout wins before metadata authorization and stale context expires while waiting
+All 5 independent PostgreSQL photo authorization groups passed; disposable local DB only.

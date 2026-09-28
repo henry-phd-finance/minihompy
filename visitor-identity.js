@@ -173,6 +173,18 @@
           restore(data.return_path);
           if(data.status==='identified'&&window.MinihompyMemberWriting?.enabled()){
             // Settle initial personal Auth before the writing exchange captures its identity generation.
+            // A fast central return can beat the deferred admin-auth script.
+            // Do not capture a writing-session identity before that module exists.
+            if(!window.MinihompyAdmin?.refresh&&typeof document!=='undefined'){
+              if(document.readyState==='complete')throw Error('Administrator module unavailable');
+              await new Promise((resolve,reject)=>{
+                const loaded=()=>{clearTimeout(timer);resolve();};
+                const timer=setTimeout(()=>{document.removeEventListener('DOMContentLoaded',loaded);reject(Error('Administrator startup timeout'));},config.loadTimeoutMs||10000);
+                document.addEventListener('DOMContentLoaded',loaded,{once:true});
+              });
+              if(current!==generation)return state;
+              if(!window.MinihompyAdmin?.refresh)throw Error('Administrator module unavailable');
+            }
             await window.MinihompyAdmin?.refresh?.();
             if(current!==generation)return state;
             await window.MinihompyMemberWriting.acceptVisit(writingProof,guard.writing,guard.attempt_id,data.profile.id);

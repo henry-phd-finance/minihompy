@@ -1,4 +1,4 @@
-# 미니홈피 설치 패키지 1.1.0
+# 미니홈피 설치 패키지 1.2.0
 
 개인 GitHub Pages와 Supabase에 미니홈피를 설치하는 소스 패키지입니다. 중앙 회원 로그인·자동 회원 확인·방명록/댓글·홈 데이터·폴더/공개범위·일촌/일촌평·일촌 공개와 최신 메뉴 로딩 개선을 포함합니다. 음악 재생은 아직 지원하지 않습니다.
 
@@ -6,7 +6,7 @@ Node.js 22 이상, Git, Supabase CLI, 본인 GitHub 저장소와 Supabase 프로
 
 ## 시작
 
-설치 압축파일을 풀고 그 안의 `minihompy-installer-1.1.0` 폴더를 본인 저장소 작업 폴더로 사용합니다. 패키지는 개인 프로젝트 URL/공개 키/siteId를 비우고 회원·홈 기능을 비활성화한 상태입니다. 원본 개발 저장소에 있는 A 사이트의 설정이나 소유권 확인 파일을 복사하지 않습니다.
+설치 압축파일을 풀고 그 안의 `minihompy-installer-1.2.0` 폴더를 본인 저장소 작업 폴더로 사용합니다. 패키지는 개인 프로젝트 URL/공개 키/siteId를 비우고 회원·홈 기능을 비활성화한 상태입니다. 원본 개발 저장소에 있는 A 사이트의 설정이나 소유권 확인 파일을 복사하지 않습니다.
 
 ```sh
 cp setup/config.example.json setup/config.json
@@ -36,4 +36,6 @@ npm run build:installer
 npm run test:installer
 ```
 
-`dist/minihompy-installer-1.1.0.tar.gz`와 `.sha256` 검증 파일이 생성됩니다. 배포 패키지에는 검수 기록·스크린샷·연구 자료·개인 확인 파일·토큰이 포함되지 않습니다. 이 명령은 npm/GitHub 업로드나 실제 사이트 재배포를 하지 않습니다.
+`dist/minihompy-installer-1.2.0.tar.gz`와 `.sha256` 검증 파일이 생성됩니다. 배포 패키지에는 검수 기록·스크린샷·연구 자료·개인 확인 파일·토큰이 포함되지 않습니다. 이 명령은 npm/GitHub 업로드나 실제 사이트 재배포를 하지 않습니다.
+
+추가 성능 개선 1.2.0은 사진 파생본 생성/읽기 SQL 3개(`202609280001`~`202609280003`), capability 검사, 기존 사진 변환 도구와 편집기 지연 로딩을 포함한다. 서버 준비 → 기존 사진 변환 → Pages → 활성화 순서와 보존/복구는 패키지의 `docs/additional-performance-deployment.md`를 따른다.

@@ -1,0 +1,205 @@
+{
+  "conditions": {
+    "bandwidthBytesPerSecond": 2097152,
+    "requestDelayMs": 30,
+    "largeSamplesPerMode": 3,
+    "cache": "new page, no media reuse",
+    "note": "Browser routes model byte transfer delay; timings are fixture measurements, not hosted network results. One page-level selection request is added only with read capability. No client conversion or second media download."
+  },
+  "beforeMedianMs": 2255.7000000476837,
+  "afterMedianMs": 424,
+  "results": [
+    {
+      "input": "large-alpha-detail",
+      "useVariant": false,
+      "sample": 0,
+      "text": 25,
+      "image": 2266.9000000953674,
+      "width": 1600,
+      "height": 1000,
+      "alpha": 0,
+      "cssWidth": 763,
+      "checks": 1,
+      "reads": [
+        {
+          "variant": false,
+          "bytes": 4367860
+        }
+      ],
+      "sourceBytes": 4367860
+    },
+    {
+      "input": "large-alpha-detail",
+      "useVariant": false,
+      "sample": 1,
+      "text": 18.5,
+      "image": 2255.7000000476837,
+      "width": 1600,
+      "height": 1000,
+      "alpha": 0,
+      "cssWidth": 763,
+      "checks": 1,
+      "reads": [
+        {
+          "variant": false,
+          "bytes": 4367860
+        }
+      ],
+      "sourceBytes": 4367860
+    },
+    {
+      "input": "large-alpha-detail",
+      "useVariant": false,
+      "sample": 2,
+      "text": 18.600000023841858,
+      "image": 2252.399999976158,
+      "width": 1600,
+      "height": 1000,
+      "alpha": 0,
+      "cssWidth": 763,
+      "checks": 1,
+      "reads": [
+        {
+          "variant": false,
+          "bytes": 4367860
+        }
+      ],
+      "sourceBytes": 4367860
+    },
+    {
+      "input": "large-alpha-detail",
+      "useVariant": true,
+      "sample": 0,
+      "text": 19.5,
+      "image": 426.1999999284744,
+      "width": 1200,
+      "height": 750,
+      "alpha": 0,
+      "cssWidth": 763,
+      "checks": 2,
+      "reads": [
+        {
+          "variant": true,
+          "bytes": 525938
+        }
+      ],
+      "sourceBytes": 4367860
+    },
+    {
+      "input": "large-alpha-detail",
+      "useVariant": true,
+      "sample": 1,
+      "text": 19.200000047683716,
+      "image": 420.40000009536743,
+      "width": 1200,
+      "height": 750,
+      "alpha": 0,
+      "cssWidth": 763,
+      "checks": 2,
+      "reads": [
+        {
+          "variant": true,
+          "bytes": 525938
+        }
+      ],
+      "sourceBytes": 4367860
+    },
+    {
+      "input": "large-alpha-detail",
+      "useVariant": true,
+      "sample": 2,
+      "text": 19.100000023841858,
+      "image": 424,
+      "width": 1200,
+      "height": 750,
+      "alpha": 0,
+      "cssWidth": 763,
+      "checks": 2,
+      "reads": [
+        {
+          "variant": true,
+          "bytes": 525938
+        }
+      ],
+      "sourceBytes": 4367860
+    },
+    {
+      "input": "small-alpha",
+      "useVariant": false,
+      "sample": 0,
+      "text": 19.700000047683716,
+      "image": 105,
+      "width": 8,
+      "height": 8,
+      "alpha": 0,
+      "cssWidth": 763,
+      "checks": 1,
+      "reads": [
+        {
+          "variant": false,
+          "bytes": 102
+        }
+      ],
+      "sourceBytes": 102
+    },
+    {
+      "input": "small-alpha",
+      "useVariant": true,
+      "sample": 0,
+      "text": 19.899999976158142,
+      "image": 137.69999992847443,
+      "width": 8,
+      "height": 8,
+      "alpha": 0,
+      "cssWidth": 763,
+      "checks": 2,
+      "reads": [
+        {
+          "variant": false,
+          "bytes": 102
+        }
+      ],
+      "sourceBytes": 102
+    },
+    {
+      "input": "gif",
+      "useVariant": false,
+      "sample": 0,
+      "text": 20,
+      "image": 107.30000007152557,
+      "width": 2,
+      "height": 2,
+      "alpha": 255,
+      "cssWidth": 763,
+      "animationFrames": 2,
+      "checks": 1,
+      "reads": [
+        {
+          "variant": false,
+          "bytes": 111
+        }
+      ],
+      "sourceBytes": 111
+    },
+    {
+      "input": "gif",
+      "useVariant": true,
+      "sample": 0,
+      "text": 21.399999976158142,
+      "image": 142.39999997615814,
+      "width": 2,
+      "height": 2,
+      "alpha": 255,
+      "cssWidth": 763,
+      "animationFrames": 2,
+      "checks": 2,
+      "reads": [
+        {
+          "variant": false,
+          "bytes": 111
+        }
+      ],
+      "sourceBytes": 111
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+PASS 1: public/friend/nonfriend/owner descriptor boundaries; legacy shape unchanged
+PASS 2: variant selector and every representation component are canonical context-bound
+PASS 3: invalid selectors, excessive targets and malformed output never downgrade or leak metadata
+PASS 4: pending/missing/deleted representation yields null only after original authorization; selected missing never falls back
+PASS 5: revision/source-hash changes, detach and deletion reject stale read descriptors
+PASS 6: new RPC and resolver remain inaccessible to browser roles
+PASS 7: read capability requires DB functions/readiness; disabled media rejects variant reads
+PASS 7 descriptor/SQL/compatibility groups

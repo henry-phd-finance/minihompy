@@ -1,0 +1,2 @@
+PASS: v2 exchange retains separate renewal credential and Retry-After without discarding it
+PASS: concurrent renewal is shared and a late response cannot restore revoked credentials

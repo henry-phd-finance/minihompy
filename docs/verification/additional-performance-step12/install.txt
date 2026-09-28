@@ -1,0 +1,3 @@
+PASS 1: actual fresh install applies all 40 migrations; second install and upgrade check preserve content and ledger
+PASS 2: fresh install exposes both service-only variant capabilities; browser metadata access remains denied
+PASS 3: existing migration hash drift rejects replay

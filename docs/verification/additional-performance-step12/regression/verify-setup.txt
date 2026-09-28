@@ -1,0 +1,1 @@
+PASS: dry-run isolation, public-key/input validation, migration fail-stop, no untracked DB replay, Auth owner proof, pending/verify/reverify, same site ID, retry after consumption, private data confinement.

@@ -1,0 +1,9 @@
+PASS 1: old-schema-compatible dry run performs real Worker conversion, exact byte estimate, GIF skip, zero server/journal writes
+PASS 2: apply/lost upload ACK/replay; completed variant verified without regeneration; original bytes/posts unchanged
+PASS 3: interrupted uploaded reservation resumes from private staged bytes without duplicate objects
+PASS 4: deletion during upload never completes; live lease preserved; expired temporary derivative alone cleaned on resume
+PASS 5: source replacement between conversion and reserve is rejected, with no derivative attached to changed source
+PASS 6: project binding, byte budget and cancellation stop safely; original hashes preserved
+PASS 7: expired orphan reservation recovered by journal source/output hash; fresh immutable variant succeeds
+PASS 8: cancellation at reserve persists recovery binding; resumed run completes exactly once
+PASS 9: deleted source plus lost reservation journal recovers only matching orphan and cleans staged output after lease

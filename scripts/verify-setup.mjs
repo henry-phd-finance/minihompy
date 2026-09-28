@@ -56,6 +56,7 @@ try {
   await cp(new URL('./build-pages.mjs',import.meta.url),join(root,'scripts/build-pages.mjs'));
   await mkdir(join(root,'setup'),{recursive:true});
   await cp(new URL('../setup/friend-visibility-release.mjs',import.meta.url),join(root,'setup/friend-visibility-release.mjs'));
+  await cp(new URL('../author-visit.html',import.meta.url),join(root,'author-visit.html'));
   const requiredRuntime=['content-access.js','member-writing-client.js','member-writing-runtime.js','photos-repository.js','photo-media-client.js','post-location-repository.js'];
   await writeFile(join(root,'index.html'),requiredRuntime.map(name=>`<script src="${name}"></script>`).join(''));
   for(const name of requiredRuntime)await cp(new URL('../'+name,import.meta.url),join(root,name));

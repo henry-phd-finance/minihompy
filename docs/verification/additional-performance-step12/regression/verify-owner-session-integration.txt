@@ -1,0 +1,6 @@
+PASS 1: real admin/content/visitor modules share initial verification; repeated queries still execute
+PASS 2: refreshed token used without remote owner recheck or identity reset
+PASS 3: item-level denial rechecks once, retains valid owner, no reload loop
+PASS 4: revoked owner removes UI authorization and denies write context
+PASS 5: other-tab sign-in/out invalidates old query context synchronously
+PASS 6: stale denied query cannot invalidate the newly signed-in account
