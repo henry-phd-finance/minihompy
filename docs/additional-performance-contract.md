@@ -74,7 +74,7 @@ Step 5에서 정적 `author-visit.html?member_id=<UUID>` 중계 페이지를 추
 
 ## 6. API·권한 hash·호환성
 
-기존 `friend_media_protocol:1`, `photo_check_protocol:1`과 원본 upload/read 계약을 유지한다. 새 health는 DB와 서버가 모두 준비됐을 때만 `photo_variant_protocol:1`, `photo_variant_recipe:'display-v1'`를 추가한다. 조회 집계의 v1 형식을 바꾸지 않는다.
+기존 `friend_media_protocol:1`, `photo_check_protocol:1`과 원본 upload/read 계약을 유지한다. 새 health는 DB와 서버가 모두 준비됐을 때만 `photo_variant_protocol:1`, `photo_variant_recipe:'display-v1'`를 추가한다. 조회 집계의 v1 형식을 바꾸지 않는다. Step 8은 읽기 준비를 별도 `photo_variant_read_protocol:1`로 알린다. Step 7의 생성 전용 서버도 photo_variant_protocol을 제공하므로, 새 photo-check/representation 읽기는 반드시 read capability까지 확인한다.
 
 ### 생성과 정리 (Step 7)
 

@@ -1,3 +1,4 @@
+import {validPath} from '../photo-media/io.js';
 import {isAggregate,aggregateInput,aggregateOutput} from './aggregate-schema.js';
 import {authenticateMember,authenticateOwner,tokenHash} from './handler.js';
 const UUID=/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
@@ -33,9 +34,10 @@ export async function rpc(db,name,args,signal){const r=await db.rpc(name,args,si
 function input(action,b,mode){
  if(action==='photo-check'){
   const scope=b.scope??(mode==='public'?'public':'visible');
-  if(Object.keys(b).some(k=>!['posts','scope'].includes(k))||!['public','visible'].includes(scope)||mode==='public'&&scope!=='public'||!Array.isArray(b.posts)||b.posts.length<1||b.posts.length>2)fail('BAD_REQUEST');
+  if(Object.keys(b).some(k=>!['posts','scope','variant'].includes(k))||!['public','visible'].includes(scope)||mode==='public'&&scope!=='public'||!Array.isArray(b.posts)||b.posts.length<1||b.posts.length>2)fail('BAD_REQUEST');
+  if('variant'in b&&b.variant!=='display-v1')fail('BAD_REQUEST');
   const posts=b.posts.map(p=>{if(!p||Object.keys(p).length!==2||typeof p.id!=='string'||!UUID.test(p.id)||!Number.isSafeInteger(p.revision)||p.revision<1)fail('BAD_REQUEST');return {id:p.id.toLowerCase(),revision:p.revision};});
-  if(new Set(posts.map(p=>p.id)).size!==posts.length)fail('BAD_REQUEST');return {scope,selectors:{posts}};
+  if(new Set(posts.map(p=>p.id)).size!==posts.length)fail('BAD_REQUEST');return {scope,selectors:{posts,...('variant'in b?{variant:b.variant}:{})}};
  }
  if(isAggregate(action))return aggregateInput(action,b,mode);
  const allowed=action==='list'?['kind','folder_id','month','page','size','scope','date','latest']:['kind','id','scope'];
@@ -80,7 +82,17 @@ function output(d,mode,scope,friend,action,s){
  if(action==='photo-check'){
   const items=d.data?.items;
   if(!Array.isArray(items)||items.length!==s.posts.length||items.some((p,i)=>!p||p.id!==s.posts[i].id||typeof p.valid!=='boolean'))fail('IDENTITY_UNAVAILABLE');
-  return {protocol:1,view:{mode,scope,includes_friends:d.view.includes_friends},data:{items:items.map(({id,valid})=>({id,valid}))}};
+  const clean=items.map(({id,valid,photos},i)=>{
+   if(!s.variant)return {id,valid};
+   if(!Array.isArray(photos)||photos.length>20||!valid&&photos.length||new Set(photos.map(p=>p?.path)).size!==photos.length)fail('IDENTITY_UNAVAILABLE');
+   return {id,valid,photos:photos.map(p=>{
+    if(!p||p.post_id!==id||p.revision!==s.posts[i].revision||!validPath(id,p.path)||typeof p.source_sha256!=='string'||!/^[0-9a-f]{64}$/.test(p.source_sha256))fail('IDENTITY_UNAVAILABLE');
+    let representation=null;
+    if(p.representation!==null){const r=p.representation;if(!r||r.kind!=='display-v1'||typeof r.sha256!=='string'||!/^[0-9a-f]{64}$/.test(r.sha256)||![r.width,r.height].every(n=>Number.isInteger(n)&&n>=1&&n<=1200)||!Number.isInteger(r.size)||r.size<1||r.size>=6291456)fail('IDENTITY_UNAVAILABLE');representation={kind:r.kind,sha256:r.sha256,width:r.width,height:r.height,size:r.size};}
+    return {post_id:id,revision:p.revision,path:p.path,source_sha256:p.source_sha256,representation};
+   })};
+  });
+  return {protocol:1,view:{mode,scope,includes_friends:d.view.includes_friends},data:{items:clean}};
  }
  if(isAggregate(action))return {protocol:1,view:{mode,scope,includes_friends:d.view.includes_friends},data:aggregateOutput(d.data,action,s)};
  const row=p=>{
@@ -121,13 +133,13 @@ export async function contentRead(req,c,mode,path,reply){
   const action=path.slice('/content/'.length);
   if(action==='health'){
    if(req.method!=='GET')fail('METHOD_NOT_ALLOWED');if(mode!=='public'||new URL(req.url).search)fail('BAD_REQUEST');
-   const s=ready(await rpc(c.db,'friend_visibility_status',{}));const keys=['friend_visibility_protocol','friend_visibility_ready','friend_media_ready','friend_summary_ready','friend_pages_ready'];return reply(200,{...Object.fromEntries(keys.map(k=>[k,s[k]])),friend_visibility_setup_protocol:1,...(s.diary_latest_protocol===1?{diary_latest_protocol:1}:{}),...(s.photo_check_protocol===1?{photo_check_protocol:1}:{})},headers);
+   const s=ready(await rpc(c.db,'friend_visibility_status',{}));const keys=['friend_visibility_protocol','friend_visibility_ready','friend_media_ready','friend_summary_ready','friend_pages_ready'];return reply(200,{...Object.fromEntries(keys.map(k=>[k,s[k]])),friend_visibility_setup_protocol:1,...(s.diary_latest_protocol===1?{diary_latest_protocol:1}:{}),...(s.photo_check_protocol===1?{photo_check_protocol:1}:{}),...(s.photo_variant_read_protocol===1?{photo_variant_protocol:1,photo_variant_recipe:'display-v1',photo_variant_read_protocol:1}:{})},headers);
   }
   if(!['list','detail','photo-check'].includes(action)&&!isAggregate(action))fail('NOT_FOUND');if(req.method!=='POST')fail('METHOD_NOT_ALLOWED');
   if(new URL(req.url).search||req.headers.get('Content-Type')?.split(';')[0].trim().toLowerCase()!=='application/json')fail('BAD_REQUEST');
   const b=await bounded(signal=>json(req,8192,signal),req.signal,5000),{scope,selectors}=input(action,b,mode);
   const state=ready(await rpc(c.db,'friend_visibility_status',{}));
-  if(action==='photo-check'&&state.photo_check_protocol!==1)fail('NOT_CONFIGURED');
+  if(action==='photo-check'&&(state.photo_check_protocol!==1||selectors.variant&&state.photo_variant_read_protocol!==1))fail('NOT_CONFIGURED');
   let auth={},verified,check=()=>{if(req.signal.aborted)fail('IDENTITY_UNAVAILABLE');},friend=false;
   if(mode==='member'){
    if(!state.friend_visibility_ready)fail('NOT_CONFIGURED');

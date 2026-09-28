@@ -1,10 +1,11 @@
+import {validateRepresentation,selectedPath,verifyBytes,sameSelection} from './representation.js';
 import {uploadVariant,cleanupVariants} from './variants.js';
 import {memberDb,memberPhotoRead} from './member-read.js';
 import {bounded} from '../member-writing/content-read.js';
 import {authenticateOwner} from '../member-writing/handler.js';
 import {adapters,BUCKET,MAX_BYTES,bytesOf,digest,imageType,validPath,immutableCopy,fail} from './io.js';
 const statuses={VARIANTS_PENDING:409,SOURCE_CHANGED:409,LEASE_EXPIRED:409,INTEGRITY_FAILED:409,NOT_READY:503,SESSION_EXPIRED:401,SESSION_REVOKED:401,TARGET_MISMATCH:403,READ_CONTEXT_EXPIRED:503,NOT_CONFIGURED:503,IDENTITY_UNAVAILABLE:503,BAD_REQUEST:400,BAD_IMAGE:400,AUTH_REQUIRED:401,FORBIDDEN:403,NOT_FOUND:404,REQUEST_CONFLICT:409,IN_USE:409,UPLOAD_PENDING:409,TOO_LARGE:413,RATE_LIMITED:429,REQUEST_TIMEOUT:408};
-export async function handlePhotoMedia(req,{env=globalThis.Deno?.env.toObject()||{},fetcher=fetch,rpc,variantRpc,variantStatus,storage,db,bodyTimeout=15000}={}){
+export async function handlePhotoMedia(req,{env=globalThis.Deno?.env.toObject()||{},fetcher=fetch,rpc,variantRpc,variantStatus,representationRpc,storage,db,bodyTimeout=15000}={}){
  const headers={'Content-Type':'application/json','Cache-Control':'private, no-store','X-Content-Type-Options':'nosniff',Vary:'Origin, Authorization, X-Minihompy-Auth-Mode','Access-Control-Allow-Methods':'GET, POST, OPTIONS','Access-Control-Allow-Headers':'Content-Type, Authorization, apikey, X-Minihompy-Auth-Mode'};
  const reply=(status,data)=>new Response(JSON.stringify(data),{status,headers});
  try{
@@ -19,7 +20,7 @@ export async function handlePhotoMedia(req,{env=globalThis.Deno?.env.toObject()|
    if(req.method!=='GET')return reply(405,{error:{code:'METHOD_NOT_ALLOWED'}});
    if(req.headers.has('Authorization')||new URL(req.url).search||req.headers.get('X-Minihompy-Auth-Mode')!=='public')fail('BAD_REQUEST');
    if(!env.SUPABASE_SERVICE_ROLE_KEY||!env.MINIHOMPY_SITE_ID||!env.MINIHOMPY_CENTRAL_API_URL||!env.SUPABASE_URL)fail('NOT_CONFIGURED');
-   let capability={};try{const v=await (variantStatus||adapters({projectUrl:env.SUPABASE_URL,serviceKey:env.SUPABASE_SERVICE_ROLE_KEY,fetcher}).variantStatus)();if(v.photo_variant_protocol===1&&v.photo_variant_recipe==='display-v1')capability={photo_variant_protocol:1,photo_variant_recipe:'display-v1'};}catch{}
+   let capability={};try{const v=await (variantStatus||adapters({projectUrl:env.SUPABASE_URL,serviceKey:env.SUPABASE_SERVICE_ROLE_KEY,fetcher}).variantStatus)();if(v.photo_variant_protocol===1&&v.photo_variant_recipe==='display-v1')capability={photo_variant_protocol:1,photo_variant_recipe:'display-v1',...(v.photo_variant_read_protocol===1?{photo_variant_read_protocol:1}:{})};}catch{}
    return reply(200,{...capability,friend_media_protocol:1,friend_visibility_setup_protocol:1,site_id:env.MINIHOMPY_SITE_ID,central_api_url:env.MINIHOMPY_CENTRAL_API_URL,project_url:env.SUPABASE_URL});
   }
   if(req.method!=='POST')return reply(405,{error:{code:'METHOD_NOT_ALLOWED'}});
@@ -50,7 +51,8 @@ export async function handlePhotoMedia(req,{env=globalThis.Deno?.env.toObject()|
    if(!req.headers.get('Content-Type')?.startsWith('application/json'))fail('BAD_REQUEST');
    try{args=JSON.parse(new TextDecoder('utf-8',{fatal:true}).decode(raw));}catch{fail('BAD_REQUEST');}
    if(!args||Array.isArray(args)||typeof args!=='object')fail('BAD_REQUEST');
-   if(Object.keys(args).sort().join(',')!==(path==='/read'?'path,post_id':'paths'))fail('BAD_REQUEST');
+   if(Object.keys(args).sort().join(',')!==(path==='/read'?('representation'in args?'path,post_id,representation':'path,post_id'):'paths'))fail('BAD_REQUEST');
+   if('representation'in args)validateRepresentation(args.representation);
   }
   if(path==='/cleanup'){
    if(!Array.isArray(args.paths)||args.paths.length<1||args.paths.length>20||new Set(args.paths).size!==args.paths.length
@@ -75,11 +77,12 @@ export async function handlePhotoMedia(req,{env=globalThis.Deno?.env.toObject()|
    return reply(200,{path:args.path});
   }
   if(mode==='member')return await memberPhotoRead(req,{env,fetcher,db:db||memberDb({projectUrl,serviceKey:env.SUPABASE_SERVICE_ROLE_KEY,fetcher,signal:req.signal}),storage,args,headers});
-  const read=async()=>{const a=await rpc('read',{...args,owner_id:uid?await owner():null});if(a.failure)fail(a.failure);return a;};
-  const a=await read();bytes=await bounded(signal=>storage.get(BUCKET,args.path,signal),req.signal,30000);
-  if(bytes.length!==a.size||imageType(bytes,args.path)!==a.mime||await digest(bytes)!==a.sha256)fail('INTEGRITY_FAILURE');
+  const reader=args.representation?(representationRpc||adapters({projectUrl,serviceKey:env.SUPABASE_SERVICE_ROLE_KEY,fetcher,rpcName:'photo_representation_read'}).rpc):rpc;
+  const read=async()=>{const a=await reader('read',{...args,owner_id:uid?await owner():null});if(a.failure)fail(a.failure);return a;};
+  const a=await read();bytes=await bounded(signal=>storage.get(BUCKET,selectedPath(a,args),signal),req.signal,30000);
+  await verifyBytes(bytes,a,args);
   const latest=await read();
-  if(latest.sha256!==a.sha256)fail('NOT_FOUND');
+  sameSelection(a,latest,args);
   return new Response(bytes,{status:200,headers:{...headers,'Content-Type':a.mime,'Content-Length':String(bytes.length)}});
  }catch(e){if(e.code==='RATE_LIMITED')headers['Retry-After']=String(e.retryAfter||1);return reply(statuses[e.code]||503,{error:{code:statuses[e.code]?e.code:'UNAVAILABLE'}});}
 }

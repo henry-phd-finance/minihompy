@@ -1,6 +1,6 @@
 # 홈·회원 조회·사진 전송 추가 성능 개선 계획
 
-작성: 2026-09-27. Step 1~7 완료(2026-09-28), Step 8~13 미착수. 사용자가 요청한 단계만 순서대로 실행한다.
+작성: 2026-09-27. Step 1~8 완료(2026-09-28), Step 9~13 미착수. 사용자가 요청한 단계만 순서대로 실행한다.
 
 이전 [메뉴 로딩 개선 8단계](menu-loading-performance-plan.md)는 완료된 작업으로 유지한다. 이번 계획은 이후 추가된 인삿말 HISTORY와 일촌평 내역을 포함한 현재 배포본을 출발점으로 삼는다.
 
@@ -139,7 +139,9 @@
 
 ## Step 8 — 표시용 사진의 보호된 서버 읽기
 
-상태: 미착수. 선행: Step 1~7.
+상태: 완료(2026-09-28). 선행: Step 1~7 완료 확인.
+
+결과: [Step 8 구현·검증](verification/additional-performance-step8/README.md). 권한별 photo-check descriptor와 public/owner/member 파생 읽기, 전체 선택 정보의 중앙 hash 바인딩, 다운로드 전후 연결·권한·무결성 검사를 구현했다. 파생 API 15개, descriptor/호환성 7개, PostgreSQL 경합 5개 및 원본 회귀 통과. 화면 연결·운영 배포는 하지 않았다.
 
 - photo-media의 public/owner/member 읽기에서 원본 경로와 허용된 variant 식별자로만 준비된 표시용 파일을 선택한다. 클라이언트 임의 Storage 경로는 받지 않는다.
 - 원본 게시글 권한·일촌 관계·현재 revision/파일 연결 검증을 파생본에도 적용한다. 회원 read-context 및 다운로드 전후 검사에 선택한 파일과 변환 버전을 포함한다.

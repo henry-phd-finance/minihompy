@@ -113,7 +113,7 @@ Step 1 정책: 비회원 작성과 기존 익명 글 소유권을 유지한다. 
 
 ## 추가 성능 개선
 
-실행 계획: [홈·회원 조회·사진 전송 추가 성능 개선 13단계](additional-performance-plan.md). Step 1 기준 측정·계약, Step 2 관계 health 공유, Step 3 진행 중 관계 상태 조회 공유, Step 4 홈 갱신 이벤트 묶기, Step 5 작성자 표시 조회 공유·최신 주소 이동 중계, Step 6 표시용 사진 DB·수명주기, Step 7 신규 업로드 파생 생성 완료. Step 8~13 미착수. [Step 7 검증](verification/additional-performance-step7/README.md). [Step 6 검증](verification/additional-performance-step6/README.md). [Step 5 검증](verification/additional-performance-step5/README.md). [Step 4 검증](verification/additional-performance-step4/README.md). [Step 3 검증](verification/additional-performance-step3/README.md). [Step 2 검증](verification/additional-performance-step2/README.md). [측정 결과와 초기 인증 실패 기록](verification/additional-performance-step1/README.md). 기존 메뉴 로딩 개선 8단계의 후속이며, 요청한 Step만 순차 실행한다.
+실행 계획: [홈·회원 조회·사진 전송 추가 성능 개선 13단계](additional-performance-plan.md). Step 1 기준 측정·계약, Step 2 관계 health 공유, Step 3 진행 중 관계 상태 조회 공유, Step 4 홈 갱신 이벤트 묶기, Step 5 작성자 표시 조회 공유·최신 주소 이동 중계, Step 6 표시용 사진 DB·수명주기, Step 7 신규 업로드 파생 생성, Step 8 보호된 파생본 서버 읽기 완료. Step 9~13 미착수. [Step 8 검증](verification/additional-performance-step8/README.md). [Step 7 검증](verification/additional-performance-step7/README.md). [Step 6 검증](verification/additional-performance-step6/README.md). [Step 5 검증](verification/additional-performance-step5/README.md). [Step 4 검증](verification/additional-performance-step4/README.md). [Step 3 검증](verification/additional-performance-step3/README.md). [Step 2 검증](verification/additional-performance-step2/README.md). [측정 결과와 초기 인증 실패 기록](verification/additional-performance-step1/README.md). 기존 메뉴 로딩 개선 8단계의 후속이며, 요청한 Step만 순차 실행한다.
 
 - [ ] 관계 health 및 동일한 방문자/주인 관계 조회 공유.
 - [ ] 홈 갱신 이벤트 묶기와 작성자 공개 프로필 조회 공유.

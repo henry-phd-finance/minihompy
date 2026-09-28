@@ -1,3 +1,4 @@
+import {readFile} from 'node:fs/promises';
 import {createServer} from 'node:http';
 import {handlePhotoMedia} from '../supabase/functions/photo-media/handler.js';
 import {digest,BUCKET} from '../supabase/functions/photo-media/io.js';
@@ -11,6 +12,8 @@ import {sha256,randomSecret} from '../../minihompy-central/supabase/functions/_s
 import {signToken} from '../../minihompy-central/supabase/functions/_shared/tokens.js';
 import {handleMemberWriting,tokenHash} from '../supabase/functions/member-writing/handler.js';
 import {memberWritingDb} from './helpers/member-writing-db.mjs';
+const variants=process.env.MINIHOMPY_TEST_VARIANT_READ==='1';
+const webp=new Uint8Array(Buffer.from('UklGRiIAAABXRUJQVlA4IBYAAAAwAQCdASoBAAEADsD+JaQAA3AAAAAA','base64'));
 const centralUrl='https://central.test/functions/v1/identity-api',secret='integration-fixture-only-secret-at-least-32-characters';
 const central=await createIdentityDb(),homes={};let groups=0,centralDown=false,centralCalls=0,readChecks=0,mutateContext=null,afterContext=null,afterRead=null,dbTransform=null,oldDb=false,centralReply=null;
 const options={supabaseClient:central.db,centralSecret:secret,allowedOrigins:new Set(['https://m1.test','https://m2.test']),transportPeerIp:'127.0.0.1'};
@@ -69,22 +72,31 @@ try{
 
  const png=new Uint8Array(Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+jRZkAAAAASUVORK5CYII=','base64'));
  for(const h of Object.values(homes))await h.pg.query('update private.photo_assets set size=$1,sha256=$2',[png.length,await digest(png)]);
+ if(variants)for(const h of Object.values(homes)){
+  for(const f of ['202609280001_photo_asset_variants.sql','202609280002_photo_variant_status.sql','202609280003_photo_variant_reads.sql'])await h.pg.exec(await readFile('supabase/migrations/'+f,'utf8'));
+  for(const n of [0,1,2]){
+   const path=post('photos',n)+'/'+id(999)+'.png',args={owner_id:h.owner,path,post_id:post('photos',n),source_sha256:await digest(png),recipe:'display-v1',sha256:await digest(webp),size:webp.length,mime:'image/webp',width:1,height:1};
+   const run=async(action,args)=>(await h.pg.query('select public.photo_variant($1,$2) v',[action,args])).rows[0].v;
+   const v=await run('reserve',args);assert(!v.failure,JSON.stringify(v));const binding={...args,id:v.id,operation_id:v.operation_id};await run('upload_confirm',binding);assert.equal((await run('complete',binding)).state,'ready');
+  }
+ }
  const path=n=>post('photos',n)+'/'+id(999)+'.png';let afterGet,reads=0,badBytes=false,lastRpc;
- const storage={get:async(bucket,p,signal)=>{assert.equal(bucket,BUCKET);assert.ok(signal);reads++;if(afterGet){const f=afterGet;afterGet=null;await f(signal);}return badBytes?new Uint8Array([1,2]):png.slice();}};
+ const storage={get:async(bucket,p,signal)=>{assert.equal(bucket,BUCKET);assert.ok(signal);reads++;if(afterGet){const f=afterGet;afterGet=null;await f(signal);}return badBytes?new Uint8Array([1,2]):p.startsWith('variants/')?webp.slice():png.slice();}};
  const photo=async(n=1,{token=ab,mode='member',status=200,body,home=2,action='read',extra={},override={}}={})=>{
   const h=homes[home],headers={Origin:h.config.MINIHOMPY_SITE_ORIGIN,'X-Minihompy-Auth-Mode':mode,...extra};
-  const req=request(h.config.SUPABASE_URL+'/functions/v1/photo-media/'+action,body||{post_id:post('photos',n),path:path(n)},token,headers);
-  const response=await handlePhotoMedia(req,{env:{...h.config,SUPABASE_SERVICE_ROLE_KEY:'fixture'},fetcher,storage,db:{rpc:async(name,args)=>{const r=await h.db.rpc(name,args);if(lastRpc&&name==='member_photo_read'){const f=lastRpc;lastRpc=null;await f();}return r;}},rpc:async(action,args)=>(await h.pg.query('select public.photo_media($1,$2) r',[action,args])).rows[0].r,...override});
+  const selectors=body||{post_id:post('photos',n),path:path(n),...(variants&&action==='read'?{representation:{kind:'display-v1',source_sha256:await digest(png),sha256:await digest(webp),revision:(await h.pg.query('select revision from public.photo_posts where id=$1',[post('photos',n)])).rows[0]?.revision||1}}:{})};
+  const req=request(h.config.SUPABASE_URL+'/functions/v1/photo-media/'+action,selectors,token,headers);
+  const response=await handlePhotoMedia(req,{env:{...h.config,SUPABASE_SERVICE_ROLE_KEY:'fixture'},fetcher,storage,representationRpc:async(action,args)=>(await h.pg.query('select public.photo_representation_read($1,$2) v',[action,args])).rows[0].v,db:{rpc:async(name,args)=>{const r=await h.db.rpc(name,args);if(lastRpc&&name==='member_photo_read'){const f=lastRpc;lastRpc=null;await f();}return r;}},rpc:async(action,args)=>(await h.pg.query('select public.photo_media($1,$2) r',[action,args])).rows[0].r,...override});
   assert.equal(response.status,status,status===200?await response.clone().text():JSON.stringify(await response.clone().json()));
   assert.equal(response.headers.get('Cache-Control'),'private, no-store');assert.equal(response.headers.get('Vary'),'Origin, Authorization, X-Minihompy-Auth-Mode');
-  if(status===200){assert.deepEqual(new Uint8Array(await response.arrayBuffer()),png);assert.equal(response.headers.get('Content-Type'),'image/png');}return response;
+  if(status===200){assert.deepEqual(new Uint8Array(await response.arrayBuffer()),selectors.representation?webp:png);assert.equal(response.headers.get('Content-Type'),selectors.representation?'image/webp':'image/png');}return response;
  };
  await check('nonfriend/pending/public denied before file fetch; accepted request verifies twice and sends actual PNG bytes',async()=>{
   await photo(1,{status:404});await photo(1,{token:null,mode:'public',status:404});assert.equal(reads,0);
   await act(2,ab,2,'request');await photo(1,{status:404});await act(1,ba,1,'accept');const before=readChecks;await photo();assert.equal(readChecks,before+2);
  });
  await check('public, owner and private boundaries; no member upload or cleanup, no credential downgrade',async()=>{
-  await photo(0,{token:null,mode:'public'});await photo(2,{status:404});await photo(2,{token:'owner.valid.jwt',mode:'owner'});
+  await photo(0,{token:null,mode:'public'});if(variants)await photo(1,{body:{post_id:post('photos',1),path:path(1)}});await photo(2,{status:404});await photo(2,{token:'owner.valid.jwt',mode:'owner'});
   await photo(1,{action:'upload',status:403});await photo(1,{action:'cleanup',status:403});await photo(1,{token:'owner.valid.jwt',status:401});await photo(1,{mode:'owner',status:401});await photo(1,{mode:'public',status:400});
  });
  await check('post/path, site token, browser context injection, range and wrong origin fail closed',async()=>{
@@ -118,11 +130,11 @@ try{
   const r=await handlePhotoMedia(req,{env:{...h.config,SUPABASE_SERVICE_ROLE_KEY:'fixture'},fetcher,db:h.db,storage:{get:async(bucket,path,signal)=>{seen=signal;controller.abort();return new Promise(()=>{});}}});assert.equal(r.status,503);assert.equal(seen.aborted,true);
  });
  await check('production service RPC and Storage adapters over loopback HTTP return real bytes without URL/sign/transform',async()=>{
-  const seen=[],h=homes[2];
+  const seen=[],h=homes[2];const expectedPath=variants?(await h.pg.query('select storage_path from private.photo_asset_variants where source_path=$1',[path(1)])).rows[0].storage_path:path(1);
   const server=createServer(async(req,res)=>{try{
    assert.equal(req.headers.authorization,'Bearer fixture');seen.push(req.url);
    if(req.url.startsWith('/rest/v1/rpc/')){let text='';for await(const chunk of req)text+=chunk;const value=await h.db.rpc(req.url.split('/').at(-1),JSON.parse(text));res.setHeader('Content-Type','application/json');res.end(JSON.stringify(value.data));}
-   else{assert.equal(req.url,'/storage/v1/object/authenticated/'+BUCKET+'/'+path(1));res.setHeader('Content-Type','image/png');res.end(png);}
+   else{assert.equal(req.url,'/storage/v1/object/authenticated/'+BUCKET+'/'+expectedPath);res.setHeader('Content-Type',variants?'image/webp':'image/png');res.end(variants?webp:png);}
   }catch(e){res.statusCode=500;res.end('{}');}});
   await new Promise(r=>server.listen(0,'127.0.0.1',r));
   try{const bridge=(url,init)=>url.startsWith(h.config.SUPABASE_URL)?fetch('http://127.0.0.1:'+server.address().port+url.slice(h.config.SUPABASE_URL.length),init):fetcher(url,init);
@@ -130,5 +142,36 @@ try{
    assert.equal(seen.filter(x=>x.endsWith('/member_photo_read')).length,2);assert.equal(seen.filter(x=>x.startsWith('/storage/')).length,1);assert.ok(seen.every(x=>!x.includes('/sign/')&&!x.includes('/public/')&&!x.includes('/render/')&&!x.includes('/list/')));
   }finally{server.closeAllConnections();await new Promise(r=>server.close(r));}
  });
- console.log(`All ${groups} friend photo central/personal API groups passed; actual PNG bytes, local Storage and Auth fixtures, no hosted writes.`);
+ if(variants){
+  await check('actual member photo-check returns authorized descriptors with a central hash-bound variant selector',async()=>{
+   const h=homes[2],posts=await Promise.all([0,1].map(async n=>({id:post('photos',n),revision:(await h.pg.query('select revision from public.photo_posts where id=$1',[post('photos',n)])).rows[0].revision})));
+   const before=readChecks,r=await call(2,'/content/photo-check',{posts,variant:'display-v1'},ab);
+   assert.equal(readChecks,before+1);assert(r.data.data.items.every(p=>p.valid&&p.photos.length===1&&p.photos[0].representation.kind==='display-v1'));assert(!JSON.stringify(r.data).includes('storage_path'));
+   const hidden=await call(2,'/content/photo-check',{posts,variant:'display-v1'},cb);assert.deepEqual(hidden.data.data.items[1].photos,[]);
+  });
+  await check('variant state/hash/metadata changed while buffered refuses bytes without original fallback',async()=>{
+   const h=homes[2];
+   for(const [column,value,restore] of [['state','deleting','ready'],['sha256','f'.repeat(64),await digest(webp)],['width',2,1]]){
+    const before=reads;afterGet=()=>h.pg.query('update private.photo_asset_variants set '+column+'=$1 where source_path=$2',[value,path(1)]);
+    await photo(1,{status:404});assert.equal(reads,before+1);await h.pg.query('update private.photo_asset_variants set '+column+'=$1 where source_path=$2',[restore,path(1)]);
+   }
+  });
+  await check('wrong internal Storage path and old DB read capability fail before fetch; central context replay rejected',async()=>{
+   const h=homes[2];let before=reads;
+   await photo(1,{status:503,override:{db:{rpc:async(name,args)=>{const r=await h.db.rpc(name,args);return name==='member_photo_read'?{...r,data:{...r.data,storage_path:'variants/another-post/file.webp'}}:r;}}}});assert.equal(reads,before);
+   await photo(1,{status:503,override:{db:{rpc:async(name,args)=>{const r=await h.db.rpc(name,args);return name==='friend_visibility_status'?{...r,data:{...r.data,photo_variant_read_protocol:undefined}}:r;}}}});assert.equal(reads,before);
+   let previous;mutateContext=d=>{previous=d;return d;};await photo();mutateContext=()=>previous;await photo(1,{status:403});mutateContext=null;
+  });
+  await check('public privacy change and owner revocation while buffering discard variant bytes',async()=>{
+   const h=homes[2];afterGet=async()=>{await h.pg.query("select set_config('request.jwt.claim.sub',$1,false)",[h.owner]);await h.pg.query("update public.photo_posts set visibility='private' where id=$1",[post('photos',0)]);};
+   await photo(0,{token:null,mode:'public',status:404});await h.pg.query("update public.photo_posts set visibility='public' where id=$1",[post('photos',0)]);
+   afterGet=()=>h.pg.query('delete from private.minihompy_admins where user_id=$1',[h.owner]);await photo(2,{token:'owner.valid.jwt',mode:'owner',status:403});await h.pg.query('insert into private.minihompy_admins values($1)',[h.owner]);
+  });
+  await check('representation input schema rejects null, extra keys and arbitrary Storage paths',async()=>{
+   const base={post_id:post('photos',1),path:path(1)},representation={kind:'display-v1',sha256:await digest(webp),source_sha256:await digest(png),revision:1};
+   for(const r of [null,{}, {...representation,kind:'display-v2'},{...representation,revision:0},{...representation,storage_path:'anything'}])await photo(1,{body:{...base,representation:r},status:400});
+   await photo(1,{body:{...base,path:'variants/'+base.post_id+'/'+id(44)+'.webp',representation},status:400});
+  });
+ }
+ console.log(`All ${groups} friend photo central/personal API groups passed; actual ${variants?'WebP variant':'PNG original'} bytes, local Storage and Auth fixtures, no hosted writes.`);
 }finally{for(const h of Object.values(homes))await h.pg.close();await central.pg.close();}

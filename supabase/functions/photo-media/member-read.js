@@ -1,5 +1,6 @@
+import {selectedPath,verifyBytes,sameSelection} from './representation.js';
 import {authorize,bounded,contentTransport,ready,rpc} from '../member-writing/content-read.js';
-import {BUCKET,MAX_BYTES,digest,imageType,bytesOf,fail} from './io.js';
+import {BUCKET,MAX_BYTES,bytesOf,fail} from './io.js';
 // Named service RPC adapter, never a browser-facing DB proxy.
 export function memberDb({projectUrl,serviceKey,fetcher,signal}){
  return {rpc:(name,args)=>{
@@ -20,18 +21,18 @@ export async function memberPhotoRead(req,{env,fetcher,db,storage,args,headers})
   try{const u=new URL(centralUrl);if(u.protocol!=='https:'||u.username||u.password||u.hash||u.search||u.href.replace(/\/$/,'')!==centralUrl)throw Error();}catch{fail('NOT_CONFIGURED');}
   const c={siteId,centralUrl,...contentTransport(req,db,fetcher)};
   const check=async()=>{
-   const state=ready(await rpc(c.db,'friend_visibility_status',{}));if(!state.friend_visibility_ready)fail('NOT_CONFIGURED');
+   const state=ready(await rpc(c.db,'friend_visibility_status',{}));if(!state.friend_visibility_ready||args.representation&&state.photo_variant_read_protocol!==1)fail('NOT_CONFIGURED');
    const proof=await authorize(req,c,state,'visible',args,'read','photo');
    const a=await bounded(s=>rpc(c.db,'member_photo_read',{p_action:'read',p_args:{site_id:siteId,mode:'member',scope:'visible',selectors:args,...proof.args}},s),req.signal,proof.remaining());proof.fence();
    if(a.post_id!==args.post_id||a.path!==args.path||!Number.isInteger(a.size)||a.size<1||a.size>MAX_BYTES||!['image/png','image/jpeg','image/gif','image/webp'].includes(a.mime)||!/^[0-9a-f]{64}$/.test(a.sha256||''))fail('INTEGRITY_FAILURE');
-   return {a,proof};
+   selectedPath(a,args);return {a,proof};
   };
   const first=await check();
-  const bytes=await bounded(s=>storage.get(BUCKET,args.path,s),req.signal,30000);
-  if(!(bytes instanceof Uint8Array)||bytes.length!==first.a.size||imageType(bytes,args.path)!==first.a.mime||await digest(bytes)!==first.a.sha256)fail('INTEGRITY_FAILURE');
+  const bytes=await bounded(s=>storage.get(BUCKET,selectedPath(first.a,args),s),req.signal,30000);
+  await verifyBytes(bytes,first.a,args);
   // A fresh central read context after buffering, not an extension of the first one.
   const last=await check();
-  if(last.a.sha256!==first.a.sha256||last.a.size!==first.a.size||last.a.mime!==first.a.mime)fail('NOT_FOUND');
+  sameSelection(first.a,last.a,args);
   const current=await bounded(s=>rpc(c.db,'member_writing_session',{p_action:'current',p_args:{site_id:siteId,token_hash:last.proof.verified.tokenHash}},s),req.signal,last.proof.remaining());
   if(current.member_id!==last.proof.verified.session.member_id||current.central_session_id!==last.proof.verified.session.central_session_id)fail('TARGET_MISMATCH');
   last.proof.fence();const response=new Response(bytes,{status:200,headers:{...headers,'Content-Type':last.a.mime,'Content-Length':String(bytes.length)}});last.proof.fence();return response;
