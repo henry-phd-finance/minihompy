@@ -52,7 +52,7 @@ const save=n=>actor(owner,()=>pg.query("insert into public.photo_posts(id,folder
 try{
  await pg.query('insert into auth.users values($1),($2)',[owner,other]);await pg.query('insert into private.minihompy_admins values($1)',[owner]);
  folder=(await pg.query('select id from public.photo_folders limit 1')).rows[0].id;
- for(const file of ['202609240004_photo_media.sql','202609240005_photo_media_safeupdate.sql'])await pg.exec(await readFile(new URL('../supabase/migrations/'+file,import.meta.url),'utf8'));
+ for(const file of ['202609240004_photo_media.sql','202609240005_photo_media_safeupdate.sql','202609280001_photo_asset_variants.sql'])await pg.exec(await readFile(new URL('../supabase/migrations/'+file,import.meta.url),'utf8'));
  await check('private registry/service RPC inaccessible; storage restrictive policies deny even permissive grant',async()=>{
   await pg.exec("create policy fixture_allow_all on storage.objects for all to anon,authenticated using(true) with check(true)");
   await pg.query("insert into storage.objects(bucket_id,name) values($1,$2)",[BUCKET,path(10)]);

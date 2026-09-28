@@ -17,7 +17,7 @@ try{
  pool=new pg.Pool(config);for(let i=0;;i++){try{await pool.query('select 1');break;}catch(e){if(i>100)throw e;await sleep(100);}}
  class Adapter{constructor(){this.client=new pg.Client(config);this.ready=this.client.connect();}async query(s,args){await this.ready;return this.client.query(s,args);}exec(s){return this.query(s);}close(){return this.client.end();}}
  fixture=await memberWritingDb(Adapter,{siteId:id(99),centralUrl:'https://central.test/api'});
- await pool.query(await readFile(new URL('../supabase/migrations/202609240004_photo_media.sql',import.meta.url),'utf8'));
+ for(const file of ['202609240004_photo_media.sql','202609240005_photo_media_safeupdate.sql','202609280001_photo_asset_variants.sql'])await pool.query(await readFile(new URL('../supabase/migrations/'+file,import.meta.url),'utf8'));
  await pool.query('insert into auth.users values($1)',[owner]);await pool.query('insert into private.minihompy_admins values($1)',[owner]);
  folder=(await pool.query('select id from public.photo_folders limit 1')).rows[0].id;
  await pool.query("update private.photo_media_state set mode='protected',ready=true");

@@ -1,0 +1,11 @@
+PASS 1: migration preserves existing originals/posts and original read protocol
+PASS 2: browser/service table denial, browser RPC denial, underlying cleanup cannot bypass wrapper
+PASS 3: reservation validates source, smaller WebP and bounded dimensions; immutable server paths
+PASS 4: upload confirmation distinct from ready; digest/metadata/operation/source binding and idempotent completion
+PASS 5: linked files protected; cleanup fences all derivatives and requires individual deletion confirmation
+PASS 6: live upload protected, lease expiry fences completion and supports abandoned upload cleanup
+PASS 7: expired/foreign draft and replaced/detached source cannot complete
+PASS 8: two independent reservations serialize to one operation/path
+PASS 9: completion wins then cleanup fences ready atomically; cleanup wins then late completion fails
+PASS 10: post deletion and owner revocation during wait are checked after acquiring lock
+PASS: 10 PostgreSQL lifecycle/permission/concurrency groups; no hosted Storage conversion or deployment.
