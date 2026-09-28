@@ -1,0 +1,880 @@
+{
+  "at": "2026-09-28T13:15:09.235Z",
+  "summaryAbortSignalForwarded": true,
+  "delaysMs": {
+    "health": 100,
+    "state": 150,
+    "summary": 180,
+    "profiles": 100,
+    "reviews": 80
+  },
+  "samples": [
+    {
+      "scenario": "friend",
+      "case": "concurrent-widgets",
+      "summaryMs": 263,
+      "relationshipMs": 314,
+      "reviewInputMs": 314,
+      "authorsMs": 263,
+      "settled": true,
+      "totalMs": 1359,
+      "requestCount": 15,
+      "responseBodyBytes": 556085,
+      "counts": {
+        "central/navigation/members": 1,
+        "content/summary": 1,
+        "friend-reviews": 1,
+        "relationships/health": 1,
+        "relationships/state": 2,
+        "static:Galmuri11-extended.woff2": 1,
+        "static:author-navigation.js": 1,
+        "static:friend-reviews-repository.js": 1,
+        "static:friend-reviews.js": 1,
+        "static:home-activity.js": 1,
+        "static:home-repository.js": 1,
+        "static:home.js": 1,
+        "static:member-relationships-repository.js": 1,
+        "static:member-relationships.js": 1
+      },
+      "requests": [
+        {
+          "category": "static:member-relationships-repository.js",
+          "method": "GET",
+          "startMs": 6,
+          "endMs": 10,
+          "durationMs": 4,
+          "status": 200,
+          "responseBodyBytes": 7704,
+          "responseHeaderBytes": 72
+        },
+        {
+          "category": "static:friend-reviews-repository.js",
+          "method": "GET",
+          "startMs": 18,
+          "endMs": 20,
+          "durationMs": 2,
+          "status": 200,
+          "responseBodyBytes": 1774,
+          "responseHeaderBytes": 72
+        },
+        {
+          "category": "static:author-navigation.js",
+          "method": "GET",
+          "startMs": 22,
+          "endMs": 24,
+          "durationMs": 2,
+          "status": 200,
+          "responseBodyBytes": 5879,
+          "responseHeaderBytes": 72
+        },
+        {
+          "category": "static:home-repository.js",
+          "method": "GET",
+          "startMs": 26,
+          "endMs": 28,
+          "durationMs": 2,
+          "status": 200,
+          "responseBodyBytes": 2880,
+          "responseHeaderBytes": 72
+        },
+        {
+          "category": "static:member-relationships.js",
+          "method": "GET",
+          "startMs": 29,
+          "endMs": 31,
+          "durationMs": 2,
+          "status": 200,
+          "responseBodyBytes": 9248,
+          "responseHeaderBytes": 72
+        },
+        {
+          "category": "relationships/health",
+          "method": "GET",
+          "startMs": 33,
+          "endMs": 139,
+          "durationMs": 106,
+          "status": 200,
+          "responseBodyBytes": 81,
+          "responseHeaderBytes": 71
+        },
+        {
+          "category": "static:friend-reviews.js",
+          "method": "GET",
+          "startMs": 35,
+          "endMs": 37,
+          "durationMs": 2,
+          "status": 200,
+          "responseBodyBytes": 12824,
+          "responseHeaderBytes": 73
+        },
+        {
+          "category": "static:home-activity.js",
+          "method": "GET",
+          "startMs": 39,
+          "endMs": 41,
+          "durationMs": 2,
+          "status": 200,
+          "responseBodyBytes": 6580,
+          "responseHeaderBytes": 72
+        },
+        {
+          "category": "static:home.js",
+          "method": "GET",
+          "startMs": 42,
+          "endMs": 44,
+          "durationMs": 2,
+          "status": 200,
+          "responseBodyBytes": 2384,
+          "responseHeaderBytes": 72
+        },
+        {
+          "category": "friend-reviews",
+          "method": "GET",
+          "startMs": 48,
+          "endMs": 130,
+          "durationMs": 82,
+          "status": 200,
+          "responseBodyBytes": 570,
+          "responseHeaderBytes": 72
+        },
+        {
+          "category": "content/summary",
+          "method": "POST",
+          "startMs": 49,
+          "endMs": 232,
+          "durationMs": 183,
+          "status": 200,
+          "responseBodyBytes": 172,
+          "responseHeaderBytes": 72
+        },
+        {
+          "category": "static:Galmuri11-extended.woff2",
+          "method": "GET",
+          "startMs": 55,
+          "endMs": 96,
+          "durationMs": 41,
+          "status": 200,
+          "responseBodyBytes": 505396,
+          "responseHeaderBytes": 43
+        },
+        {
+          "category": "central/navigation/members",
+          "method": "GET",
+          "startMs": 139,
+          "endMs": 241,
+          "durationMs": 102,
+          "status": 200,
+          "responseBodyBytes": 539,
+          "responseHeaderBytes": 72
+        },
+        {
+          "category": "relationships/state",
+          "method": "POST",
+          "startMs": 139,
+          "endMs": 293,
+          "durationMs": 154,
+          "status": 200,
+          "responseBodyBytes": 27,
+          "responseHeaderBytes": 71
+        },
+        {
+          "category": "relationships/state",
+          "method": "POST",
+          "startMs": 140,
+          "endMs": 293,
+          "durationMs": 153,
+          "status": 200,
+          "responseBodyBytes": 27,
+          "responseHeaderBytes": 71
+        }
+      ]
+    },
+    {
+      "scenario": "friend",
+      "case": "focus-burst",
+      "summaryMs": 210,
+      "relationshipMs": 159,
+      "reviewInputMs": 159,
+      "authorsMs": 210,
+      "settled": true,
+      "totalMs": 1298,
+      "requestCount": 7,
+      "responseBodyBytes": 1335,
+      "counts": {
+        "central/navigation/members": 1,
+        "content/summary": 3,
+        "friend-reviews": 1,
+        "relationships/state": 2
+      },
+      "requests": [
+        {
+          "category": "friend-reviews",
+          "method": "GET",
+          "startMs": 4,
+          "endMs": 85,
+          "durationMs": 81,
+          "status": 200,
+          "responseBodyBytes": 570,
+          "responseHeaderBytes": 72
+        },
+        {
+          "category": "content/summary",
+          "method": "POST",
+          "startMs": 4,
+          "endMs": 5,
+          "failed": true
+        },
+        {
+          "category": "content/summary",
+          "method": "POST",
+          "startMs": 4,
+          "endMs": 5,
+          "failed": true
+        },
+        {
+          "category": "content/summary",
+          "method": "POST",
+          "startMs": 5,
+          "endMs": 187,
+          "durationMs": 182,
+          "status": 200,
+          "responseBodyBytes": 172,
+          "responseHeaderBytes": 72
+        },
+        {
+          "category": "relationships/state",
+          "method": "POST",
+          "startMs": 5,
+          "endMs": 158,
+          "durationMs": 153,
+          "status": 200,
+          "responseBodyBytes": 27,
+          "responseHeaderBytes": 71
+        },
+        {
+          "category": "relationships/state",
+          "method": "POST",
+          "startMs": 5,
+          "endMs": 159,
+          "durationMs": 154,
+          "status": 200,
+          "responseBodyBytes": 27,
+          "responseHeaderBytes": 71
+        },
+        {
+          "category": "central/navigation/members",
+          "method": "GET",
+          "startMs": 86,
+          "endMs": 188,
+          "durationMs": 102,
+          "status": 200,
+          "responseBodyBytes": 539,
+          "responseHeaderBytes": 72
+        }
+      ]
+    },
+    {
+      "scenario": "friend",
+      "case": "staggered-same-author",
+      "authorLinksReadyMs": 139,
+      "requestCount": 2,
+      "responseBodyBytes": 366,
+      "counts": {
+        "central/navigation/members": 2
+      },
+      "requests": [
+        {
+          "category": "central/navigation/members",
+          "method": "GET",
+          "startMs": 2,
+          "endMs": 105,
+          "durationMs": 103,
+          "status": 200,
+          "responseBodyBytes": 183,
+          "responseHeaderBytes": 72
+        },
+        {
+          "category": "central/navigation/members",
+          "method": "GET",
+          "startMs": 34,
+          "endMs": 137,
+          "durationMs": 103,
+          "status": 200,
+          "responseBodyBytes": 183,
+          "responseHeaderBytes": 72
+        }
+      ]
+    },
+    {
+      "scenario": "nonfriend",
+      "case": "concurrent-widgets",
+      "summaryMs": 263,
+      "relationshipMs": 313,
+      "reviewInputMs": null,
+      "authorsMs": 263,
+      "settled": true,
+      "totalMs": 1355,
+      "requestCount": 15,
+      "responseBodyBytes": 556077,
+      "counts": {
+        "central/navigation/members": 1,
+        "content/summary": 1,
+        "friend-reviews": 1,
+        "relationships/health": 1,
+        "relationships/state": 2,
+        "static:Galmuri11-extended.woff2": 1,
+        "static:author-navigation.js": 1,
+        "static:friend-reviews-repository.js": 1,
+        "static:friend-reviews.js": 1,
+        "static:home-activity.js": 1,
+        "static:home-repository.js": 1,
+        "static:home.js": 1,
+        "static:member-relationships-repository.js": 1,
+        "static:member-relationships.js": 1
+      },
+      "requests": [
+        {
+          "category": "static:member-relationships-repository.js",
+          "method": "GET",
+          "startMs": 3,
+          "endMs": 7,
+          "durationMs": 4,
+          "status": 200,
+          "responseBodyBytes": 7704,
+          "responseHeaderBytes": 72
+        },
+        {
+          "category": "static:friend-reviews-repository.js",
+          "method": "GET",
+          "startMs": 16,
+          "endMs": 19,
+          "durationMs": 3,
+          "status": 200,
+          "responseBodyBytes": 1774,
+          "responseHeaderBytes": 72
+        },
+        {
+          "category": "static:author-navigation.js",
+          "method": "GET",
+          "startMs": 20,
+          "endMs": 22,
+          "durationMs": 2,
+          "status": 200,
+          "responseBodyBytes": 5879,
+          "responseHeaderBytes": 72
+        },
+        {
+          "category": "static:home-repository.js",
+          "method": "GET",
+          "startMs": 24,
+          "endMs": 27,
+          "durationMs": 3,
+          "status": 200,
+          "responseBodyBytes": 2880,
+          "responseHeaderBytes": 72
+        },
+        {
+          "category": "static:member-relationships.js",
+          "method": "GET",
+          "startMs": 28,
+          "endMs": 31,
+          "durationMs": 3,
+          "status": 200,
+          "responseBodyBytes": 9248,
+          "responseHeaderBytes": 72
+        },
+        {
+          "category": "relationships/health",
+          "method": "GET",
+          "startMs": 34,
+          "endMs": 141,
+          "durationMs": 107,
+          "status": 200,
+          "responseBodyBytes": 81,
+          "responseHeaderBytes": 71
+        },
+        {
+          "category": "static:friend-reviews.js",
+          "method": "GET",
+          "startMs": 35,
+          "endMs": 38,
+          "durationMs": 3,
+          "status": 200,
+          "responseBodyBytes": 12824,
+          "responseHeaderBytes": 73
+        },
+        {
+          "category": "static:home-activity.js",
+          "method": "GET",
+          "startMs": 39,
+          "endMs": 42,
+          "durationMs": 3,
+          "status": 200,
+          "responseBodyBytes": 6580,
+          "responseHeaderBytes": 72
+        },
+        {
+          "category": "static:home.js",
+          "method": "GET",
+          "startMs": 43,
+          "endMs": 45,
+          "durationMs": 2,
+          "status": 200,
+          "responseBodyBytes": 2384,
+          "responseHeaderBytes": 72
+        },
+        {
+          "category": "friend-reviews",
+          "method": "GET",
+          "startMs": 50,
+          "endMs": 132,
+          "durationMs": 82,
+          "status": 200,
+          "responseBodyBytes": 570,
+          "responseHeaderBytes": 72
+        },
+        {
+          "category": "content/summary",
+          "method": "POST",
+          "startMs": 51,
+          "endMs": 232,
+          "durationMs": 181,
+          "status": 200,
+          "responseBodyBytes": 172,
+          "responseHeaderBytes": 72
+        },
+        {
+          "category": "static:Galmuri11-extended.woff2",
+          "method": "GET",
+          "startMs": 57,
+          "endMs": 105,
+          "durationMs": 48,
+          "status": 200,
+          "responseBodyBytes": 505396,
+          "responseHeaderBytes": 43
+        },
+        {
+          "category": "central/navigation/members",
+          "method": "GET",
+          "startMs": 141,
+          "endMs": 242,
+          "durationMs": 101,
+          "status": 200,
+          "responseBodyBytes": 539,
+          "responseHeaderBytes": 72
+        },
+        {
+          "category": "relationships/state",
+          "method": "POST",
+          "startMs": 142,
+          "endMs": 294,
+          "durationMs": 152,
+          "status": 200,
+          "responseBodyBytes": 23,
+          "responseHeaderBytes": 71
+        },
+        {
+          "category": "relationships/state",
+          "method": "POST",
+          "startMs": 142,
+          "endMs": 295,
+          "durationMs": 153,
+          "status": 200,
+          "responseBodyBytes": 23,
+          "responseHeaderBytes": 71
+        }
+      ]
+    },
+    {
+      "scenario": "nonfriend",
+      "case": "focus-burst",
+      "summaryMs": 212,
+      "relationshipMs": 160,
+      "reviewInputMs": null,
+      "authorsMs": 212,
+      "settled": true,
+      "totalMs": 1315,
+      "requestCount": 7,
+      "responseBodyBytes": 1327,
+      "counts": {
+        "central/navigation/members": 1,
+        "content/summary": 3,
+        "friend-reviews": 1,
+        "relationships/state": 2
+      },
+      "requests": [
+        {
+          "category": "friend-reviews",
+          "method": "GET",
+          "startMs": 4,
+          "endMs": 87,
+          "durationMs": 83,
+          "status": 200,
+          "responseBodyBytes": 570,
+          "responseHeaderBytes": 72
+        },
+        {
+          "category": "content/summary",
+          "method": "POST",
+          "startMs": 5,
+          "endMs": 6,
+          "failed": true
+        },
+        {
+          "category": "content/summary",
+          "method": "POST",
+          "startMs": 5,
+          "endMs": 6,
+          "failed": true
+        },
+        {
+          "category": "content/summary",
+          "method": "POST",
+          "startMs": 5,
+          "endMs": 187,
+          "durationMs": 182,
+          "status": 200,
+          "responseBodyBytes": 172,
+          "responseHeaderBytes": 72
+        },
+        {
+          "category": "relationships/state",
+          "method": "POST",
+          "startMs": 5,
+          "endMs": 159,
+          "durationMs": 154,
+          "status": 200,
+          "responseBodyBytes": 23,
+          "responseHeaderBytes": 71
+        },
+        {
+          "category": "relationships/state",
+          "method": "POST",
+          "startMs": 5,
+          "endMs": 159,
+          "durationMs": 154,
+          "status": 200,
+          "responseBodyBytes": 23,
+          "responseHeaderBytes": 71
+        },
+        {
+          "category": "central/navigation/members",
+          "method": "GET",
+          "startMs": 88,
+          "endMs": 190,
+          "durationMs": 102,
+          "status": 200,
+          "responseBodyBytes": 539,
+          "responseHeaderBytes": 72
+        }
+      ]
+    },
+    {
+      "scenario": "nonfriend",
+      "case": "staggered-same-author",
+      "authorLinksReadyMs": 143,
+      "requestCount": 2,
+      "responseBodyBytes": 366,
+      "counts": {
+        "central/navigation/members": 2
+      },
+      "requests": [
+        {
+          "category": "central/navigation/members",
+          "method": "GET",
+          "startMs": 4,
+          "endMs": 108,
+          "durationMs": 104,
+          "status": 200,
+          "responseBodyBytes": 183,
+          "responseHeaderBytes": 72
+        },
+        {
+          "category": "central/navigation/members",
+          "method": "GET",
+          "startMs": 36,
+          "endMs": 138,
+          "durationMs": 102,
+          "status": 200,
+          "responseBodyBytes": 183,
+          "responseHeaderBytes": 72
+        }
+      ]
+    },
+    {
+      "scenario": "empty",
+      "case": "concurrent-widgets",
+      "summaryMs": 251,
+      "relationshipMs": 302,
+      "reviewInputMs": 302,
+      "authorsMs": null,
+      "settled": true,
+      "totalMs": 1350,
+      "requestCount": 14,
+      "responseBodyBytes": 555001,
+      "counts": {
+        "content/summary": 1,
+        "friend-reviews": 1,
+        "relationships/health": 1,
+        "relationships/state": 2,
+        "static:Galmuri11-extended.woff2": 1,
+        "static:author-navigation.js": 1,
+        "static:friend-reviews-repository.js": 1,
+        "static:friend-reviews.js": 1,
+        "static:home-activity.js": 1,
+        "static:home-repository.js": 1,
+        "static:home.js": 1,
+        "static:member-relationships-repository.js": 1,
+        "static:member-relationships.js": 1
+      },
+      "requests": [
+        {
+          "category": "static:member-relationships-repository.js",
+          "method": "GET",
+          "startMs": 5,
+          "endMs": 7,
+          "durationMs": 2,
+          "status": 200,
+          "responseBodyBytes": 7704,
+          "responseHeaderBytes": 72
+        },
+        {
+          "category": "static:friend-reviews-repository.js",
+          "method": "GET",
+          "startMs": 17,
+          "endMs": 20,
+          "durationMs": 3,
+          "status": 200,
+          "responseBodyBytes": 1774,
+          "responseHeaderBytes": 72
+        },
+        {
+          "category": "static:author-navigation.js",
+          "method": "GET",
+          "startMs": 21,
+          "endMs": 23,
+          "durationMs": 2,
+          "status": 200,
+          "responseBodyBytes": 5879,
+          "responseHeaderBytes": 72
+        },
+        {
+          "category": "static:home-repository.js",
+          "method": "GET",
+          "startMs": 25,
+          "endMs": 27,
+          "durationMs": 2,
+          "status": 200,
+          "responseBodyBytes": 2880,
+          "responseHeaderBytes": 72
+        },
+        {
+          "category": "static:member-relationships.js",
+          "method": "GET",
+          "startMs": 28,
+          "endMs": 29,
+          "durationMs": 1,
+          "status": 200,
+          "responseBodyBytes": 9248,
+          "responseHeaderBytes": 72
+        },
+        {
+          "category": "relationships/health",
+          "method": "GET",
+          "startMs": 31,
+          "endMs": 132,
+          "durationMs": 101,
+          "status": 200,
+          "responseBodyBytes": 81,
+          "responseHeaderBytes": 71
+        },
+        {
+          "category": "static:friend-reviews.js",
+          "method": "GET",
+          "startMs": 32,
+          "endMs": 34,
+          "durationMs": 2,
+          "status": 200,
+          "responseBodyBytes": 12824,
+          "responseHeaderBytes": 73
+        },
+        {
+          "category": "static:home-activity.js",
+          "method": "GET",
+          "startMs": 36,
+          "endMs": 38,
+          "durationMs": 2,
+          "status": 200,
+          "responseBodyBytes": 6580,
+          "responseHeaderBytes": 72
+        },
+        {
+          "category": "static:home.js",
+          "method": "GET",
+          "startMs": 39,
+          "endMs": 40,
+          "durationMs": 1,
+          "status": 200,
+          "responseBodyBytes": 2384,
+          "responseHeaderBytes": 72
+        },
+        {
+          "category": "friend-reviews",
+          "method": "GET",
+          "startMs": 43,
+          "endMs": 125,
+          "durationMs": 82,
+          "status": 200,
+          "responseBodyBytes": 25,
+          "responseHeaderBytes": 71
+        },
+        {
+          "category": "content/summary",
+          "method": "POST",
+          "startMs": 44,
+          "endMs": 226,
+          "durationMs": 182,
+          "status": 200,
+          "responseBodyBytes": 172,
+          "responseHeaderBytes": 72
+        },
+        {
+          "category": "static:Galmuri11-extended.woff2",
+          "method": "GET",
+          "startMs": 57,
+          "endMs": 95,
+          "durationMs": 38,
+          "status": 200,
+          "responseBodyBytes": 505396,
+          "responseHeaderBytes": 43
+        },
+        {
+          "category": "relationships/state",
+          "method": "POST",
+          "startMs": 133,
+          "endMs": 285,
+          "durationMs": 152,
+          "status": 200,
+          "responseBodyBytes": 27,
+          "responseHeaderBytes": 71
+        },
+        {
+          "category": "relationships/state",
+          "method": "POST",
+          "startMs": 133,
+          "endMs": 286,
+          "durationMs": 153,
+          "status": 200,
+          "responseBodyBytes": 27,
+          "responseHeaderBytes": 71
+        }
+      ]
+    },
+    {
+      "scenario": "empty",
+      "case": "focus-burst",
+      "summaryMs": 213,
+      "relationshipMs": 162,
+      "reviewInputMs": 162,
+      "authorsMs": null,
+      "settled": true,
+      "totalMs": 1255,
+      "requestCount": 6,
+      "responseBodyBytes": 251,
+      "counts": {
+        "content/summary": 3,
+        "friend-reviews": 1,
+        "relationships/state": 2
+      },
+      "requests": [
+        {
+          "category": "friend-reviews",
+          "method": "GET",
+          "startMs": 4,
+          "endMs": 86,
+          "durationMs": 82,
+          "status": 200,
+          "responseBodyBytes": 25,
+          "responseHeaderBytes": 71
+        },
+        {
+          "category": "content/summary",
+          "method": "POST",
+          "startMs": 5,
+          "endMs": 5,
+          "failed": true
+        },
+        {
+          "category": "content/summary",
+          "method": "POST",
+          "startMs": 5,
+          "endMs": 5,
+          "failed": true
+        },
+        {
+          "category": "content/summary",
+          "method": "POST",
+          "startMs": 5,
+          "endMs": 188,
+          "durationMs": 183,
+          "status": 200,
+          "responseBodyBytes": 172,
+          "responseHeaderBytes": 72
+        },
+        {
+          "category": "relationships/state",
+          "method": "POST",
+          "startMs": 5,
+          "endMs": 158,
+          "durationMs": 153,
+          "status": 200,
+          "responseBodyBytes": 27,
+          "responseHeaderBytes": 71
+        },
+        {
+          "category": "relationships/state",
+          "method": "POST",
+          "startMs": 5,
+          "endMs": 159,
+          "durationMs": 154,
+          "status": 200,
+          "responseBodyBytes": 27,
+          "responseHeaderBytes": 71
+        }
+      ]
+    },
+    {
+      "scenario": "empty",
+      "case": "staggered-same-author",
+      "authorLinksReadyMs": 145,
+      "requestCount": 2,
+      "responseBodyBytes": 366,
+      "counts": {
+        "central/navigation/members": 2
+      },
+      "requests": [
+        {
+          "category": "central/navigation/members",
+          "method": "GET",
+          "startMs": 3,
+          "endMs": 108,
+          "durationMs": 105,
+          "status": 200,
+          "responseBodyBytes": 183,
+          "responseHeaderBytes": 72
+        },
+        {
+          "category": "central/navigation/members",
+          "method": "GET",
+          "startMs": 34,
+          "endMs": 138,
+          "durationMs": 104,
+          "status": 200,
+          "responseBodyBytes": 183,
+          "responseHeaderBytes": 72
+        }
+      ]
+    }
+  ],
+  "transport": "synthetic fixed delays, real relationship/review/author/home widgets; not a permissions test"
+}

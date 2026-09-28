@@ -1,0 +1,9 @@
+PASS 1: two repositories share one health; each state/write remains a separate server call
+PASS 2: TTL starts at completion; expires at exactly 30s and normalizes slash
+PASS 3: consumer capabilities independent; missing/unready/malformed/error never cached
+PASS 4: one cancelled waiter cannot cancel another; all cancellation aborts and late bytes cannot seed cache
+PASS 5: project/site/central/release changes and auth events invalidate, including stale in-flight response
+PASS 6: explicit retry/service and auth rejection invalidate; business conflict does not resend or alter readiness
+PASS 7: timeout bounds headers and body, no retry loop, no cached failure
+PASS 8: already aborted caller sends nothing; cached response cannot survive same-turn account switch
+All 8 shared relationship readiness groups passed; no hosted requests.

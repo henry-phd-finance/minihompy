@@ -1,0 +1,13 @@
+PASS 1: 1280px request/cancel, confirmation and separate member/admin identity
+PASS 2: 1280px accept/reject/disconnect and retention explanation
+PASS 3: 1280px rate limit and lost ACK recovery without another mutation
+PASS 4: 1280px unavailable backend and failure never become non-friend state
+PASS 5: 1280px late response, logout, shared login and self-request prevention
+PASS 6: 1280px focus refresh, Escape/Enter focus return, viewport and placeholder cleanup
+PASS 7: 375px request/cancel, confirmation and separate member/admin identity
+PASS 8: 375px accept/reject/disconnect and retention explanation
+PASS 9: 375px rate limit and lost ACK recovery without another mutation
+PASS 10: 375px unavailable backend and failure never become non-friend state
+PASS 11: 375px late response, logout, shared login and self-request prevention
+PASS 12: 375px focus refresh, Escape/Enter focus return, viewport and placeholder cleanup
+All 12 Chromium relationship UI groups passed.

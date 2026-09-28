@@ -1,0 +1,15 @@
+PASS 1: 1280px real API create, empty list, duplicate submit guard, safe text, author link
+PASS 2: 1280px latest per author, history pages and deletion, Enter/IME guard
+PASS 3: 1280px inactive historical author retained without home link, latest verified destination
+PASS 4: 1280px draft survives session refresh; lost ACK recovers with no duplicate POST
+PASS 5: 1280px relationship revoked at server, public list error/retry
+PASS 6: 1280px explicit local admin delete during central outage, bounded content width
+PASS 7: 1280px menu draft discard, identity switch drops stale authority/responses, anonymous read and keyboard retry
+PASS 8: 375px real API create, empty list, duplicate submit guard, safe text, author link
+PASS 9: 375px latest per author, history pages and deletion, Enter/IME guard
+PASS 10: 375px inactive historical author retained without home link, latest verified destination
+PASS 11: 375px draft survives session refresh; lost ACK recovers with no duplicate POST
+PASS 12: 375px relationship revoked at server, public list error/retry
+PASS 13: 375px explicit local admin delete during central outage, bounded content width
+PASS 14: 375px menu draft discard, identity switch drops stale authority/responses, anonymous read and keyboard retry
+All 14 Chromium real repository/API/SQL review groups passed.

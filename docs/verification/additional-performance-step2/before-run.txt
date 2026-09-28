@@ -1,0 +1,3 @@
+Fixture friend complete
+Fixture nonfriend complete
+Fixture empty complete

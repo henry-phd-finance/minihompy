@@ -17,11 +17,12 @@
   s.save.hidden=s.permission!=='accepted';s.input.hidden=s.permission!=='accepted';s.label.hidden=s.input.hidden;
   s.actions.replaceChildren();
   if(s.pending){button(s.actions,'처리 결과 확인',()=>void recover(s),'recover').disabled=s.busy;if(s.missing)button(s.actions,'같은 작업 다시 시도',()=>void recover(s,true),'resend').disabled=s.busy;}
-  else if(s.listError||['error','unavailable'].includes(s.permission))button(s.actions,'다시 시도',()=>{if(!s.busy){s.cursor=null;s.history=[];void load(s);void refreshPermission(s);}},'refresh').disabled=s.busy;
+  else if(s.listError||['error','unavailable'].includes(s.permission))button(s.actions,'다시 시도',()=>{if(!s.busy){window.MinihompyRelationshipHealth.invalidate();s.cursor=null;s.history=[];void load(s);void refreshPermission(s);}},'refresh').disabled=s.busy;
   for(const b of s.list.querySelectorAll('[data-review-action="delete"]'))b.disabled=s.busy||!!s.pending;
  }
  async function refreshPermission(s){void window.MinihompyRelationshipUI?.refresh();if(window.MinihompyNavigation?.state.status==='error')await window.MinihompyNavigation.refresh(shared());else await permission(s);}
  async function permission(s){
+  s.healthController?.abort();const controller=s.healthController=new AbortController();
   const seq=++s.permissionSeq,g=s.generation,stamp=runtime().snapshot(),identity=shared(),nav=window.MinihompyNavigation?.state;
   s.permission='pending';controls(s);
   if(!runtime().enabled()){s.permission='unavailable';controls(s);return;}
@@ -30,7 +31,7 @@
   if(identity?.status!=='identified'||!nav?.owner||nav.visitor?.id!==identity.visitor.id){s.permission=identity?.status==='error'?'error':'pending';controls(s);return;}
   if(nav.owner.id===identity.visitor.id){s.permission='self';controls(s);return;}
   try{
-   if(!runtime().enabled()||!await repository().ready()){if(valid(s,g,stamp)&&seq===s.permissionSeq){s.permission='unavailable';controls(s);}return;}
+   if(!runtime().enabled()||!await repository().ready({signal:controller.signal})){if(valid(s,g,stamp)&&seq===s.permissionSeq){s.permission='unavailable';controls(s);}return;}
    relationships ||= window.createMinihompyRelationships();const r=await relationships.state(nav.owner.id);
    if(valid(s,g,stamp)&&seq===s.permissionSeq)s.permission=r.state==='accepted'?'accepted':'none';
   }catch{if(valid(s,g,stamp)&&seq===s.permissionSeq)s.permission='error';}
@@ -85,8 +86,8 @@
   catch(e){if(!valid(s,g,stamp))return;if(e.status===404&&!resend){s.missing=true;s.status.textContent='아직 처리 기록이 없습니다. 같은 작업을 다시 시도하거나 결과를 다시 확인해 주세요.';}else if(resend&&[400,403,404,409,429].includes(e.status)){s.pending=null;s.missing=false;s.status.textContent='이 작업을 완료하지 못했습니다. 목록과 관계를 확인한 뒤 새로 제출해 주세요.';await load(s);void permission(s);}else s.status.textContent='아직 처리 결과를 확인하지 못했습니다. 잠시 후 다시 확인해 주세요.';}
   finally{if(valid(s,g,stamp)){s.busy=false;controls(s);}}
  }
- function reset(){if(!active)return;const s=active;++s.generation;++s.listSeq;++s.permissionSeq;s.input.value='';s.author=null;s.items=[];s.pending=null;s.busy=false;s.confirm.replaceChildren();s.cursor=null;s.history=[];s.status.textContent='';paintList(s);if(s.root.isConnected){void load(s);void permission(s);}}
- function discard(){if(active){++active.generation;active.input.value='';active.root.replaceChildren();active=null;}}
+ function reset(){if(!active)return;const s=active;s.healthController?.abort();++s.generation;++s.listSeq;++s.permissionSeq;s.input.value='';s.author=null;s.items=[];s.pending=null;s.busy=false;s.confirm.replaceChildren();s.cursor=null;s.history=[];s.status.textContent='';paintList(s);if(s.root.isConnected){void load(s);void permission(s);}}
+ function discard(){if(active){active.healthController?.abort();++active.generation;active.input.value='';active.root.replaceChildren();active=null;}}
  for(const name of ['minihompy:visitor-identity','minihompy:identity'])window.addEventListener(name,reset);
  window.addEventListener('minihompy:writing-reset',e=>{if(e.detail?.clearDraft!==false)reset();else if(active){active.permission='error';controls(active);}});
  window.addEventListener('minihompy:member-session',()=>{if(active){controls(active);if(runtime().state.status==='ready'&&active.permission==='error')void refreshPermission(active);}});

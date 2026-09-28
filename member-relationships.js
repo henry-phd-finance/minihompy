@@ -3,6 +3,7 @@
  const dialog=document.querySelector('#relationship-dialog'),open=document.querySelector('#relationship-open');
  if(!dialog||!open)return;
  const summary=document.querySelector('#relationship-summary'),message=document.querySelector('#relationship-message'),people=document.querySelector('#relationship-people'),actions=document.querySelector('#relationship-actions');
+ let healthController;
  let repo,seq=0,busy=false,pending=null,confirmation=null,pairKey='',state={status:'pending'},notice='';
  const runtime=()=>window.MinihompyMemberWriting;
  const repository=()=>repo ||= window.createMinihompyRelationships();
@@ -28,7 +29,7 @@
   }
   if(focused&&dialog.open){const replacement=actions.querySelector(`[data-relationship-action="${focused}"]`);(replacement||document.querySelector('#relationship-close')).focus();}
  }
- function reset(){++seq;busy=false;pending=null;confirmation=null;notice='';pairKey='';state={status:'pending'};render();}
+ function reset(){healthController?.abort();++seq;busy=false;pending=null;confirmation=null;notice='';pairKey='';state={status:'pending'};render();}
  function valid(token,s){if(token!==seq)return false;try{runtime()?.check(s);return true;}catch{return false;}}
  async function refresh(){
   const n=nav(),identity=window.MinihompySharedIdentity?.state;
@@ -41,9 +42,10 @@
   if(key!==pairKey){reset();pairKey=key;}
   if(busy||pending){render();return;}
   if(n.status==='self'||n.status==='anonymous'){state={status:n.status};render();return;}
+  healthController?.abort();const controller=healthController=new AbortController();
   const token=++seq,s=stamp();busy=true;confirmation=null;notice='';state={status:'pending'};render();
   try{
-   if(!runtime()?.enabled()||!await repository().ready()){if(valid(token,s))state={status:'unavailable'};return;}
+   if(!runtime()?.enabled()||!await repository().ready({signal:controller.signal})){if(valid(token,s))state={status:'unavailable'};return;}
    if(!valid(token,s))return;
    const result=await repository().state(n.owner.id);if(valid(token,s))state={...result,status:result.state};
   }catch{if(valid(token,s))state={status:'error'};}
@@ -77,6 +79,7 @@
   }finally{if(valid(token,s)){busy=false;render();}}
  }
  async function retry(){
+  window.MinihompyRelationshipHealth.invalidate();
   notice='';try{if(['error','loginRequired'].includes(runtime()?.state.status))await runtime().retry();if(!['self','other','anonymous'].includes(nav()?.status))await window.MinihompyNavigation?.refresh(window.MinihompySharedIdentity?.state);}catch{}
   await refresh();
  }

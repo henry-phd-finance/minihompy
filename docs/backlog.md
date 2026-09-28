@@ -113,7 +113,7 @@ Step 1 정책: 비회원 작성과 기존 익명 글 소유권을 유지한다. 
 
 ## 추가 성능 개선
 
-실행 계획: [홈·회원 조회·사진 전송 추가 성능 개선 13단계](additional-performance-plan.md). Step 1 기준 측정·계약 완료, Step 2~13 미착수. [측정 결과와 초기 인증 실패 기록](verification/additional-performance-step1/README.md). 기존 메뉴 로딩 개선 8단계의 후속이며, 요청한 Step만 순차 실행한다.
+실행 계획: [홈·회원 조회·사진 전송 추가 성능 개선 13단계](additional-performance-plan.md). Step 1 기준 측정·계약 및 Step 2 관계 health 공유 완료, Step 3~13 미착수. [Step 2 검증](verification/additional-performance-step2/README.md). [측정 결과와 초기 인증 실패 기록](verification/additional-performance-step1/README.md). 기존 메뉴 로딩 개선 8단계의 후속이며, 요청한 Step만 순차 실행한다.
 
 - [ ] 관계 health 및 동일한 방문자/주인 관계 조회 공유.
 - [ ] 홈 갱신 이벤트 묶기와 작성자 공개 프로필 조회 공유.

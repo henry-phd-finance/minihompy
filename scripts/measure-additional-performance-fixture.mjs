@@ -1,6 +1,7 @@
 // Current production widgets with fixed-delay synthetic reads; not an authorization proof.
 import {readFile,mkdir,writeFile} from 'node:fs/promises';import {resolve} from 'node:path';import {pathToFileURL} from 'node:url';import assert from 'node:assert/strict';
 import {collect,homeSample} from './helpers/additional-performance-metrics.mjs';
+const sourceRoot=resolve(process.env.MINIHOMPY_FIXTURE_SOURCE_DIR||'.');const source=file=>readFile(resolve(sourceRoot,file));
 const out=process.env.VERIFICATION_DIR||'docs/verification/additional-performance-step1';await mkdir(out,{recursive:true});
 const {chromium}=await import(pathToFileURL(resolve(process.argv[2]))),browser=await chromium.launch({headless:true,executablePath:process.env.CHROMIUM_PATH});
 const report={at:new Date().toISOString(),summaryAbortSignalForwarded:true,delaysMs:{health:100,state:150,summary:180,profiles:100,reviews:80},samples:[],transport:'synthetic fixed delays, real relationship/review/author/home widgets; not a permissions test'};
@@ -16,8 +17,8 @@ try{for(const scenario of ['friend','nonfriend','empty']){const page=await brows
    else return route.fulfill({status:404,body:''});
    await new Promise(r=>setTimeout(r,delay));return route.fulfill({json:data});
   }
-  if(u.pathname==='/')return route.fulfill({contentType:'text/html',body:(await readFile('index.html','utf8')).replace(/<script\b[^>]*>[\s\S]*?<\/script>/g,'')});
-  try{return route.fulfill({body:await readFile(u.pathname.slice(1)),contentType:u.pathname.endsWith('.js')?'text/javascript':u.pathname.endsWith('.css')?'text/css':undefined});}catch{return route.fulfill({status:404,body:''});}
+  if(u.pathname==='/')return route.fulfill({contentType:'text/html',body:(await source('index.html')).toString('utf8').replace(/<script\b[^>]*>[\s\S]*?<\/script>/g,'')});
+  try{return route.fulfill({body:await source(u.pathname.slice(1)),contentType:u.pathname.endsWith('.js')?'text/javascript':u.pathname.endsWith('.css')?'text/css':undefined});}catch{return route.fulfill({status:404,body:''});}
  });
  await page.goto('https://fixture.test/');await page.evaluate(({owner,visitor})=>{
   const base='https://fixture.test/functions/v1/';window.MINIHOMPY_VIEWS={};window.MINIHOMPY_CONFIG={menus:[{id:'board',label:'게시판',visible:true}],profile:{name:'Fixture'}};
@@ -28,9 +29,9 @@ try{for(const scenario of ['friend','nonfriend','empty']){const page=await brows
   window.MinihompyMemberWriting={enabled:()=>true,snapshot:()=>({}),check(){},state:{status:'ready'},review:(path)=>get(path),relationship:(path,body)=>get(path,body)};
   window.MinihompyContentAccess={read:async(_action,_body,{signal}={})=>({data:await get('/content/summary',{},signal)})};
  },{owner:id(2),visitor:id(1)});
- for(const f of ['member-relationships-repository.js','friend-reviews-repository.js','author-navigation.js','home-repository.js','member-relationships.js','friend-reviews.js','home-activity.js','views/home.js'])await page.addScriptTag({url:'https://fixture.test/'+f});
+ const scripts=['member-relationships-repository.js','friend-reviews-repository.js','author-navigation.js','home-repository.js','member-relationships.js','friend-reviews.js','home-activity.js','views/home.js'];
  const mount=()=>page.evaluate(()=>{document.querySelector('[data-view-slot=main]').replaceChildren(MINIHOMPY_VIEWS.home.createMain());dispatchEvent(new Event('minihompy:navigation-state'));});
- const first=await homeSample(page,mount,{timeout:10000});assert(first.settled);report.samples.push({scenario,case:'concurrent-widgets',...first});
+ const first=await homeSample(page,async()=>{for(const f of scripts)await page.addScriptTag({url:'https://fixture.test/'+f});await mount();},{timeout:10000});assert(first.settled);report.samples.push({scenario,case:'concurrent-widgets',...first});
  const burst=await homeSample(page,()=>page.evaluate(()=>{dispatchEvent(new Event('focus'));dispatchEvent(new PageTransitionEvent('pageshow'));document.dispatchEvent(new Event('visibilitychange'));}),{timeout:10000});assert(burst.settled);report.samples.push({scenario,case:'focus-burst',...burst});
  const c=collect(page),authorStart=Date.now();await page.evaluate(({id})=>{for(let i=0;i<3;i++)document.querySelector('[data-view-slot=main]').append(MinihompyAuthorNavigation.create({author_kind:'member',author_member_id:id,author_name:'fixture'},'author'));},{id:id(1)});await page.waitForTimeout(30);await page.evaluate(({id})=>document.querySelector('[data-view-slot=main]').append(MinihompyAuthorNavigation.create({author_kind:'member',author_member_id:id,author_name:'fixture'},'author')),{id:id(1)});await page.waitForFunction(()=>!document.querySelector('.author-navigation[data-status=loading]'));report.samples.push({scenario,case:'staggered-same-author',authorLinksReadyMs:Date.now()-authorStart,...await c.finish()});assert.deepEqual(errors,[]);await page.close();console.log('Fixture '+scenario+' complete');
 }}finally{await browser.close();await writeFile(out+'/widget-fixture.json',JSON.stringify(report,null,2)+'\n');}

@@ -2,6 +2,7 @@
  'use strict';
  const dialog=document.querySelector('#relationship-lists-dialog');if(!dialog)return;
  const list=dialog.querySelector('ul'),status=dialog.querySelector('[role="status"]'),heading=dialog.querySelector('h2'),controls=dialog.querySelector('.relationship-list-controls');
+ let healthController;
  let repo,mode='incoming',generation=0,cursor=null,history=[],next=null,busy=false,pending=null,confirmation=null,opener;
  const runtime=()=>window.MinihompyMemberWriting;
  const repository=()=>repo ||= window.createMinihompyRelationships();
@@ -10,7 +11,7 @@
  const labels={incoming:'내가 받은 신청',outgoing:'내가 보낸 신청',friends:'이 홈의 일촌'};
  const verbs={accept:'수락',reject:'거절',cancel:'신청 취소'};
  function button(parent,text,fn,key){const b=document.createElement('button');b.type='button';b.textContent=text;b.dataset.listAction=key;b.disabled=busy;b.onclick=fn;parent.append(b);return b;}
- function clear(){++generation;busy=false;list.replaceChildren();controls.replaceChildren();confirmation=null;}
+ function clear(){healthController?.abort();++generation;busy=false;list.replaceChildren();controls.replaceChildren();confirmation=null;}
  function valid(g,s){try{return g===generation&&(runtime()?.check(s),true);}catch{return false;}}
  function navigation(){
   controls.replaceChildren();
@@ -18,7 +19,7 @@
   if(pending){button(controls,'처리 결과 확인',()=>void recover(),'recover');return;}
   if(history.length)button(controls,'이전 페이지',()=>{cursor=history.pop();void load();},'previous');
   if(next)button(controls,'다음 페이지',()=>{history.push(cursor);cursor=next;void load();},'next');
-  button(controls,'새로고침',()=>void load(true),'refresh');
+  button(controls,'새로고침',()=>{window.MinihompyRelationshipHealth.invalidate();void load(true);},'refresh');
  }
  function announce(){window.dispatchEvent(new CustomEvent('minihompy:relationship-change'));void window.MinihompyRelationshipUI?.refresh();}
  function row(item){
@@ -48,10 +49,11 @@
   dialog.querySelector('#relationship-list-scope').textContent=mode==='friends'?`${home?.display_name||'현재 홈'} (@${home?.handle||'?'})의 확정 일촌`:`${actor?.visitor?.display_name||'방문자'} (@${actor?.visitor?.handle||'?'}) 본인의 신청함`;
   if(mode!=='friends'&&actor?.status!=='identified'){status.textContent='상단의 공통 로그인으로 로그인해 주세요.';navigation();return;}
   if(mode==='friends'&&!home){status.textContent='홈 주인을 확인하지 못했습니다. 다시 조회해 주세요.';navigation();return;}
+  const controller=healthController=new AbortController();
   const g=generation,s=runtime()?.snapshot();busy=true;status.textContent='목록을 불러오고 있습니다.';navigation();
   try{
    if(mode!=='friends'&&['error','loginRequired'].includes(runtime()?.state.status))await runtime().retry();
-   if(mode!=='friends'&&(!runtime()?.enabled()||!await repository().ready()))throw Error('관계 기능 준비 중');
+   if(mode!=='friends'&&(!runtime()?.enabled()||!await repository().ready({signal:controller.signal})))throw Error('관계 기능 준비 중');
    if(!valid(g,s))return;
    const result=mode==='friends'?await repository().friends(home.id,{cursor}):await repository().requests(mode,{cursor});
    if(!valid(g,s))return;

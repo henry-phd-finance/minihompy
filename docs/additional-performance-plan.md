@@ -1,6 +1,6 @@
 # 홈·회원 조회·사진 전송 추가 성능 개선 계획
 
-작성: 2026-09-27. Step 1 완료(2026-09-28), Step 2~13 미착수. 사용자가 요청한 단계만 순서대로 실행한다.
+작성: 2026-09-27. Step 1~2 완료(2026-09-28), Step 3~13 미착수. 사용자가 요청한 단계만 순서대로 실행한다.
 
 이전 [메뉴 로딩 개선 8단계](menu-loading-performance-plan.md)는 완료된 작업으로 유지한다. 이번 계획은 이후 추가된 인삿말 HISTORY와 일촌평 내역을 포함한 현재 배포본을 출발점으로 삼는다.
 
@@ -62,7 +62,9 @@
 
 ## Step 2 — 관계 서버 준비 상태 조회 공유
 
-상태: 미착수. 선행: Step 1.
+상태: 완료 (2026-09-28). 선행 Step 1 완료 확인.
+
+결과: [Step 2 구현·검증](verification/additional-performance-step2/README.md). 공통 health 요청 공유·성공 응답 30초 재사용·부분 취소·무효화를 구현했다. 동일 조건 초기 health 3→1회, 30초 이내 복귀 2→0회. 실제 관계/쓰기 권한 검사는 유지하며 운영 배포는 하지 않았다.
 
 - `member-relationships-repository.js`와 `friend-reviews-repository.js`의 동일 `/relationships/health` 조회를 공통화한다.
 - 같은 프로젝트/사이트의 진행 중 조회를 공유하고 정상 준비 상태만 최대 30초 재사용한다. 각 소비자는 자신에게 필요한 capability를 따로 확인한다.
