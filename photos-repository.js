@@ -28,13 +28,29 @@
         .order('created_at', { ascending: false }).order('id', { ascending: false }).range((page - 1) * size, page * size - 1));
       return { items: result.data, count: result.count };
     },
-    async revalidate(posts,ctx,{details=false}={}) {
+    async revalidate(posts,ctx,{details=false,variant=false,selectionOnly=false,signal}={}) {
       const access=window.MinihompyContentAccess;
-      const readiness=await access.read?.('readiness');ctx?.assert?.();
+      const readiness=await access.read?.('readiness',undefined,{signal});ctx?.assert?.();
       if(!readiness||readiness.legacy||readiness.capabilities?.photo_check_protocol!==1)return null;
-      const r=await access.read('photo-check',{posts:posts.map(({id,revision})=>({id,revision}))});ctx?.assert?.();
+      const useVariant=variant&&readiness.capabilities?.photo_variant_read_protocol===1;
+      if(selectionOnly&&!useVariant)return null;
+      const r=await access.read('photo-check',{posts:posts.map(({id,revision})=>({id,revision})),...(useVariant?{variant:'display-v1'}:{})},{signal});ctx?.assert?.();
       const items=r?.data?.items;
       if(r?.legacy||!Array.isArray(items)||items.length!==posts.length||items.some((p,i)=>!p||p.id!==posts[i].id||typeof p.valid!=='boolean'))throw Error('사진글 확인 응답이 올바르지 않습니다. 다시 조회해 주세요.');
+      if(useVariant)for(const [i,item] of items.entries()){
+        const post=posts[i],expected=[...new Set(paths(post.body))];
+        if(!Array.isArray(item.photos)||item.photos.length!==(item.valid?expected.length:0))throw Error('사진 선택 응답이 올바르지 않습니다.');
+        const seen=new Set();
+        for(const photo of item.photos){
+          const rep=photo?.representation;
+          if(!photo||photo.post_id!==post.id||photo.revision!==post.revision||!expected.includes(photo.path)||seen.has(photo.path)
+            ||!/^([0-9a-f]{64})$/.test(photo.source_sha256||'')
+            ||rep!==null&&(!rep||rep.kind!=='display-v1'||!/^([0-9a-f]{64})$/.test(rep.sha256||'')
+              ||!['width','height'].every(k=>Number.isInteger(rep[k])&&rep[k]>=1&&rep[k]<=1200)
+              ||!Number.isInteger(rep.size)||rep.size<1||rep.size>6*1024*1024))throw Error('사진 선택 응답이 올바르지 않습니다.');
+          seen.add(photo.path);
+        }
+      }
       return details?items:items.every(p=>p.valid);
     },
     upload: (path,file,options)=>window.MinihompyPhotoMedia.upload(path,file,options),

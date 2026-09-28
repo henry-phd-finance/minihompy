@@ -179,9 +179,10 @@
   // stay queued for another fresh check, even when they belong to the same post.
   function progressivePhotos(jobs,posts,ctx,token,folder,currentPage) {
     let stopped=false,running=false,timer=null;const ready=[];
-    const invalid=new Set();
+    const invalid=new Set(),controller=new AbortController();
+    let initialSelection;
     const alive=()=>!stopped&&token===request&&mainRoot?.isConnected;
-    const dispose=()=>{stopped=true;clearTimeout(timer);ready.length=0;for(const j of jobs)j.scope?.dispose();};
+    const dispose=()=>{stopped=true;controller.abort();clearTimeout(timer);ready.length=0;for(const j of jobs)j.scope?.dispose();};
     mediaScope={dispose};
     const globalError=e=>['AUTH_REQUIRED','SESSION_EXPIRED','SESSION_REVOKED','FORBIDDEN','TARGET_MISMATCH','IDENTITY_UNAVAILABLE','READ_CONTEXT_EXPIRED','NOT_CONFIGURED','READINESS_INVALID','PROTOCOL_MISMATCH','401','403'].includes(e?.code)||e?.status===401||e?.status===403;
     const removed=post=>{
@@ -195,7 +196,7 @@
     const fileFailure=job=>{
       job.scope?.dispose();job.slot.dataset.state='error';job.slot.setAttribute('aria-busy','false');
       const retry=node('button','photo-image-retry','사진 다시 시도');retry.type='button';
-      retry.addEventListener('click',()=>{if(alive()&&!invalid.has(job.post.id))void load(job);});
+      retry.addEventListener('click',()=>{if(alive()&&!invalid.has(job.post.id))void load(job,true);});
       job.slot.replaceChildren(node('span','photo-image-status','사진을 표시하지 못했습니다.'),retry);
     };
     const schedule=()=>{if(alive()&&!running&&timer===null)timer=setTimeout(()=>{timer=null;void flush();},16);};
@@ -205,7 +206,7 @@
       try{
         const checkedPosts=posts.filter(p=>!invalid.has(p.id));
         if(!checkedPosts.length)return;
-        let checks=await repository.revalidate?.(checkedPosts,ctx,{details:true})??null;
+        let checks=await repository.revalidate?.(checkedPosts,ctx,{details:true,variant:true,signal:controller.signal})??null;
         if(!alive())return;
         if(checks===null){
           const latest=await repository.list(folder,currentPage,pageSize,ctx);if(!alive())return;
@@ -217,20 +218,37 @@
         for(const job of batch){
           if(!alive()||invalid.has(job.post.id))continue;
           if(job.error){if(globalError(job.error))throw job.error;fileFailure(job);continue;}
+          if(job.selection){
+            const fresh=checks.find(c=>c.id===job.post.id)?.photos?.find(p=>p.path===job.path);
+            if(!sameSelection(job.selection,fresh)){fileFailure(job);continue;}
+          }
           job.slot.dataset.state='ready';job.slot.setAttribute('aria-busy','false');job.slot.replaceChildren(job.image);
         }
         requestAnimationFrame(updateScroll);
       }catch(error){if(alive())showFailure(error);}
       finally{running=false;if(ready.length)schedule();}
     }
-    async function load(job){
+    const sameSelection=(a,b)=>b&&a.post_id===b.post_id&&a.path===b.path&&a.revision===b.revision&&a.source_sha256===b.source_sha256
+      &&['kind','sha256','width','height','size'].every(k=>a.representation?.[k]===b.representation?.[k]);
+    async function select(selectedPosts){
+      return await repository.revalidate?.(selectedPosts,ctx,{details:true,variant:true,selectionOnly:true,signal:controller.signal})??null;
+    }
+    async function load(job,retry=false){
       if(!alive()||invalid.has(job.post.id))return;
       job.scope?.dispose();job.scope=window.MinihompyPhotoMedia.scope();job.error=null;
       job.slot.dataset.state='loading';job.slot.setAttribute('aria-busy','true');job.slot.replaceChildren(node('span','photo-image-status','사진을 불러오고 있습니다.'));
       try{
-        const src=await job.scope.read(job.post.id,job.path);if(!alive()||invalid.has(job.post.id))return;
+        const selections=await (retry?select([job.post]):initialSelection);if(!alive()||invalid.has(job.post.id))return;
+        const checked=selections?.find(p=>p.id===job.post.id);
+        if(checked&&!checked.valid){
+          if(job.post.visibility==='friends')throw Object.assign(Error('일촌 공개 글을 조회할 수 없습니다.'),{code:'FORBIDDEN'});
+          removed(job.post);return;
+        }
+        job.selection=checked?.photos?.find(p=>p.path===job.path)||null;
+        const src=await job.scope.read(job.post.id,job.path,job.selection?.representation?job.selection:null);if(!alive()||invalid.has(job.post.id))return;
         const img=node('img','photo-image');img.alt='';img.src=src;
         await img.decode();if(!alive()||invalid.has(job.post.id))return;
+        if(job.selection?.representation&&(img.naturalWidth!==job.selection.representation.width||img.naturalHeight!==job.selection.representation.height))throw Error('표시용 사진 크기가 올바르지 않습니다.');
         img.addEventListener('error',()=>{if(alive()&&!invalid.has(job.post.id)){job.error=Error('사진 디코딩 오류');ready.push(job);schedule();}},{once:true});
         job.image=img;
       }catch(error){if(!alive()||invalid.has(job.post.id))return;if(globalError(error)){showFailure(error);return;}job.error=error;}
@@ -239,7 +257,9 @@
     // Route focus/scroll happens first. Submit nearest placeholders first; the
     // shared media client retains its global maximum of four downloads.
     requestAnimationFrame(()=>{
-      if(!alive())return;const bounds=mainRoot.getBoundingClientRect();
+      if(!alive()||!jobs.length)return;
+      initialSelection=select(posts); // One bounded selection for the page, never one per file.
+      const bounds=mainRoot.getBoundingClientRect();
       const distance=j=>{const r=j.slot.getBoundingClientRect();return Math.max(bounds.top-r.bottom,r.top-bounds.bottom,0);};
       for(const job of [...jobs].sort((a,b)=>distance(a)-distance(b)))void load(job);
     });

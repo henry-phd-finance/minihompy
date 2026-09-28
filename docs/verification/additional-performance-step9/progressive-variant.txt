@@ -1,0 +1,22 @@
+PASS 1280: first photo in same post and next post visible before held photo; later photo gets fresh check; comments once
+PASS 1280: download finishing during pending check waits for a subsequent check
+PASS 1280: failed file stays local and retry downloads just that image
+PASS 1280: changed public post and comments removed; unaffected post remains
+PASS 1280: final authorization denial clears all protected content and URLs
+PASS 1280: menu leave cancels unfinished work, rejects late bytes and releases all URLs
+PASS 1280: old capability fallback and completed layout
+PASS 1280: tampered derivative rejected without original fallback; explicit retry obtains fresh descriptor
+PASS 1280: descriptor removal after download rejects stale Blob; explicit retry may select protected original
+PASS 1280: leaving during descriptor selection starts no media request or late Blob
+PASS 1280: nearby images submitted first and four-download global limit preserved
+PASS 375: first photo in same post and next post visible before held photo; later photo gets fresh check; comments once
+PASS 375: download finishing during pending check waits for a subsequent check
+PASS 375: failed file stays local and retry downloads just that image
+PASS 375: changed public post and comments removed; unaffected post remains
+PASS 375: final authorization denial clears all protected content and URLs
+PASS 375: menu leave cancels unfinished work, rejects late bytes and releases all URLs
+PASS 375: old capability fallback and completed layout
+PASS 375: tampered derivative rejected without original fallback; explicit retry obtains fresh descriptor
+PASS 375: descriptor removal after download rejects stale Blob; explicit retry may select protected original
+PASS 375: leaving during descriptor selection starts no media request or late Blob
+PASS 375: nearby images submitted first and four-download global limit preserved

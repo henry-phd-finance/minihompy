@@ -14,6 +14,8 @@ import {sha256,randomSecret} from '../../minihompy-central/supabase/functions/_s
 import {signToken} from '../../minihompy-central/supabase/functions/_shared/tokens.js';
 import {handleMemberWriting,tokenHash} from '../supabase/functions/member-writing/handler.js';
 import {memberWritingDb} from './helpers/member-writing-db.mjs';
+const variants=process.env.MINIHOMPY_TEST_VARIANT_READ==='1';
+const webp=new Uint8Array(Buffer.from('UklGRiIAAABXRUJQVlA4IBYAAAAwAQCdASoBAAEADsD+JaQAA3AAAAAA','base64'));
 const centralUrl='https://central.test/functions/v1/identity-api',secret='integration-fixture-only-secret-at-least-32-characters';
 const central=await createIdentityDb(),homes={};let groups=0,centralDown=false,centralCalls=0,readChecks=0,mutateContext=null,afterContext=null,afterRead=null,dbTransform=null,oldDb=false,centralReply=null;
 const options={supabaseClient:central.db,centralSecret:secret,allowedOrigins:new Set(['https://m1.test','https://m2.test']),transportPeerIp:'127.0.0.1'};
@@ -75,6 +77,14 @@ try{
 
  const png=new Uint8Array(Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+jRZkAAAAASUVORK5CYII=','base64'));
  for(const h of Object.values(homes))await h.pg.query('update private.photo_assets set size=$1,sha256=$2',[png.length,await digest(png)]);
+ if(variants)for(const h of Object.values(homes)){
+  for(const f of ['202609280001_photo_asset_variants.sql','202609280002_photo_variant_status.sql','202609280003_photo_variant_reads.sql'])await h.pg.exec(await readFile('supabase/migrations/'+f,'utf8'));
+  for(const n of [0,1,2]){
+   const path=post('photos',n)+'/'+id(999)+'.png',args={owner_id:h.owner,path,post_id:post('photos',n),source_sha256:await digest(png),recipe:'display-v1',sha256:await digest(webp),size:webp.length,mime:'image/webp',width:1,height:1};
+   const run=async(action,args)=>(await h.pg.query('select public.photo_variant($1,$2) v',[action,args])).rows[0].v;
+   const v=await run('reserve',args);assert(!v.failure,JSON.stringify(v));const binding={...args,id:v.id,operation_id:v.operation_id};await run('upload_confirm',binding);assert.equal((await run('complete',binding)).state,'ready');
+  }
+ }
  const {chromium}=await import(pathToFileURL(resolve(process.argv[2])));const browser=await chromium.launch({headless:true,executablePath:process.env.CHROMIUM_PATH});
  const out=process.env.VERIFICATION_DIR||'docs/verification/friend-visibility-step10';await mkdir(out,{recursive:true});
  try{for(const width of [1280,375]){
@@ -85,6 +95,7 @@ try{
  // Quill must exist before the user opens the real editor.
  files.unshift(files.pop());
  const assets=new Map();for(const row of (await h.pg.query('select path from private.photo_assets')).rows)assets.set(row.path,png.slice());
+ if(variants)for(const row of (await h.pg.query("select storage_path from private.photo_asset_variants where state='ready'")).rows)assets.set(row.storage_path,webp.slice());
  let oldPhotoCheck=false,checkFailure=false;const contentRequests=[];
  const db={rpc:(name,args)=>transport.run(async()=>{const r=await h.db.rpc(name,args);if(oldPhotoCheck&&name==='friend_visibility_status'){const {photo_check_protocol,...data}=r.data;return {...r,data};}return r;})};
  const emptyFolder=id(8888);await transport.run(()=>h.pg.query("insert into public.photo_folders(id,label,sort_order) values($1,'empty fixture',999) on conflict do nothing",[emptyFolder]));
@@ -99,7 +110,7 @@ try{
    if(url.pathname.includes('/content/'))contentRequests.push(url.pathname.split('/').at(-1));
    if(checkFailure&&url.pathname.endsWith('/content/photo-check'))return route.fulfill({status:503,json:{error:{code:'IDENTITY_UNAVAILABLE',message:'fixture'}}});
    if(media&&url.pathname.endsWith('/read')){mediaReads++;modes.push(req.headers()['x-minihompy-auth-mode']);}
-   const res=media?await handlePhotoMedia(r,{env:{...h.config,SUPABASE_SERVICE_ROLE_KEY:'fixture'},fetcher,db,rpc,storage}):await handleMemberWriting(r,{config:h.config,fetcher,db});
+   const res=media?await handlePhotoMedia(r,{env:{...h.config,SUPABASE_SERVICE_ROLE_KEY:'fixture'},fetcher,db,rpc,storage,representationRpc:(action,args)=>transport.run(async()=>(await h.pg.query('select public.photo_representation_read($1,$2) v',[action,args])).rows[0].v)}):await handleMemberWriting(r,{config:h.config,fetcher,db});
    const payload={status:res.status,headers:Object.fromEntries(res.headers),body:Buffer.from(await res.arrayBuffer())};
    if(media&&res.ok&&holdReply){holdReply=false;await new Promise(r=>release=r);}
    return route.fulfill(payload).catch(()=>{});
@@ -119,16 +130,16 @@ try{
  const focus=()=>page.evaluate(()=>dispatchEvent(new Event('focus')));
  const visibility=async value=>transport.run(async()=>{await h.pg.query("select set_config('request.jwt.claim.sub',$1,false)",[h.owner]);try{await h.pg.query('update public.photo_posts set visibility=$1 where id=$2',[value,post('photos',1)]);}finally{await h.pg.query("select set_config('request.jwt.claim.sub','',false)");}});
  await page.goto('https://m2.test/#/photos?post='+post('photos',1));await loaded();assert.ok(modes.includes('member'));assert.equal(await page.locator(target+' .photo-privacy').innerText(),'공개설정 : 일촌 공개');
- assert.equal(contentRequests.filter(x=>x==='list').length,1);assert.ok(contentRequests.filter(x=>x==='photo-check').length>=1&&contentRequests.filter(x=>x==='photo-check').length<=2);
+ assert.equal(contentRequests.filter(x=>x==='list').length,1);assert.ok(contentRequests.filter(x=>x==='photo-check').length>=1&&contentRequests.filter(x=>x==='photo-check').length<=(variants?3:2));
  contentRequests.length=0;oldPhotoCheck=true;await page.evaluate(()=>MinihompyContentAccess.retry());await focus();await loaded();assert.ok(contentRequests.filter(x=>x==='list').length>=2&&contentRequests.filter(x=>x==='list').length<=3);assert.equal(contentRequests.filter(x=>x==='photo-check').length,0);
  oldPhotoCheck=false;await page.evaluate(()=>MinihompyContentAccess.retry());checkFailure=true;contentRequests.length=0;await focus();await page.locator('.photo-retry').waitFor();await invisible();assert.equal(contentRequests.filter(x=>x==='list').length,1);checkFailure=false;await page.locator('.photo-retry').click();await loaded();
  contentRequests.length=0;await page.locator('[data-folder="'+emptyFolder+'"]').focus();await page.keyboard.press('Enter');await page.getByText('등록된 사진이 없습니다.',{exact:true}).waitFor();assert.equal(contentRequests.filter(x=>x==='list').length,1);assert.equal(contentRequests.filter(x=>x==='photo-check').length,0);await page.getByRole('link',{name:'홈',exact:true}).click();await go();await loaded();
  console.log('PASS '+width+': one list plus bounded progressive checks, old server fallback, failure no fallback, empty album one list');
- const url=await page.locator(target+' img').getAttribute('src');assert.deepEqual(await page.evaluate(async u=>[...new Uint8Array(await (await fetch(u)).arrayBuffer())],url),[...png]);
+ const url=await page.locator(target+' img').getAttribute('src');assert.deepEqual(await page.evaluate(async u=>[...new Uint8Array(await (await fetch(u)).arrayBuffer())],url),[...(variants?webp:png)]);
  await transport.run(()=>h.pg.query("update private.member_writing_limits set last_write=clock_timestamp()-interval '1 minute'"));
  await page.locator(target+' .comment-body').fill('friend photo comment '+width);await page.locator(target+' .comment-save').click();await page.locator('.photo-comment').filter({hasText:'friend photo comment '+width}).first().waitFor();
  await page.reload();await loaded();await page.getByRole('link',{name:'홈',exact:true}).click();await page.goBack();await loaded();await page.goForward();await page.goBack();await loaded();
- await page.screenshot({path:out+'/photos-'+width+'.png'});console.log('PASS '+width+': actual friend PNG bytes, comments, direct address and history');
+ await page.screenshot({path:out+'/photos-'+width+'.png'});console.log('PASS '+width+': actual friend protected image bytes, comments, direct address and history');
  const currentUrl=await page.locator(target+' img').getAttribute('src');hold=true;await focus();await held();assert.ok(await page.locator('.photo-post').count()>0);assert.equal(await page.locator(target+' .photo-image').count(),0);await page.evaluate(data=>setUser(data),sessions['3:2']);await page.locator('.photo-retry').waitFor();finish();await page.waitForTimeout(50);await invisible();assert.ok(await page.evaluate(u=>revokedBlobs.includes(u),currentUrl));
  await page.evaluate(data=>setUser(data),sessions['1:2']);await loaded();hold=true;await focus();await held();await page.getByRole('link',{name:'홈',exact:true}).click();finish();await page.waitForTimeout(50);await invisible();assert.equal(await page.evaluate(()=>createdBlobs.filter(u=>!revokedBlobs.includes(u)).length),0);await go();await loaded();
  console.log('PASS '+width+': account and menu changes discard held bytes, metadata, comments and blob URLs');

@@ -28,6 +28,7 @@
  async function call(action,body,{signal,ctx}={}){
   const access=ctx||await window.MinihompyContentAccess.open(action!=='read');
   if(action==='read'){const r=await window.MinihompyContentAccess.read?.('photo',body,{signal});if(r&&!r.legacy)return {response:r.response,access:{verify:async()=>{await r.verify();await access.verify();}}};}
+  if(action==='read'&&body.representation)throw failure('사진 서버의 표시용 파일 지원 상태가 변경되었습니다. 다시 조회해 주세요.','PROTOCOL_MISMATCH');
   const auth=await access.authorization();
   if(action!=='read'&&!auth)throw Error('관리자 로그인이 필요합니다.');
   const {url,key}=endpoint(action),multipart=body instanceof FormData;
@@ -44,23 +45,35 @@
   const controller=new AbortController(),urls=new Set(),cache=new Map();let disposed=false;
   const current=()=>{if(disposed||controller.signal.aborted)throw failure('이미지 조회가 취소되었습니다.','ABORTED');};
   const result={
-   async read(post,path){
-    current();const key=post+':'+path;
+   async read(post,path,photo=null){
+    current();
+    const rep=photo?.representation;
+    if(photo&&(photo.post_id!==post||photo.path!==path||!Number.isSafeInteger(photo.revision)||photo.revision<1
+      ||!/^([0-9a-f]{64})$/.test(photo.source_sha256||'')||!rep||rep.kind!=='display-v1'
+      ||!/^([0-9a-f]{64})$/.test(rep.sha256||'')||!Number.isInteger(rep.size)||rep.size<1||rep.size>MAX))throw failure('사진 선택 정보가 올바르지 않습니다.','INTEGRITY_FAILURE');
+    const representation=photo?{kind:rep.kind,source_sha256:photo.source_sha256,sha256:rep.sha256,revision:photo.revision}:null;
+    const key=JSON.stringify([post,path,photo]);
     if(!cache.has(key)){
      const timer=setTimeout(()=>result.dispose(),45000);
      cache.set(key,scheduled(controller.signal,()=>cancellable(controller.signal,async()=>{
       current();
       const ctx=await window.MinihompyContentAccess.open();
-      const {response,access}=await call('read',{post_id:post,path},{signal:controller.signal,ctx});
+      const {response,access}=await call('read',{post_id:post,path,...(representation?{representation}:{})},{signal:controller.signal,ctx});
       if(disposed||controller.signal.aborted){void response.body?.cancel().catch(()=>{});current();}
       const type=response.headers.get('Content-Type')?.split(';')[0];
+      if(rep&&type!=='image/webp'){void response.body?.cancel();throw failure('표시용 사진 형식이 올바르지 않습니다.','INTEGRITY_FAILURE');}
       if(!['image/jpeg','image/png','image/gif','image/webp'].includes(type)){void response.body?.cancel();throw Error('올바른 이미지 응답이 아닙니다.');}
       const reader=response.body.getReader(),chunks=[];let size=0;
       try{for(;;){const {value,done}=await cancellable(controller.signal,()=>reader.read());current();if(done)break;size+=value.length;if(size>MAX)throw Error('이미지 크기 제한을 초과했습니다.');chunks.push(value);}}
       finally{void reader.cancel().catch(()=>{});}
       await access.verify();current();
       if(!size)throw Error('빈 이미지입니다.');
-      const url=URL.createObjectURL(new Blob(chunks,{type}));urls.add(url);return url;
+      const blob=new Blob(chunks,{type});
+      if(rep){
+       const hash=[...new Uint8Array(await crypto.subtle.digest('SHA-256',await blob.arrayBuffer()))].map(x=>x.toString(16).padStart(2,'0')).join('');current();
+       if(size!==rep.size||hash!==rep.sha256)throw failure('표시용 사진 검증에 실패했습니다.','INTEGRITY_FAILURE');
+      }
+      const url=URL.createObjectURL(blob);urls.add(url);return url;
     })).finally(()=>clearTimeout(timer)).catch(error=>{cache.delete(key);throw error;}));
     }
     return cache.get(key);

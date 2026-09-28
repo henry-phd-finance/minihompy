@@ -6,7 +6,7 @@ const source=await readFile('photo-media-client.js','utf8'),turn=()=>new Promise
 function fixture(){
  const window=new EventTarget(),timers=new Map(),created=[],revoked=[];let serial=0,read=async()=>new Response(new Uint8Array([1,2,3]),{headers:{'Content-Type':'image/png'}}),verify=async()=>{};
  window.MinihompyContentAccess={open:async()=>({verify:()=>verify()}),read:async(action,body,{signal})=>{assert.equal(action,'photo');return {response:await read(body,signal),verify:()=>verify()};}};
- vm.runInNewContext(source,{window,Event,CustomEvent,AbortSignal,AbortController,FormData,Blob,URL:{createObjectURL:()=>{const u='blob:'+ ++serial;created.push(u);return u;},revokeObjectURL:u=>revoked.push(u)},setTimeout:(f,ms)=>{assert.equal(ms,45000);const id=++serial;timers.set(id,f);return id;},clearTimeout:id=>timers.delete(id)});
+ vm.runInNewContext(source,{window,crypto,Uint8Array,Event,CustomEvent,AbortSignal,AbortController,FormData,Blob,URL:{createObjectURL:()=>{const u='blob:'+ ++serial;created.push(u);return u;},revokeObjectURL:u=>revoked.push(u)},setTimeout:(f,ms)=>{assert.equal(ms,45000);const id=++serial;timers.set(id,f);return id;},clearTimeout:id=>timers.delete(id)});
  return {window,api:window.MinihompyPhotoMedia,timers,created,revoked,setRead:f=>read=f,setVerify:f=>verify=f};
 }
 {
@@ -42,4 +42,16 @@ function fixture(){
  await client.exchange('proof','v'.repeat(43));
  for(const mode of ['member','owner','public']){const response=await client.media({post_id:'post',path:'path'},{mode,accessToken:'owner.jwt'});assert.equal(response.headers.get('Content-Type'),'image/png');const {url,init}=requests.at(-1);assert.equal(url,'https://b.test/functions/v1/photo-media/read');assert.equal(init.headers['X-Minihompy-Auth-Mode'],mode);assert.equal(init.headers.Authorization,mode==='member'?'Bearer '+'a'.repeat(43):mode==='owner'?'Bearer owner.jwt':undefined);assert.equal(init.cache,'no-store');assert.equal(init.credentials,'omit');assert.equal(init.redirect,'error');}
  console.log('PASS 5: binary route stays on target site, distinct private member/owner credentials, explicit public mode and no-store');
+}
+
+{
+ const bytes=new Uint8Array([82,73,70,70,0,0,0,0,87,69,66,80]),hash=[...new Uint8Array(await crypto.subtle.digest('SHA-256',bytes))].map(x=>x.toString(16).padStart(2,'0')).join('');
+ const photo={post_id:'post',path:'path',revision:1,source_sha256:'a'.repeat(64),representation:{kind:'display-v1',sha256:hash,width:1,height:1,size:bytes.length}};
+ const f=fixture(),bodies=[];f.setRead(async body=>{bodies.push(body);return new Response(bytes,{headers:{'Content-Type':body.representation?'image/webp':'image/png'}});});
+ const s=f.api.scope();await s.read('post','path',photo);await s.read('post','path',structuredClone(photo));assert.equal(bodies.length,1);
+ assert.deepEqual(JSON.parse(JSON.stringify(bodies[0].representation)),{kind:'display-v1',source_sha256:photo.source_sha256,sha256:hash,revision:1});
+ await s.read('post','path');await s.read('post','path',{...photo,revision:2});assert.equal(bodies.length,3);s.dispose();assert.deepEqual(f.created,f.revoked);
+ for(const broken of [{...photo,representation:{...photo.representation,size:bytes.length+1}},{...photo,representation:{...photo.representation,sha256:'b'.repeat(64)}}]){const scope=f.api.scope();const before=bodies.length;await assert.rejects(scope.read('post','path',broken));assert.equal(bodies.length,before+1);scope.dispose();}
+ const stale=f.api.scope();f.window.MinihompyContentAccess.read=async()=>({legacy:true});await assert.rejects(stale.read('post','path',photo),e=>e.code==='PROTOCOL_MISMATCH');stale.dispose();
+ console.log('PASS 6: variant request fields, complete scoped key, no original/variant collision, byte/hash rejection, capability downgrade never fetches original');
 }

@@ -1,0 +1,2 @@
+{"beforeMedianMs":2260.2999999523163,"afterMedianMs":423.60000002384186,"originalBytes":4367860,"variantBytes":525938}
+PASS actual view/media/Worker: large transfer and first image improvement, dimensions/alpha, one media request, small/GIF original compatibility and Blob reset
