@@ -1,0 +1,9 @@
+PASS 1280: actual runtime/repository/home shows friend data without confirmation button
+PASS 1280: shared runtime renews an expiring session automatically before home read
+PASS 1280: A to C switch clears protected results and rejects late A response
+PASS 1280: failure never becomes empty/public, retry recovers, owner sees private and logout clears it
+PASS 375: actual runtime/repository/home shows friend data without confirmation button
+PASS 375: shared runtime renews an expiring session automatically before home read
+PASS 375: A to C switch clears protected results and rejects late A response
+PASS 375: failure never becomes empty/public, retry recovers, owner sees private and logout clears it
+All 8 browser friend home scenarios passed using actual runtime, repository, central/personal handlers and SQL; Auth/identity display and readiness are fixtures.

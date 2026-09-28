@@ -1,0 +1,4 @@
+PASS burst=1, in-flight join without abort, detached DOM reused only after fresh success, unrelated draft preserved
+PASS identity/writing/content/access/settings/relationship changes abort old reads and reject late responses
+PASS hidden suppression/return, minute expiry, KST midnight and old-day pending response
+PASS timeout/retry failure/recovery, menu leave, attach before insertion, pagehide/pageshow
