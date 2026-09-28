@@ -1,0 +1,288 @@
+{
+  "delayedAuth": true,
+  "overlay": false,
+  "events": [
+    {
+      "event": "minihompy:visitor-identity",
+      "status": "unverified",
+      "adminPresent": false,
+      "documentState": "interactive"
+    },
+    {
+      "event": "minihompy:visitor-identity",
+      "status": "unverified",
+      "adminPresent": true,
+      "documentState": "complete"
+    },
+    {
+      "event": "minihompy:visitor-identity",
+      "status": "unverified",
+      "adminPresent": false,
+      "documentState": "interactive"
+    },
+    {
+      "event": "minihompy:visitor-identity",
+      "status": "anonymous",
+      "adminPresent": false,
+      "documentState": "interactive"
+    },
+    {
+      "event": "minihompy:member-session",
+      "status": "anonymous",
+      "adminPresent": false,
+      "documentState": "interactive"
+    },
+    {
+      "event": "minihompy:visitor-identity",
+      "status": "unverified",
+      "adminPresent": true,
+      "documentState": "complete"
+    },
+    {
+      "event": "minihompy:visitor-identity",
+      "status": "unverified",
+      "adminPresent": false,
+      "documentState": "interactive"
+    },
+    {
+      "event": "before-admin-refresh",
+      "adminPresent": true,
+      "documentState": "interactive"
+    },
+    {
+      "event": "minihompy:identity",
+      "role": "admin",
+      "adminPresent": true,
+      "documentState": "complete"
+    },
+    {
+      "event": "minihompy:writing-reset",
+      "reason": "관리자 상태가 변경되어 작성 내용을 정리했습니다.",
+      "adminPresent": true,
+      "documentState": "complete"
+    },
+    {
+      "event": "minihompy:visitor-identity",
+      "status": "identified",
+      "adminPresent": true,
+      "documentState": "complete"
+    },
+    {
+      "event": "minihompy:member-session",
+      "status": "ready",
+      "adminPresent": true,
+      "documentState": "complete"
+    },
+    {
+      "event": "minihompy:visitor-identity",
+      "status": "unverified",
+      "adminPresent": false,
+      "documentState": "interactive"
+    },
+    {
+      "event": "minihompy:visitor-identity",
+      "status": "unverified",
+      "adminPresent": true,
+      "documentState": "complete"
+    },
+    {
+      "event": "minihompy:visitor-identity",
+      "status": "unverified",
+      "adminPresent": false,
+      "documentState": "interactive"
+    },
+    {
+      "event": "before-admin-refresh",
+      "adminPresent": true,
+      "documentState": "interactive"
+    },
+    {
+      "event": "minihompy:identity",
+      "role": "admin",
+      "adminPresent": true,
+      "documentState": "complete"
+    },
+    {
+      "event": "minihompy:writing-reset",
+      "reason": "관리자 상태가 변경되어 작성 내용을 정리했습니다.",
+      "adminPresent": true,
+      "documentState": "complete"
+    },
+    {
+      "event": "minihompy:visitor-identity",
+      "status": "identified",
+      "adminPresent": true,
+      "documentState": "complete"
+    },
+    {
+      "event": "minihompy:member-session",
+      "status": "ready",
+      "adminPresent": true,
+      "documentState": "complete"
+    },
+    {
+      "event": "minihompy:visitor-identity",
+      "status": "unverified",
+      "adminPresent": false,
+      "documentState": "interactive"
+    },
+    {
+      "event": "minihompy:visitor-identity",
+      "status": "unverified",
+      "adminPresent": true,
+      "documentState": "complete"
+    },
+    {
+      "event": "minihompy:visitor-identity",
+      "status": "unverified",
+      "adminPresent": false,
+      "documentState": "interactive"
+    },
+    {
+      "event": "before-admin-refresh",
+      "adminPresent": true,
+      "documentState": "interactive"
+    },
+    {
+      "event": "minihompy:visitor-identity",
+      "status": "identified",
+      "adminPresent": true,
+      "documentState": "complete"
+    },
+    {
+      "event": "minihompy:member-session",
+      "status": "ready",
+      "adminPresent": true,
+      "documentState": "complete"
+    },
+    {
+      "event": "minihompy:visitor-identity",
+      "status": "unverified",
+      "adminPresent": false,
+      "documentState": "interactive"
+    },
+    {
+      "event": "minihompy:visitor-identity",
+      "status": "unverified",
+      "adminPresent": true,
+      "documentState": "complete"
+    },
+    {
+      "event": "minihompy:visitor-identity",
+      "status": "unverified",
+      "adminPresent": false,
+      "documentState": "interactive"
+    },
+    {
+      "event": "before-admin-refresh",
+      "adminPresent": true,
+      "documentState": "interactive"
+    },
+    {
+      "event": "minihompy:identity",
+      "role": "admin",
+      "adminPresent": true,
+      "documentState": "complete"
+    },
+    {
+      "event": "minihompy:writing-reset",
+      "reason": "관리자 상태가 변경되어 작성 내용을 정리했습니다.",
+      "adminPresent": true,
+      "documentState": "complete"
+    },
+    {
+      "event": "minihompy:visitor-identity",
+      "status": "identified",
+      "adminPresent": true,
+      "documentState": "complete"
+    },
+    {
+      "event": "minihompy:member-session",
+      "status": "ready",
+      "adminPresent": true,
+      "documentState": "complete"
+    },
+    {
+      "event": "minihompy:identity",
+      "role": "reader",
+      "adminPresent": true,
+      "documentState": "complete"
+    },
+    {
+      "event": "minihompy:writing-reset",
+      "reason": "관리자 상태가 변경되어 작성 내용을 정리했습니다.",
+      "adminPresent": true,
+      "documentState": "complete"
+    },
+    {
+      "event": "minihompy:writing-reset",
+      "reason": "로그아웃하여 작성 내용과 비밀글을 정리했습니다.",
+      "adminPresent": true,
+      "documentState": "complete"
+    },
+    {
+      "event": "minihompy:member-session",
+      "status": "loginRequired",
+      "adminPresent": true,
+      "documentState": "complete"
+    },
+    {
+      "event": "minihompy:visitor-identity",
+      "status": "unverified",
+      "adminPresent": true,
+      "documentState": "complete"
+    },
+    {
+      "event": "minihompy:visitor-identity",
+      "status": "unverified",
+      "adminPresent": false,
+      "documentState": "interactive"
+    },
+    {
+      "event": "minihompy:visitor-identity",
+      "status": "anonymous",
+      "adminPresent": false,
+      "documentState": "interactive"
+    },
+    {
+      "event": "minihompy:member-session",
+      "status": "anonymous",
+      "adminPresent": false,
+      "documentState": "interactive"
+    }
+  ],
+  "samples": [
+    {
+      "label": "B anonymous",
+      "identity": "anonymous",
+      "writing": "anonymous",
+      "admin": "reader"
+    },
+    {
+      "label": "B login",
+      "identity": "identified",
+      "writing": "ready",
+      "admin": "admin"
+    },
+    {
+      "label": "B first document",
+      "identity": "identified",
+      "writing": "ready",
+      "admin": "admin"
+    },
+    {
+      "label": "A first document",
+      "identity": "identified",
+      "writing": "ready",
+      "admin": "reader"
+    },
+    {
+      "label": "B first document",
+      "identity": "identified",
+      "writing": "ready",
+      "admin": "admin"
+    }
+  ],
+  "blockedWrites": 0,
+  "logout": true
+}

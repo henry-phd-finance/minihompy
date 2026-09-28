@@ -1,0 +1,123 @@
+{
+  "site": "B",
+  "at": "2026-09-28T14:55:27.906Z",
+  "preserved": [
+    {
+      "table": "private.comment_write_limits",
+      "count": 1
+    },
+    {
+      "table": "private.content_folder_requests",
+      "count": 24
+    },
+    {
+      "table": "private.content_folder_state",
+      "count": 3
+    },
+    {
+      "table": "private.content_visibility_requests",
+      "count": 11
+    },
+    {
+      "table": "private.friend_review_operations",
+      "count": 6
+    },
+    {
+      "table": "private.friend_reviews",
+      "count": 2
+    },
+    {
+      "table": "private.guestbook_write_limits",
+      "count": 1
+    },
+    {
+      "table": "private.member_writing_requests",
+      "count": 57
+    },
+    {
+      "table": "private.member_writing_site",
+      "count": 1
+    },
+    {
+      "table": "private.minihompy_admins",
+      "count": 1
+    },
+    {
+      "table": "private.photo_assets",
+      "count": 6
+    },
+    {
+      "table": "private.photo_media_state",
+      "count": 1
+    },
+    {
+      "table": "private.visit_days",
+      "count": 6
+    },
+    {
+      "table": "private.visit_keys",
+      "count": 23
+    },
+    {
+      "table": "private.visit_total",
+      "count": 1
+    },
+    {
+      "table": "public.board_folders",
+      "count": 1
+    },
+    {
+      "table": "public.board_posts",
+      "count": 0
+    },
+    {
+      "table": "public.diary_entries",
+      "count": 0
+    },
+    {
+      "table": "public.diary_folders",
+      "count": 1
+    },
+    {
+      "table": "public.guestbook_posts",
+      "count": 3
+    },
+    {
+      "table": "public.home_greeting_history",
+      "count": 1
+    },
+    {
+      "table": "public.minihompy_profile",
+      "count": 1
+    },
+    {
+      "table": "public.minihompy_settings",
+      "count": 1
+    },
+    {
+      "table": "public.photo_folders",
+      "count": 1
+    },
+    {
+      "table": "public.photo_posts",
+      "count": 0
+    },
+    {
+      "table": "public.post_comments",
+      "count": 0
+    }
+  ],
+  "expectedOperationalChanges": [
+    "private.friend_review_limits",
+    "private.friend_visibility_deployment",
+    "private.member_writing_families",
+    "private.member_writing_sessions",
+    "private.minihompy_setup_migrations"
+  ],
+  "changedTables": [],
+  "originalObjectCount": 0,
+  "originalBytes": 0,
+  "objectsPreserved": true,
+  "configPreserved": true,
+  "newObjectCount": 0
+}

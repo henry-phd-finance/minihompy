@@ -1,0 +1,12 @@
+{
+  "checkedAt": "2026-09-28T14:52:04.131Z",
+  "passed": true,
+  "checks": [
+    "Mobile A login automatically prepares own-home session",
+    "Mobile B recognizes A without admin rights or member buttons; menu departure discards input",
+    "Mobile central logout completes without writing content"
+  ],
+  "contentWrites": 0,
+  "blockedWrites": 0,
+  "pageErrors": []
+}

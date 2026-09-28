@@ -1,0 +1,60 @@
+{
+  "site": "central",
+  "at": "2026-09-28T14:56:46.204Z",
+  "preserved": [
+    {
+      "table": "private.identity_bindings",
+      "count": 2
+    },
+    {
+      "table": "private.identity_members",
+      "count": 2
+    },
+    {
+      "table": "private.identity_registrations",
+      "count": 2
+    },
+    {
+      "table": "private.identity_relationship_cooldowns",
+      "count": 2
+    },
+    {
+      "table": "private.identity_relationship_operations",
+      "count": 37
+    },
+    {
+      "table": "private.identity_relationships",
+      "count": 1
+    },
+    {
+      "table": "private.identity_review_permits",
+      "count": 9
+    },
+    {
+      "table": "private.identity_sites",
+      "count": 2
+    },
+    {
+      "table": "private.member_writing_deployments",
+      "count": 4
+    },
+    {
+      "table": "private.navigation_deployments",
+      "count": 1
+    }
+  ],
+  "expectedOperationalChanges": [
+    "private.identity_login_attempts",
+    "private.identity_relationship_limits",
+    "private.identity_sessions",
+    "private.identity_writing_delegations",
+    "private.identity_writing_grants",
+    "private.identity_writing_proofs"
+  ],
+  "changedTables": [],
+  "originalObjectCount": 0,
+  "originalBytes": 0,
+  "objectsPreserved": true,
+  "configPreserved": true,
+  "newObjectCount": 0
+}

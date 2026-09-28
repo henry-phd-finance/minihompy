@@ -1,0 +1,33 @@
+{
+  "at": "2026-09-28T14:44:17.959Z",
+  "health": {
+    "member-writing/content/health": {
+      "friend_visibility_protocol": 1,
+      "friend_visibility_ready": true,
+      "friend_media_ready": true,
+      "friend_summary_ready": true,
+      "friend_pages_ready": true,
+      "friend_visibility_setup_protocol": 1,
+      "diary_latest_protocol": 1,
+      "photo_check_protocol": 1,
+      "photo_variant_protocol": 1,
+      "photo_variant_recipe": "display-v1",
+      "photo_variant_read_protocol": 1
+    },
+    "photo-media/health": {
+      "photo_variant_protocol": 1,
+      "photo_variant_recipe": "display-v1",
+      "photo_variant_read_protocol": 1,
+      "friend_media_protocol": 1,
+      "friend_visibility_setup_protocol": 1,
+      "site_id": "afd287c3-0f9f-44b4-8811-3cf11774f859",
+      "central_api_url": "https://pcwovvdgggpbghvqraex.supabase.co/functions/v1/identity-api",
+      "project_url": "https://itkymmxnbjylyzbmdxdb.supabase.co"
+    }
+  },
+  "pagesHash": "10d3565542b77c540505427727c279f8630f50e69fca4371b87e711ed7bcb9a7",
+  "filesVerified": 67,
+  "extraFilesVerified": [
+    "author-visit.html"
+  ]
+}

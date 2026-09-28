@@ -1,0 +1,6399 @@
+{
+  "at": "2026-09-28T14:44:02.194Z",
+  "viewport": {
+    "width": 1280,
+    "height": 900
+  },
+  "cachePolicy": "HTTP cache disabled by request routing; repetitions retain application/server warmth only",
+  "visitMode": "GET via disabled navigator.locks",
+  "samples": [
+    {
+      "site": "A",
+      "role": "public",
+      "scenario": "first-document",
+      "cache": "new context, HTTP cache disabled",
+      "summaryMs": 3588,
+      "relationshipMs": 2963,
+      "reviewInputMs": null,
+      "authorsMs": 3379,
+      "settled": true,
+      "totalMs": 4327,
+      "requestCount": 124,
+      "responseBodyBytes": 936010,
+      "counts": {
+        "central/navigation/members": 1,
+        "central/navigation/site": 1,
+        "central/visits/issue": 1,
+        "central/visits/resolve": 1,
+        "content/health": 2,
+        "content/summary": 1,
+        "db/minihompy_settings": 2,
+        "friend-reviews": 3,
+        "static:Galmuri11-extended.woff2": 2,
+        "static:admin-auth.js": 2,
+        "static:app.js": 2,
+        "static:author-navigation.js": 2,
+        "static:board-repository.js": 2,
+        "static:board.js": 2,
+        "static:comments-repository.js": 2,
+        "static:comments.js": 2,
+        "static:config.js": 3,
+        "static:content-access.js": 2,
+        "static:content-folders-repository.js": 2,
+        "static:content-folders.js": 2,
+        "static:content.js": 2,
+        "static:diary-repository.js": 2,
+        "static:diary.js": 2,
+        "static:friend-reviews-repository.js": 2,
+        "static:friend-reviews.js": 2,
+        "static:guestbook-repository.js": 2,
+        "static:guestbook.js": 2,
+        "static:home-activity.js": 2,
+        "static:home-data-config.js": 2,
+        "static:home-profile-data.js": 2,
+        "static:home-profile-history.js": 2,
+        "static:home-profile.js": 2,
+        "static:home-repository.js": 2,
+        "static:home.js": 2,
+        "static:index.js": 2,
+        "static:login-flow.js": 1,
+        "static:login.css": 1,
+        "static:member-navigation.js": 2,
+        "static:member-relationship-lists.js": 2,
+        "static:member-relationships-repository.js": 2,
+        "static:member-relationships.js": 2,
+        "static:member-writing-client.js": 2,
+        "static:member-writing-config.js": 2,
+        "static:member-writing-runtime.js": 2,
+        "static:photo-editor-loader.js": 2,
+        "static:photo-media-client.js": 2,
+        "static:photos-repository.js": 2,
+        "static:photos.js": 2,
+        "static:post-location-repository.js": 2,
+        "static:post-routes.js": 2,
+        "static:profile-data.js": 2,
+        "static:profile.js": 2,
+        "static:settings.js": 2,
+        "static:styles.css": 2,
+        "static:supabase-2.116.0.js": 2,
+        "static:supabase-client.js": 2,
+        "static:supabase-config.js": 2,
+        "static:surf-navigation.js": 2,
+        "static:visit-counts.js": 2,
+        "static:visit-flow.js": 1,
+        "static:visitor-identity-config.js": 2,
+        "static:visitor-identity-login.js": 2,
+        "static:visitor-identity.js": 2,
+        "static:visitor-session.js": 2,
+        "visits": 2
+      },
+      "requests": [
+        {
+          "category": "static:styles.css",
+          "method": "GET",
+          "startMs": 406,
+          "endMs": 550,
+          "durationMs": 144,
+          "status": 200,
+          "responseBodyBytes": 13641,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:config.js",
+          "method": "GET",
+          "startMs": 407,
+          "endMs": 793,
+          "durationMs": 386,
+          "status": 200,
+          "responseBodyBytes": 1859,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:visitor-identity-config.js",
+          "method": "GET",
+          "startMs": 408,
+          "endMs": 571,
+          "durationMs": 163,
+          "status": 200,
+          "responseBodyBytes": 551,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:visitor-identity-login.js",
+          "method": "GET",
+          "startMs": 408,
+          "endMs": 598,
+          "durationMs": 190,
+          "status": 200,
+          "responseBodyBytes": 2267,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:supabase-config.js",
+          "method": "GET",
+          "startMs": 410,
+          "endMs": 575,
+          "durationMs": 165,
+          "status": 200,
+          "responseBodyBytes": 439,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:supabase-2.116.0.js",
+          "method": "GET",
+          "startMs": 410,
+          "endMs": 787,
+          "durationMs": 377,
+          "status": 200,
+          "responseBodyBytes": 56608,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:supabase-client.js",
+          "method": "GET",
+          "startMs": 411,
+          "endMs": 573,
+          "durationMs": 162,
+          "status": 200,
+          "responseBodyBytes": 588,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:member-writing-config.js",
+          "method": "GET",
+          "startMs": 411,
+          "endMs": 575,
+          "durationMs": 164,
+          "status": 200,
+          "responseBodyBytes": 433,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:member-writing-client.js",
+          "method": "GET",
+          "startMs": 411,
+          "endMs": 573,
+          "durationMs": 162,
+          "status": 200,
+          "responseBodyBytes": 3557,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:member-writing-runtime.js",
+          "method": "GET",
+          "startMs": 412,
+          "endMs": 572,
+          "durationMs": 160,
+          "status": 200,
+          "responseBodyBytes": 4146,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:member-relationships-repository.js",
+          "method": "GET",
+          "startMs": 412,
+          "endMs": 583,
+          "durationMs": 171,
+          "status": 200,
+          "responseBodyBytes": 3994,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:member-relationships.js",
+          "method": "GET",
+          "startMs": 412,
+          "endMs": 580,
+          "durationMs": 168,
+          "status": 200,
+          "responseBodyBytes": 3390,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:visitor-identity.js",
+          "method": "GET",
+          "startMs": 414,
+          "endMs": 573,
+          "durationMs": 159,
+          "status": 200,
+          "responseBodyBytes": 5593,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:member-navigation.js",
+          "method": "GET",
+          "startMs": 414,
+          "endMs": 581,
+          "durationMs": 167,
+          "status": 200,
+          "responseBodyBytes": 3043,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:author-navigation.js",
+          "method": "GET",
+          "startMs": 414,
+          "endMs": 741,
+          "durationMs": 327,
+          "status": 200,
+          "responseBodyBytes": 2872,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:member-relationship-lists.js",
+          "method": "GET",
+          "startMs": 414,
+          "endMs": 573,
+          "durationMs": 159,
+          "status": 200,
+          "responseBodyBytes": 3324,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:surf-navigation.js",
+          "method": "GET",
+          "startMs": 417,
+          "endMs": 584,
+          "durationMs": 167,
+          "status": 200,
+          "responseBodyBytes": 2964,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:visitor-session.js",
+          "method": "GET",
+          "startMs": 417,
+          "endMs": 575,
+          "durationMs": 158,
+          "status": 200,
+          "responseBodyBytes": 985,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:friend-reviews-repository.js",
+          "method": "GET",
+          "startMs": 417,
+          "endMs": 799,
+          "durationMs": 382,
+          "status": 200,
+          "responseBodyBytes": 1105,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:friend-reviews.js",
+          "method": "GET",
+          "startMs": 417,
+          "endMs": 793,
+          "durationMs": 376,
+          "status": 200,
+          "responseBodyBytes": 4378,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:comments-repository.js",
+          "method": "GET",
+          "startMs": 418,
+          "endMs": 790,
+          "durationMs": 372,
+          "status": 200,
+          "responseBodyBytes": 2130,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:comments.js",
+          "method": "GET",
+          "startMs": 418,
+          "endMs": 791,
+          "durationMs": 373,
+          "status": 200,
+          "responseBodyBytes": 4327,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:content.js",
+          "method": "GET",
+          "startMs": 418,
+          "endMs": 791,
+          "durationMs": 373,
+          "status": 200,
+          "responseBodyBytes": 1429,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:post-routes.js",
+          "method": "GET",
+          "startMs": 418,
+          "endMs": 587,
+          "durationMs": 169,
+          "status": 200,
+          "responseBodyBytes": 1192,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:content-access.js",
+          "method": "GET",
+          "startMs": 418,
+          "endMs": 787,
+          "durationMs": 369,
+          "status": 200,
+          "responseBodyBytes": 3383,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:post-location-repository.js",
+          "method": "GET",
+          "startMs": 418,
+          "endMs": 574,
+          "durationMs": 156,
+          "status": 200,
+          "responseBodyBytes": 892,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:index.js",
+          "method": "GET",
+          "startMs": 419,
+          "endMs": 582,
+          "durationMs": 163,
+          "status": 200,
+          "responseBodyBytes": 588,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:home-data-config.js",
+          "method": "GET",
+          "startMs": 419,
+          "endMs": 587,
+          "durationMs": 168,
+          "status": 200,
+          "responseBodyBytes": 523,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:visit-counts.js",
+          "method": "GET",
+          "startMs": 419,
+          "endMs": 587,
+          "durationMs": 168,
+          "status": 200,
+          "responseBodyBytes": 2305,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:home-repository.js",
+          "method": "GET",
+          "startMs": 419,
+          "endMs": 612,
+          "durationMs": 193,
+          "status": 200,
+          "responseBodyBytes": 1620,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:home-activity.js",
+          "method": "GET",
+          "startMs": 419,
+          "endMs": 622,
+          "durationMs": 203,
+          "status": 200,
+          "responseBodyBytes": 3501,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:home-profile-data.js",
+          "method": "GET",
+          "startMs": 420,
+          "endMs": 622,
+          "durationMs": 202,
+          "status": 200,
+          "responseBodyBytes": 1299,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:home-profile.js",
+          "method": "GET",
+          "startMs": 420,
+          "endMs": 624,
+          "durationMs": 204,
+          "status": 200,
+          "responseBodyBytes": 2469,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:home-profile-history.js",
+          "method": "GET",
+          "startMs": 420,
+          "endMs": 607,
+          "durationMs": 187,
+          "status": 200,
+          "responseBodyBytes": 2194,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:home.js",
+          "method": "GET",
+          "startMs": 420,
+          "endMs": 601,
+          "durationMs": 181,
+          "status": 200,
+          "responseBodyBytes": 1332,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:profile-data.js",
+          "method": "GET",
+          "startMs": 420,
+          "endMs": 599,
+          "durationMs": 179,
+          "status": 200,
+          "responseBodyBytes": 1864,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:profile.js",
+          "method": "GET",
+          "startMs": 420,
+          "endMs": 621,
+          "durationMs": 201,
+          "status": 200,
+          "responseBodyBytes": 4020,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:content-folders-repository.js",
+          "method": "GET",
+          "startMs": 420,
+          "endMs": 786,
+          "durationMs": 366,
+          "status": 200,
+          "responseBodyBytes": 1529,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:content-folders.js",
+          "method": "GET",
+          "startMs": 421,
+          "endMs": 743,
+          "durationMs": 322,
+          "status": 200,
+          "responseBodyBytes": 4372,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:photo-media-client.js",
+          "method": "GET",
+          "startMs": 421,
+          "endMs": 588,
+          "durationMs": 167,
+          "status": 200,
+          "responseBodyBytes": 3658,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:photos-repository.js",
+          "method": "GET",
+          "startMs": 421,
+          "endMs": 627,
+          "durationMs": 206,
+          "status": 200,
+          "responseBodyBytes": 2861,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:photo-editor-loader.js",
+          "method": "GET",
+          "startMs": 421,
+          "endMs": 598,
+          "durationMs": 177,
+          "status": 200,
+          "responseBodyBytes": 1300,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:photos.js",
+          "method": "GET",
+          "startMs": 421,
+          "endMs": 606,
+          "durationMs": 185,
+          "status": 200,
+          "responseBodyBytes": 7867,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:diary-repository.js",
+          "method": "GET",
+          "startMs": 421,
+          "endMs": 732,
+          "durationMs": 311,
+          "status": 200,
+          "responseBodyBytes": 1951,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:diary.js",
+          "method": "GET",
+          "startMs": 421,
+          "endMs": 623,
+          "durationMs": 202,
+          "status": 200,
+          "responseBodyBytes": 7196,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:guestbook-repository.js",
+          "method": "GET",
+          "startMs": 421,
+          "endMs": 593,
+          "durationMs": 172,
+          "status": 200,
+          "responseBodyBytes": 2080,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:guestbook.js",
+          "method": "GET",
+          "startMs": 422,
+          "endMs": 588,
+          "durationMs": 166,
+          "status": 200,
+          "responseBodyBytes": 5798,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:board-repository.js",
+          "method": "GET",
+          "startMs": 422,
+          "endMs": 743,
+          "durationMs": 321,
+          "status": 200,
+          "responseBodyBytes": 1685,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:board.js",
+          "method": "GET",
+          "startMs": 422,
+          "endMs": 594,
+          "durationMs": 172,
+          "status": 200,
+          "responseBodyBytes": 5708,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:settings.js",
+          "method": "GET",
+          "startMs": 422,
+          "endMs": 590,
+          "durationMs": 168,
+          "status": 200,
+          "responseBodyBytes": 3231,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:app.js",
+          "method": "GET",
+          "startMs": 422,
+          "endMs": 729,
+          "durationMs": 307,
+          "status": 200,
+          "responseBodyBytes": 3317,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:admin-auth.js",
+          "method": "GET",
+          "startMs": 422,
+          "endMs": 787,
+          "durationMs": 365,
+          "status": 200,
+          "responseBodyBytes": 2562,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "visits",
+          "method": "GET",
+          "startMs": 800,
+          "endMs": 1186,
+          "durationMs": 386,
+          "status": 200,
+          "responseBodyBytes": 816,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "db/minihompy_settings",
+          "method": "GET",
+          "startMs": 814,
+          "endMs": 1121,
+          "durationMs": 307,
+          "status": 200,
+          "responseBodyBytes": 1375,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:Galmuri11-extended.woff2",
+          "method": "GET",
+          "startMs": 1135,
+          "endMs": 1610,
+          "failed": true
+        },
+        {
+          "category": "friend-reviews",
+          "method": "GET",
+          "startMs": 1137,
+          "endMs": 1516,
+          "durationMs": 379,
+          "status": 200,
+          "responseBodyBytes": 1048,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "content/health",
+          "method": "GET",
+          "startMs": 1176,
+          "endMs": 1557,
+          "durationMs": 381,
+          "status": 200,
+          "responseBodyBytes": 1002,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "friend-reviews",
+          "method": "GET",
+          "startMs": 1257,
+          "endMs": 1610,
+          "failed": true
+        },
+        {
+          "category": "static:login.css",
+          "method": "GET",
+          "startMs": 1631,
+          "endMs": 1875,
+          "durationMs": 244,
+          "status": 200,
+          "responseBodyBytes": 1050,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:config.js",
+          "method": "GET",
+          "startMs": 1632,
+          "endMs": 1880,
+          "durationMs": 248,
+          "status": 200,
+          "responseBodyBytes": 343,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:login-flow.js",
+          "method": "GET",
+          "startMs": 1632,
+          "endMs": 1889,
+          "durationMs": 257,
+          "status": 200,
+          "responseBodyBytes": 1419,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:visit-flow.js",
+          "method": "GET",
+          "startMs": 1632,
+          "endMs": 1875,
+          "durationMs": 243,
+          "status": 200,
+          "responseBodyBytes": 1459,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "central/visits/issue",
+          "method": "POST",
+          "startMs": 1892,
+          "endMs": 2187,
+          "durationMs": 295,
+          "status": 200,
+          "responseBodyBytes": 1444,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:styles.css",
+          "method": "GET",
+          "startMs": 2248,
+          "endMs": 2305,
+          "durationMs": 57,
+          "status": 200,
+          "responseBodyBytes": 13486,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:config.js",
+          "method": "GET",
+          "startMs": 2250,
+          "endMs": 2304,
+          "durationMs": 54,
+          "status": 200,
+          "responseBodyBytes": 1913,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:visitor-identity-config.js",
+          "method": "GET",
+          "startMs": 2250,
+          "endMs": 2305,
+          "durationMs": 55,
+          "status": 200,
+          "responseBodyBytes": 533,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:visitor-identity-login.js",
+          "method": "GET",
+          "startMs": 2250,
+          "endMs": 2309,
+          "durationMs": 59,
+          "status": 200,
+          "responseBodyBytes": 2266,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:supabase-config.js",
+          "method": "GET",
+          "startMs": 2251,
+          "endMs": 2310,
+          "durationMs": 59,
+          "status": 200,
+          "responseBodyBytes": 479,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:supabase-2.116.0.js",
+          "method": "GET",
+          "startMs": 2251,
+          "endMs": 2320,
+          "durationMs": 69,
+          "status": 200,
+          "responseBodyBytes": 56494,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:supabase-client.js",
+          "method": "GET",
+          "startMs": 2251,
+          "endMs": 2323,
+          "durationMs": 72,
+          "status": 200,
+          "responseBodyBytes": 706,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:member-writing-config.js",
+          "method": "GET",
+          "startMs": 2251,
+          "endMs": 2332,
+          "durationMs": 81,
+          "status": 200,
+          "responseBodyBytes": 413,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:member-writing-client.js",
+          "method": "GET",
+          "startMs": 2252,
+          "endMs": 2343,
+          "durationMs": 91,
+          "status": 200,
+          "responseBodyBytes": 3470,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:member-writing-runtime.js",
+          "method": "GET",
+          "startMs": 2252,
+          "endMs": 2341,
+          "durationMs": 89,
+          "status": 200,
+          "responseBodyBytes": 4232,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:member-relationships-repository.js",
+          "method": "GET",
+          "startMs": 2252,
+          "endMs": 2323,
+          "durationMs": 71,
+          "status": 200,
+          "responseBodyBytes": 4079,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:member-relationships.js",
+          "method": "GET",
+          "startMs": 2252,
+          "endMs": 2324,
+          "durationMs": 72,
+          "status": 200,
+          "responseBodyBytes": 3406,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:visitor-identity.js",
+          "method": "GET",
+          "startMs": 2252,
+          "endMs": 2324,
+          "durationMs": 72,
+          "status": 200,
+          "responseBodyBytes": 5462,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:member-navigation.js",
+          "method": "GET",
+          "startMs": 2254,
+          "endMs": 2327,
+          "durationMs": 73,
+          "status": 200,
+          "responseBodyBytes": 3043,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:author-navigation.js",
+          "method": "GET",
+          "startMs": 2254,
+          "endMs": 2332,
+          "durationMs": 78,
+          "status": 200,
+          "responseBodyBytes": 2806,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:member-relationship-lists.js",
+          "method": "GET",
+          "startMs": 2254,
+          "endMs": 2321,
+          "durationMs": 67,
+          "status": 200,
+          "responseBodyBytes": 3388,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:surf-navigation.js",
+          "method": "GET",
+          "startMs": 2255,
+          "endMs": 2323,
+          "durationMs": 68,
+          "status": 200,
+          "responseBodyBytes": 2890,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:visitor-session.js",
+          "method": "GET",
+          "startMs": 2255,
+          "endMs": 2343,
+          "durationMs": 88,
+          "status": 200,
+          "responseBodyBytes": 942,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:friend-reviews-repository.js",
+          "method": "GET",
+          "startMs": 2255,
+          "endMs": 2321,
+          "durationMs": 66,
+          "status": 200,
+          "responseBodyBytes": 1077,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:friend-reviews.js",
+          "method": "GET",
+          "startMs": 2255,
+          "endMs": 2352,
+          "durationMs": 97,
+          "status": 200,
+          "responseBodyBytes": 4381,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:comments-repository.js",
+          "method": "GET",
+          "startMs": 2255,
+          "endMs": 2350,
+          "durationMs": 95,
+          "status": 200,
+          "responseBodyBytes": 2141,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:comments.js",
+          "method": "GET",
+          "startMs": 2255,
+          "endMs": 2351,
+          "durationMs": 96,
+          "status": 200,
+          "responseBodyBytes": 4399,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:content.js",
+          "method": "GET",
+          "startMs": 2255,
+          "endMs": 2354,
+          "durationMs": 99,
+          "status": 200,
+          "responseBodyBytes": 1357,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:post-routes.js",
+          "method": "GET",
+          "startMs": 2256,
+          "endMs": 2352,
+          "durationMs": 96,
+          "status": 200,
+          "responseBodyBytes": 1205,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:content-access.js",
+          "method": "GET",
+          "startMs": 2256,
+          "endMs": 2354,
+          "durationMs": 98,
+          "status": 200,
+          "responseBodyBytes": 3463,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:post-location-repository.js",
+          "method": "GET",
+          "startMs": 2256,
+          "endMs": 2352,
+          "durationMs": 96,
+          "status": 200,
+          "responseBodyBytes": 875,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:index.js",
+          "method": "GET",
+          "startMs": 2256,
+          "endMs": 2349,
+          "durationMs": 93,
+          "status": 200,
+          "responseBodyBytes": 574,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:home-data-config.js",
+          "method": "GET",
+          "startMs": 2256,
+          "endMs": 2550,
+          "durationMs": 294,
+          "status": 200,
+          "responseBodyBytes": 463,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:visit-counts.js",
+          "method": "GET",
+          "startMs": 2256,
+          "endMs": 2351,
+          "durationMs": 95,
+          "status": 200,
+          "responseBodyBytes": 2316,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:home-repository.js",
+          "method": "GET",
+          "startMs": 2256,
+          "endMs": 2349,
+          "durationMs": 93,
+          "status": 200,
+          "responseBodyBytes": 1512,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:home-activity.js",
+          "method": "GET",
+          "startMs": 2256,
+          "endMs": 2552,
+          "durationMs": 296,
+          "status": 200,
+          "responseBodyBytes": 3492,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:home-profile-data.js",
+          "method": "GET",
+          "startMs": 2256,
+          "endMs": 2347,
+          "durationMs": 91,
+          "status": 200,
+          "responseBodyBytes": 1197,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:home-profile.js",
+          "method": "GET",
+          "startMs": 2256,
+          "endMs": 2346,
+          "durationMs": 90,
+          "status": 200,
+          "responseBodyBytes": 2532,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:home-profile-history.js",
+          "method": "GET",
+          "startMs": 2256,
+          "endMs": 2346,
+          "durationMs": 90,
+          "status": 200,
+          "responseBodyBytes": 2230,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:home.js",
+          "method": "GET",
+          "startMs": 2257,
+          "endMs": 2353,
+          "durationMs": 96,
+          "status": 200,
+          "responseBodyBytes": 1322,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:profile-data.js",
+          "method": "GET",
+          "startMs": 2257,
+          "endMs": 2381,
+          "durationMs": 124,
+          "status": 200,
+          "responseBodyBytes": 1878,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:profile.js",
+          "method": "GET",
+          "startMs": 2257,
+          "endMs": 2381,
+          "durationMs": 124,
+          "status": 200,
+          "responseBodyBytes": 4057,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:content-folders-repository.js",
+          "method": "GET",
+          "startMs": 2257,
+          "endMs": 2382,
+          "durationMs": 125,
+          "status": 200,
+          "responseBodyBytes": 1587,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:content-folders.js",
+          "method": "GET",
+          "startMs": 2257,
+          "endMs": 2427,
+          "durationMs": 170,
+          "status": 200,
+          "responseBodyBytes": 4342,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:photo-media-client.js",
+          "method": "GET",
+          "startMs": 2257,
+          "endMs": 2381,
+          "durationMs": 124,
+          "status": 200,
+          "responseBodyBytes": 3667,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:photos-repository.js",
+          "method": "GET",
+          "startMs": 2257,
+          "endMs": 2427,
+          "durationMs": 170,
+          "status": 200,
+          "responseBodyBytes": 2787,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:photo-editor-loader.js",
+          "method": "GET",
+          "startMs": 2257,
+          "endMs": 2381,
+          "durationMs": 124,
+          "status": 200,
+          "responseBodyBytes": 1274,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:photos.js",
+          "method": "GET",
+          "startMs": 2257,
+          "endMs": 2387,
+          "durationMs": 130,
+          "status": 200,
+          "responseBodyBytes": 7933,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:diary-repository.js",
+          "method": "GET",
+          "startMs": 2258,
+          "endMs": 2427,
+          "durationMs": 169,
+          "status": 200,
+          "responseBodyBytes": 2042,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:diary.js",
+          "method": "GET",
+          "startMs": 2258,
+          "endMs": 2387,
+          "durationMs": 129,
+          "status": 200,
+          "responseBodyBytes": 7169,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:guestbook-repository.js",
+          "method": "GET",
+          "startMs": 2258,
+          "endMs": 2586,
+          "durationMs": 328,
+          "status": 200,
+          "responseBodyBytes": 2129,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:guestbook.js",
+          "method": "GET",
+          "startMs": 2258,
+          "endMs": 2388,
+          "durationMs": 130,
+          "status": 200,
+          "responseBodyBytes": 5772,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:board-repository.js",
+          "method": "GET",
+          "startMs": 2258,
+          "endMs": 2427,
+          "durationMs": 169,
+          "status": 200,
+          "responseBodyBytes": 1766,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:board.js",
+          "method": "GET",
+          "startMs": 2258,
+          "endMs": 2388,
+          "durationMs": 130,
+          "status": 200,
+          "responseBodyBytes": 5704,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:settings.js",
+          "method": "GET",
+          "startMs": 2258,
+          "endMs": 2361,
+          "durationMs": 103,
+          "status": 200,
+          "responseBodyBytes": 3179,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:app.js",
+          "method": "GET",
+          "startMs": 2260,
+          "endMs": 2427,
+          "durationMs": 167,
+          "status": 200,
+          "responseBodyBytes": 3224,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:admin-auth.js",
+          "method": "GET",
+          "startMs": 2260,
+          "endMs": 2361,
+          "durationMs": 101,
+          "status": 200,
+          "responseBodyBytes": 2525,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "central/visits/resolve",
+          "method": "POST",
+          "startMs": 2349,
+          "endMs": 2629,
+          "durationMs": 280,
+          "status": 200,
+          "responseBodyBytes": 937,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "visits",
+          "method": "GET",
+          "startMs": 2551,
+          "endMs": 2758,
+          "durationMs": 207,
+          "status": 200,
+          "responseBodyBytes": 820,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "db/minihompy_settings",
+          "method": "GET",
+          "startMs": 2592,
+          "endMs": 2675,
+          "durationMs": 83,
+          "status": 200,
+          "responseBodyBytes": 1340,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "central/navigation/site",
+          "method": "GET",
+          "startMs": 2632,
+          "endMs": 2924,
+          "durationMs": 292,
+          "status": 200,
+          "responseBodyBytes": 1012,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:Galmuri11-extended.woff2",
+          "method": "GET",
+          "startMs": 2680,
+          "endMs": 2952,
+          "durationMs": 272,
+          "status": 200,
+          "responseBodyBytes": 505869,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "friend-reviews",
+          "method": "GET",
+          "startMs": 2682,
+          "endMs": 3064,
+          "durationMs": 382,
+          "status": 200,
+          "responseBodyBytes": 1047,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "content/health",
+          "method": "GET",
+          "startMs": 2729,
+          "endMs": 3110,
+          "durationMs": 381,
+          "status": 200,
+          "responseBodyBytes": 1006,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "central/navigation/members",
+          "method": "GET",
+          "startMs": 3067,
+          "endMs": 3370,
+          "durationMs": 303,
+          "status": 200,
+          "responseBodyBytes": 1003,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "content/summary",
+          "method": "POST",
+          "startMs": 3111,
+          "endMs": 3543,
+          "durationMs": 432,
+          "status": 200,
+          "responseBodyBytes": 1521,
+          "responseHeaderBytes": 0
+        }
+      ],
+      "cpuSeconds": {
+        "LayoutDuration": 0.039301,
+        "ScriptDuration": 0.033367,
+        "TaskDuration": 0.18764
+      }
+    },
+    {
+      "site": "A",
+      "role": "public",
+      "scenario": "diary",
+      "round": 1,
+      "menu": "diary",
+      "firstBodyMs": 556,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "settledMs": 939,
+      "calendarReadyMs": 939,
+      "empty": false,
+      "error": false,
+      "photoCount": 0,
+      "requests": [
+        {
+          "path": "/rest/v1/diary_folders",
+          "method": "GET",
+          "startMs": 52,
+          "endMs": 124,
+          "durationMs": 72,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 125,
+          "endMs": 547,
+          "durationMs": 422,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/calendar",
+          "method": "POST",
+          "startMs": 552,
+          "endMs": 925,
+          "durationMs": 373,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/post_comments",
+          "method": "GET",
+          "startMs": 615,
+          "endMs": 703,
+          "durationMs": 88,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/post_comments",
+          "method": "GET",
+          "startMs": 627,
+          "endMs": 703,
+          "durationMs": 76,
+          "status": 200
+        }
+      ],
+      "requestCount": 5,
+      "commentAuthors": {
+        "count": 0,
+        "loading": false,
+        "error": false,
+        "photoWidths": [],
+        "readyMs": null
+      },
+      "network": {
+        "requestCount": 7,
+        "responseBodyBytes": 6931,
+        "counts": {
+          "content/calendar": 1,
+          "content/list": 1,
+          "db/diary_entries": 2,
+          "db/diary_folders": 1,
+          "db/post_comments": 2
+        },
+        "requests": [
+          {
+            "category": "db/diary_folders",
+            "method": "GET",
+            "startMs": 53,
+            "endMs": 125,
+            "durationMs": 72,
+            "status": 200,
+            "responseBodyBytes": 869,
+            "responseHeaderBytes": 0
+          },
+          {
+            "category": "content/list",
+            "method": "POST",
+            "startMs": 126,
+            "endMs": 548,
+            "durationMs": 422,
+            "status": 200,
+            "responseBodyBytes": 1426,
+            "responseHeaderBytes": 0
+          },
+          {
+            "category": "content/calendar",
+            "method": "POST",
+            "startMs": 553,
+            "endMs": 925,
+            "durationMs": 372,
+            "status": 200,
+            "responseBodyBytes": 957,
+            "responseHeaderBytes": 0
+          },
+          {
+            "category": "db/diary_entries",
+            "method": "GET",
+            "startMs": 553,
+            "endMs": 615,
+            "durationMs": 62,
+            "status": 200,
+            "responseBodyBytes": 831,
+            "responseHeaderBytes": 0
+          },
+          {
+            "category": "db/diary_entries",
+            "method": "GET",
+            "startMs": 554,
+            "endMs": 627,
+            "durationMs": 73,
+            "status": 200,
+            "responseBodyBytes": 833,
+            "responseHeaderBytes": 0
+          },
+          {
+            "category": "db/post_comments",
+            "method": "GET",
+            "startMs": 616,
+            "endMs": 704,
+            "durationMs": 88,
+            "status": 200,
+            "responseBodyBytes": 1163,
+            "responseHeaderBytes": 0
+          },
+          {
+            "category": "db/post_comments",
+            "method": "GET",
+            "startMs": 628,
+            "endMs": 704,
+            "durationMs": 76,
+            "status": 200,
+            "responseBodyBytes": 852,
+            "responseHeaderBytes": 0
+          }
+        ]
+      }
+    },
+    {
+      "site": "A",
+      "role": "public",
+      "scenario": "home-return",
+      "from": "diary",
+      "round": 1,
+      "summaryMs": 509,
+      "relationshipMs": 38,
+      "reviewInputMs": null,
+      "authorsMs": 509,
+      "settled": true,
+      "totalMs": 1302,
+      "requestCount": 2,
+      "responseBodyBytes": 2572,
+      "counts": {
+        "content/summary": 1,
+        "friend-reviews": 1
+      },
+      "requests": [
+        {
+          "category": "friend-reviews",
+          "method": "GET",
+          "startMs": 36,
+          "endMs": 464,
+          "durationMs": 428,
+          "status": 200,
+          "responseBodyBytes": 1051,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "content/summary",
+          "method": "POST",
+          "startMs": 85,
+          "endMs": 499,
+          "durationMs": 414,
+          "status": 200,
+          "responseBodyBytes": 1521,
+          "responseHeaderBytes": 0
+        }
+      ]
+    },
+    {
+      "site": "A",
+      "role": "public",
+      "scenario": "photos",
+      "round": 1,
+      "menu": "photos",
+      "firstBodyMs": 524,
+      "firstPhotoMs": 1840,
+      "allPhotosMs": 1840,
+      "settledMs": 1840,
+      "calendarReadyMs": null,
+      "empty": false,
+      "error": false,
+      "photoCount": 1,
+      "requests": [
+        {
+          "path": "/rest/v1/photo_folders",
+          "method": "GET",
+          "startMs": 33,
+          "endMs": 114,
+          "durationMs": 81,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 116,
+          "endMs": 513,
+          "durationMs": 397,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/photo_posts",
+          "method": "GET",
+          "startMs": 519,
+          "endMs": 619,
+          "durationMs": 100,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/photo-check",
+          "method": "POST",
+          "startMs": 525,
+          "endMs": 927,
+          "durationMs": 402,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/post_comments",
+          "method": "GET",
+          "startMs": 621,
+          "endMs": 694,
+          "durationMs": 73,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/photo-media/read",
+          "method": "POST",
+          "startMs": 929,
+          "endMs": 1390,
+          "durationMs": 461,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/photo-check",
+          "method": "POST",
+          "startMs": 1412,
+          "endMs": 1840,
+          "durationMs": 428,
+          "status": 200
+        }
+      ],
+      "requestCount": 7,
+      "commentAuthors": {
+        "count": 0,
+        "loading": false,
+        "error": false,
+        "photoWidths": [
+          {
+            "cssWidth": 241,
+            "renderedWidth": 452,
+            "naturalWidth": 749,
+            "dpr": 1
+          }
+        ],
+        "readyMs": null
+      },
+      "network": {
+        "requestCount": 7,
+        "responseBodyBytes": 12714,
+        "counts": {
+          "content/list": 1,
+          "content/photo-check": 2,
+          "db/photo_folders": 1,
+          "db/photo_posts": 1,
+          "db/post_comments": 1,
+          "photo/read": 1
+        },
+        "requests": [
+          {
+            "category": "db/photo_folders",
+            "method": "GET",
+            "startMs": 35,
+            "endMs": 115,
+            "durationMs": 80,
+            "status": 200,
+            "responseBodyBytes": 971,
+            "responseHeaderBytes": 0
+          },
+          {
+            "category": "content/list",
+            "method": "POST",
+            "startMs": 118,
+            "endMs": 514,
+            "durationMs": 396,
+            "status": 200,
+            "responseBodyBytes": 1404,
+            "responseHeaderBytes": 0
+          },
+          {
+            "category": "db/photo_posts",
+            "method": "GET",
+            "startMs": 521,
+            "endMs": 621,
+            "durationMs": 100,
+            "status": 200,
+            "responseBodyBytes": 829,
+            "responseHeaderBytes": 0
+          },
+          {
+            "category": "content/photo-check",
+            "method": "POST",
+            "startMs": 527,
+            "endMs": 929,
+            "durationMs": 402,
+            "status": 200,
+            "responseBodyBytes": 1295,
+            "responseHeaderBytes": 0
+          },
+          {
+            "category": "db/post_comments",
+            "method": "GET",
+            "startMs": 623,
+            "endMs": 696,
+            "durationMs": 73,
+            "status": 200,
+            "responseBodyBytes": 1295,
+            "responseHeaderBytes": 0
+          },
+          {
+            "category": "photo/read",
+            "method": "POST",
+            "startMs": 931,
+            "endMs": 1392,
+            "durationMs": 461,
+            "status": 200,
+            "responseBodyBytes": 5622,
+            "responseHeaderBytes": 0
+          },
+          {
+            "category": "content/photo-check",
+            "method": "POST",
+            "startMs": 1414,
+            "endMs": 1842,
+            "durationMs": 428,
+            "status": 200,
+            "responseBodyBytes": 1298,
+            "responseHeaderBytes": 0
+          }
+        ]
+      }
+    },
+    {
+      "site": "A",
+      "role": "public",
+      "scenario": "home-return",
+      "from": "photos",
+      "round": 1,
+      "summaryMs": 512,
+      "relationshipMs": 37,
+      "reviewInputMs": null,
+      "authorsMs": 460,
+      "settled": true,
+      "totalMs": 1298,
+      "requestCount": 2,
+      "responseBodyBytes": 2567,
+      "counts": {
+        "content/summary": 1,
+        "friend-reviews": 1
+      },
+      "requests": [
+        {
+          "category": "friend-reviews",
+          "method": "GET",
+          "startMs": 36,
+          "endMs": 408,
+          "durationMs": 372,
+          "status": 200,
+          "responseBodyBytes": 1050,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "content/summary",
+          "method": "POST",
+          "startMs": 84,
+          "endMs": 508,
+          "durationMs": 424,
+          "status": 200,
+          "responseBodyBytes": 1517,
+          "responseHeaderBytes": 0
+        }
+      ]
+    },
+    {
+      "site": "A",
+      "role": "public",
+      "scenario": "diary",
+      "round": 2,
+      "menu": "diary",
+      "firstBodyMs": 526,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "settledMs": 959,
+      "calendarReadyMs": 959,
+      "empty": false,
+      "error": false,
+      "photoCount": 0,
+      "requests": [
+        {
+          "path": "/rest/v1/diary_folders",
+          "method": "GET",
+          "startMs": 33,
+          "endMs": 96,
+          "durationMs": 63,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 97,
+          "endMs": 523,
+          "durationMs": 426,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/calendar",
+          "method": "POST",
+          "startMs": 525,
+          "endMs": 949,
+          "durationMs": 424,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/post_comments",
+          "method": "GET",
+          "startMs": 575,
+          "endMs": 652,
+          "durationMs": 77,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/post_comments",
+          "method": "GET",
+          "startMs": 578,
+          "endMs": 654,
+          "durationMs": 76,
+          "status": 200
+        }
+      ],
+      "requestCount": 5,
+      "commentAuthors": {
+        "count": 0,
+        "loading": false,
+        "error": false,
+        "photoWidths": [],
+        "readyMs": null
+      },
+      "network": {
+        "requestCount": 7,
+        "responseBodyBytes": 6922,
+        "counts": {
+          "content/calendar": 1,
+          "content/list": 1,
+          "db/diary_entries": 2,
+          "db/diary_folders": 1,
+          "db/post_comments": 2
+        },
+        "requests": [
+          {
+            "category": "db/diary_folders",
+            "method": "GET",
+            "startMs": 36,
+            "endMs": 98,
+            "durationMs": 62,
+            "status": 200,
+            "responseBodyBytes": 867,
+            "responseHeaderBytes": 0
+          },
+          {
+            "category": "content/list",
+            "method": "POST",
+            "startMs": 100,
+            "endMs": 525,
+            "durationMs": 425,
+            "status": 200,
+            "responseBodyBytes": 1427,
+            "responseHeaderBytes": 0
+          },
+          {
+            "category": "content/calendar",
+            "method": "POST",
+            "startMs": 528,
+            "endMs": 952,
+            "durationMs": 424,
+            "status": 200,
+            "responseBodyBytes": 956,
+            "responseHeaderBytes": 0
+          },
+          {
+            "category": "db/diary_entries",
+            "method": "GET",
+            "startMs": 529,
+            "endMs": 580,
+            "durationMs": 51,
+            "status": 200,
+            "responseBodyBytes": 829,
+            "responseHeaderBytes": 0
+          },
+          {
+            "category": "db/diary_entries",
+            "method": "GET",
+            "startMs": 529,
+            "endMs": 577,
+            "durationMs": 48,
+            "status": 200,
+            "responseBodyBytes": 829,
+            "responseHeaderBytes": 0
+          },
+          {
+            "category": "db/post_comments",
+            "method": "GET",
+            "startMs": 578,
+            "endMs": 655,
+            "durationMs": 77,
+            "status": 200,
+            "responseBodyBytes": 853,
+            "responseHeaderBytes": 0
+          },
+          {
+            "category": "db/post_comments",
+            "method": "GET",
+            "startMs": 581,
+            "endMs": 657,
+            "durationMs": 76,
+            "status": 200,
+            "responseBodyBytes": 1161,
+            "responseHeaderBytes": 0
+          }
+        ]
+      }
+    },
+    {
+      "site": "A",
+      "role": "public",
+      "scenario": "home-return",
+      "from": "diary",
+      "round": 2,
+      "summaryMs": 508,
+      "relationshipMs": 40,
+      "reviewInputMs": null,
+      "authorsMs": 456,
+      "settled": true,
+      "totalMs": 1297,
+      "requestCount": 2,
+      "responseBodyBytes": 2569,
+      "counts": {
+        "content/summary": 1,
+        "friend-reviews": 1
+      },
+      "requests": [
+        {
+          "category": "friend-reviews",
+          "method": "GET",
+          "startMs": 38,
+          "endMs": 403,
+          "durationMs": 365,
+          "status": 200,
+          "responseBodyBytes": 1049,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "content/summary",
+          "method": "POST",
+          "startMs": 87,
+          "endMs": 482,
+          "durationMs": 395,
+          "status": 200,
+          "responseBodyBytes": 1520,
+          "responseHeaderBytes": 0
+        }
+      ]
+    },
+    {
+      "site": "A",
+      "role": "public",
+      "scenario": "photos",
+      "round": 2,
+      "menu": "photos",
+      "firstBodyMs": 545,
+      "firstPhotoMs": 1945,
+      "allPhotosMs": 1945,
+      "settledMs": 1945,
+      "calendarReadyMs": null,
+      "empty": false,
+      "error": false,
+      "photoCount": 1,
+      "requests": [
+        {
+          "path": "/rest/v1/photo_folders",
+          "method": "GET",
+          "startMs": 37,
+          "endMs": 115,
+          "durationMs": 78,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 118,
+          "endMs": 538,
+          "durationMs": 420,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/photo_posts",
+          "method": "GET",
+          "startMs": 540,
+          "endMs": 598,
+          "durationMs": 58,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/photo-check",
+          "method": "POST",
+          "startMs": 545,
+          "endMs": 937,
+          "durationMs": 392,
+          "status": 200
+        },
+        {
+          "path": "/rest/v1/post_comments",
+          "method": "GET",
+          "startMs": 599,
+          "endMs": 662,
+          "durationMs": 63,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/photo-media/read",
+          "method": "POST",
+          "startMs": 939,
+          "endMs": 1357,
+          "failed": true
+        },
+        {
+          "path": "/functions/v1/member-writing/content/photo-check",
+          "method": "POST",
+          "startMs": 1377,
+          "endMs": 1936,
+          "durationMs": 559,
+          "status": 200
+        }
+      ],
+      "requestCount": 7,
+      "commentAuthors": {
+        "count": 0,
+        "loading": false,
+        "error": false,
+        "photoWidths": [
+          {
+            "cssWidth": 241,
+            "renderedWidth": 452,
+            "naturalWidth": 749,
+            "dpr": 1
+          }
+        ],
+        "readyMs": null
+      },
+      "network": {
+        "requestCount": 7,
+        "responseBodyBytes": 7093,
+        "counts": {
+          "content/list": 1,
+          "content/photo-check": 2,
+          "db/photo_folders": 1,
+          "db/photo_posts": 1,
+          "db/post_comments": 1,
+          "photo/read": 1
+        },
+        "requests": [
+          {
+            "category": "db/photo_folders",
+            "method": "GET",
+            "startMs": 41,
+            "endMs": 119,
+            "durationMs": 78,
+            "status": 200,
+            "responseBodyBytes": 970,
+            "responseHeaderBytes": 0
+          },
+          {
+            "category": "content/list",
+            "method": "POST",
+            "startMs": 122,
+            "endMs": 542,
+            "durationMs": 420,
+            "status": 200,
+            "responseBodyBytes": 1407,
+            "responseHeaderBytes": 0
+          },
+          {
+            "category": "db/photo_posts",
+            "method": "GET",
+            "startMs": 544,
+            "endMs": 602,
+            "durationMs": 58,
+            "status": 200,
+            "responseBodyBytes": 832,
+            "responseHeaderBytes": 0
+          },
+          {
+            "category": "content/photo-check",
+            "method": "POST",
+            "startMs": 549,
+            "endMs": 940,
+            "durationMs": 391,
+            "status": 200,
+            "responseBodyBytes": 1293,
+            "responseHeaderBytes": 0
+          },
+          {
+            "category": "db/post_comments",
+            "method": "GET",
+            "startMs": 603,
+            "endMs": 666,
+            "durationMs": 63,
+            "status": 200,
+            "responseBodyBytes": 1293,
+            "responseHeaderBytes": 0
+          },
+          {
+            "category": "photo/read",
+            "method": "POST",
+            "startMs": 943,
+            "endMs": 1361,
+            "failed": true
+          },
+          {
+            "category": "content/photo-check",
+            "method": "POST",
+            "startMs": 1381,
+            "endMs": 1939,
+            "durationMs": 558,
+            "status": 200,
+            "responseBodyBytes": 1298,
+            "responseHeaderBytes": 0
+          }
+        ]
+      }
+    },
+    {
+      "site": "A",
+      "role": "public",
+      "scenario": "home-return",
+      "from": "photos",
+      "round": 2,
+      "summaryMs": 347,
+      "relationshipMs": 40,
+      "reviewInputMs": null,
+      "authorsMs": 296,
+      "settled": true,
+      "totalMs": 1333,
+      "requestCount": 2,
+      "responseBodyBytes": 2571,
+      "counts": {
+        "content/summary": 1,
+        "friend-reviews": 1
+      },
+      "requests": [
+        {
+          "category": "friend-reviews",
+          "method": "GET",
+          "startMs": 39,
+          "endMs": 294,
+          "durationMs": 255,
+          "status": 200,
+          "responseBodyBytes": 1049,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "content/summary",
+          "method": "POST",
+          "startMs": 87,
+          "endMs": 325,
+          "durationMs": 238,
+          "status": 200,
+          "responseBodyBytes": 1522,
+          "responseHeaderBytes": 0
+        }
+      ]
+    },
+    {
+      "site": "A",
+      "role": "public",
+      "scenario": "focus-burst",
+      "syntheticEvents": true,
+      "summaryMs": 475,
+      "relationshipMs": 318,
+      "reviewInputMs": null,
+      "authorsMs": 526,
+      "settled": true,
+      "totalMs": 1470,
+      "requestCount": 6,
+      "responseBodyBytes": 5404,
+      "counts": {
+        "central/navigation/members": 1,
+        "central/navigation/site": 2,
+        "content/summary": 1,
+        "friend-reviews": 1,
+        "visits": 1
+      },
+      "requests": [
+        {
+          "category": "friend-reviews",
+          "method": "GET",
+          "startMs": 6,
+          "endMs": 243,
+          "durationMs": 237,
+          "status": 200,
+          "responseBodyBytes": 1050,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "central/navigation/site",
+          "method": "GET",
+          "startMs": 7,
+          "endMs": 8,
+          "failed": true
+        },
+        {
+          "category": "central/navigation/site",
+          "method": "GET",
+          "startMs": 7,
+          "endMs": 283,
+          "durationMs": 276,
+          "status": 200,
+          "responseBodyBytes": 1012,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "visits",
+          "method": "GET",
+          "startMs": 7,
+          "endMs": 226,
+          "durationMs": 219,
+          "status": 200,
+          "responseBodyBytes": 819,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "content/summary",
+          "method": "POST",
+          "startMs": 57,
+          "endMs": 453,
+          "durationMs": 396,
+          "status": 200,
+          "responseBodyBytes": 1521,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "central/navigation/members",
+          "method": "GET",
+          "startMs": 244,
+          "endMs": 510,
+          "durationMs": 266,
+          "status": 200,
+          "responseBodyBytes": 1002,
+          "responseHeaderBytes": 0
+        }
+      ]
+    },
+    {
+      "site": "A",
+      "role": "owner",
+      "scenario": "first-document",
+      "cache": "HTTP cache disabled, established auth storage",
+      "summaryMs": 3843,
+      "relationshipMs": 3154,
+      "reviewInputMs": null,
+      "authorsMs": 3525,
+      "settled": true,
+      "totalMs": 4467,
+      "requestCount": 125,
+      "responseBodyBytes": 936373,
+      "counts": {
+        "auth": 2,
+        "central/navigation/members": 2,
+        "central/navigation/site": 1,
+        "central/visits/issue": 1,
+        "central/visits/resolve": 1,
+        "content/health": 1,
+        "content/summary": 1,
+        "db/is_minihompy_admin": 1,
+        "db/minihompy_settings": 2,
+        "friend-reviews": 1,
+        "sessions/exchange": 1,
+        "static:Galmuri11-extended.woff2": 1,
+        "static:admin-auth.js": 2,
+        "static:app.js": 2,
+        "static:author-navigation.js": 2,
+        "static:board-repository.js": 2,
+        "static:board.js": 2,
+        "static:comments-repository.js": 2,
+        "static:comments.js": 2,
+        "static:config.js": 3,
+        "static:content-access.js": 2,
+        "static:content-folders-repository.js": 2,
+        "static:content-folders.js": 2,
+        "static:content.js": 2,
+        "static:diary-repository.js": 2,
+        "static:diary.js": 2,
+        "static:friend-reviews-repository.js": 2,
+        "static:friend-reviews.js": 2,
+        "static:guestbook-repository.js": 2,
+        "static:guestbook.js": 2,
+        "static:home-activity.js": 2,
+        "static:home-data-config.js": 2,
+        "static:home-profile-data.js": 2,
+        "static:home-profile-history.js": 2,
+        "static:home-profile.js": 2,
+        "static:home-repository.js": 2,
+        "static:home.js": 2,
+        "static:index.js": 2,
+        "static:login-flow.js": 1,
+        "static:login.css": 1,
+        "static:member-navigation.js": 2,
+        "static:member-relationship-lists.js": 2,
+        "static:member-relationships-repository.js": 2,
+        "static:member-relationships.js": 2,
+        "static:member-writing-client.js": 2,
+        "static:member-writing-config.js": 2,
+        "static:member-writing-runtime.js": 2,
+        "static:photo-editor-loader.js": 2,
+        "static:photo-media-client.js": 2,
+        "static:photos-repository.js": 2,
+        "static:photos.js": 2,
+        "static:post-location-repository.js": 2,
+        "static:post-routes.js": 2,
+        "static:profile-data.js": 2,
+        "static:profile.js": 2,
+        "static:settings.js": 2,
+        "static:styles.css": 2,
+        "static:supabase-2.116.0.js": 2,
+        "static:supabase-client.js": 2,
+        "static:supabase-config.js": 2,
+        "static:surf-navigation.js": 2,
+        "static:visit-counts.js": 2,
+        "static:visit-flow.js": 1,
+        "static:visitor-identity-config.js": 2,
+        "static:visitor-identity-login.js": 2,
+        "static:visitor-identity.js": 2,
+        "static:visitor-session.js": 2,
+        "visits": 2
+      },
+      "requests": [
+        {
+          "category": "static:styles.css",
+          "method": "GET",
+          "startMs": 72,
+          "endMs": 147,
+          "durationMs": 75,
+          "status": 200,
+          "responseBodyBytes": 13409,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:config.js",
+          "method": "GET",
+          "startMs": 72,
+          "endMs": 151,
+          "durationMs": 79,
+          "status": 200,
+          "responseBodyBytes": 1997,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:visitor-identity-config.js",
+          "method": "GET",
+          "startMs": 74,
+          "endMs": 151,
+          "durationMs": 77,
+          "status": 200,
+          "responseBodyBytes": 512,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:visitor-identity-login.js",
+          "method": "GET",
+          "startMs": 75,
+          "endMs": 148,
+          "durationMs": 73,
+          "status": 200,
+          "responseBodyBytes": 2215,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:supabase-config.js",
+          "method": "GET",
+          "startMs": 75,
+          "endMs": 152,
+          "durationMs": 77,
+          "status": 200,
+          "responseBodyBytes": 448,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:supabase-2.116.0.js",
+          "method": "GET",
+          "startMs": 76,
+          "endMs": 162,
+          "durationMs": 86,
+          "status": 200,
+          "responseBodyBytes": 56621,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:supabase-client.js",
+          "method": "GET",
+          "startMs": 76,
+          "endMs": 189,
+          "durationMs": 113,
+          "status": 200,
+          "responseBodyBytes": 663,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:member-writing-config.js",
+          "method": "GET",
+          "startMs": 76,
+          "endMs": 189,
+          "durationMs": 113,
+          "status": 200,
+          "responseBodyBytes": 453,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:member-writing-client.js",
+          "method": "GET",
+          "startMs": 77,
+          "endMs": 188,
+          "durationMs": 111,
+          "status": 200,
+          "responseBodyBytes": 3473,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:member-writing-runtime.js",
+          "method": "GET",
+          "startMs": 77,
+          "endMs": 200,
+          "durationMs": 123,
+          "status": 200,
+          "responseBodyBytes": 4176,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:member-relationships-repository.js",
+          "method": "GET",
+          "startMs": 77,
+          "endMs": 203,
+          "durationMs": 126,
+          "status": 200,
+          "responseBodyBytes": 4016,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:member-relationships.js",
+          "method": "GET",
+          "startMs": 77,
+          "endMs": 289,
+          "durationMs": 212,
+          "status": 200,
+          "responseBodyBytes": 3353,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:visitor-identity.js",
+          "method": "GET",
+          "startMs": 77,
+          "endMs": 290,
+          "durationMs": 213,
+          "status": 200,
+          "responseBodyBytes": 5553,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:member-navigation.js",
+          "method": "GET",
+          "startMs": 77,
+          "endMs": 291,
+          "durationMs": 214,
+          "status": 200,
+          "responseBodyBytes": 2960,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:author-navigation.js",
+          "method": "GET",
+          "startMs": 77,
+          "endMs": 291,
+          "durationMs": 214,
+          "status": 200,
+          "responseBodyBytes": 2809,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:member-relationship-lists.js",
+          "method": "GET",
+          "startMs": 77,
+          "endMs": 292,
+          "durationMs": 215,
+          "status": 200,
+          "responseBodyBytes": 3422,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:surf-navigation.js",
+          "method": "GET",
+          "startMs": 79,
+          "endMs": 346,
+          "durationMs": 267,
+          "status": 200,
+          "responseBodyBytes": 2878,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:visitor-session.js",
+          "method": "GET",
+          "startMs": 79,
+          "endMs": 346,
+          "durationMs": 267,
+          "status": 200,
+          "responseBodyBytes": 944,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:friend-reviews-repository.js",
+          "method": "GET",
+          "startMs": 79,
+          "endMs": 349,
+          "durationMs": 270,
+          "status": 200,
+          "responseBodyBytes": 1003,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:friend-reviews.js",
+          "method": "GET",
+          "startMs": 79,
+          "endMs": 348,
+          "durationMs": 269,
+          "status": 200,
+          "responseBodyBytes": 4347,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:comments-repository.js",
+          "method": "GET",
+          "startMs": 79,
+          "endMs": 349,
+          "durationMs": 270,
+          "status": 200,
+          "responseBodyBytes": 2090,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:comments.js",
+          "method": "GET",
+          "startMs": 79,
+          "endMs": 347,
+          "durationMs": 268,
+          "status": 200,
+          "responseBodyBytes": 4463,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:content.js",
+          "method": "GET",
+          "startMs": 80,
+          "endMs": 403,
+          "durationMs": 323,
+          "status": 200,
+          "responseBodyBytes": 1414,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:post-routes.js",
+          "method": "GET",
+          "startMs": 80,
+          "endMs": 404,
+          "durationMs": 324,
+          "status": 200,
+          "responseBodyBytes": 1288,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:content-access.js",
+          "method": "GET",
+          "startMs": 80,
+          "endMs": 406,
+          "durationMs": 326,
+          "status": 200,
+          "responseBodyBytes": 3398,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:post-location-repository.js",
+          "method": "GET",
+          "startMs": 80,
+          "endMs": 406,
+          "durationMs": 326,
+          "status": 200,
+          "responseBodyBytes": 864,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:index.js",
+          "method": "GET",
+          "startMs": 80,
+          "endMs": 404,
+          "durationMs": 324,
+          "status": 200,
+          "responseBodyBytes": 503,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:home-data-config.js",
+          "method": "GET",
+          "startMs": 80,
+          "endMs": 403,
+          "durationMs": 323,
+          "status": 200,
+          "responseBodyBytes": 483,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:visit-counts.js",
+          "method": "GET",
+          "startMs": 80,
+          "endMs": 453,
+          "durationMs": 373,
+          "status": 200,
+          "responseBodyBytes": 2429,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:home-repository.js",
+          "method": "GET",
+          "startMs": 80,
+          "endMs": 461,
+          "durationMs": 381,
+          "status": 200,
+          "responseBodyBytes": 1505,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:home-activity.js",
+          "method": "GET",
+          "startMs": 80,
+          "endMs": 462,
+          "durationMs": 382,
+          "status": 200,
+          "responseBodyBytes": 3540,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:home-profile-data.js",
+          "method": "GET",
+          "startMs": 81,
+          "endMs": 464,
+          "durationMs": 383,
+          "status": 200,
+          "responseBodyBytes": 1179,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:home-profile.js",
+          "method": "GET",
+          "startMs": 81,
+          "endMs": 462,
+          "durationMs": 381,
+          "status": 200,
+          "responseBodyBytes": 2624,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:home-profile-history.js",
+          "method": "GET",
+          "startMs": 81,
+          "endMs": 452,
+          "durationMs": 371,
+          "status": 200,
+          "responseBodyBytes": 2217,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:home.js",
+          "method": "GET",
+          "startMs": 81,
+          "endMs": 505,
+          "durationMs": 424,
+          "status": 200,
+          "responseBodyBytes": 1357,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:profile-data.js",
+          "method": "GET",
+          "startMs": 83,
+          "endMs": 508,
+          "durationMs": 425,
+          "status": 200,
+          "responseBodyBytes": 1831,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:profile.js",
+          "method": "GET",
+          "startMs": 83,
+          "endMs": 506,
+          "durationMs": 423,
+          "status": 200,
+          "responseBodyBytes": 4028,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:content-folders-repository.js",
+          "method": "GET",
+          "startMs": 83,
+          "endMs": 506,
+          "durationMs": 423,
+          "status": 200,
+          "responseBodyBytes": 1475,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:content-folders.js",
+          "method": "GET",
+          "startMs": 83,
+          "endMs": 506,
+          "durationMs": 423,
+          "status": 200,
+          "responseBodyBytes": 4437,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:photo-media-client.js",
+          "method": "GET",
+          "startMs": 84,
+          "endMs": 505,
+          "durationMs": 421,
+          "status": 200,
+          "responseBodyBytes": 3696,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:photos-repository.js",
+          "method": "GET",
+          "startMs": 84,
+          "endMs": 543,
+          "durationMs": 459,
+          "status": 200,
+          "responseBodyBytes": 2863,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:photo-editor-loader.js",
+          "method": "GET",
+          "startMs": 84,
+          "endMs": 545,
+          "durationMs": 461,
+          "status": 200,
+          "responseBodyBytes": 1358,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:photos.js",
+          "method": "GET",
+          "startMs": 84,
+          "endMs": 548,
+          "durationMs": 464,
+          "status": 200,
+          "responseBodyBytes": 7901,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:diary-repository.js",
+          "method": "GET",
+          "startMs": 84,
+          "endMs": 545,
+          "durationMs": 461,
+          "status": 200,
+          "responseBodyBytes": 1940,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:diary.js",
+          "method": "GET",
+          "startMs": 84,
+          "endMs": 543,
+          "durationMs": 459,
+          "status": 200,
+          "responseBodyBytes": 7205,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:guestbook-repository.js",
+          "method": "GET",
+          "startMs": 84,
+          "endMs": 561,
+          "durationMs": 477,
+          "status": 200,
+          "responseBodyBytes": 2017,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:guestbook.js",
+          "method": "GET",
+          "startMs": 84,
+          "endMs": 582,
+          "durationMs": 498,
+          "status": 200,
+          "responseBodyBytes": 5832,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:board-repository.js",
+          "method": "GET",
+          "startMs": 84,
+          "endMs": 583,
+          "durationMs": 499,
+          "status": 200,
+          "responseBodyBytes": 1726,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:board.js",
+          "method": "GET",
+          "startMs": 85,
+          "endMs": 584,
+          "durationMs": 499,
+          "status": 200,
+          "responseBodyBytes": 5696,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:settings.js",
+          "method": "GET",
+          "startMs": 85,
+          "endMs": 586,
+          "durationMs": 501,
+          "status": 200,
+          "responseBodyBytes": 3162,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:app.js",
+          "method": "GET",
+          "startMs": 85,
+          "endMs": 586,
+          "durationMs": 501,
+          "status": 200,
+          "responseBodyBytes": 3325,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:admin-auth.js",
+          "method": "GET",
+          "startMs": 85,
+          "endMs": 590,
+          "durationMs": 505,
+          "status": 200,
+          "responseBodyBytes": 2435,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "visits",
+          "method": "GET",
+          "startMs": 453,
+          "endMs": 643,
+          "failed": true
+        },
+        {
+          "category": "db/minihompy_settings",
+          "method": "GET",
+          "startMs": 589,
+          "endMs": 643,
+          "failed": true
+        },
+        {
+          "category": "auth",
+          "method": "GET",
+          "startMs": 592,
+          "endMs": 643,
+          "failed": true
+        },
+        {
+          "category": "static:login.css",
+          "method": "GET",
+          "startMs": 648,
+          "endMs": 703,
+          "durationMs": 55,
+          "status": 200,
+          "responseBodyBytes": 1047,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:config.js",
+          "method": "GET",
+          "startMs": 650,
+          "endMs": 704,
+          "durationMs": 54,
+          "status": 200,
+          "responseBodyBytes": 496,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:login-flow.js",
+          "method": "GET",
+          "startMs": 650,
+          "endMs": 705,
+          "durationMs": 55,
+          "status": 200,
+          "responseBodyBytes": 1367,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:visit-flow.js",
+          "method": "GET",
+          "startMs": 650,
+          "endMs": 705,
+          "durationMs": 55,
+          "status": 200,
+          "responseBodyBytes": 1350,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "central/visits/issue",
+          "method": "POST",
+          "startMs": 707,
+          "endMs": 1116,
+          "durationMs": 409,
+          "status": 200,
+          "responseBodyBytes": 1989,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:styles.css",
+          "method": "GET",
+          "startMs": 1194,
+          "endMs": 1247,
+          "durationMs": 53,
+          "status": 200,
+          "responseBodyBytes": 13435,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:config.js",
+          "method": "GET",
+          "startMs": 1196,
+          "endMs": 1254,
+          "durationMs": 58,
+          "status": 200,
+          "responseBodyBytes": 1973,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:visitor-identity-config.js",
+          "method": "GET",
+          "startMs": 1196,
+          "endMs": 1250,
+          "durationMs": 54,
+          "status": 200,
+          "responseBodyBytes": 531,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:visitor-identity-login.js",
+          "method": "GET",
+          "startMs": 1196,
+          "endMs": 1254,
+          "durationMs": 58,
+          "status": 200,
+          "responseBodyBytes": 2187,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:supabase-config.js",
+          "method": "GET",
+          "startMs": 1197,
+          "endMs": 1254,
+          "durationMs": 57,
+          "status": 200,
+          "responseBodyBytes": 453,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:supabase-2.116.0.js",
+          "method": "GET",
+          "startMs": 1197,
+          "endMs": 1276,
+          "durationMs": 79,
+          "status": 200,
+          "responseBodyBytes": 56594,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:supabase-client.js",
+          "method": "GET",
+          "startMs": 1197,
+          "endMs": 1305,
+          "durationMs": 108,
+          "status": 200,
+          "responseBodyBytes": 671,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:member-writing-config.js",
+          "method": "GET",
+          "startMs": 1197,
+          "endMs": 1305,
+          "durationMs": 108,
+          "status": 200,
+          "responseBodyBytes": 385,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:member-writing-client.js",
+          "method": "GET",
+          "startMs": 1197,
+          "endMs": 1351,
+          "durationMs": 154,
+          "status": 200,
+          "responseBodyBytes": 3577,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:member-writing-runtime.js",
+          "method": "GET",
+          "startMs": 1197,
+          "endMs": 1352,
+          "durationMs": 155,
+          "status": 200,
+          "responseBodyBytes": 4176,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:member-relationships-repository.js",
+          "method": "GET",
+          "startMs": 1197,
+          "endMs": 1319,
+          "durationMs": 122,
+          "status": 200,
+          "responseBodyBytes": 4103,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:member-relationships.js",
+          "method": "GET",
+          "startMs": 1197,
+          "endMs": 1425,
+          "durationMs": 228,
+          "status": 200,
+          "responseBodyBytes": 3398,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:visitor-identity.js",
+          "method": "GET",
+          "startMs": 1197,
+          "endMs": 1426,
+          "durationMs": 229,
+          "status": 200,
+          "responseBodyBytes": 5414,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:member-navigation.js",
+          "method": "GET",
+          "startMs": 1199,
+          "endMs": 1428,
+          "durationMs": 229,
+          "status": 200,
+          "responseBodyBytes": 2963,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:author-navigation.js",
+          "method": "GET",
+          "startMs": 1199,
+          "endMs": 1430,
+          "durationMs": 231,
+          "status": 200,
+          "responseBodyBytes": 2932,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:member-relationship-lists.js",
+          "method": "GET",
+          "startMs": 1199,
+          "endMs": 1430,
+          "durationMs": 231,
+          "status": 200,
+          "responseBodyBytes": 3320,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:surf-navigation.js",
+          "method": "GET",
+          "startMs": 1199,
+          "endMs": 1466,
+          "durationMs": 267,
+          "status": 200,
+          "responseBodyBytes": 2879,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:visitor-session.js",
+          "method": "GET",
+          "startMs": 1199,
+          "endMs": 1464,
+          "durationMs": 265,
+          "status": 200,
+          "responseBodyBytes": 937,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:friend-reviews-repository.js",
+          "method": "GET",
+          "startMs": 1199,
+          "endMs": 1466,
+          "durationMs": 267,
+          "status": 200,
+          "responseBodyBytes": 1150,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:friend-reviews.js",
+          "method": "GET",
+          "startMs": 1199,
+          "endMs": 1467,
+          "durationMs": 268,
+          "status": 200,
+          "responseBodyBytes": 4326,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:comments-repository.js",
+          "method": "GET",
+          "startMs": 1200,
+          "endMs": 1465,
+          "durationMs": 265,
+          "status": 200,
+          "responseBodyBytes": 2213,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:comments.js",
+          "method": "GET",
+          "startMs": 1200,
+          "endMs": 1466,
+          "durationMs": 266,
+          "status": 200,
+          "responseBodyBytes": 4339,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:content.js",
+          "method": "GET",
+          "startMs": 1200,
+          "endMs": 1504,
+          "durationMs": 304,
+          "status": 200,
+          "responseBodyBytes": 1351,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:post-routes.js",
+          "method": "GET",
+          "startMs": 1200,
+          "endMs": 1502,
+          "durationMs": 302,
+          "status": 200,
+          "responseBodyBytes": 1141,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:content-access.js",
+          "method": "GET",
+          "startMs": 1200,
+          "endMs": 1503,
+          "durationMs": 303,
+          "status": 200,
+          "responseBodyBytes": 3383,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:post-location-repository.js",
+          "method": "GET",
+          "startMs": 1200,
+          "endMs": 1504,
+          "durationMs": 304,
+          "status": 200,
+          "responseBodyBytes": 974,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:index.js",
+          "method": "GET",
+          "startMs": 1200,
+          "endMs": 1505,
+          "durationMs": 305,
+          "status": 200,
+          "responseBodyBytes": 563,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:home-data-config.js",
+          "method": "GET",
+          "startMs": 1200,
+          "endMs": 1506,
+          "durationMs": 306,
+          "status": 200,
+          "responseBodyBytes": 546,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:visit-counts.js",
+          "method": "GET",
+          "startMs": 1200,
+          "endMs": 1549,
+          "durationMs": 349,
+          "status": 200,
+          "responseBodyBytes": 2304,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:home-repository.js",
+          "method": "GET",
+          "startMs": 1201,
+          "endMs": 1562,
+          "durationMs": 361,
+          "status": 200,
+          "responseBodyBytes": 1542,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:home-activity.js",
+          "method": "GET",
+          "startMs": 1201,
+          "endMs": 1563,
+          "durationMs": 362,
+          "status": 200,
+          "responseBodyBytes": 3506,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:home-profile-data.js",
+          "method": "GET",
+          "startMs": 1201,
+          "endMs": 1566,
+          "durationMs": 365,
+          "status": 200,
+          "responseBodyBytes": 1297,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:home-profile.js",
+          "method": "GET",
+          "startMs": 1201,
+          "endMs": 1563,
+          "durationMs": 362,
+          "status": 200,
+          "responseBodyBytes": 2624,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:home-profile-history.js",
+          "method": "GET",
+          "startMs": 1201,
+          "endMs": 1563,
+          "durationMs": 362,
+          "status": 200,
+          "responseBodyBytes": 2173,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:home.js",
+          "method": "GET",
+          "startMs": 1201,
+          "endMs": 1602,
+          "durationMs": 401,
+          "status": 200,
+          "responseBodyBytes": 1271,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:profile-data.js",
+          "method": "GET",
+          "startMs": 1201,
+          "endMs": 1621,
+          "durationMs": 420,
+          "status": 200,
+          "responseBodyBytes": 1869,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:profile.js",
+          "method": "GET",
+          "startMs": 1201,
+          "endMs": 1622,
+          "durationMs": 421,
+          "status": 200,
+          "responseBodyBytes": 4078,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:content-folders-repository.js",
+          "method": "GET",
+          "startMs": 1201,
+          "endMs": 1626,
+          "durationMs": 425,
+          "status": 200,
+          "responseBodyBytes": 1594,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:content-folders.js",
+          "method": "GET",
+          "startMs": 1201,
+          "endMs": 1626,
+          "durationMs": 425,
+          "status": 200,
+          "responseBodyBytes": 4358,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:photo-media-client.js",
+          "method": "GET",
+          "startMs": 1202,
+          "endMs": 1625,
+          "durationMs": 423,
+          "status": 200,
+          "responseBodyBytes": 3657,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:photos-repository.js",
+          "method": "GET",
+          "startMs": 1202,
+          "endMs": 1676,
+          "durationMs": 474,
+          "status": 200,
+          "responseBodyBytes": 2776,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:photo-editor-loader.js",
+          "method": "GET",
+          "startMs": 1202,
+          "endMs": 1677,
+          "durationMs": 475,
+          "status": 200,
+          "responseBodyBytes": 1275,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:photos.js",
+          "method": "GET",
+          "startMs": 1202,
+          "endMs": 1678,
+          "durationMs": 476,
+          "status": 200,
+          "responseBodyBytes": 7950,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:diary-repository.js",
+          "method": "GET",
+          "startMs": 1202,
+          "endMs": 1678,
+          "durationMs": 476,
+          "status": 200,
+          "responseBodyBytes": 2062,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:diary.js",
+          "method": "GET",
+          "startMs": 1202,
+          "endMs": 1678,
+          "durationMs": 476,
+          "status": 200,
+          "responseBodyBytes": 7168,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:guestbook-repository.js",
+          "method": "GET",
+          "startMs": 1202,
+          "endMs": 1678,
+          "durationMs": 476,
+          "status": 200,
+          "responseBodyBytes": 2034,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:guestbook.js",
+          "method": "GET",
+          "startMs": 1202,
+          "endMs": 1728,
+          "durationMs": 526,
+          "status": 200,
+          "responseBodyBytes": 5745,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:board-repository.js",
+          "method": "GET",
+          "startMs": 1202,
+          "endMs": 1731,
+          "durationMs": 529,
+          "status": 200,
+          "responseBodyBytes": 1666,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:board.js",
+          "method": "GET",
+          "startMs": 1202,
+          "endMs": 1744,
+          "durationMs": 542,
+          "status": 200,
+          "responseBodyBytes": 5689,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:settings.js",
+          "method": "GET",
+          "startMs": 1202,
+          "endMs": 1731,
+          "durationMs": 529,
+          "status": 200,
+          "responseBodyBytes": 3279,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:app.js",
+          "method": "GET",
+          "startMs": 1203,
+          "endMs": 1746,
+          "durationMs": 543,
+          "status": 200,
+          "responseBodyBytes": 3386,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:admin-auth.js",
+          "method": "GET",
+          "startMs": 1203,
+          "endMs": 1742,
+          "durationMs": 539,
+          "status": 200,
+          "responseBodyBytes": 2448,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "central/visits/resolve",
+          "method": "POST",
+          "startMs": 1429,
+          "endMs": 1763,
+          "durationMs": 334,
+          "status": 200,
+          "responseBodyBytes": 1067,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "visits",
+          "method": "GET",
+          "startMs": 1550,
+          "endMs": 1761,
+          "durationMs": 211,
+          "status": 200,
+          "responseBodyBytes": 814,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "db/minihompy_settings",
+          "method": "GET",
+          "startMs": 1751,
+          "endMs": 1824,
+          "durationMs": 73,
+          "status": 200,
+          "responseBodyBytes": 1339,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "auth",
+          "method": "GET",
+          "startMs": 1752,
+          "endMs": 1821,
+          "durationMs": 69,
+          "status": 200,
+          "responseBodyBytes": 1112,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "db/is_minihompy_admin",
+          "method": "POST",
+          "startMs": 1823,
+          "endMs": 1889,
+          "durationMs": 66,
+          "status": 200,
+          "responseBodyBytes": 822,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "sessions/exchange",
+          "method": "POST",
+          "startMs": 1893,
+          "endMs": 2835,
+          "durationMs": 942,
+          "status": 200,
+          "responseBodyBytes": 1169,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "central/navigation/site",
+          "method": "GET",
+          "startMs": 2839,
+          "endMs": 3124,
+          "durationMs": 285,
+          "status": 200,
+          "responseBodyBytes": 1010,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "central/navigation/members",
+          "method": "GET",
+          "startMs": 2840,
+          "endMs": 3148,
+          "durationMs": 308,
+          "status": 200,
+          "responseBodyBytes": 1015,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:Galmuri11-extended.woff2",
+          "method": "GET",
+          "startMs": 2840,
+          "endMs": 3112,
+          "durationMs": 272,
+          "status": 200,
+          "responseBodyBytes": 505906,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "friend-reviews",
+          "method": "GET",
+          "startMs": 2841,
+          "endMs": 3183,
+          "durationMs": 342,
+          "status": 200,
+          "responseBodyBytes": 1046,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "content/health",
+          "method": "GET",
+          "startMs": 2890,
+          "endMs": 3265,
+          "durationMs": 375,
+          "status": 200,
+          "responseBodyBytes": 1003,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "central/navigation/members",
+          "method": "GET",
+          "startMs": 3184,
+          "endMs": 3505,
+          "durationMs": 321,
+          "status": 200,
+          "responseBodyBytes": 1000,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "content/summary",
+          "method": "POST",
+          "startMs": 3267,
+          "endMs": 3802,
+          "durationMs": 535,
+          "status": 200,
+          "responseBodyBytes": 1623,
+          "responseHeaderBytes": 0
+        }
+      ],
+      "cpuSeconds": {
+        "LayoutDuration": 0.006886,
+        "ScriptDuration": 0.01535,
+        "TaskDuration": 0.146655
+      }
+    },
+    {
+      "site": "A",
+      "role": "owner",
+      "scenario": "diary",
+      "round": 1,
+      "menu": "diary",
+      "firstBodyMs": 670,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "settledMs": 1403,
+      "calendarReadyMs": 1403,
+      "empty": false,
+      "error": false,
+      "photoCount": 0,
+      "requests": [
+        {
+          "path": "/rest/v1/diary_folders",
+          "method": "GET",
+          "startMs": 48,
+          "endMs": 128,
+          "durationMs": 80,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 130,
+          "endMs": 656,
+          "durationMs": 526,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/calendar",
+          "method": "POST",
+          "startMs": 662,
+          "endMs": 1398,
+          "durationMs": 736,
+          "status": 200
+        }
+      ],
+      "requestCount": 3,
+      "commentAuthors": {
+        "count": 0,
+        "loading": false,
+        "error": false,
+        "photoWidths": [],
+        "readyMs": null
+      },
+      "network": {
+        "requestCount": 3,
+        "responseBodyBytes": 3577,
+        "counts": {
+          "content/calendar": 1,
+          "content/list": 1,
+          "db/diary_folders": 1
+        },
+        "requests": [
+          {
+            "category": "db/diary_folders",
+            "method": "GET",
+            "startMs": 49,
+            "endMs": 129,
+            "durationMs": 80,
+            "status": 200,
+            "responseBodyBytes": 968,
+            "responseHeaderBytes": 0
+          },
+          {
+            "category": "content/list",
+            "method": "POST",
+            "startMs": 131,
+            "endMs": 656,
+            "durationMs": 525,
+            "status": 200,
+            "responseBodyBytes": 1543,
+            "responseHeaderBytes": 0
+          },
+          {
+            "category": "content/calendar",
+            "method": "POST",
+            "startMs": 663,
+            "endMs": 1399,
+            "durationMs": 736,
+            "status": 200,
+            "responseBodyBytes": 1066,
+            "responseHeaderBytes": 0
+          }
+        ]
+      }
+    },
+    {
+      "site": "A",
+      "role": "owner",
+      "scenario": "home-return",
+      "from": "diary",
+      "round": 1,
+      "summaryMs": 618,
+      "relationshipMs": 40,
+      "reviewInputMs": null,
+      "authorsMs": 462,
+      "settled": true,
+      "totalMs": 1307,
+      "requestCount": 2,
+      "responseBodyBytes": 2670,
+      "counts": {
+        "content/summary": 1,
+        "friend-reviews": 1
+      },
+      "requests": [
+        {
+          "category": "friend-reviews",
+          "method": "GET",
+          "startMs": 39,
+          "endMs": 422,
+          "durationMs": 383,
+          "status": 200,
+          "responseBodyBytes": 1049,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "content/summary",
+          "method": "POST",
+          "startMs": 89,
+          "endMs": 610,
+          "durationMs": 521,
+          "status": 200,
+          "responseBodyBytes": 1621,
+          "responseHeaderBytes": 0
+        }
+      ]
+    },
+    {
+      "site": "A",
+      "role": "owner",
+      "scenario": "photos",
+      "round": 1,
+      "menu": "photos",
+      "firstBodyMs": 636,
+      "firstPhotoMs": 2336,
+      "allPhotosMs": 2336,
+      "settledMs": 2336,
+      "calendarReadyMs": null,
+      "empty": false,
+      "error": false,
+      "photoCount": 1,
+      "requests": [
+        {
+          "path": "/rest/v1/photo_folders",
+          "method": "GET",
+          "startMs": 43,
+          "endMs": 115,
+          "durationMs": 72,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 116,
+          "endMs": 619,
+          "durationMs": 503,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/photo-check",
+          "method": "POST",
+          "startMs": 637,
+          "endMs": 1170,
+          "durationMs": 533,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/photo-media/read",
+          "method": "POST",
+          "startMs": 1171,
+          "endMs": 1710,
+          "failed": true
+        },
+        {
+          "path": "/functions/v1/member-writing/content/photo-check",
+          "method": "POST",
+          "startMs": 1730,
+          "endMs": 2331,
+          "durationMs": 601,
+          "status": 200
+        }
+      ],
+      "requestCount": 5,
+      "commentAuthors": {
+        "count": 0,
+        "loading": false,
+        "error": false,
+        "photoWidths": [
+          {
+            "cssWidth": 241,
+            "renderedWidth": 452,
+            "naturalWidth": 749,
+            "dpr": 1
+          }
+        ],
+        "readyMs": null
+      },
+      "network": {
+        "requestCount": 5,
+        "responseBodyBytes": 5383,
+        "counts": {
+          "content/list": 1,
+          "content/photo-check": 2,
+          "db/photo_folders": 1,
+          "photo/read": 1
+        },
+        "requests": [
+          {
+            "category": "db/photo_folders",
+            "method": "GET",
+            "startMs": 46,
+            "endMs": 117,
+            "durationMs": 71,
+            "status": 200,
+            "responseBodyBytes": 1072,
+            "responseHeaderBytes": 0
+          },
+          {
+            "category": "content/list",
+            "method": "POST",
+            "startMs": 119,
+            "endMs": 622,
+            "durationMs": 503,
+            "status": 200,
+            "responseBodyBytes": 1513,
+            "responseHeaderBytes": 0
+          },
+          {
+            "category": "content/photo-check",
+            "method": "POST",
+            "startMs": 640,
+            "endMs": 1173,
+            "durationMs": 533,
+            "status": 200,
+            "responseBodyBytes": 1398,
+            "responseHeaderBytes": 0
+          },
+          {
+            "category": "photo/read",
+            "method": "POST",
+            "startMs": 1174,
+            "endMs": 1713,
+            "failed": true
+          },
+          {
+            "category": "content/photo-check",
+            "method": "POST",
+            "startMs": 1733,
+            "endMs": 2334,
+            "durationMs": 601,
+            "status": 200,
+            "responseBodyBytes": 1400,
+            "responseHeaderBytes": 0
+          }
+        ]
+      }
+    },
+    {
+      "site": "A",
+      "role": "owner",
+      "scenario": "first-editor",
+      "editorMs": 227,
+      "requestCount": 3,
+      "responseBodyBytes": 65841,
+      "counts": {
+        "static:photo-editor.js": 1,
+        "static:photo-variant-client.js": 1,
+        "static:quill-2.0.3.js": 1
+      },
+      "requests": [
+        {
+          "category": "static:quill-2.0.3.js",
+          "method": "GET",
+          "startMs": 31,
+          "endMs": 103,
+          "durationMs": 72,
+          "status": 200,
+          "responseBodyBytes": 60234,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:photo-variant-client.js",
+          "method": "GET",
+          "startMs": 31,
+          "endMs": 102,
+          "durationMs": 71,
+          "status": 200,
+          "responseBodyBytes": 878,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:photo-editor.js",
+          "method": "GET",
+          "startMs": 116,
+          "endMs": 155,
+          "durationMs": 39,
+          "status": 200,
+          "responseBodyBytes": 4729,
+          "responseHeaderBytes": 0
+        }
+      ]
+    },
+    {
+      "site": "A",
+      "role": "owner",
+      "scenario": "home-return",
+      "from": "photos",
+      "round": 1,
+      "summaryMs": 706,
+      "relationshipMs": 23,
+      "reviewInputMs": null,
+      "authorsMs": 443,
+      "settled": true,
+      "totalMs": 1286,
+      "requestCount": 2,
+      "responseBodyBytes": 2673,
+      "counts": {
+        "content/summary": 1,
+        "friend-reviews": 1
+      },
+      "requests": [
+        {
+          "category": "friend-reviews",
+          "method": "GET",
+          "startMs": 22,
+          "endMs": 425,
+          "durationMs": 403,
+          "status": 200,
+          "responseBodyBytes": 1046,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "content/summary",
+          "method": "POST",
+          "startMs": 72,
+          "endMs": 679,
+          "durationMs": 607,
+          "status": 200,
+          "responseBodyBytes": 1627,
+          "responseHeaderBytes": 0
+        }
+      ]
+    },
+    {
+      "site": "A",
+      "role": "owner",
+      "scenario": "diary",
+      "round": 2,
+      "menu": "diary",
+      "firstBodyMs": 592,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "settledMs": 1142,
+      "calendarReadyMs": 1142,
+      "empty": false,
+      "error": false,
+      "photoCount": 0,
+      "requests": [
+        {
+          "path": "/rest/v1/diary_folders",
+          "method": "GET",
+          "startMs": 34,
+          "endMs": 111,
+          "durationMs": 77,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 113,
+          "endMs": 587,
+          "durationMs": 474,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/calendar",
+          "method": "POST",
+          "startMs": 592,
+          "endMs": 1134,
+          "durationMs": 542,
+          "status": 200
+        }
+      ],
+      "requestCount": 3,
+      "commentAuthors": {
+        "count": 0,
+        "loading": false,
+        "error": false,
+        "photoWidths": [],
+        "readyMs": null
+      },
+      "network": {
+        "requestCount": 3,
+        "responseBodyBytes": 3574,
+        "counts": {
+          "content/calendar": 1,
+          "content/list": 1,
+          "db/diary_folders": 1
+        },
+        "requests": [
+          {
+            "category": "db/diary_folders",
+            "method": "GET",
+            "startMs": 37,
+            "endMs": 114,
+            "durationMs": 77,
+            "status": 200,
+            "responseBodyBytes": 969,
+            "responseHeaderBytes": 0
+          },
+          {
+            "category": "content/list",
+            "method": "POST",
+            "startMs": 116,
+            "endMs": 590,
+            "durationMs": 474,
+            "status": 200,
+            "responseBodyBytes": 1541,
+            "responseHeaderBytes": 0
+          },
+          {
+            "category": "content/calendar",
+            "method": "POST",
+            "startMs": 595,
+            "endMs": 1136,
+            "durationMs": 541,
+            "status": 200,
+            "responseBodyBytes": 1064,
+            "responseHeaderBytes": 0
+          }
+        ]
+      }
+    },
+    {
+      "site": "A",
+      "role": "owner",
+      "scenario": "home-return",
+      "from": "diary",
+      "round": 2,
+      "summaryMs": 611,
+      "relationshipMs": 31,
+      "reviewInputMs": null,
+      "authorsMs": 401,
+      "settled": true,
+      "totalMs": 1298,
+      "requestCount": 2,
+      "responseBodyBytes": 2672,
+      "counts": {
+        "content/summary": 1,
+        "friend-reviews": 1
+      },
+      "requests": [
+        {
+          "category": "friend-reviews",
+          "method": "GET",
+          "startMs": 30,
+          "endMs": 363,
+          "durationMs": 333,
+          "status": 200,
+          "responseBodyBytes": 1050,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "content/summary",
+          "method": "POST",
+          "startMs": 78,
+          "endMs": 573,
+          "durationMs": 495,
+          "status": 200,
+          "responseBodyBytes": 1622,
+          "responseHeaderBytes": 0
+        }
+      ]
+    },
+    {
+      "site": "A",
+      "role": "owner",
+      "scenario": "photos",
+      "round": 2,
+      "menu": "photos",
+      "firstBodyMs": 624,
+      "firstPhotoMs": 2490,
+      "allPhotosMs": 2490,
+      "settledMs": 2490,
+      "calendarReadyMs": null,
+      "empty": false,
+      "error": false,
+      "photoCount": 1,
+      "requests": [
+        {
+          "path": "/rest/v1/photo_folders",
+          "method": "GET",
+          "startMs": 30,
+          "endMs": 126,
+          "durationMs": 96,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 129,
+          "endMs": 619,
+          "durationMs": 490,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/photo-check",
+          "method": "POST",
+          "startMs": 625,
+          "endMs": 1123,
+          "durationMs": 498,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/photo-media/read",
+          "method": "POST",
+          "startMs": 1124,
+          "endMs": 1944,
+          "failed": true
+        },
+        {
+          "path": "/functions/v1/member-writing/content/photo-check",
+          "method": "POST",
+          "startMs": 1966,
+          "endMs": 2482,
+          "durationMs": 516,
+          "status": 200
+        }
+      ],
+      "requestCount": 5,
+      "commentAuthors": {
+        "count": 0,
+        "loading": false,
+        "error": false,
+        "photoWidths": [
+          {
+            "cssWidth": 241,
+            "renderedWidth": 452,
+            "naturalWidth": 749,
+            "dpr": 1
+          }
+        ],
+        "readyMs": null
+      },
+      "network": {
+        "requestCount": 5,
+        "responseBodyBytes": 5382,
+        "counts": {
+          "content/list": 1,
+          "content/photo-check": 2,
+          "db/photo_folders": 1,
+          "photo/read": 1
+        },
+        "requests": [
+          {
+            "category": "db/photo_folders",
+            "method": "GET",
+            "startMs": 31,
+            "endMs": 127,
+            "durationMs": 96,
+            "status": 200,
+            "responseBodyBytes": 1069,
+            "responseHeaderBytes": 0
+          },
+          {
+            "category": "content/list",
+            "method": "POST",
+            "startMs": 130,
+            "endMs": 619,
+            "durationMs": 489,
+            "status": 200,
+            "responseBodyBytes": 1512,
+            "responseHeaderBytes": 0
+          },
+          {
+            "category": "content/photo-check",
+            "method": "POST",
+            "startMs": 626,
+            "endMs": 1124,
+            "durationMs": 498,
+            "status": 200,
+            "responseBodyBytes": 1400,
+            "responseHeaderBytes": 0
+          },
+          {
+            "category": "photo/read",
+            "method": "POST",
+            "startMs": 1125,
+            "endMs": 1945,
+            "failed": true
+          },
+          {
+            "category": "content/photo-check",
+            "method": "POST",
+            "startMs": 1967,
+            "endMs": 2483,
+            "durationMs": 516,
+            "status": 200,
+            "responseBodyBytes": 1401,
+            "responseHeaderBytes": 0
+          }
+        ]
+      }
+    },
+    {
+      "site": "A",
+      "role": "owner",
+      "scenario": "home-return",
+      "from": "photos",
+      "round": 2,
+      "summaryMs": 616,
+      "relationshipMs": 39,
+      "reviewInputMs": null,
+      "authorsMs": 299,
+      "settled": true,
+      "totalMs": 1305,
+      "requestCount": 2,
+      "responseBodyBytes": 2672,
+      "counts": {
+        "content/summary": 1,
+        "friend-reviews": 1
+      },
+      "requests": [
+        {
+          "category": "friend-reviews",
+          "method": "GET",
+          "startMs": 37,
+          "endMs": 273,
+          "durationMs": 236,
+          "status": 200,
+          "responseBodyBytes": 1048,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "content/summary",
+          "method": "POST",
+          "startMs": 86,
+          "endMs": 580,
+          "durationMs": 494,
+          "status": 200,
+          "responseBodyBytes": 1624,
+          "responseHeaderBytes": 0
+        }
+      ]
+    },
+    {
+      "site": "A",
+      "role": "owner",
+      "scenario": "focus-burst",
+      "syntheticEvents": true,
+      "summaryMs": 586,
+      "relationshipMs": 324,
+      "reviewInputMs": null,
+      "authorsMs": 745,
+      "settled": true,
+      "totalMs": 1637,
+      "requestCount": 9,
+      "responseBodyBytes": 7552,
+      "counts": {
+        "central/navigation/members": 3,
+        "central/navigation/site": 2,
+        "content/summary": 1,
+        "friend-reviews": 1,
+        "sessions/current": 1,
+        "visits": 1
+      },
+      "requests": [
+        {
+          "category": "friend-reviews",
+          "method": "GET",
+          "startMs": 6,
+          "endMs": 388,
+          "durationMs": 382,
+          "status": 200,
+          "responseBodyBytes": 1045,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "central/navigation/site",
+          "method": "GET",
+          "startMs": 6,
+          "endMs": 9,
+          "failed": true
+        },
+        {
+          "category": "central/navigation/members",
+          "method": "GET",
+          "startMs": 7,
+          "endMs": 9,
+          "failed": true
+        },
+        {
+          "category": "central/navigation/site",
+          "method": "GET",
+          "startMs": 7,
+          "endMs": 294,
+          "durationMs": 287,
+          "status": 200,
+          "responseBodyBytes": 1011,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "central/navigation/members",
+          "method": "GET",
+          "startMs": 7,
+          "endMs": 304,
+          "durationMs": 297,
+          "status": 200,
+          "responseBodyBytes": 1014,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "visits",
+          "method": "GET",
+          "startMs": 8,
+          "endMs": 218,
+          "durationMs": 210,
+          "status": 200,
+          "responseBodyBytes": 816,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "sessions/current",
+          "method": "GET",
+          "startMs": 8,
+          "endMs": 710,
+          "durationMs": 702,
+          "status": 200,
+          "responseBodyBytes": 1037,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "content/summary",
+          "method": "POST",
+          "startMs": 56,
+          "endMs": 576,
+          "durationMs": 520,
+          "status": 200,
+          "responseBodyBytes": 1625,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "central/navigation/members",
+          "method": "GET",
+          "startMs": 390,
+          "endMs": 706,
+          "durationMs": 316,
+          "status": 200,
+          "responseBodyBytes": 1004,
+          "responseHeaderBytes": 0
+        }
+      ]
+    },
+    {
+      "site": "A",
+      "role": "member",
+      "scenario": "first-document",
+      "cache": "HTTP cache disabled, established auth storage",
+      "summaryMs": 4311,
+      "relationshipMs": 4681,
+      "reviewInputMs": 4681,
+      "authorsMs": 3468,
+      "settled": true,
+      "totalMs": 4946,
+      "requestCount": 124,
+      "responseBodyBytes": 937459,
+      "counts": {
+        "central/navigation/members": 2,
+        "central/navigation/site": 1,
+        "central/visits/issue": 1,
+        "central/visits/resolve": 1,
+        "content/health": 1,
+        "content/summary": 1,
+        "db/minihompy_settings": 2,
+        "friend-reviews": 1,
+        "relationships/health": 1,
+        "relationships/state": 1,
+        "sessions/exchange": 1,
+        "static:Galmuri11-extended.woff2": 1,
+        "static:admin-auth.js": 2,
+        "static:app.js": 2,
+        "static:author-navigation.js": 2,
+        "static:board-repository.js": 2,
+        "static:board.js": 2,
+        "static:comments-repository.js": 2,
+        "static:comments.js": 2,
+        "static:config.js": 3,
+        "static:content-access.js": 2,
+        "static:content-folders-repository.js": 2,
+        "static:content-folders.js": 2,
+        "static:content.js": 2,
+        "static:diary-repository.js": 2,
+        "static:diary.js": 2,
+        "static:friend-reviews-repository.js": 2,
+        "static:friend-reviews.js": 2,
+        "static:guestbook-repository.js": 2,
+        "static:guestbook.js": 2,
+        "static:home-activity.js": 2,
+        "static:home-data-config.js": 2,
+        "static:home-profile-data.js": 2,
+        "static:home-profile-history.js": 2,
+        "static:home-profile.js": 2,
+        "static:home-repository.js": 2,
+        "static:home.js": 2,
+        "static:index.js": 2,
+        "static:login-flow.js": 1,
+        "static:login.css": 1,
+        "static:member-navigation.js": 2,
+        "static:member-relationship-lists.js": 2,
+        "static:member-relationships-repository.js": 2,
+        "static:member-relationships.js": 2,
+        "static:member-writing-client.js": 2,
+        "static:member-writing-config.js": 2,
+        "static:member-writing-runtime.js": 2,
+        "static:photo-editor-loader.js": 2,
+        "static:photo-media-client.js": 2,
+        "static:photos-repository.js": 2,
+        "static:photos.js": 2,
+        "static:post-location-repository.js": 2,
+        "static:post-routes.js": 2,
+        "static:profile-data.js": 2,
+        "static:profile.js": 2,
+        "static:settings.js": 2,
+        "static:styles.css": 2,
+        "static:supabase-2.116.0.js": 2,
+        "static:supabase-client.js": 2,
+        "static:supabase-config.js": 2,
+        "static:surf-navigation.js": 2,
+        "static:visit-counts.js": 2,
+        "static:visit-flow.js": 1,
+        "static:visitor-identity-config.js": 2,
+        "static:visitor-identity-login.js": 2,
+        "static:visitor-identity.js": 2,
+        "static:visitor-session.js": 2,
+        "visits": 2
+      },
+      "requests": [
+        {
+          "category": "static:styles.css",
+          "method": "GET",
+          "startMs": 63,
+          "endMs": 104,
+          "durationMs": 41,
+          "status": 200,
+          "responseBodyBytes": 13513,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:config.js",
+          "method": "GET",
+          "startMs": 63,
+          "endMs": 121,
+          "durationMs": 58,
+          "status": 200,
+          "responseBodyBytes": 1871,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:visitor-identity-config.js",
+          "method": "GET",
+          "startMs": 66,
+          "endMs": 120,
+          "durationMs": 54,
+          "status": 200,
+          "responseBodyBytes": 536,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:visitor-identity-login.js",
+          "method": "GET",
+          "startMs": 67,
+          "endMs": 121,
+          "durationMs": 54,
+          "status": 200,
+          "responseBodyBytes": 2297,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:supabase-config.js",
+          "method": "GET",
+          "startMs": 67,
+          "endMs": 122,
+          "durationMs": 55,
+          "status": 200,
+          "responseBodyBytes": 429,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:supabase-2.116.0.js",
+          "method": "GET",
+          "startMs": 68,
+          "endMs": 157,
+          "durationMs": 89,
+          "status": 200,
+          "responseBodyBytes": 56516,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:supabase-client.js",
+          "method": "GET",
+          "startMs": 68,
+          "endMs": 159,
+          "durationMs": 91,
+          "status": 200,
+          "responseBodyBytes": 680,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:member-writing-config.js",
+          "method": "GET",
+          "startMs": 68,
+          "endMs": 158,
+          "durationMs": 90,
+          "status": 200,
+          "responseBodyBytes": 460,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:member-writing-client.js",
+          "method": "GET",
+          "startMs": 68,
+          "endMs": 161,
+          "durationMs": 93,
+          "status": 200,
+          "responseBodyBytes": 3502,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:member-writing-runtime.js",
+          "method": "GET",
+          "startMs": 68,
+          "endMs": 179,
+          "durationMs": 111,
+          "status": 200,
+          "responseBodyBytes": 4285,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:member-relationships-repository.js",
+          "method": "GET",
+          "startMs": 68,
+          "endMs": 181,
+          "durationMs": 113,
+          "status": 200,
+          "responseBodyBytes": 4007,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:member-relationships.js",
+          "method": "GET",
+          "startMs": 69,
+          "endMs": 304,
+          "durationMs": 235,
+          "status": 200,
+          "responseBodyBytes": 3456,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:visitor-identity.js",
+          "method": "GET",
+          "startMs": 69,
+          "endMs": 306,
+          "durationMs": 237,
+          "status": 200,
+          "responseBodyBytes": 5444,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:member-navigation.js",
+          "method": "GET",
+          "startMs": 69,
+          "endMs": 308,
+          "durationMs": 239,
+          "status": 200,
+          "responseBodyBytes": 2991,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:author-navigation.js",
+          "method": "GET",
+          "startMs": 69,
+          "endMs": 308,
+          "durationMs": 239,
+          "status": 200,
+          "responseBodyBytes": 2909,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:member-relationship-lists.js",
+          "method": "GET",
+          "startMs": 70,
+          "endMs": 310,
+          "durationMs": 240,
+          "status": 200,
+          "responseBodyBytes": 3316,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:surf-navigation.js",
+          "method": "GET",
+          "startMs": 71,
+          "endMs": 340,
+          "durationMs": 269,
+          "status": 200,
+          "responseBodyBytes": 2968,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:visitor-session.js",
+          "method": "GET",
+          "startMs": 71,
+          "endMs": 339,
+          "durationMs": 268,
+          "status": 200,
+          "responseBodyBytes": 965,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:friend-reviews-repository.js",
+          "method": "GET",
+          "startMs": 71,
+          "endMs": 341,
+          "durationMs": 270,
+          "status": 200,
+          "responseBodyBytes": 1033,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:friend-reviews.js",
+          "method": "GET",
+          "startMs": 71,
+          "endMs": 343,
+          "durationMs": 272,
+          "status": 200,
+          "responseBodyBytes": 4379,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:comments-repository.js",
+          "method": "GET",
+          "startMs": 72,
+          "endMs": 343,
+          "durationMs": 271,
+          "status": 200,
+          "responseBodyBytes": 2110,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:comments.js",
+          "method": "GET",
+          "startMs": 72,
+          "endMs": 348,
+          "durationMs": 276,
+          "status": 200,
+          "responseBodyBytes": 4347,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:content.js",
+          "method": "GET",
+          "startMs": 72,
+          "endMs": 384,
+          "durationMs": 312,
+          "status": 200,
+          "responseBodyBytes": 1344,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:post-routes.js",
+          "method": "GET",
+          "startMs": 72,
+          "endMs": 384,
+          "durationMs": 312,
+          "status": 200,
+          "responseBodyBytes": 1179,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:content-access.js",
+          "method": "GET",
+          "startMs": 72,
+          "endMs": 385,
+          "durationMs": 313,
+          "status": 200,
+          "responseBodyBytes": 3495,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:post-location-repository.js",
+          "method": "GET",
+          "startMs": 72,
+          "endMs": 384,
+          "durationMs": 312,
+          "status": 200,
+          "responseBodyBytes": 876,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:index.js",
+          "method": "GET",
+          "startMs": 72,
+          "endMs": 385,
+          "durationMs": 313,
+          "status": 200,
+          "responseBodyBytes": 625,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:home-data-config.js",
+          "method": "GET",
+          "startMs": 72,
+          "endMs": 385,
+          "durationMs": 313,
+          "status": 200,
+          "responseBodyBytes": 491,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:visit-counts.js",
+          "method": "GET",
+          "startMs": 73,
+          "endMs": 423,
+          "durationMs": 350,
+          "status": 200,
+          "responseBodyBytes": 2318,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:home-repository.js",
+          "method": "GET",
+          "startMs": 73,
+          "endMs": 425,
+          "durationMs": 352,
+          "status": 200,
+          "responseBodyBytes": 1548,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:home-activity.js",
+          "method": "GET",
+          "startMs": 73,
+          "endMs": 425,
+          "durationMs": 352,
+          "status": 200,
+          "responseBodyBytes": 3515,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:home-profile-data.js",
+          "method": "GET",
+          "startMs": 73,
+          "endMs": 425,
+          "durationMs": 352,
+          "status": 200,
+          "responseBodyBytes": 1279,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:home-profile.js",
+          "method": "GET",
+          "startMs": 73,
+          "endMs": 624,
+          "durationMs": 551,
+          "status": 200,
+          "responseBodyBytes": 2549,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:home-profile-history.js",
+          "method": "GET",
+          "startMs": 73,
+          "endMs": 629,
+          "durationMs": 556,
+          "status": 200,
+          "responseBodyBytes": 2194,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:home.js",
+          "method": "GET",
+          "startMs": 73,
+          "endMs": 467,
+          "durationMs": 394,
+          "status": 200,
+          "responseBodyBytes": 1336,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:profile-data.js",
+          "method": "GET",
+          "startMs": 74,
+          "endMs": 468,
+          "durationMs": 394,
+          "status": 200,
+          "responseBodyBytes": 1880,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:profile.js",
+          "method": "GET",
+          "startMs": 74,
+          "endMs": 466,
+          "durationMs": 392,
+          "status": 200,
+          "responseBodyBytes": 4000,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:content-folders-repository.js",
+          "method": "GET",
+          "startMs": 74,
+          "endMs": 664,
+          "durationMs": 590,
+          "status": 200,
+          "responseBodyBytes": 1525,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:content-folders.js",
+          "method": "GET",
+          "startMs": 74,
+          "endMs": 524,
+          "durationMs": 450,
+          "status": 200,
+          "responseBodyBytes": 4420,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:photo-media-client.js",
+          "method": "GET",
+          "startMs": 74,
+          "endMs": 523,
+          "durationMs": 449,
+          "status": 200,
+          "responseBodyBytes": 3667,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:photos-repository.js",
+          "method": "GET",
+          "startMs": 74,
+          "endMs": 730,
+          "durationMs": 656,
+          "status": 200,
+          "responseBodyBytes": 2791,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:photo-editor-loader.js",
+          "method": "GET",
+          "startMs": 74,
+          "endMs": 582,
+          "durationMs": 508,
+          "status": 200,
+          "responseBodyBytes": 1280,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:photos.js",
+          "method": "GET",
+          "startMs": 75,
+          "endMs": 582,
+          "durationMs": 507,
+          "status": 200,
+          "responseBodyBytes": 7879,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:diary-repository.js",
+          "method": "GET",
+          "startMs": 75,
+          "endMs": 823,
+          "durationMs": 748,
+          "status": 200,
+          "responseBodyBytes": 2039,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:diary.js",
+          "method": "GET",
+          "startMs": 75,
+          "endMs": 623,
+          "durationMs": 548,
+          "status": 200,
+          "responseBodyBytes": 7233,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:guestbook-repository.js",
+          "method": "GET",
+          "startMs": 75,
+          "endMs": 661,
+          "durationMs": 586,
+          "status": 200,
+          "responseBodyBytes": 2117,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:guestbook.js",
+          "method": "GET",
+          "startMs": 75,
+          "endMs": 865,
+          "durationMs": 790,
+          "status": 200,
+          "responseBodyBytes": 5761,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:board-repository.js",
+          "method": "GET",
+          "startMs": 75,
+          "endMs": 909,
+          "durationMs": 834,
+          "status": 200,
+          "responseBodyBytes": 1705,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:board.js",
+          "method": "GET",
+          "startMs": 75,
+          "endMs": 706,
+          "durationMs": 631,
+          "status": 200,
+          "responseBodyBytes": 5717,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:settings.js",
+          "method": "GET",
+          "startMs": 75,
+          "endMs": 706,
+          "durationMs": 631,
+          "status": 200,
+          "responseBodyBytes": 3234,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:app.js",
+          "method": "GET",
+          "startMs": 75,
+          "endMs": 945,
+          "durationMs": 870,
+          "status": 200,
+          "responseBodyBytes": 3293,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:admin-auth.js",
+          "method": "GET",
+          "startMs": 76,
+          "endMs": 744,
+          "durationMs": 668,
+          "status": 200,
+          "responseBodyBytes": 2494,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "visits",
+          "method": "GET",
+          "startMs": 424,
+          "endMs": 699,
+          "durationMs": 275,
+          "status": 200,
+          "responseBodyBytes": 817,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "db/minihompy_settings",
+          "method": "GET",
+          "startMs": 954,
+          "endMs": 1025,
+          "failed": true
+        },
+        {
+          "category": "static:login.css",
+          "method": "GET",
+          "startMs": 1030,
+          "endMs": 1080,
+          "durationMs": 50,
+          "status": 200,
+          "responseBodyBytes": 1089,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:config.js",
+          "method": "GET",
+          "startMs": 1030,
+          "endMs": 1083,
+          "durationMs": 53,
+          "status": 200,
+          "responseBodyBytes": 345,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:login-flow.js",
+          "method": "GET",
+          "startMs": 1030,
+          "endMs": 1083,
+          "durationMs": 53,
+          "status": 200,
+          "responseBodyBytes": 1343,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:visit-flow.js",
+          "method": "GET",
+          "startMs": 1031,
+          "endMs": 1081,
+          "durationMs": 50,
+          "status": 200,
+          "responseBodyBytes": 1479,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "central/visits/issue",
+          "method": "POST",
+          "startMs": 1086,
+          "endMs": 1544,
+          "durationMs": 458,
+          "status": 200,
+          "responseBodyBytes": 1999,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:styles.css",
+          "method": "GET",
+          "startMs": 1589,
+          "endMs": 1642,
+          "durationMs": 53,
+          "status": 200,
+          "responseBodyBytes": 13405,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:config.js",
+          "method": "GET",
+          "startMs": 1591,
+          "endMs": 1643,
+          "durationMs": 52,
+          "status": 200,
+          "responseBodyBytes": 1897,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:visitor-identity-config.js",
+          "method": "GET",
+          "startMs": 1591,
+          "endMs": 1638,
+          "durationMs": 47,
+          "status": 200,
+          "responseBodyBytes": 640,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:visitor-identity-login.js",
+          "method": "GET",
+          "startMs": 1592,
+          "endMs": 1646,
+          "durationMs": 54,
+          "status": 200,
+          "responseBodyBytes": 2319,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:supabase-config.js",
+          "method": "GET",
+          "startMs": 1592,
+          "endMs": 1660,
+          "durationMs": 68,
+          "status": 200,
+          "responseBodyBytes": 449,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:supabase-2.116.0.js",
+          "method": "GET",
+          "startMs": 1592,
+          "endMs": 1670,
+          "durationMs": 78,
+          "status": 200,
+          "responseBodyBytes": 56466,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:supabase-client.js",
+          "method": "GET",
+          "startMs": 1592,
+          "endMs": 1688,
+          "durationMs": 96,
+          "status": 200,
+          "responseBodyBytes": 780,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:member-writing-config.js",
+          "method": "GET",
+          "startMs": 1593,
+          "endMs": 1700,
+          "durationMs": 107,
+          "status": 200,
+          "responseBodyBytes": 356,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:member-writing-client.js",
+          "method": "GET",
+          "startMs": 1594,
+          "endMs": 1702,
+          "durationMs": 108,
+          "status": 200,
+          "responseBodyBytes": 3503,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:member-writing-runtime.js",
+          "method": "GET",
+          "startMs": 1594,
+          "endMs": 1702,
+          "durationMs": 108,
+          "status": 200,
+          "responseBodyBytes": 4162,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:member-relationships-repository.js",
+          "method": "GET",
+          "startMs": 1594,
+          "endMs": 1724,
+          "durationMs": 130,
+          "status": 200,
+          "responseBodyBytes": 4003,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:member-relationships.js",
+          "method": "GET",
+          "startMs": 1594,
+          "endMs": 1805,
+          "durationMs": 211,
+          "status": 200,
+          "responseBodyBytes": 3399,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:visitor-identity.js",
+          "method": "GET",
+          "startMs": 1594,
+          "endMs": 1806,
+          "durationMs": 212,
+          "status": 200,
+          "responseBodyBytes": 5544,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:member-navigation.js",
+          "method": "GET",
+          "startMs": 1594,
+          "endMs": 1810,
+          "durationMs": 216,
+          "status": 200,
+          "responseBodyBytes": 3014,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:author-navigation.js",
+          "method": "GET",
+          "startMs": 1594,
+          "endMs": 1808,
+          "durationMs": 214,
+          "status": 200,
+          "responseBodyBytes": 2810,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:member-relationship-lists.js",
+          "method": "GET",
+          "startMs": 1594,
+          "endMs": 1810,
+          "durationMs": 216,
+          "status": 200,
+          "responseBodyBytes": 3416,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:surf-navigation.js",
+          "method": "GET",
+          "startMs": 1594,
+          "endMs": 1852,
+          "durationMs": 258,
+          "status": 200,
+          "responseBodyBytes": 2864,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:visitor-session.js",
+          "method": "GET",
+          "startMs": 1594,
+          "endMs": 1853,
+          "durationMs": 259,
+          "status": 200,
+          "responseBodyBytes": 965,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:friend-reviews-repository.js",
+          "method": "GET",
+          "startMs": 1595,
+          "endMs": 1861,
+          "durationMs": 266,
+          "status": 200,
+          "responseBodyBytes": 1046,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:friend-reviews.js",
+          "method": "GET",
+          "startMs": 1595,
+          "endMs": 1860,
+          "durationMs": 265,
+          "status": 200,
+          "responseBodyBytes": 4444,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:comments-repository.js",
+          "method": "GET",
+          "startMs": 1595,
+          "endMs": 1861,
+          "durationMs": 266,
+          "status": 200,
+          "responseBodyBytes": 2182,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:comments.js",
+          "method": "GET",
+          "startMs": 1595,
+          "endMs": 1861,
+          "durationMs": 266,
+          "status": 200,
+          "responseBodyBytes": 4326,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:content.js",
+          "method": "GET",
+          "startMs": 1595,
+          "endMs": 1903,
+          "durationMs": 308,
+          "status": 200,
+          "responseBodyBytes": 1451,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:post-routes.js",
+          "method": "GET",
+          "startMs": 1595,
+          "endMs": 1901,
+          "durationMs": 306,
+          "status": 200,
+          "responseBodyBytes": 1242,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:content-access.js",
+          "method": "GET",
+          "startMs": 1595,
+          "endMs": 1900,
+          "durationMs": 305,
+          "status": 200,
+          "responseBodyBytes": 3412,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:post-location-repository.js",
+          "method": "GET",
+          "startMs": 1595,
+          "endMs": 1900,
+          "durationMs": 305,
+          "status": 200,
+          "responseBodyBytes": 877,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:index.js",
+          "method": "GET",
+          "startMs": 1595,
+          "endMs": 1902,
+          "durationMs": 307,
+          "status": 200,
+          "responseBodyBytes": 562,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:home-data-config.js",
+          "method": "GET",
+          "startMs": 1596,
+          "endMs": 1903,
+          "durationMs": 307,
+          "status": 200,
+          "responseBodyBytes": 446,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:visit-counts.js",
+          "method": "GET",
+          "startMs": 1596,
+          "endMs": 1944,
+          "durationMs": 348,
+          "status": 200,
+          "responseBodyBytes": 2329,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:home-repository.js",
+          "method": "GET",
+          "startMs": 1596,
+          "endMs": 1944,
+          "durationMs": 348,
+          "status": 200,
+          "responseBodyBytes": 1505,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:home-activity.js",
+          "method": "GET",
+          "startMs": 1596,
+          "endMs": 1946,
+          "durationMs": 350,
+          "status": 200,
+          "responseBodyBytes": 3464,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:home-profile-data.js",
+          "method": "GET",
+          "startMs": 1596,
+          "endMs": 1945,
+          "durationMs": 349,
+          "status": 200,
+          "responseBodyBytes": 1312,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:home-profile.js",
+          "method": "GET",
+          "startMs": 1596,
+          "endMs": 1946,
+          "durationMs": 350,
+          "status": 200,
+          "responseBodyBytes": 2618,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:home-profile-history.js",
+          "method": "GET",
+          "startMs": 1596,
+          "endMs": 1946,
+          "durationMs": 350,
+          "status": 200,
+          "responseBodyBytes": 2218,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:home.js",
+          "method": "GET",
+          "startMs": 1596,
+          "endMs": 2000,
+          "durationMs": 404,
+          "status": 200,
+          "responseBodyBytes": 1236,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:profile-data.js",
+          "method": "GET",
+          "startMs": 1596,
+          "endMs": 2002,
+          "durationMs": 406,
+          "status": 200,
+          "responseBodyBytes": 1830,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:profile.js",
+          "method": "GET",
+          "startMs": 1596,
+          "endMs": 2002,
+          "durationMs": 406,
+          "status": 200,
+          "responseBodyBytes": 4015,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:content-folders-repository.js",
+          "method": "GET",
+          "startMs": 1596,
+          "endMs": 2001,
+          "durationMs": 405,
+          "status": 200,
+          "responseBodyBytes": 1610,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:content-folders.js",
+          "method": "GET",
+          "startMs": 1597,
+          "endMs": 2002,
+          "durationMs": 405,
+          "status": 200,
+          "responseBodyBytes": 4455,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:photo-media-client.js",
+          "method": "GET",
+          "startMs": 1597,
+          "endMs": 2001,
+          "durationMs": 404,
+          "status": 200,
+          "responseBodyBytes": 3673,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:photos-repository.js",
+          "method": "GET",
+          "startMs": 1597,
+          "endMs": 2050,
+          "durationMs": 453,
+          "status": 200,
+          "responseBodyBytes": 2763,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:photo-editor-loader.js",
+          "method": "GET",
+          "startMs": 1597,
+          "endMs": 2065,
+          "durationMs": 468,
+          "status": 200,
+          "responseBodyBytes": 1272,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:photos.js",
+          "method": "GET",
+          "startMs": 1599,
+          "endMs": 2064,
+          "durationMs": 465,
+          "status": 200,
+          "responseBodyBytes": 7853,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:diary-repository.js",
+          "method": "GET",
+          "startMs": 1599,
+          "endMs": 2064,
+          "durationMs": 465,
+          "status": 200,
+          "responseBodyBytes": 2072,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:diary.js",
+          "method": "GET",
+          "startMs": 1599,
+          "endMs": 2061,
+          "durationMs": 462,
+          "status": 200,
+          "responseBodyBytes": 7168,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:guestbook-repository.js",
+          "method": "GET",
+          "startMs": 1599,
+          "endMs": 2065,
+          "durationMs": 466,
+          "status": 200,
+          "responseBodyBytes": 2153,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:guestbook.js",
+          "method": "GET",
+          "startMs": 1600,
+          "endMs": 2101,
+          "durationMs": 501,
+          "status": 200,
+          "responseBodyBytes": 5733,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:board-repository.js",
+          "method": "GET",
+          "startMs": 1600,
+          "endMs": 2105,
+          "durationMs": 505,
+          "status": 200,
+          "responseBodyBytes": 1787,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:board.js",
+          "method": "GET",
+          "startMs": 1600,
+          "endMs": 2105,
+          "durationMs": 505,
+          "status": 200,
+          "responseBodyBytes": 5694,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:settings.js",
+          "method": "GET",
+          "startMs": 1600,
+          "endMs": 2106,
+          "durationMs": 506,
+          "status": 200,
+          "responseBodyBytes": 3161,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:app.js",
+          "method": "GET",
+          "startMs": 1600,
+          "endMs": 2107,
+          "durationMs": 507,
+          "status": 200,
+          "responseBodyBytes": 3366,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:admin-auth.js",
+          "method": "GET",
+          "startMs": 1600,
+          "endMs": 2106,
+          "durationMs": 506,
+          "status": 200,
+          "responseBodyBytes": 2474,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "central/visits/resolve",
+          "method": "POST",
+          "startMs": 1809,
+          "endMs": 2145,
+          "durationMs": 336,
+          "status": 200,
+          "responseBodyBytes": 1057,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "visits",
+          "method": "GET",
+          "startMs": 1945,
+          "endMs": 2157,
+          "durationMs": 212,
+          "status": 200,
+          "responseBodyBytes": 814,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "db/minihompy_settings",
+          "method": "GET",
+          "startMs": 2112,
+          "endMs": 2192,
+          "durationMs": 80,
+          "status": 200,
+          "responseBodyBytes": 1339,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "sessions/exchange",
+          "method": "POST",
+          "startMs": 2148,
+          "endMs": 2794,
+          "durationMs": 646,
+          "status": 200,
+          "responseBodyBytes": 1164,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "central/navigation/site",
+          "method": "GET",
+          "startMs": 2805,
+          "endMs": 3081,
+          "durationMs": 276,
+          "status": 200,
+          "responseBodyBytes": 1009,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "central/navigation/members",
+          "method": "GET",
+          "startMs": 2805,
+          "endMs": 3107,
+          "durationMs": 302,
+          "status": 200,
+          "responseBodyBytes": 1005,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "static:Galmuri11-extended.woff2",
+          "method": "GET",
+          "startMs": 2805,
+          "endMs": 3345,
+          "durationMs": 540,
+          "status": 200,
+          "responseBodyBytes": 505884,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "friend-reviews",
+          "method": "GET",
+          "startMs": 2807,
+          "endMs": 3221,
+          "durationMs": 414,
+          "status": 200,
+          "responseBodyBytes": 1049,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "content/health",
+          "method": "GET",
+          "startMs": 2850,
+          "endMs": 3199,
+          "durationMs": 349,
+          "status": 200,
+          "responseBodyBytes": 1007,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "relationships/health",
+          "method": "GET",
+          "startMs": 3109,
+          "endMs": 3711,
+          "durationMs": 602,
+          "status": 200,
+          "responseBodyBytes": 875,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "content/summary",
+          "method": "POST",
+          "startMs": 3200,
+          "endMs": 4271,
+          "durationMs": 1071,
+          "status": 200,
+          "responseBodyBytes": 1528,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "central/navigation/members",
+          "method": "GET",
+          "startMs": 3222,
+          "endMs": 3466,
+          "durationMs": 244,
+          "status": 200,
+          "responseBodyBytes": 1002,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "relationships/state",
+          "method": "POST",
+          "startMs": 3715,
+          "endMs": 4648,
+          "durationMs": 933,
+          "status": 200,
+          "responseBodyBytes": 1115,
+          "responseHeaderBytes": 0
+        }
+      ],
+      "cpuSeconds": {
+        "LayoutDuration": 0.034017,
+        "ScriptDuration": 0.027758,
+        "TaskDuration": 0.209838
+      }
+    },
+    {
+      "site": "A",
+      "role": "member",
+      "scenario": "diary",
+      "round": 1,
+      "menu": "diary",
+      "firstBodyMs": 1167,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "settledMs": 2316,
+      "calendarReadyMs": 2316,
+      "empty": false,
+      "error": false,
+      "photoCount": 0,
+      "requests": [
+        {
+          "path": "/rest/v1/diary_folders",
+          "method": "GET",
+          "startMs": 44,
+          "endMs": 113,
+          "durationMs": 69,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 115,
+          "endMs": 1151,
+          "durationMs": 1036,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/calendar",
+          "method": "POST",
+          "startMs": 1156,
+          "endMs": 2303,
+          "durationMs": 1147,
+          "status": 200
+        }
+      ],
+      "requestCount": 3,
+      "commentAuthors": {
+        "count": 0,
+        "loading": false,
+        "error": false,
+        "photoWidths": [],
+        "readyMs": null
+      },
+      "network": {
+        "requestCount": 3,
+        "responseBodyBytes": 3278,
+        "counts": {
+          "content/calendar": 1,
+          "content/list": 1,
+          "db/diary_folders": 1
+        },
+        "requests": [
+          {
+            "category": "db/diary_folders",
+            "method": "GET",
+            "startMs": 45,
+            "endMs": 114,
+            "durationMs": 69,
+            "status": 200,
+            "responseBodyBytes": 869,
+            "responseHeaderBytes": 0
+          },
+          {
+            "category": "content/list",
+            "method": "POST",
+            "startMs": 116,
+            "endMs": 1152,
+            "durationMs": 1036,
+            "status": 200,
+            "responseBodyBytes": 1442,
+            "responseHeaderBytes": 0
+          },
+          {
+            "category": "content/calendar",
+            "method": "POST",
+            "startMs": 1157,
+            "endMs": 2303,
+            "durationMs": 1146,
+            "status": 200,
+            "responseBodyBytes": 967,
+            "responseHeaderBytes": 0
+          }
+        ]
+      }
+    },
+    {
+      "site": "A",
+      "role": "member",
+      "scenario": "home-return",
+      "from": "diary",
+      "round": 1,
+      "summaryMs": 1250,
+      "relationshipMs": 34,
+      "reviewInputMs": 984,
+      "authorsMs": 405,
+      "settled": true,
+      "totalMs": 1303,
+      "requestCount": 3,
+      "responseBodyBytes": 3692,
+      "counts": {
+        "content/summary": 1,
+        "friend-reviews": 1,
+        "relationships/state": 1
+      },
+      "requests": [
+        {
+          "category": "friend-reviews",
+          "method": "GET",
+          "startMs": 33,
+          "endMs": 392,
+          "durationMs": 359,
+          "status": 200,
+          "responseBodyBytes": 1047,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "relationships/state",
+          "method": "POST",
+          "startMs": 33,
+          "endMs": 961,
+          "durationMs": 928,
+          "status": 200,
+          "responseBodyBytes": 1116,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "content/summary",
+          "method": "POST",
+          "startMs": 81,
+          "endMs": 1232,
+          "durationMs": 1151,
+          "status": 200,
+          "responseBodyBytes": 1529,
+          "responseHeaderBytes": 0
+        }
+      ]
+    },
+    {
+      "site": "A",
+      "role": "member",
+      "scenario": "photos",
+      "round": 1,
+      "menu": "photos",
+      "firstBodyMs": 1180,
+      "firstPhotoMs": 5579,
+      "allPhotosMs": 5579,
+      "settledMs": 5579,
+      "calendarReadyMs": null,
+      "empty": false,
+      "error": false,
+      "photoCount": 1,
+      "requests": [
+        {
+          "path": "/rest/v1/photo_folders",
+          "method": "GET",
+          "startMs": 41,
+          "endMs": 101,
+          "durationMs": 60,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 102,
+          "endMs": 1174,
+          "durationMs": 1072,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/photo-check",
+          "method": "POST",
+          "startMs": 1183,
+          "endMs": 2269,
+          "durationMs": 1086,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/photo-media/read",
+          "method": "POST",
+          "startMs": 2272,
+          "endMs": 4085,
+          "failed": true
+        },
+        {
+          "path": "/functions/v1/member-writing/content/photo-check",
+          "method": "POST",
+          "startMs": 4106,
+          "endMs": 5573,
+          "durationMs": 1467,
+          "status": 200
+        }
+      ],
+      "requestCount": 5,
+      "commentAuthors": {
+        "count": 0,
+        "loading": false,
+        "error": false,
+        "photoWidths": [
+          {
+            "cssWidth": 241,
+            "renderedWidth": 452,
+            "naturalWidth": 749,
+            "dpr": 1
+          }
+        ],
+        "readyMs": null
+      },
+      "network": {
+        "requestCount": 5,
+        "responseBodyBytes": 4991,
+        "counts": {
+          "content/list": 1,
+          "content/photo-check": 2,
+          "db/photo_folders": 1,
+          "photo/read": 1
+        },
+        "requests": [
+          {
+            "category": "db/photo_folders",
+            "method": "GET",
+            "startMs": 44,
+            "endMs": 103,
+            "durationMs": 59,
+            "status": 200,
+            "responseBodyBytes": 970,
+            "responseHeaderBytes": 0
+          },
+          {
+            "category": "content/list",
+            "method": "POST",
+            "startMs": 105,
+            "endMs": 1176,
+            "durationMs": 1071,
+            "status": 200,
+            "responseBodyBytes": 1417,
+            "responseHeaderBytes": 0
+          },
+          {
+            "category": "content/photo-check",
+            "method": "POST",
+            "startMs": 1186,
+            "endMs": 2271,
+            "durationMs": 1085,
+            "status": 200,
+            "responseBodyBytes": 1301,
+            "responseHeaderBytes": 0
+          },
+          {
+            "category": "photo/read",
+            "method": "POST",
+            "startMs": 2275,
+            "endMs": 4088,
+            "failed": true
+          },
+          {
+            "category": "content/photo-check",
+            "method": "POST",
+            "startMs": 4109,
+            "endMs": 5575,
+            "durationMs": 1466,
+            "status": 200,
+            "responseBodyBytes": 1303,
+            "responseHeaderBytes": 0
+          }
+        ]
+      }
+    },
+    {
+      "site": "A",
+      "role": "member",
+      "scenario": "home-return",
+      "from": "photos",
+      "round": 1,
+      "summaryMs": 1151,
+      "relationshipMs": 39,
+      "reviewInputMs": 886,
+      "authorsMs": 355,
+      "settled": true,
+      "totalMs": 1310,
+      "requestCount": 3,
+      "responseBodyBytes": 3690,
+      "counts": {
+        "content/summary": 1,
+        "friend-reviews": 1,
+        "relationships/state": 1
+      },
+      "requests": [
+        {
+          "category": "friend-reviews",
+          "method": "GET",
+          "startMs": 37,
+          "endMs": 315,
+          "durationMs": 278,
+          "status": 200,
+          "responseBodyBytes": 1045,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "relationships/state",
+          "method": "POST",
+          "startMs": 38,
+          "endMs": 864,
+          "durationMs": 826,
+          "status": 200,
+          "responseBodyBytes": 1116,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "content/summary",
+          "method": "POST",
+          "startMs": 87,
+          "endMs": 1123,
+          "durationMs": 1036,
+          "status": 200,
+          "responseBodyBytes": 1529,
+          "responseHeaderBytes": 0
+        }
+      ]
+    },
+    {
+      "site": "A",
+      "role": "member",
+      "scenario": "diary",
+      "round": 2,
+      "menu": "diary",
+      "firstBodyMs": 1231,
+      "firstPhotoMs": null,
+      "allPhotosMs": null,
+      "settledMs": 2447,
+      "calendarReadyMs": 2447,
+      "empty": false,
+      "error": false,
+      "photoCount": 0,
+      "requests": [
+        {
+          "path": "/rest/v1/diary_folders",
+          "method": "GET",
+          "startMs": 46,
+          "endMs": 150,
+          "durationMs": 104,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 153,
+          "endMs": 1227,
+          "durationMs": 1074,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/calendar",
+          "method": "POST",
+          "startMs": 1232,
+          "endMs": 2446,
+          "durationMs": 1214,
+          "status": 200
+        }
+      ],
+      "requestCount": 3,
+      "commentAuthors": {
+        "count": 0,
+        "loading": false,
+        "error": false,
+        "photoWidths": [],
+        "readyMs": null
+      },
+      "network": {
+        "requestCount": 3,
+        "responseBodyBytes": 3276,
+        "counts": {
+          "content/calendar": 1,
+          "content/list": 1,
+          "db/diary_folders": 1
+        },
+        "requests": [
+          {
+            "category": "db/diary_folders",
+            "method": "GET",
+            "startMs": 48,
+            "endMs": 151,
+            "durationMs": 103,
+            "status": 200,
+            "responseBodyBytes": 869,
+            "responseHeaderBytes": 0
+          },
+          {
+            "category": "content/list",
+            "method": "POST",
+            "startMs": 155,
+            "endMs": 1229,
+            "durationMs": 1074,
+            "status": 200,
+            "responseBodyBytes": 1441,
+            "responseHeaderBytes": 0
+          },
+          {
+            "category": "content/calendar",
+            "method": "POST",
+            "startMs": 1234,
+            "endMs": 2448,
+            "durationMs": 1214,
+            "status": 200,
+            "responseBodyBytes": 966,
+            "responseHeaderBytes": 0
+          }
+        ]
+      }
+    },
+    {
+      "site": "A",
+      "role": "member",
+      "scenario": "home-return",
+      "from": "diary",
+      "round": 2,
+      "summaryMs": 1181,
+      "relationshipMs": 38,
+      "reviewInputMs": 812,
+      "authorsMs": 455,
+      "settled": true,
+      "totalMs": 1287,
+      "requestCount": 3,
+      "responseBodyBytes": 3684,
+      "counts": {
+        "content/summary": 1,
+        "friend-reviews": 1,
+        "relationships/state": 1
+      },
+      "requests": [
+        {
+          "category": "friend-reviews",
+          "method": "GET",
+          "startMs": 36,
+          "endMs": 415,
+          "durationMs": 379,
+          "status": 200,
+          "responseBodyBytes": 1045,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "relationships/state",
+          "method": "POST",
+          "startMs": 37,
+          "endMs": 787,
+          "durationMs": 750,
+          "status": 200,
+          "responseBodyBytes": 1117,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "content/summary",
+          "method": "POST",
+          "startMs": 85,
+          "endMs": 1133,
+          "durationMs": 1048,
+          "status": 200,
+          "responseBodyBytes": 1522,
+          "responseHeaderBytes": 0
+        }
+      ]
+    },
+    {
+      "site": "A",
+      "role": "member",
+      "scenario": "photos",
+      "round": 2,
+      "menu": "photos",
+      "firstBodyMs": 1191,
+      "firstPhotoMs": 5057,
+      "allPhotosMs": 5057,
+      "settledMs": 5057,
+      "calendarReadyMs": null,
+      "empty": false,
+      "error": false,
+      "photoCount": 1,
+      "requests": [
+        {
+          "path": "/rest/v1/photo_folders",
+          "method": "GET",
+          "startMs": 33,
+          "endMs": 107,
+          "durationMs": 74,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/list",
+          "method": "POST",
+          "startMs": 109,
+          "endMs": 1179,
+          "durationMs": 1070,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/member-writing/content/photo-check",
+          "method": "POST",
+          "startMs": 1193,
+          "endMs": 2287,
+          "durationMs": 1094,
+          "status": 200
+        },
+        {
+          "path": "/functions/v1/photo-media/read",
+          "method": "POST",
+          "startMs": 2288,
+          "endMs": 3965,
+          "failed": true
+        },
+        {
+          "path": "/functions/v1/member-writing/content/photo-check",
+          "method": "POST",
+          "startMs": 3988,
+          "endMs": 5043,
+          "durationMs": 1055,
+          "status": 200
+        }
+      ],
+      "requestCount": 5,
+      "commentAuthors": {
+        "count": 0,
+        "loading": false,
+        "error": false,
+        "photoWidths": [
+          {
+            "cssWidth": 241,
+            "renderedWidth": 452,
+            "naturalWidth": 749,
+            "dpr": 1
+          }
+        ],
+        "readyMs": null
+      },
+      "network": {
+        "requestCount": 5,
+        "responseBodyBytes": 4989,
+        "counts": {
+          "content/list": 1,
+          "content/photo-check": 2,
+          "db/photo_folders": 1,
+          "photo/read": 1
+        },
+        "requests": [
+          {
+            "category": "db/photo_folders",
+            "method": "GET",
+            "startMs": 35,
+            "endMs": 108,
+            "durationMs": 73,
+            "status": 200,
+            "responseBodyBytes": 968,
+            "responseHeaderBytes": 0
+          },
+          {
+            "category": "content/list",
+            "method": "POST",
+            "startMs": 111,
+            "endMs": 1181,
+            "durationMs": 1070,
+            "status": 200,
+            "responseBodyBytes": 1416,
+            "responseHeaderBytes": 0
+          },
+          {
+            "category": "content/photo-check",
+            "method": "POST",
+            "startMs": 1195,
+            "endMs": 2289,
+            "durationMs": 1094,
+            "status": 200,
+            "responseBodyBytes": 1304,
+            "responseHeaderBytes": 0
+          },
+          {
+            "category": "photo/read",
+            "method": "POST",
+            "startMs": 2290,
+            "endMs": 3967,
+            "failed": true
+          },
+          {
+            "category": "content/photo-check",
+            "method": "POST",
+            "startMs": 3990,
+            "endMs": 5045,
+            "durationMs": 1055,
+            "status": 200,
+            "responseBodyBytes": 1301,
+            "responseHeaderBytes": 0
+          }
+        ]
+      }
+    },
+    {
+      "site": "A",
+      "role": "member",
+      "scenario": "home-return",
+      "from": "photos",
+      "round": 2,
+      "summaryMs": 1142,
+      "relationshipMs": 40,
+      "reviewInputMs": 984,
+      "authorsMs": 456,
+      "settled": true,
+      "totalMs": 1301,
+      "requestCount": 3,
+      "responseBodyBytes": 3696,
+      "counts": {
+        "content/summary": 1,
+        "friend-reviews": 1,
+        "relationships/state": 1
+      },
+      "requests": [
+        {
+          "category": "friend-reviews",
+          "method": "GET",
+          "startMs": 39,
+          "endMs": 424,
+          "durationMs": 385,
+          "status": 200,
+          "responseBodyBytes": 1050,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "relationships/state",
+          "method": "POST",
+          "startMs": 39,
+          "endMs": 962,
+          "durationMs": 923,
+          "status": 200,
+          "responseBodyBytes": 1119,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "content/summary",
+          "method": "POST",
+          "startMs": 87,
+          "endMs": 1133,
+          "durationMs": 1046,
+          "status": 200,
+          "responseBodyBytes": 1527,
+          "responseHeaderBytes": 0
+        }
+      ]
+    },
+    {
+      "site": "A",
+      "role": "member",
+      "scenario": "focus-burst",
+      "syntheticEvents": true,
+      "summaryMs": 1642,
+      "relationshipMs": 1642,
+      "reviewInputMs": 1642,
+      "authorsMs": 695,
+      "settled": true,
+      "totalMs": 1908,
+      "requestCount": 10,
+      "responseBodyBytes": 8553,
+      "counts": {
+        "central/navigation/members": 3,
+        "central/navigation/site": 2,
+        "content/summary": 1,
+        "friend-reviews": 1,
+        "relationships/state": 1,
+        "sessions/current": 1,
+        "visits": 1
+      },
+      "requests": [
+        {
+          "category": "friend-reviews",
+          "method": "GET",
+          "startMs": 7,
+          "endMs": 383,
+          "durationMs": 376,
+          "status": 200,
+          "responseBodyBytes": 1046,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "central/navigation/site",
+          "method": "GET",
+          "startMs": 8,
+          "endMs": 10,
+          "failed": true
+        },
+        {
+          "category": "central/navigation/members",
+          "method": "GET",
+          "startMs": 8,
+          "endMs": 10,
+          "failed": true
+        },
+        {
+          "category": "central/navigation/site",
+          "method": "GET",
+          "startMs": 9,
+          "endMs": 321,
+          "durationMs": 312,
+          "status": 200,
+          "responseBodyBytes": 1011,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "central/navigation/members",
+          "method": "GET",
+          "startMs": 9,
+          "endMs": 303,
+          "durationMs": 294,
+          "status": 200,
+          "responseBodyBytes": 1004,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "visits",
+          "method": "GET",
+          "startMs": 9,
+          "endMs": 241,
+          "durationMs": 232,
+          "status": 200,
+          "responseBodyBytes": 818,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "sessions/current",
+          "method": "GET",
+          "startMs": 10,
+          "endMs": 694,
+          "durationMs": 684,
+          "status": 200,
+          "responseBodyBytes": 1030,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "central/navigation/members",
+          "method": "GET",
+          "startMs": 384,
+          "endMs": 643,
+          "durationMs": 259,
+          "status": 200,
+          "responseBodyBytes": 1004,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "content/summary",
+          "method": "POST",
+          "startMs": 696,
+          "endMs": 1627,
+          "durationMs": 931,
+          "status": 200,
+          "responseBodyBytes": 1522,
+          "responseHeaderBytes": 0
+        },
+        {
+          "category": "relationships/state",
+          "method": "POST",
+          "startMs": 697,
+          "endMs": 1604,
+          "durationMs": 907,
+          "status": 200,
+          "responseBodyBytes": 1118,
+          "responseHeaderBytes": 0
+        }
+      ]
+    }
+  ],
+  "failures": [],
+  "blockedWrites": 0
+}

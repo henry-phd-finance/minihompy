@@ -1,0 +1,16 @@
+{
+  "site": "A",
+  "selfOnly": true,
+  "created": 1,
+  "reloaded": 1,
+  "privateFiltered": true,
+  "removed": 1,
+  "logout": true,
+  "initialCleanupCheck": "deleted target lookup threw instead of returning null",
+  "cleanupDatabaseConfirmed": true,
+  "operationReceipts": [
+    "guestbook.create",
+    "guestbook.delete"
+  ],
+  "remainingTestPosts": 0
+}

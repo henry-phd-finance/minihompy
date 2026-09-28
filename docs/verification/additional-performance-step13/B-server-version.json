@@ -1,0 +1,33 @@
+{
+  "site": "B",
+  "functions": [
+    {
+      "slug": "member-writing",
+      "version": 15,
+      "verify_jwt": false,
+      "status": "ACTIVE",
+      "updated_at": 1790606766769
+    },
+    {
+      "slug": "photo-media",
+      "version": 4,
+      "verify_jwt": false,
+      "status": "ACTIVE",
+      "updated_at": 1790606771626
+    }
+  ],
+  "migrations": [
+    {
+      "name": "202609280001_photo_asset_variants.sql",
+      "sha256": "59742a5c5a20071f15c6f7952a3cb1849aaafe1728f09efc9ea6bfcc8ed89b8e"
+    },
+    {
+      "name": "202609280002_photo_variant_status.sql",
+      "sha256": "344fe41793adde600d086b52fbff308613c4b256db5772fb0364a38c22fe186c"
+    },
+    {
+      "name": "202609280003_photo_variant_reads.sql",
+      "sha256": "ffd67aafc1e579e55adee711d7a8ef905ed7176cf24e9fa593026077c170d2f9"
+    }
+  ]
+}

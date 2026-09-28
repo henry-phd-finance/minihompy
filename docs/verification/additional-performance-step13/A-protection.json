@@ -1,0 +1,25 @@
+{
+  "site": "A",
+  "privateBucket": true,
+  "readyVariants": 1,
+  "checks": [
+    {
+      "mode": "legacy-original",
+      "bytes": 20038,
+      "hashMatches": true,
+      "noStore": true
+    },
+    {
+      "mode": "display-v1",
+      "bytes": 4798,
+      "hashMatches": true,
+      "noStore": true
+    },
+    {
+      "directStorageDenied": 400,
+      "anonMetadataDenied": 401,
+      "forgedDescriptorDenied": 404
+    }
+  ],
+  "capabilitiesVerified": true
+}

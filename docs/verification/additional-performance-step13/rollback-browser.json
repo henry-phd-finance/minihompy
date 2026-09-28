@@ -1,0 +1,15 @@
+{
+  "mode": "Step 8 client overlay + current identity fix against deployed A server; no public rollback",
+  "source": "9241c6a",
+  "reads": [
+    {
+      "status": 200,
+      "bytes": 20038,
+      "representation": false,
+      "hashMatchesPreservedOriginal": true
+    }
+  ],
+  "errors": [],
+  "blockedWrites": 0,
+  "passed": true
+}
