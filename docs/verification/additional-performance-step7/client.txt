@@ -1,0 +1,3 @@
+PASS capability fallback, original success survives conversion/upload failure, owner recheck, credential-free health
+PASS conversion canceled on identity/menu/page departure, no late variant upload, original ACK retained for editor cleanup
+PASS 8 client integration cases

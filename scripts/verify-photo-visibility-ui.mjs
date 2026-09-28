@@ -11,10 +11,10 @@ const {chromium}=await import(pathToFileURL(resolve(process.argv[2])));
 const {PGlite}=await import(pathToFileURL(resolve('../minihompy-central/node_modules/@electric-sql/pglite/dist/index.js')));
 await mkdir(process.env.VERIFICATION_DIR||'docs/verification/folder-visibility-step8',{recursive:true});
 const browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH,headless:true});
-const retained=new Set(['views/home.js','config.js','content.js','views/index.js','post-routes.js','content-access.js','post-location-repository.js','photo-media-client.js','photos-repository.js','comments-repository.js','comments.js','views/photos.js','app.js','content-folders.js','content-folders-repository.js','photo-editor.js','assets/vendor/quill-2.0.3.js']);
+const retained=new Set(['views/home.js','config.js','content.js','views/index.js','post-routes.js','content-access.js','post-location-repository.js','photo-variant-client.js','photo-media-client.js','photos-repository.js','comments-repository.js','comments.js','views/photos.js','app.js','content-folders.js','content-folders-repository.js','photo-editor.js','assets/vendor/quill-2.0.3.js']);
 const id=n=>'a0000000-0000-4000-8000-'+String(n).padStart(12,'0'),ids={owner:id(1),A:id(2)},path=(n,i=77)=>id(n)+'/'+id(i)+'.jpg';
 const picture=new Uint8Array(await readFile(resolve('assets/photos/lake.jpg'))),sha=await digest(picture),results=[];
-const env={SUPABASE_URL:'https://abcdefghijklmnopqrst.supabase.co',SUPABASE_ANON_KEY:'public-fixture',SUPABASE_SERVICE_ROLE_KEY:'service-fixture',MINIHOMPY_SITE_ORIGIN:'https://photos.test'};
+const env={SUPABASE_URL:'https://abcdefghijklmnopqrst.supabase.co',SUPABASE_ANON_KEY:'public-fixture',SUPABASE_SERVICE_ROLE_KEY:'service-fixture',MINIHOMPY_SITE_ORIGIN:'https://photos.test',MINIHOMPY_SITE_ID:id(99),MINIHOMPY_CENTRAL_API_URL:'https://central.test/api'};
 try{for(const width of [1280,375]){
  const {pg}=await memberWritingDb(PGlite,{siteId:id(99),centralUrl:'https://central.test/api',photoMedia:true}),{handle,run}=sqlTransport(pg,ids);
  const context=await browser.newContext({viewport:{width,height:850}});
@@ -23,6 +23,8 @@ try{for(const width of [1280,375]){
   await pg.exec('set role service_role');
   try{const v=(await pg.query('select public.photo_media($1,$2) v',[action,args])).rows[0].v;if(v.failure)fail(v.failure);return v;}finally{await pg.exec('reset role');}
  });
+ const variantRpc=(action,args)=>run(async()=>{await pg.exec('set role service_role');try{const v=(await pg.query('select public.photo_variant($1,$2) v',[action,args])).rows[0].v;if(v.failure)fail(v.failure);return v;}finally{await pg.exec('reset role');}});
+ const variantStatus=()=>run(async()=>(await pg.query('select public.photo_variant_status() v')).rows[0].v);
  const storage={
   async get(bucket,p){assert.equal(bucket,BUCKET);activeReads++;maxReads=Math.max(maxReads,activeReads);
    try{if(holdRead){holdRead=false;await new Promise(r=>release=r);}await new Promise(r=>setTimeout(r,20));const b=files.get(p);if(!b)fail('NOT_FOUND');return b.slice();}finally{activeReads--;}
@@ -36,6 +38,7 @@ try{for(const width of [1280,375]){
   if(url.endsWith('/is_minihompy_admin'))return new Response('true');
   throw Error('Unexpected auth URL');
  };
+ for(const f of ['202609280001_photo_asset_variants.sql','202609280002_photo_variant_status.sql'])await pg.exec(await readFile('supabase/migrations/'+f,'utf8'));
  await pg.query('insert into auth.users values($1),($2)',Object.values(ids));await pg.query('insert into private.minihompy_admins values($1)',[ids.owner]);
  const folder=(await pg.query('select id from public.photo_folders limit 1')).rows[0].id;
  await rpc('freeze');await rpc('protect');await pg.exec('update private.photo_media_state set ready=true');
@@ -66,7 +69,7 @@ try{for(const width of [1280,375]){
   if(url.origin===env.SUPABASE_URL){
    if(!url.pathname.startsWith('/functions/v1/photo-media/')){external.push(url.href);return route.fulfill({status:403,body:'forbidden'});}
    const action=url.pathname.split('/').at(-1);if(action==='read')mediaReads++;
-   const response=await handlePhotoMedia(new Request(req.url(),{method:req.method(),headers:req.headers(),body:req.postDataBuffer()}),{env,fetcher,rpc,storage});
+   const response=await handlePhotoMedia(new Request(req.url(),{method:req.method(),headers:req.headers(),...(['GET','HEAD'].includes(req.method())?{}:{body:req.postDataBuffer()})}),{env,fetcher,rpc,variantRpc,variantStatus,storage});
    if(action==='upload'&&holdUpload){holdUpload=false;await new Promise(r=>release=r);}
    if(action==='upload'&&loseUpload){loseUpload=false;return route.abort('failed').catch(()=>{});}
    return route.fulfill({status:response.status,headers:Object.fromEntries(response.headers),body:Buffer.from(await response.arrayBuffer())}).catch(()=>{});
@@ -177,13 +180,13 @@ try{for(const width of [1280,375]){
  await check('cancel after lost upload response cleans server-staged image even without client acknowledgement',async()=>{
   await navigate();await loaded();await compose('CANCEL UPLOAD');const before=new Set(files.keys());loseUpload=true;
   await page.locator('.photo-save').click();await page.getByText('작성 내용은 유지됩니다.',{exact:false}).waitFor();
-  const added=[...files.keys()].filter(p=>!before.has(p));assert.equal(added.length,1);
+  const added=[...files.keys()].filter(p=>!before.has(p)&&!p.startsWith('variants/'));assert.equal(added.length,1);
   await page.locator('.photo-cancel').click();await loaded();assert.ok(!files.has(added[0]));
  });
  await check('cancel after lost committed save never cleans referenced attachment',async()=>{
   await navigate();await loaded();await compose('CANCEL UNKNOWN');const before=new Set(files.keys());loseSave=true;await page.locator('.photo-save').click();
   await page.getByText('작성 내용은 유지됩니다.',{exact:false}).waitFor();await page.locator('.photo-cancel').click();await loaded();
-  const added=[...files.keys()].filter(p=>!before.has(p));assert.equal(added.length,1);
+  const added=[...files.keys()].filter(p=>!before.has(p)&&!p.startsWith('variants/'));assert.equal(added.length,1);
   assert.equal((await run(()=>pg.query("select count(*)::int n from public.photo_posts where title='CANCEL UNKNOWN'"))).rows[0].n,1);
   const a=(await rpc('inventory')).assets.find(a=>a.path===added[0]);assert.equal(a.state,'attached');
  });
@@ -191,7 +194,7 @@ try{for(const width of [1280,375]){
   const post=id(11),asset=path(11);
   const status=await page.evaluate(async({url,post,asset})=>(await fetch(url+'/functions/v1/photo-media/read',{method:'POST',headers:{'Content-Type':'application/json',apikey:'public-fixture'},body:JSON.stringify({post_id:post,path:asset})})).status,{url:env.SUPABASE_URL,post,asset});
   assert.equal(status,404);
-  assert.equal((await handlePhotoMedia(new Request(env.SUPABASE_URL+'/functions/v1/photo-media/read'),{env,fetcher,rpc,storage})).status,405);
+  assert.equal((await handlePhotoMedia(new Request(env.SUPABASE_URL+'/functions/v1/photo-media/read'),{env,fetcher,rpc,variantRpc,variantStatus,storage})).status,405);
   await page.evaluate(()=>dispatchEvent(new PageTransitionEvent('pagehide',{persisted:true})));assert.equal(await page.locator('.photo-image').count(),0);
   assert.ok(await page.evaluate(()=>createdBlobs.every(u=>revokedBlobs.includes(u))));
   await page.evaluate(()=>dispatchEvent(new PageTransitionEvent('pageshow',{persisted:true})));await loaded();
@@ -223,6 +226,7 @@ try{for(const width of [1280,375]){
   failCleanup=false;await page.evaluate(p=>MinihompyPhotosRepository.cleanup([p]),path(10));
   assert.ok(!files.has(path(10)));assert.deepEqual(files.get(path(11)),originalOther);
  });
+ assert((await run(()=>pg.query("select count(*)::int n from private.photo_asset_variants where state='ready'"))).rows[0].n>0,'Editor should create ready variants');
  assert.deepEqual(errors,[]);assert.deepEqual(external,[]);
  }finally{if(release)release();await context.close();await pg.close();}
 }

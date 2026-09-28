@@ -1,0 +1,2 @@
+Built dist/minihompy-installer-1.1.0.tar.gz (169 files), SHA-256 sidecar and unpacked directory.
+PASS: 169 hashed files, complete SQL/functions, clean identity templates, reproducible archive, extracted offline install dry run and Pages build.

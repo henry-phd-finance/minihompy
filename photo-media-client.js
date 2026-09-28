@@ -1,6 +1,6 @@
 (() => {
  'use strict';
- const MAX=6*1024*1024,scopes=new Set();
+ const MAX=6*1024*1024,scopes=new Set(),uploads=new Set();
  let active=0;const queue=[];
  const failure=(message,code)=>Object.assign(new Error(message),{code});
  function drain(){
@@ -72,16 +72,33 @@
   };
   scopes.add(result);return result;
  }
- const dispose=()=>{for(const s of [...scopes])s.dispose();};
+ const dispose=()=>{for(const s of [...scopes])s.dispose();for(const c of uploads)c.abort();};
  window.addEventListener('minihompy:content-access-reset',dispose);
  window.addEventListener('minihompy:menu-leave',e=>{if(e.detail.id===null||e.detail.id==='photos')dispose();});
  window.addEventListener('pagehide',dispose);
  window.MinihompyPhotoMedia=Object.freeze({
   scope,
-  async upload(path,file){
-   const form=new FormData();form.set('post_id',path.split('/')[0]);form.set('path',path);form.set('file',file);
-   // A mutation may finish after menu leave. Only the editor generation may advance to saving.
-   await call('upload',form);
+  async upload(path,file,{signal}={}){
+   const controller=new AbortController();uploads.add(controller);
+   const aborted=()=>controller.abort();signal?.addEventListener('abort',aborted,{once:true});if(signal?.aborted)aborted();
+   const current=()=>{if(controller.signal.aborted)throw failure('사진 업로드가 취소되었습니다.','ABORTED');};
+   try{
+    current();const ctx=await window.MinihompyContentAccess.open(true);current();
+    const form=new FormData();form.set('post_id',path.split('/')[0]);form.set('path',path);form.set('file',file);
+    // Keep the original mutation's acknowledgement so the editor can clean a late upload.
+    await call('upload',form,{ctx,signal:AbortSignal.timeout(30000)});if(controller.signal.aborted)return;
+    // Derivative failure must not lose a successfully uploaded original.
+    try{
+     const {url,key}=endpoint('health');const r=await fetch(url,{headers:{apikey:key,'X-Minihompy-Auth-Mode':'public'},signal:AbortSignal.any([controller.signal,AbortSignal.timeout(2000)]),credentials:'omit',cache:'no-store',redirect:'error'});
+     if(!r.ok)return;const capability=await r.json();current();
+     if(capability.photo_variant_protocol!==1||capability.photo_variant_recipe!=='display-v1')return;
+     const converted=await window.MinihompyPhotoVariant?.convert(file,{signal:controller.signal});current();if(!converted)return;
+     await ctx.verify();current();
+     const hash=[...new Uint8Array(await crypto.subtle.digest('SHA-256',await file.arrayBuffer()))].map(x=>x.toString(16).padStart(2,'0')).join('');current();
+     const variant=new FormData();variant.set('post_id',path.split('/')[0]);variant.set('path',path);variant.set('file',converted);variant.set('recipe','display-v1');variant.set('source_sha256',hash);
+     await call('variant-upload',variant,{ctx,signal:AbortSignal.any([controller.signal,AbortSignal.timeout(30000)])});
+    }catch{/* Original remains usable; incomplete variants stay recoverable in the registry. */}
+   }finally{signal?.removeEventListener('abort',aborted);uploads.delete(controller);}
   },
   async cleanup(paths){
    const unique=[...new Set(paths)];for(let i=0;i<unique.length;i+=20)await call('cleanup',{paths:unique.slice(i,i+20)});

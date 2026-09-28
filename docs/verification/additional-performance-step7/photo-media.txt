@@ -1,0 +1,12 @@
+PASS 1: private registry/service RPC inaccessible; storage restrictive policies deny even permissive grant
+PASS 2: upload, staged preview, duplicate response retry, immutable hash, invalid MIME/path/size
+PASS 3: actual save attaches; public bytes no-store; private/absent/other path indistinguishable
+PASS 4: explicit bad/expired/foreign/member auth never falls back; Origin/method/range/body guards
+PASS 5: read rechecks visibility, attachment and auth after Storage transfer
+PASS 6: save vs cleanup: attached retained; deleting tombstone rejects save/upload; retry deletion after failure
+PASS 7: upload success with response loss is recovered; incomplete reservation is not cleaned or attached
+PASS 8: upload completion racing cleanup leaves no readable or attachable asset; retry cleanup removes orphan
+PASS 9: loopback HTTP: actual service adapter, multipart upload, byte read and cleanup; no URL redirect
+PASS 10: bounded slow bodies, public request quota and corrupted Storage fail closed
+PASS 11: frozen writes and legacy storage signing/writes blocked; migration dry-run/copy/recovery/closure
+PASS: 11 photo media groups; SQL and handler, Storage/Auth fixtures, no deployment

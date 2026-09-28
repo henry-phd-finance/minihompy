@@ -9,6 +9,7 @@
   window.Quill.register(LocalImage, true);
   const Delta = window.Quill.import('delta');
   let draft, quill, root, message, busy = false, dirty = false, selection = 0;
+  let uploadController=new AbortController();
   let generation = 0, submitted=false, mediaScope, friendsReady=false;
   const node = (tag, className, text) => {
     const element = document.createElement(tag);
@@ -19,6 +20,7 @@
   const admin = () => window.MinihompyAdmin?.state.role === 'admin';
   function notify(text) { if (message) message.textContent = text; }
   function reset() {
+    uploadController.abort();uploadController=new AbortController();
     generation++;mediaScope?.dispose();mediaScope=null;
     for (const src of previews.keys()) URL.revokeObjectURL(src);
     previews.clear();for(const src of decoding)URL.revokeObjectURL(src);decoding.clear();
@@ -171,7 +173,7 @@
           for (const [index, local] of pending.entries()) {
             stage = `사진 업로드 (${index + 1}/${pending.length})`;
             notify(`${stage} 중입니다.`);
-            local.attempted=true;await repository.upload(local.path, local.file); local.uploaded = true;
+            local.attempted=true;await repository.upload(local.path, local.file,{signal:uploadController.signal}); local.uploaded = true;
             if (token !== generation || !admin()){if(cleanupSafe)await repository.cleanup(pending.filter(p=>p.attempted||p.uploaded).map(p=>p.path)).catch(()=>{});return;}
           }
           stage = '글 저장';

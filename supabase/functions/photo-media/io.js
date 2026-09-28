@@ -25,15 +25,16 @@ export function imageType(bytes,path){
  else fail('BAD_IMAGE');
  if(!path.endsWith('.'+ext))fail('BAD_IMAGE');return mime;
 }
-export function adapters({projectUrl,serviceKey,fetcher=fetch}){
+export function adapters({projectUrl,serviceKey,fetcher=fetch,rpcName='photo_media'}){
  const headers={apikey:serviceKey,Authorization:'Bearer '+serviceKey};
  async function request(path,options={}){
   const r=await fetcher(projectUrl+path,{...options,headers:{...headers,...options.headers},redirect:'error',signal:AbortSignal.any([AbortSignal.timeout(20000),...(options.signal?[options.signal]:[])])});
   if(!r.ok){void r.body?.cancel();fail(r.status===404?'NOT_FOUND':'STORAGE_UNAVAILABLE');}return r;
  }
  return {
+  variantStatus:async()=> (await request('/rest/v1/rpc/photo_variant_status',{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'})).json(),
   rpc:async(action,args={})=>{
-   const r=await request('/rest/v1/rpc/photo_media',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({p_action:action,p_args:args})});
+   const r=await request('/rest/v1/rpc/'+rpcName,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({p_action:action,p_args:args})});
    const value=await r.json();if(value?.failure)fail(value.failure);return value;
   },
   storage:{

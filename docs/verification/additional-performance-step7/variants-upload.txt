@@ -1,0 +1,8 @@
+PASS real Worker resize, alpha preservation, EXIF rotation, GIF/no-gain skip, cancellation
+PASS stuck Worker terminated at deadline and unavailable Worker skips conversion
+PASS predecode bounds/animation/truncation rejection
+PASS DB-gated capability, actual SQL reserve/upload/confirm/complete, lost Storage ACK recovery, immutable original, idempotent duplicate
+PASS member/expired owner denial, source-hash mismatch, malformed output, corrupted stored derivative rejected
+PASS partial cleanup preserves original, retry confirms derived deletion then original, tombstone retained
+PASS owner revoked after Storage upload leaves tracked pending derivative, authenticated retry recovers
+PASS partial corrupt upload never overwritten or marked ready, lease cleanup permits fresh immutable retry

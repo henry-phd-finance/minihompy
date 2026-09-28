@@ -37,7 +37,7 @@
       if(r?.legacy||!Array.isArray(items)||items.length!==posts.length||items.some((p,i)=>!p||p.id!==posts[i].id||typeof p.valid!=='boolean'))throw Error('사진글 확인 응답이 올바르지 않습니다. 다시 조회해 주세요.');
       return details?items:items.every(p=>p.valid);
     },
-    upload: (path,file)=>window.MinihompyPhotoMedia.upload(path,file),
+    upload: (path,file,options)=>window.MinihompyPhotoMedia.upload(path,file,options),
     async save(draft) {
       validate(draft);
       const client = await writer();
