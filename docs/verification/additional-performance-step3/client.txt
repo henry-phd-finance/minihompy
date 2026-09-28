@@ -1,0 +1,7 @@
+PASS 1: concurrent relationship reads share renewal and use member bearer even for local admin
+PASS 2: immutable operation retains ID for explicit retry and result recovery, never automatic resend
+PASS 3: account switch rejects both stale response and old operation recovery before another send
+PASS 4: anonymous/disabled identities do not send member requests; arbitrary tasks are refused
+PASS 5: public friends use credential-free HTTPS and discard account-stale responses
+PASS 6: cancelling state reaches transport without invalidating the shared member session
+All 6 browser client/runtime/repository groups passed (VM, actual source).

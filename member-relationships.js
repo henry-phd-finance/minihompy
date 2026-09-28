@@ -47,7 +47,7 @@
   try{
    if(!runtime()?.enabled()||!await repository().ready({signal:controller.signal})){if(valid(token,s))state={status:'unavailable'};return;}
    if(!valid(token,s))return;
-   const result=await repository().state(n.owner.id);if(valid(token,s))state={...result,status:result.state};
+   const result=await repository().state(n.owner.id,{signal:controller.signal});if(valid(token,s))state={...result,status:result.state};
   }catch{if(valid(token,s))state={status:'error'};}
   finally{if(valid(token,s)){busy=false;render();}}
  }
@@ -79,13 +79,15 @@
   }finally{if(valid(token,s)){busy=false;render();}}
  }
  async function retry(){
-  window.MinihompyRelationshipHealth.invalidate();
+  window.MinihompyRelationshipHealth.invalidate();window.MinihompyRelationshipState.invalidate();
   notice='';try{if(['error','loginRequired'].includes(runtime()?.state.status))await runtime().retry();if(!['self','other','anonymous'].includes(nav()?.status))await window.MinihompyNavigation?.refresh(window.MinihompySharedIdentity?.state);}catch{}
-  await refresh();
+  window.MinihompyRelationshipState.refresh();
  }
  open.addEventListener('click',()=>{if(!dialog.open)dialog.showModal();void refresh();});
  document.querySelector('#relationship-close').addEventListener('click',()=>dialog.close());
  dialog.addEventListener('close',()=>{confirmation=null;open.focus();});
+ window.addEventListener('minihompy:relationship-refresh',()=>{if(!(state.status==='error'&&notice))void refresh();});
+ window.addEventListener('minihompy:relationship-pending',()=>{if(!pending)reset();});
  window.addEventListener('minihompy:navigation-state',()=>void refresh());
  window.addEventListener('minihompy:visitor-identity',()=>{reset();void refresh();});
  window.addEventListener('minihompy:writing-reset',e=>{if(e.detail?.clearDraft!==false){reset();void refresh();}});

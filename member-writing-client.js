@@ -109,10 +109,10 @@
         if(mode!=='public'&&!token)throw Object.assign(Error('로그인 상태를 확인해 주세요.'),{code:'AUTH_REQUIRED',status:401});
         return request('/content/'+action,action==='health'?'GET':'POST',body,token,mode,signal);
       },
-      relationship(path, body) {
+      relationship(path, body, {signal}={}) {
         if (!/^\/relationships\/(?:state|requests|actions|operations)$/.test(path)) throw Error('Invalid relationship request');
         const token=read();if(!token)throw Object.assign(Error('로그인이 필요합니다.'),{code:'AUTH_REQUIRED',status:401});
-        return request(path,'POST',body,token,'member');
+        return request(path,'POST',body,token,'member',path==='/relationships/state'?signal:undefined);
       },
       ownerCurrent(accessToken) { return request('/sessions/current', 'GET', undefined, accessToken, 'owner'); },
     });

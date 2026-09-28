@@ -1,0 +1,11 @@
+PASS 1: 1280px own incoming pagination, inactive peer, accept final page resets and synchronizes widget
+PASS 2: 1280px reject/cancel confirmations, empty lists, actor never supplied by UI
+PASS 3: 1280px current-home public friends pagination and latest member-ID home URL
+PASS 4: 1280px lost mutation result recovers without resending
+PASS 5: 1280px logout clears private items and delayed response, anonymous public list, back/Escape focus
+PASS 6: 375px own incoming pagination, inactive peer, accept final page resets and synchronizes widget
+PASS 7: 375px reject/cancel confirmations, empty lists, actor never supplied by UI
+PASS 8: 375px current-home public friends pagination and latest member-ID home URL
+PASS 9: 375px lost mutation result recovers without resending
+PASS 10: 375px logout clears private items and delayed response, anonymous public list, back/Escape focus
+PASS: 10 relationship list browser groups

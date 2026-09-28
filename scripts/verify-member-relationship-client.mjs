@@ -25,7 +25,7 @@ function fixture(){
  window.MinihompyAdmin={state:{role:'admin',userId:'local-owner'}};
  window.MinihompyVisitorSession={context:async()=>{throw Error('Owner context must not be used');}};
  window.fetch=fetcher;
- const sandbox={window,document,location:{pathname:'/home/'},URL,URLSearchParams,Event,CustomEvent,Date,Math,Error,crypto,sessionStorage:storage,localStorage:storage,fetch:fetcher,Response,AbortSignal,TextEncoder,btoa,atob,setInterval(){},clearTimeout(){},setTimeout(){return 1;}};
+ const sandbox={window,document,location:{pathname:'/home/'},URL,URLSearchParams,Event,CustomEvent,Date,Math,Error,crypto,sessionStorage:storage,localStorage:storage,fetch:fetcher,Response,AbortSignal,AbortController,DOMException,TextEncoder,btoa,atob,setInterval(){},clearTimeout(){},setTimeout(){return 1;}};
  const ctx=vm.createContext(sandbox);vm.runInContext(sources[0],ctx);window.createMinihompyMemberWriting=ctx.createMinihompyMemberWriting;
  vm.runInContext(sources[1],ctx);vm.runInContext(sources[2],ctx);
  const runtime=window.MinihompyMemberWriting,repo=window.createMinihompyRelationships();
@@ -34,7 +34,7 @@ function fixture(){
 await check('concurrent relationship reads share renewal and use member bearer even for local admin',async()=>{
  const f=fixture();await Promise.all([f.repo.state(B),f.repo.state(B)]);
  assert.equal(f.calls.filter(c=>c.url.endsWith('/sessions/renew')).length,1);
- const posts=f.calls.filter(c=>c.url.endsWith('/relationships/state'));assert.equal(posts.length,2);
+ const posts=f.calls.filter(c=>c.url.endsWith('/relationships/state'));assert.equal(posts.length,1);
  for(const {init} of posts){assert.equal(init.headers['X-Minihompy-Auth-Mode'],'member');assert.equal(init.headers.Authorization,'Bearer '+'r'.repeat(43));assert.equal(init.credentials,'omit');assert.equal(init.redirect,'error');}
 });
 await check('immutable operation retains ID for explicit retry and result recovery, never automatic resend',async()=>{
@@ -58,5 +58,8 @@ await check('anonymous/disabled identities do not send member requests; arbitrar
 await check('public friends use credential-free HTTPS and discard account-stale responses',async()=>{
  const f=fixture();await f.repo.friends(B);let c=f.calls[0];assert.equal(c.init.credentials,'omit');assert.equal(c.init.headers,undefined);assert.ok(c.url.startsWith('https://central.test/relationships/friends?'));
  f.hold();const pending=f.repo.friends(B);await new Promise(setImmediate);f.window.MinihompySharedIdentity.state={status:'anonymous'};f.release();await assert.rejects(pending,e=>e.code==='IDENTITY_CHANGED');
+});
+await check('cancelling state reaches transport without invalidating the shared member session',async()=>{
+ const f=fixture();await f.repo.state(B);f.hold();const c=new AbortController(),p=f.repo.state(B,{signal:c.signal});await new Promise(setImmediate);c.abort();await assert.rejects(p,{name:'AbortError'});assert.equal(f.calls.at(-1).init.signal.aborted,true);f.release();await new Promise(setImmediate);assert.equal(f.runtime.state.status,'ready');assert.equal(f.calls.filter(c=>c.url.endsWith('/sessions/revoke')).length,0);
 });
 console.log(`All ${groups} browser client/runtime/repository groups passed (VM, actual source).`);

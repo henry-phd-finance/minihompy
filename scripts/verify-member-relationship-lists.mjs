@@ -26,7 +26,7 @@ try{for(const width of [1280,375]){
   window.MinihompyNavigation={state:{owner:{id:idB,display_name:'B',handle:'bob'}}};
   window.parseMinihompyNavigationProfile=p=>p;
   window.fixture={incoming:items,outgoing:[{...items[0],target:{...items[0].target,member_id:idB},state:'outgoing'}],calls:[],generation:1,hold:false,lose:false,receipts:{},refresh:0};
-  window.MinihompyRelationshipUI={refresh:()=>fixture.refresh++};
+  window.MinihompyRelationshipUI={refresh:()=>fixture.refresh++};window.addEventListener('minihompy:relationship-refresh',()=>window.MinihompyRelationshipUI.refresh());
   window.MinihompyMemberWriting={enabled:()=>true,snapshot:()=>fixture.generation,check:s=>{if(s!==fixture.generation)throw Error('IDENTITY_CHANGED');},state:{status:'ready'},retry:async()=>{},relationship:async(path,b)=>{
    fixture.calls.push({path,b});
    if(path.endsWith('/requests')){if(fixture.readError)throw Object.assign(Error('quota'),{status:429,retryAfter:20});const start=b.cursor?20:0,result={items:fixture[b.direction].slice(start,start+20),next_cursor:fixture[b.direction].length>start+20?'page2':null};if(fixture.hold)await new Promise(r=>fixture.release=r);return result;}

@@ -21,7 +21,7 @@
   if(next)button(controls,'다음 페이지',()=>{history.push(cursor);cursor=next;void load();},'next');
   button(controls,'새로고침',()=>{window.MinihompyRelationshipHealth.invalidate();void load(true);},'refresh');
  }
- function announce(){window.dispatchEvent(new CustomEvent('minihompy:relationship-change'));void window.MinihompyRelationshipUI?.refresh();}
+ function announce(){window.dispatchEvent(new CustomEvent('minihompy:relationship-change'));}
  function row(item){
   const profile=mode==='friends'?item:item.target,li=document.createElement('li');li.dataset.memberId=profile.member_id;
   if(profile.unavailable){li.append(document.createTextNode('비활성 회원'));}
