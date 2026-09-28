@@ -19,8 +19,9 @@ try {
     return route.fulfill({status:mode==='offline'?503:200,json:{items:mode==='malformed'?[{...items[0],homepage_url:'javascript:alert(1)'}]:items}}).catch(()=>{});
    }
    if(u.hostname==='homes.test')return route.fulfill({contentType:'text/html',body:'visited'});
+   if(u.pathname==='/visitor-identity-config.js')return route.fulfill({contentType:'text/javascript',body:"window.MINIHOMPY_VISITOR_IDENTITY_CONFIG={enabled:true,centralApiUrl:'https://central.test'};"});
    if(u.pathname==='/')return route.fulfill({contentType:'text/html',body:'<!doctype html><meta charset="utf-8"><main id="guest"></main><section id="comments"></section><section id="extra"></section>'});
-   return route.fulfill({contentType:'text/javascript',body:await readFile(new URL(u.pathname.slice(1),root),'utf8')});
+   return route.fulfill({contentType:u.pathname.endsWith('.html')?'text/html':'text/javascript',body:await readFile(new URL(u.pathname.slice(1),root),'utf8')});
   });
   await page.goto('https://fixture.test/');
   await page.evaluate(({id1,id2,id3})=>{
@@ -49,7 +50,7 @@ try {
   // Invalidation removes all old links synchronously; a later re-read uses the changed URL.
   version=2;mode='offline';await page.evaluate(()=>dispatchEvent(new Event('minihompy:navigation-invalidate')));
   assert.equal(await page.locator('.author-home[href]').count(),0);await page.waitForFunction(()=>document.querySelector('.author-navigation[data-status="error"]'));
-  mode='ready';await page.locator('.author-home-retry').first().click();await page.waitForFunction(()=>document.querySelector('.author-home[href*="/v2/"]'));
+  mode='ready';await page.locator('.author-home-retry').first().click();await page.waitForFunction(()=>document.querySelector('.author-home[href*="author-visit.html"]'));
   // An inactive member has no fallback link; malformed responses also fail closed.
   await page.evaluate(id=>document.querySelector('#extra').append(window.MinihompyAuthorNavigation.create({author_kind:'member',author_member_id:id,author_name:'동명'},'test-author')),id(3));
   await page.waitForFunction(()=>document.querySelector('#extra [data-status="unavailable"]'));

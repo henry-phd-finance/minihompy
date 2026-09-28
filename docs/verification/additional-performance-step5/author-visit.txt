@@ -1,0 +1,8 @@
+Checking click
+Checking enter
+Checking ctrl
+Checking middle
+Checking copied-link
+PASS click/Enter/Ctrl-click/middle-click/copied href all revalidate changed destination, no referrer/opener
+PASS inactive/HTTP error/unsafe URL/wrong member never redirect, explicit fresh retry recovers
+PASS pending duplicate retry joins, departure fences late redirect, invalid ID/destination query cannot redirect

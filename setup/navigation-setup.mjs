@@ -8,6 +8,8 @@ export async function verifyNavigationSetup({config,target,dryRun=false,fetcher=
  for(const file of ['member-navigation.js','author-navigation.js','surf-navigation.js']){
   await readFile(join(target,file));if(!html.includes(`src="${file}"`))throw Error('이동 런타임 연결이 필요합니다: '+file);
  }
+ const relay=await readFile(join(target,'author-visit.html'),'utf8');
+ for(const file of ['visitor-identity-config.js','member-navigation.js','author-visit.js']){await readFile(join(target,file));if(!relay.includes(`src="${file}"`))throw Error('작성자 이동 중계 연결이 필요합니다: '+file);}
  if(dryRun){log('DRY RUN: 이동 런타임 확인 완료. 중앙 SQL/함수 배포 후 공개 API를 확인합니다.');return;}
  const health=await request(c.centralApiUrl+'/health',{},fetcher);if(health.navigation_protocol!==1)throw Error('중앙 이동 서버를 먼저 배포해 주세요.');
  const result=await request(c.centralApiUrl+'/navigation/site?site_id='+encodeURIComponent(c.siteId),{},fetcher);

@@ -6,7 +6,7 @@ const destination = new URL('_site/', root);
 // Only runtime files enter the Pages artifact, never SQL, tests or research.
 await rm(destination, { recursive: true, force: true });
 await mkdir(destination, { recursive: true });
-const files = ['index.html', 'styles.css', 'assets', 'views', 'login'];
+const files = ['index.html','author-visit.html', 'styles.css', 'assets', 'views', 'login'];
 for (const entry of await readdir(root, { withFileTypes: true })) {
   if (entry.isFile() && entry.name.endsWith('.js')) files.push(entry.name);
 }

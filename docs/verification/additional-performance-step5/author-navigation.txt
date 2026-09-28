@@ -1,0 +1,1 @@
+PASS author navigation desktop/mobile: actual guestbook + four comment parents, batched lookup, nonblocking content, latest URLs, same names, anonymous/inactive/error/retry, lookup preserves drafts, page departure without confirmation, and stale detached responses.

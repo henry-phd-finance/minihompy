@@ -13,7 +13,7 @@ const tracked=execFileSync('git',['ls-files','-z'],{cwd:root,encoding:'utf8'}).s
 const scripts=['build-pages.mjs','verify-artifact.mjs','migrate-photo-media.mjs'];
 const docs=['install-and-upgrade','deployment','configuration','login-flow','member-writing-deployment','member-session-deployment','member-navigation-deployment','home-data-deployment','folder-visibility-deployment','member-relationship-deployment','friend-visibility-deployment','photo-media-migration','visit-counts-contract'];
 const selected=tracked.filter(path=>
-  ['index.html','styles.css','.gitignore','.github/workflows/pages.yml'].includes(path) ||
+  ['index.html','author-visit.html','styles.css','.gitignore','.github/workflows/pages.yml'].includes(path) ||
   /^[^/]+\.js$/.test(path) || /^(assets|views|login)\//.test(path) ||
   /^setup\/[^/]+\.mjs$/.test(path) || path==='setup/config.example.json' ||
   /^supabase\/(migrations\/[^/]+\.sql|functions\/.+\.(js|ts)|config\.toml)$/.test(path) ||

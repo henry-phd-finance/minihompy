@@ -3,6 +3,7 @@ const config={...JSON.parse(await readFile(new URL('../setup/config.example.json
 const target=await mkdtemp(join(tmpdir(),'navigation-setup-'));const files=['member-navigation.js','author-navigation.js','surf-navigation.js'];
 try{
  for(const file of files)await writeFile(join(target,file),'');await writeFile(join(target,'index.html'),files.map(f=>`<script src="${f}"></script>`).join(''));
+ await writeFile(join(target,'visitor-identity-config.js'),'');await writeFile(join(target,'author-visit.js'),'');await writeFile(join(target,'author-visit.html'),['visitor-identity-config.js','member-navigation.js','author-visit.js'].map(f=>`<script src="${f}"></script>`).join(''));
  const fetcher=async url=>new Response(JSON.stringify(url.endsWith('/health')?{navigation_protocol:1}:url.includes('/navigation/site')?{item:{site_id:config.siteId,homepage_url:`https://${config.githubUser}.github.io/${config.githubRepo}/`}}:{items:[],next_cursor:null}),{status:200});
  await verifyNavigationSetup({config,target,fetcher,log:()=>{}});
  await verifyNavigationSetup({config,target,dryRun:true,fetcher:()=>{throw Error('Unexpected network')},log:()=>{}});
