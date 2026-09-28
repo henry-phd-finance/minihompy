@@ -1,0 +1,11 @@
+PASS 1: nonfriend/pending/public denied before file fetch; accepted request verifies twice and sends actual PNG bytes
+PASS 2: public, owner and private boundaries; no member upload or cleanup, no credential downgrade
+PASS 3: post/path, site token, browser context injection, range and wrong origin fail closed
+PASS 4: disconnect during file read discards buffered bytes; reconnect restores access
+PASS 5: private transition during file read and after first SQL refuses bytes
+PASS 6: metadata/file tampering and central outage or altered context do not return bytes
+PASS 7: local logout while buffering wins; independent new login reads successfully
+PASS 8: central 429 preserved and late final SQL cannot send successful response
+PASS 9: logout after final metadata denies response; request abort reaches pending Storage fetch
+PASS 10: production service RPC and Storage adapters over loopback HTTP return real bytes without URL/sign/transform
+All 10 friend photo central/personal API groups passed; actual PNG bytes, local Storage and Auth fixtures, no hosted writes.
