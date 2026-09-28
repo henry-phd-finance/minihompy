@@ -1,0 +1,65 @@
+{
+  "conditions": {
+    "network": "30ms + body bytes / 2 MiB/s per script; local routed fixture",
+    "baseline": "Step 10 index/editor from 033a2bf",
+    "scope": "same isolated photo dependencies and view; not full production homepage",
+    "samplesPerMode": 3,
+    "cache": "new browser page per sample; same page for reedit"
+  },
+  "records": [
+    {
+      "old": true,
+      "sample": 0,
+      "initialBytes": 264925,
+      "initialDeferredRequests": 3,
+      "homeReadyMs": 153.60000002384186,
+      "firstEditMs": 39,
+      "reeditMs": 33
+    },
+    {
+      "old": true,
+      "sample": 1,
+      "initialBytes": 264925,
+      "initialDeferredRequests": 3,
+      "homeReadyMs": 157.40000009536743,
+      "firstEditMs": 33,
+      "reeditMs": 33
+    },
+    {
+      "old": true,
+      "sample": 2,
+      "initialBytes": 264925,
+      "initialDeferredRequests": 3,
+      "homeReadyMs": 154.10000002384186,
+      "firstEditMs": 46,
+      "reeditMs": 33
+    },
+    {
+      "old": false,
+      "sample": 0,
+      "initialBytes": 43941,
+      "initialDeferredRequests": 0,
+      "homeReadyMs": 45.5,
+      "firstEditMs": 312,
+      "reeditMs": 46
+    },
+    {
+      "old": false,
+      "sample": 1,
+      "initialBytes": 43941,
+      "initialDeferredRequests": 0,
+      "homeReadyMs": 46.299999952316284,
+      "firstEditMs": 322,
+      "reeditMs": 43
+    },
+    {
+      "old": false,
+      "sample": 2,
+      "initialBytes": 43941,
+      "initialDeferredRequests": 0,
+      "homeReadyMs": 45.800000071525574,
+      "firstEditMs": 308,
+      "reeditMs": 27
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+PASS: 176 hashed files, complete SQL/functions, clean identity templates, reproducible archive, extracted offline install dry run and Pages build.

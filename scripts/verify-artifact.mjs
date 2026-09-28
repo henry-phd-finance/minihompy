@@ -5,7 +5,7 @@ import { resolve, dirname } from 'node:path';
 const root=resolve('_site');
 async function walk(dir) {const paths=[];for(const item of await readdir(dir,{withFileTypes:true})){const p=resolve(dir,item.name); if(item.isDirectory())paths.push(...await walk(p));else paths.push(p);}return paths;}
 const paths=await walk(root);
-for(const required of ['index.html','author-visit.html','photo-media-client.js','photo-variant-client.js','photo-variant-worker.js','photo-variant-format.js','content-access.js','content-folders-repository.js','content-folders.js','member-writing-config.js','member-writing-client.js','member-writing-runtime.js','member-relationships-repository.js','member-relationships.js','member-relationship-lists.js','friend-reviews-repository.js','friend-reviews.js','login/index.html','assets/login-flow.js','assets/login.css','visitor-identity-login.js','visitor-identity.js','member-navigation.js','author-navigation.js','author-visit.js','surf-navigation.js','home-data-config.js','visit-counts.js','home-repository.js','home-activity.js','post-routes.js','post-location-repository.js'])assert.ok(paths.includes(resolve(root,required)),required);
+for(const required of ['index.html','author-visit.html','photo-editor-loader.js','photo-editor.js','assets/vendor/quill-2.0.3.js','photo-media-client.js','photo-variant-client.js','photo-variant-worker.js','photo-variant-format.js','content-access.js','content-folders-repository.js','content-folders.js','member-writing-config.js','member-writing-client.js','member-writing-runtime.js','member-relationships-repository.js','member-relationships.js','member-relationship-lists.js','friend-reviews-repository.js','friend-reviews.js','login/index.html','assets/login-flow.js','assets/login.css','visitor-identity-login.js','visitor-identity.js','member-navigation.js','author-navigation.js','author-visit.js','surf-navigation.js','home-data-config.js','visit-counts.js','home-repository.js','home-activity.js','post-routes.js','post-location-repository.js'])assert.ok(paths.includes(resolve(root,required)),required);
 for(const path of paths){
   assert.ok(!/\.(sql|ts|toml|env)$/.test(path) && !/(?:^|\/)(?:setup|scripts|supabase|docs|node_modules|\.env)(?:\/|$)/.test(path.slice(root.length)),path);
   if(!path.endsWith('.html'))continue;
@@ -15,6 +15,10 @@ for(const path of paths){
     assert.ok(paths.includes(resolve(dirname(path),link)),`Missing ${link} from ${path}`);
   }
 }
+const index=await readFile(resolve(root,'index.html'),'utf8');
+for(const path of ['photo-editor.js','photo-variant-client.js','assets/vendor/quill-2.0.3.js'])assert.ok(!index.includes('src="'+path+'"'),'Editor dependency loaded eagerly: '+path);
+const loader=await readFile(resolve(root,'photo-editor-loader.js'),'utf8');
+for(const [,path] of loader.matchAll(/load\('([^']+)'/g))assert.ok(paths.includes(resolve(root,path)),'Missing lazy dependency '+path);
 console.log('PASS: Pages includes login/runtime assets and excludes backend/setup/secrets.');
 
 assert.deepEqual(JSON.parse(await readFile(resolve(root,'friend-visibility-release.json'),'utf8')),await friendPagesRelease(root));

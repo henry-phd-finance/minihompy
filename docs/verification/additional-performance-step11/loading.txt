@@ -1,0 +1,5 @@
+PASS 1: current index home/album reads load no editor; first edit loads three dependencies once; reedit reuses code but discards draft
+PASS 2: duplicate clicks share code download; leave/logout/owner switch cancel opening while static code safely finishes
+PASS 3: each dependency failure has explicit retry; successful dependencies reused
+PASS 4: visitors cannot initiate editor loading
+PASS 5: cancellation while real editor prepares a draft clears it; no late opening

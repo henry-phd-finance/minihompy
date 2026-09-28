@@ -112,9 +112,20 @@
   }
 
   async function startEditing(post){
-    const token=request;
-    try{if(await editor.start(post,selected)){if(token!==request)return;if(!post)clearTarget();void renderMain();}}
-    catch(error){if(token===request){notice=error.message;void renderMain();}}
+    if(editor.loading||!admin())return;
+    const token=request,originalRoot=mainRoot;
+    const current=()=>token===request&&mainRoot===originalRoot&&mainRoot?.isConnected&&admin();
+    const status=mainRoot?.querySelector('.photo-editor-message');
+    if(status)status.textContent='사진 편집기를 불러오고 있습니다.';
+    try{
+      if(await editor.start(post,selected,{isCurrent:current})){
+        if(!current())return;if(!post)clearTarget();void renderMain();
+      }else if(current()&&status)status.textContent='';
+    }catch(error){
+      if(!current())return;
+      const retry=node('button','photo-editor-load-retry','편집기 다시 시도');retry.type='button';retry.addEventListener('click',()=>void startEditing(post));
+      status?.replaceChildren(document.createTextNode(error.message+' '),retry);
+    }
   }
   function postElement(post,jobs) {
     const article = node('article', 'photo-post');

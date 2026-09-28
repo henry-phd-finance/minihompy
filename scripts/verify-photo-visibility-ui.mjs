@@ -11,7 +11,7 @@ const {chromium}=await import(pathToFileURL(resolve(process.argv[2])));
 const {PGlite}=await import(pathToFileURL(resolve('../minihompy-central/node_modules/@electric-sql/pglite/dist/index.js')));
 await mkdir(process.env.VERIFICATION_DIR||'docs/verification/folder-visibility-step8',{recursive:true});
 const browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH,headless:true});
-const retained=new Set(['views/home.js','config.js','content.js','views/index.js','post-routes.js','content-access.js','post-location-repository.js','photo-variant-client.js','photo-media-client.js','photos-repository.js','comments-repository.js','comments.js','views/photos.js','app.js','content-folders.js','content-folders-repository.js','photo-editor.js','assets/vendor/quill-2.0.3.js']);
+const retained=new Set(['views/home.js','config.js','content.js','views/index.js','post-routes.js','content-access.js','post-location-repository.js','photo-editor-loader.js','photo-media-client.js','photos-repository.js','comments-repository.js','comments.js','views/photos.js','app.js','content-folders.js','content-folders-repository.js']);
 const id=n=>'a0000000-0000-4000-8000-'+String(n).padStart(12,'0'),ids={owner:id(1),A:id(2)},path=(n,i=77)=>id(n)+'/'+id(i)+'.jpg';
 const picture=new Uint8Array(await readFile(resolve('assets/photos/lake.jpg'))),sha=await digest(picture),results=[];
 const env={SUPABASE_URL:'https://abcdefghijklmnopqrst.supabase.co',SUPABASE_ANON_KEY:'public-fixture',SUPABASE_SERVICE_ROLE_KEY:'service-fixture',MINIHOMPY_SITE_ORIGIN:'https://photos.test',MINIHOMPY_SITE_ID:id(99),MINIHOMPY_CENTRAL_API_URL:'https://central.test/api'};

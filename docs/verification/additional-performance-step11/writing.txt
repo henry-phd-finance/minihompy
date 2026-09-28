@@ -1,0 +1,31 @@
+PASS 1280: public anonymous Blob images, private address denied, bounded concurrency and no storage URLs
+PASS 1280: same-scope repeated image read shares a Blob; disposal prevents URL reuse
+PASS 1280: admin private view/editor Blob preview, visibility in both directions and public home
+PASS 1280: logout revokes all image URLs, removes private content and drops held image response
+PASS 1280: expired server auth clears existing images and can recover after reauthentication
+PASS 1280: menu leave during upload cleans unattached file without creating post
+PASS 1280: menu leave after committed save preserves attached file and discards late UI
+PASS 1280: lost upload and save responses retry same path/post without duplicates
+PASS 1280: denied write retains uploaded draft; stale visibility edit cannot overwrite newer row
+PASS 1280: cancel after lost upload response cleans server-staged image even without client acknowledgement
+PASS 1280: cancel after lost committed save never cleans referenced attachment
+PASS 1280: private endpoint direct read and GET fail; bfcache clears URLs and reloads fresh images
+PASS 1280: same-account refresh keeps editor; account switch and history discard/revoke
+PASS 1280: logout during local image decoding immediately revokes preview and late decode cannot restore editor
+PASS 1280: delete clears image immediately; failed cleanup remains unreadable and retry preserves other attachments
+PASS 375: public anonymous Blob images, private address denied, bounded concurrency and no storage URLs
+PASS 375: same-scope repeated image read shares a Blob; disposal prevents URL reuse
+PASS 375: admin private view/editor Blob preview, visibility in both directions and public home
+PASS 375: logout revokes all image URLs, removes private content and drops held image response
+PASS 375: expired server auth clears existing images and can recover after reauthentication
+PASS 375: menu leave during upload cleans unattached file without creating post
+PASS 375: menu leave after committed save preserves attached file and discards late UI
+PASS 375: lost upload and save responses retry same path/post without duplicates
+PASS 375: denied write retains uploaded draft; stale visibility edit cannot overwrite newer row
+PASS 375: cancel after lost upload response cleans server-staged image even without client acknowledgement
+PASS 375: cancel after lost committed save never cleans referenced attachment
+PASS 375: private endpoint direct read and GET fail; bfcache clears URLs and reloads fresh images
+PASS 375: same-account refresh keeps editor; account switch and history discard/revoke
+PASS 375: logout during local image decoding immediately revokes preview and late decode cannot restore editor
+PASS 375: delete clears image immediately; failed cleanup remains unreadable and retry preserves other attachments
+PASS: 30 photo visibility browser/SQL/handler groups

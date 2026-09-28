@@ -1,5 +1,6 @@
 (() => {
   'use strict';
+  if(window.MinihompyPhotoEditorImplementation)return;
   const repository = window.MinihompyPhotosRepository;
   const Image = window.Quill.import('formats/image');
   const previews = new Map(),decoding=new Set();
@@ -77,11 +78,11 @@
     } catch (error) { if (generation === token) notify(error.message); }
     finally { if (generation === token) { capture(); lock(false); } }
   }
-  window.MinihompyPhotoEditor = {
+  const api = {
     get active() { return Boolean(draft); },
     get busy() { return busy; },
-    async start(post, folder) {
-      if (!admin() || busy) return false;
+    async start(post, folder, {isCurrent=()=>true}={}) {
+      if (!admin() || busy || !isCurrent()) return false;
       if (draft && dirty && !confirm('작성 중인 내용을 버릴까요?')) return false;
       reset();const token=generation;
       mediaScope=window.MinihompyPhotoMedia.scope();const currentScope=mediaScope;
@@ -90,16 +91,16 @@
         originalPaths:(post?.body||[]).filter(b=>b.type==='image').map(b=>b.path)};
       busy=true;selection=0;
       try{
-        friendsReady=await window.MinihompyContentAccess.friendsReady?.()===true;if(token!==generation)return false;
+        friendsReady=await window.MinihompyContentAccess.friendsReady?.()===true;if(token!==generation)return false;if(!isCurrent()){reset();return false;}
         const ops=await Promise.all((post?.body||[{type:'text',text:'\n'}]).map(async block=>{
           if(block.type==='text')return {insert:block.text};
           const src=await currentScope.read(post.id,block.path);
           if(token!==generation)throw Error('편집이 취소되었습니다.');
           draft.existing.set(src,block.path);return {insert:{image:src}};
         }));
-        if(token!==generation||!admin())return false;
+        if(token!==generation)return false;if(!admin()||!isCurrent()){reset();return false;}
         draft.delta={ops};busy=false;return true;
-      }catch(error){if(token!==generation)return false;reset();throw error;}
+      }catch(error){if(token!==generation)return false;const cancelled=!isCurrent();reset();if(cancelled)return false;throw error;}
     },
     render(folders, done) {
       capture();
@@ -198,6 +199,8 @@
       return root;
     },
   };
+  window.MinihompyPhotoEditorImplementation=api;
+  window.MinihompyPhotoEditor??=api; // Standalone editor integrations retain the existing API.
   window.MinihompyPostRoutes?.guard(next=>(root?.isConnected||next?.id==='photos'&&next.post)?{busy,dirty,discard:()=>{if(next?.id==='photos'&&next.post)reset();}}:null);
   window.addEventListener('minihompy:content-access-reset',reset);
   window.addEventListener('pagehide',reset);
